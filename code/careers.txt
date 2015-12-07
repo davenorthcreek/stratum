@@ -1,0 +1,24 @@
+A1	Chemical Engineering
+A2	Civil Engineering
+A3	Commercial
+A4 	Design
+A5	Economics
+A6	Electrical Engineering
+A7	Environmental
+A8	Financial
+A9	Geochemistry
+A10	Geology
+A11	Geophysics
+A12	Geotechnical Engineering
+A13	Human Resources
+A14	Hydrogeology / Hydrology
+A15	Logistics / Supply Chain
+A16	Mechanical Engineering
+A17	Metallurgy / Mineral Processing
+A18	Mine Engineering (Open Pit)
+A19	Mine Engineering (Underground)
+A20	Mine Production / Operator
+A21	Procurement / Supply Chain
+A22	Surveying
+A23	Trade – Electrical
+A24	Trade - Mechanical

@@ -1,0 +1,50 @@
+A1	Acid Rock Drainage
+A2	Albion Process
+A3	Bench Scale Lab Techniques
+A4	Bio / Bacterial Leaching
+A5	BIOX
+A6	Calcining
+A7	Carbon Adsorption
+A8	CIC - Carbon in Column
+A9	CIL - Carbon in Leach
+A10	CIP - Carbon in Pulp
+A11	Clarification / Thickening
+A12	Crushing
+A13	Cyanide Destruction Process
+A14	Cyclone / Classification
+A15	Dewatering
+A16	Drying
+A17	Electroforming
+A18	Electroplating
+A19	Electrorefining
+A20	Electrowinning (EW)
+A21	Filtration
+A22	Flash Floatation
+A23	Floatation
+A24	Grinding / Milling
+A25	Hazop
+A26	Heap leaching
+A27	High Intensity Smelting (HIsmelt)
+A28	High Pressure Acid Leaching (HPAL)
+A29	High Pressure Grinding
+A30	Hydrocyclone / Dense Media Separation
+A31	In-situ leaching
+A32	Intensive Cyanide Leaching
+A33	Isasmelt
+A34	Leachox Process
+A35	Merill-Crowe Process
+A36	Miller Process
+A37	Pelletizing
+A38	Pilot Scale Lab Techniques
+A39	Precipitation
+A40	Pressure Oxidation (POX)
+A41	Reclaimation
+A42	Refining
+A43	Remediation
+A44	Roasting
+A45	Screening
+A46	Smelting
+A47	Solution Extraction (SX)
+A48	Tailings Backfill
+A49	Ultrafine Grinding (UFG)
+A50	Vat leaching

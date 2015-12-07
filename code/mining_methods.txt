@@ -1,0 +1,11 @@
+A1  OP - Conventional (Surface  Miner)
+A2  OP - Conventional (Truck & Shovel)
+A3  OP - Strip (Dragline)
+A4  OP - Strip (Truck & Shovel)
+A5  OTHER - Dredging
+A6  UG - Board & Pillar
+A7  UG - Caving
+A8  UG - Cut & Fill
+A9  UG - Longwall
+A10 UG - Retreat Benching
+A11 UG - Stoping

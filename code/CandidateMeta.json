@@ -1,0 +1,4869 @@
+{
+  "entity": "Candidate",
+  "entityMetaUrl": "https://rest22.bullhornstaffing.com/rest-services/987up/meta/Candidate?fields=*",
+  "label": "Candidate",
+  "fields": [
+    {
+      "name": "id",
+      "type": "ID",
+      "dataType": "Integer"
+    },
+    {
+      "name": "address",
+      "type": "COMPOSITE",
+      "dataType": "Address",
+      "confidential": false,
+      "label": "Address",
+      "hideFromSearch": false,
+      "fields": [
+        {
+          "name": "address1",
+          "type": "SCALAR",
+          "dataType": "String",
+          "maxLength": 40,
+          "confidential": false,
+          "label": "Home Address",
+          "hideFromSearch": false
+        },
+        {
+          "name": "address2",
+          "type": "SCALAR",
+          "dataType": "String",
+          "maxLength": 40,
+          "confidential": false,
+          "label": "Address2",
+          "hideFromSearch": false
+        },
+        {
+          "name": "city",
+          "type": "SCALAR",
+          "dataType": "String",
+          "maxLength": 40,
+          "confidential": false,
+          "label": "Current HOME Town/City",
+          "hideFromSearch": false
+        },
+        {
+          "name": "state",
+          "type": "SCALAR",
+          "dataType": "String",
+          "maxLength": 30,
+          "confidential": false,
+          "label": "State/Region (Home)",
+          "optionsType": "StateText",
+          "optionsUrl": "https://rest22.bullhornstaffing.com/rest-services/987up/options/StateText",
+          "options": [
+            {
+              "value": "Avon",
+              "label": "Avon"
+            },
+            {
+              "value": "Bedfordshire",
+              "label": "Bedfordshire"
+            },
+            {
+              "value": "Berkshire",
+              "label": "Berkshire"
+            },
+            {
+              "value": "Borders",
+              "label": "Borders"
+            },
+            {
+              "value": "Buckinghamshire",
+              "label": "Buckinghamshire"
+            },
+            {
+              "value": "Cambridgeshire",
+              "label": "Cambridgeshire"
+            },
+            {
+              "value": "Central",
+              "label": "Central"
+            },
+            {
+              "value": "Cheshire",
+              "label": "Cheshire"
+            },
+            {
+              "value": "Cleveland",
+              "label": "Cleveland"
+            },
+            {
+              "value": "Clwyd",
+              "label": "Clwyd"
+            },
+            {
+              "value": "Cornwall",
+              "label": "Cornwall"
+            },
+            {
+              "value": "County Antrim",
+              "label": "County Antrim"
+            },
+            {
+              "value": "County Armagh",
+              "label": "County Armagh"
+            },
+            {
+              "value": "County Down",
+              "label": "County Down"
+            },
+            {
+              "value": "County Fermanagh",
+              "label": "County Fermanagh"
+            },
+            {
+              "value": "County Londonderry",
+              "label": "County Londonderry"
+            },
+            {
+              "value": "County Tyrone",
+              "label": "County Tyrone"
+            },
+            {
+              "value": "Cumbria",
+              "label": "Cumbria"
+            },
+            {
+              "value": "Derbyshire",
+              "label": "Derbyshire"
+            },
+            {
+              "value": "Devon",
+              "label": "Devon"
+            },
+            {
+              "value": "Dorset",
+              "label": "Dorset"
+            },
+            {
+              "value": "Dumfries and Galloway",
+              "label": "Dumfries and Galloway"
+            },
+            {
+              "value": "Durham",
+              "label": "Durham"
+            },
+            {
+              "value": "Dyfed",
+              "label": "Dyfed"
+            },
+            {
+              "value": "East Sussex",
+              "label": "East Sussex"
+            },
+            {
+              "value": "Essex",
+              "label": "Essex"
+            },
+            {
+              "value": "Fife",
+              "label": "Fife"
+            },
+            {
+              "value": "Gloucestershire",
+              "label": "Gloucestershire"
+            },
+            {
+              "value": "Grampian",
+              "label": "Grampian"
+            },
+            {
+              "value": "Greater Manchester",
+              "label": "Greater Manchester"
+            },
+            {
+              "value": "Gwent",
+              "label": "Gwent"
+            },
+            {
+              "value": "Gwynedd County",
+              "label": "Gwynedd County"
+            },
+            {
+              "value": "Hampshire",
+              "label": "Hampshire"
+            },
+            {
+              "value": "Herefordshire",
+              "label": "Herefordshire"
+            },
+            {
+              "value": "Hertfordshire",
+              "label": "Hertfordshire"
+            },
+            {
+              "value": "Highlands and Islands",
+              "label": "Highlands and Islands"
+            },
+            {
+              "value": "Humberside",
+              "label": "Humberside"
+            },
+            {
+              "value": "Isle of Wight",
+              "label": "Isle of Wight"
+            },
+            {
+              "value": "Kent",
+              "label": "Kent"
+            },
+            {
+              "value": "Lancashire",
+              "label": "Lancashire"
+            },
+            {
+              "value": "Leicestershire",
+              "label": "Leicestershire"
+            },
+            {
+              "value": "Lincolnshire",
+              "label": "Lincolnshire"
+            },
+            {
+              "value": "Lothian",
+              "label": "Lothian"
+            },
+            {
+              "value": "Merseyside",
+              "label": "Merseyside"
+            },
+            {
+              "value": "Mid Glamorgan",
+              "label": "Mid Glamorgan"
+            },
+            {
+              "value": "Norfolk",
+              "label": "Norfolk"
+            },
+            {
+              "value": "North Yorkshire",
+              "label": "North Yorkshire"
+            },
+            {
+              "value": "Northamptonshire",
+              "label": "Northamptonshire"
+            },
+            {
+              "value": "Northumberland",
+              "label": "Northumberland"
+            },
+            {
+              "value": "Nottinghamshire",
+              "label": "Nottinghamshire"
+            },
+            {
+              "value": "Oxfordshire",
+              "label": "Oxfordshire"
+            },
+            {
+              "value": "Powys",
+              "label": "Powys"
+            },
+            {
+              "value": "Rutland",
+              "label": "Rutland"
+            },
+            {
+              "value": "Shropshire",
+              "label": "Shropshire"
+            },
+            {
+              "value": "Somerset",
+              "label": "Somerset"
+            },
+            {
+              "value": "South Glamorgan",
+              "label": "South Glamorgan"
+            },
+            {
+              "value": "South Yorkshire",
+              "label": "South Yorkshire"
+            },
+            {
+              "value": "Staffordshire",
+              "label": "Staffordshire"
+            },
+            {
+              "value": "Strathclyde",
+              "label": "Strathclyde"
+            },
+            {
+              "value": "Suffolk",
+              "label": "Suffolk"
+            },
+            {
+              "value": "Surrey",
+              "label": "Surrey"
+            },
+            {
+              "value": "Tayside",
+              "label": "Tayside"
+            },
+            {
+              "value": "Tyne and Wear",
+              "label": "Tyne and Wear"
+            },
+            {
+              "value": "Warwickshire",
+              "label": "Warwickshire"
+            },
+            {
+              "value": "West Glamorgan",
+              "label": "West Glamorgan"
+            },
+            {
+              "value": "West Midlands",
+              "label": "West Midlands"
+            },
+            {
+              "value": "West Sussex",
+              "label": "West Sussex"
+            },
+            {
+              "value": "West Yorkshire",
+              "label": "West Yorkshire"
+            },
+            {
+              "value": "Wiltshire",
+              "label": "Wiltshire"
+            },
+            {
+              "value": "Worcestershire",
+              "label": "Worcestershire"
+            },
+            {
+              "value": "CARLOW",
+              "label": "CARLOW"
+            },
+            {
+              "value": "CAVAN",
+              "label": "CAVAN"
+            },
+            {
+              "value": "CORK",
+              "label": "CORK"
+            },
+            {
+              "value": "DONEGAL",
+              "label": "DONEGAL"
+            },
+            {
+              "value": "DUBLIN",
+              "label": "DUBLIN"
+            },
+            {
+              "value": "DUBLIN 1",
+              "label": "DUBLIN 1"
+            },
+            {
+              "value": "DUBLIN 2",
+              "label": "DUBLIN 2"
+            },
+            {
+              "value": "DUBLIN 3",
+              "label": "DUBLIN 3"
+            },
+            {
+              "value": "DUBLIN 4",
+              "label": "DUBLIN 4"
+            },
+            {
+              "value": "DUBLIN 5",
+              "label": "DUBLIN 5"
+            },
+            {
+              "value": "DUBLIN 6",
+              "label": "DUBLIN 6"
+            },
+            {
+              "value": "DUBLIN 6W",
+              "label": "DUBLIN 6W"
+            },
+            {
+              "value": "DUBLIN 7",
+              "label": "DUBLIN 7"
+            },
+            {
+              "value": "DUBLIN 8",
+              "label": "DUBLIN 8"
+            },
+            {
+              "value": "DUBLIN 9",
+              "label": "DUBLIN 9"
+            },
+            {
+              "value": "DUBLIN 10",
+              "label": "DUBLIN 10"
+            },
+            {
+              "value": "DUBLIN 11",
+              "label": "DUBLIN 11"
+            },
+            {
+              "value": "DUBLIN 12",
+              "label": "DUBLIN 12"
+            },
+            {
+              "value": "DUBLIN 13",
+              "label": "DUBLIN 13"
+            },
+            {
+              "value": "DUBLIN 14",
+              "label": "DUBLIN 14"
+            },
+            {
+              "value": "DUBLIN 15",
+              "label": "DUBLIN 15"
+            },
+            {
+              "value": "DUBLIN 16",
+              "label": "DUBLIN 16"
+            },
+            {
+              "value": "DUBLIN 17",
+              "label": "DUBLIN 17"
+            },
+            {
+              "value": "DUBLIN 18",
+              "label": "DUBLIN 18"
+            },
+            {
+              "value": "DUBLIN 20",
+              "label": "DUBLIN 20"
+            },
+            {
+              "value": "DUBLIN 22",
+              "label": "DUBLIN 22"
+            },
+            {
+              "value": "GALWAY",
+              "label": "GALWAY"
+            },
+            {
+              "value": "KERRY",
+              "label": "KERRY"
+            },
+            {
+              "value": "KILDARE",
+              "label": "KILDARE"
+            },
+            {
+              "value": "KILKENNY",
+              "label": "KILKENNY"
+            },
+            {
+              "value": "LAOIS",
+              "label": "LAOIS"
+            },
+            {
+              "value": "LEITRIM",
+              "label": "LEITRIM"
+            },
+            {
+              "value": "LIMERICK",
+              "label": "LIMERICK"
+            },
+            {
+              "value": "LONGFORD",
+              "label": "LONGFORD"
+            },
+            {
+              "value": "LOUTH",
+              "label": "LOUTH"
+            },
+            {
+              "value": "MAYO",
+              "label": "MAYO"
+            },
+            {
+              "value": "MEATH",
+              "label": "MEATH"
+            },
+            {
+              "value": "MONAGHAN",
+              "label": "MONAGHAN"
+            },
+            {
+              "value": "OFFALY",
+              "label": "OFFALY"
+            },
+            {
+              "value": "ROSCOMMON",
+              "label": "ROSCOMMON"
+            },
+            {
+              "value": "SLIGO",
+              "label": "SLIGO"
+            },
+            {
+              "value": "TIPPERARY",
+              "label": "TIPPERARY"
+            },
+            {
+              "value": "WATERFORD",
+              "label": "WATERFORD"
+            },
+            {
+              "value": "WESTMEATH",
+              "label": "WESTMEATH"
+            },
+            {
+              "value": "WEXFORD",
+              "label": "WEXFORD"
+            },
+            {
+              "value": "WICKLOW",
+              "label": "WICKLOW"
+            }
+          ],
+          "hideFromSearch": false
+        },
+        {
+          "name": "zip",
+          "type": "SCALAR",
+          "dataType": "String",
+          "maxLength": 15,
+          "confidential": false,
+          "label": "Post Code (Home)",
+          "hideFromSearch": false
+        },
+        {
+          "name": "countryID",
+          "type": "SCALAR",
+          "dataType": "Integer",
+          "confidential": false,
+          "label": "Current HOME Country",
+          "optionsType": "Country",
+          "optionsUrl": "https://rest22.bullhornstaffing.com/rest-services/987up/options/Country",
+          "hideFromSearch": false
+        },
+        {
+          "name": "countryName",
+          "type": "SCALAR",
+          "dataType": "String",
+          "maxLength": 0
+        }
+      ]
+    },
+    {
+      "name": "businessSectors",
+      "type": "TO_MANY",
+      "confidential": false,
+      "label": "Business Sector",
+      "optionsType": "BusinessSector",
+      "optionsUrl": "https://rest22.bullhornstaffing.com/rest-services/987up/options/BusinessSector",
+      "hideFromSearch": false,
+      "associatedEntity": {
+        "entity": "BusinessSector",
+        "entityMetaUrl": "https://rest22.bullhornstaffing.com/rest-services/987up/meta/BusinessSector?fields=*",
+        "label": "Business Sector",
+        "fields": [
+          {
+            "name": "id",
+            "type": "ID",
+            "dataType": "Integer"
+          }
+        ]
+      }
+    },
+    {
+      "name": "canEnterTime",
+      "type": "SCALAR",
+      "dataType": "Boolean",
+      "confidential": false,
+      "label": "Can Enter Time",
+      "hideFromSearch": false
+    },
+    {
+      "name": "candidateSource",
+      "type": "TO_ONE",
+      "confidential": false,
+      "label": "3rd Party",
+      "optionsType": "CandidateSource",
+      "optionsUrl": "https://rest22.bullhornstaffing.com/rest-services/987up/options/CandidateSource",
+      "hideFromSearch": false,
+      "associatedEntity": {
+        "entity": "CandidateSource",
+        "entityMetaUrl": "https://rest22.bullhornstaffing.com/rest-services/987up/meta/CandidateSource?fields=*",
+        "label": "Candidate Source",
+        "fields": [
+          {
+            "name": "id",
+            "type": "ID",
+            "dataType": "Integer"
+          }
+        ]
+      }
+    },
+    {
+      "name": "categories",
+      "type": "TO_MANY",
+      "confidential": false,
+      "label": "Job Title (Coded)",
+      "optionsType": "Category",
+      "optionsUrl": "https://rest22.bullhornstaffing.com/rest-services/987up/options/Category",
+      "hideFromSearch": false,
+      "associatedEntity": {
+        "entity": "Category",
+        "entityMetaUrl": "https://rest22.bullhornstaffing.com/rest-services/987up/meta/Category?fields=*",
+        "label": "Category",
+        "fields": [
+          {
+            "name": "id",
+            "type": "ID",
+            "dataType": "Integer"
+          }
+        ]
+      }
+    },
+    {
+      "name": "category",
+      "type": "TO_ONE",
+      "confidential": false,
+      "label": "Job Title (Coded)",
+      "optionsType": "Category",
+      "optionsUrl": "https://rest22.bullhornstaffing.com/rest-services/987up/options/Category",
+      "hideFromSearch": false,
+      "associatedEntity": {
+        "entity": "Category",
+        "entityMetaUrl": "https://rest22.bullhornstaffing.com/rest-services/987up/meta/Category?fields=*",
+        "label": "Category",
+        "fields": [
+          {
+            "name": "id",
+            "type": "ID",
+            "dataType": "Integer"
+          }
+        ]
+      }
+    },
+    {
+      "name": "certificationList",
+      "type": "TO_MANY",
+      "confidential": false,
+      "label": "Certifications",
+      "optionsType": "CandidateCertification",
+      "optionsUrl": "https://rest22.bullhornstaffing.com/rest-services/987up/options/CandidateCertification",
+      "hideFromSearch": false,
+      "associatedEntity": {
+        "entity": "CandidateCertification",
+        "entityMetaUrl": "https://rest22.bullhornstaffing.com/rest-services/987up/meta/CandidateCertification?fields=*",
+        "label": "Certification",
+        "fields": [
+          {
+            "name": "id",
+            "type": "ID",
+            "dataType": "Integer"
+          }
+        ]
+      }
+    },
+    {
+      "name": "certifications",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 2147483647,
+      "confidential": false,
+      "label": "Software/ERP",
+      "optionsType": "SpecialtyText",
+      "optionsUrl": "https://rest22.bullhornstaffing.com/rest-services/987up/options/SpecialtyText",
+      "hideFromSearch": false
+    },
+    {
+      "name": "clientCorporationBlackList",
+      "type": "TO_MANY",
+      "confidential": false,
+      "label": "Client Corporation Black List",
+      "optionsType": "ClientCorporation",
+      "optionsUrl": "https://rest22.bullhornstaffing.com/rest-services/987up/options/ClientCorporation",
+      "hideFromSearch": false,
+      "associatedEntity": {
+        "entity": "ClientCorporation",
+        "entityMetaUrl": "https://rest22.bullhornstaffing.com/rest-services/987up/meta/ClientCorporation?fields=*",
+        "label": "Client",
+        "fields": [
+          {
+            "name": "id",
+            "type": "ID",
+            "dataType": "Integer"
+          },
+          {
+            "name": "name",
+            "type": "SCALAR",
+            "dataType": "String",
+            "maxLength": 100,
+            "confidential": false,
+            "label": "Company Name",
+            "hideFromSearch": false
+          }
+        ]
+      }
+    },
+    {
+      "name": "clientCorporationWhiteList",
+      "type": "TO_MANY",
+      "confidential": false,
+      "label": "Client Corporation White List",
+      "optionsType": "ClientCorporation",
+      "optionsUrl": "https://rest22.bullhornstaffing.com/rest-services/987up/options/ClientCorporation",
+      "hideFromSearch": false,
+      "associatedEntity": {
+        "entity": "ClientCorporation",
+        "entityMetaUrl": "https://rest22.bullhornstaffing.com/rest-services/987up/meta/ClientCorporation?fields=*",
+        "label": "Client",
+        "fields": [
+          {
+            "name": "id",
+            "type": "ID",
+            "dataType": "Integer"
+          },
+          {
+            "name": "name",
+            "type": "SCALAR",
+            "dataType": "String",
+            "maxLength": 100,
+            "confidential": false,
+            "label": "Company Name",
+            "hideFromSearch": false
+          }
+        ]
+      }
+    },
+    {
+      "name": "comments",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 2147483647,
+      "confidential": false,
+      "label": "General Comments",
+      "hideFromSearch": false
+    },
+    {
+      "name": "companyName",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 100,
+      "confidential": false,
+      "label": "Employer",
+      "optionsType": "ClientCorporationText",
+      "optionsUrl": "https://rest22.bullhornstaffing.com/rest-services/987up/options/ClientCorporationText",
+      "hideFromSearch": false
+    },
+    {
+      "name": "companyURL",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 100,
+      "confidential": false,
+      "label": "Personal URL",
+      "hideFromSearch": true
+    },
+    {
+      "name": "customDate1",
+      "type": "SCALAR",
+      "dataType": "Timestamp",
+      "confidential": false,
+      "label": "Full Code Completed",
+      "hideFromSearch": false
+    },
+    {
+      "name": "customDate2",
+      "type": "SCALAR",
+      "dataType": "Timestamp",
+      "confidential": false,
+      "label": "Live Candidates: Last Salary/Situation Check",
+      "hideFromSearch": false
+    },
+    {
+      "name": "customDate3",
+      "type": "SCALAR",
+      "dataType": "Timestamp",
+      "confidential": false,
+      "label": "customDate3",
+      "hideFromSearch": true
+    },
+    {
+      "name": "customFloat1",
+      "type": "SCALAR",
+      "dataType": "Double",
+      "confidential": false,
+      "label": "Gross Salary (Annual) OLD Do Not change for now. May be needed in future",
+      "hideFromSearch": true
+    },
+    {
+      "name": "customFloat2",
+      "type": "SCALAR",
+      "dataType": "Double",
+      "confidential": false,
+      "label": "Bonus Percentage Max",
+      "hideFromSearch": false
+    },
+    {
+      "name": "customFloat3",
+      "type": "SCALAR",
+      "dataType": "Double",
+      "confidential": false,
+      "label": "Salary (Current/Last)",
+      "hideFromSearch": false
+    },
+    {
+      "name": "customInt1",
+      "type": "SCALAR",
+      "dataType": "Integer",
+      "confidential": false,
+      "label": "NET Salary (Current) (Old)",
+      "hideFromSearch": true
+    },
+    {
+      "name": "customInt2",
+      "type": "SCALAR",
+      "dataType": "Integer",
+      "confidential": false,
+      "label": "Plant Capacity",
+      "hideFromSearch": false
+    },
+    {
+      "name": "customInt3",
+      "type": "SCALAR",
+      "dataType": "Integer",
+      "confidential": false,
+      "label": "Employees Managed - Indirect",
+      "hideFromSearch": false
+    },
+    {
+      "name": "customObject1s",
+      "type": "TO_MANY",
+      "confidential": false,
+      "label": "Custom Object1s",
+      "optionsType": "PersonCustomObjectInstance1",
+      "optionsUrl": "https://rest22.bullhornstaffing.com/rest-services/987up/options/PersonCustomObjectInstance1",
+      "hideFromSearch": false,
+      "associatedEntity": {
+        "entity": "PersonCustomObjectInstance1",
+        "entityMetaUrl": "https://rest22.bullhornstaffing.com/rest-services/987up/meta/PersonCustomObjectInstance1?fields=*",
+        "label": "Additional Information",
+        "fields": [
+          {
+            "name": "id",
+            "type": "ID",
+            "dataType": "Integer"
+          }
+        ]
+      }
+    },
+    {
+      "name": "customObject2s",
+      "type": "TO_MANY",
+      "confidential": false,
+      "label": "Custom Object2s",
+      "optionsType": "PersonCustomObjectInstance2",
+      "optionsUrl": "https://rest22.bullhornstaffing.com/rest-services/987up/options/PersonCustomObjectInstance2",
+      "hideFromSearch": false,
+      "associatedEntity": {
+        "entity": "PersonCustomObjectInstance2",
+        "entityMetaUrl": "https://rest22.bullhornstaffing.com/rest-services/987up/meta/PersonCustomObjectInstance2?fields=*",
+        "label": "Executive Summary",
+        "fields": [
+          {
+            "name": "id",
+            "type": "ID",
+            "dataType": "Integer"
+          }
+        ]
+      }
+    },
+    {
+      "name": "customText1",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 100,
+      "confidential": false,
+      "label": "Company Type Experience",
+      "optionsType": "SpecialtyText",
+      "optionsUrl": "https://rest22.bullhornstaffing.com/rest-services/987up/options/SpecialtyText",
+      "hideFromSearch": false
+    },
+    {
+      "name": "customText10",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 100,
+      "confidential": false,
+      "label": "Climate Exposure",
+      "optionsType": "SpecialtyText",
+      "optionsUrl": "https://rest22.bullhornstaffing.com/rest-services/987up/options/SpecialtyText",
+      "hideFromSearch": false
+    },
+    {
+      "name": "customText11",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 100,
+      "confidential": false,
+      "label": "Notice Period",
+      "options": [
+        {
+          "value": "Please Select",
+          "label": "Please Select"
+        },
+        {
+          "value": "None",
+          "label": "None"
+        },
+        {
+          "value": "1 week",
+          "label": "1 week"
+        },
+        {
+          "value": "2 weeks",
+          "label": "2 weeks"
+        },
+        {
+          "value": "3 weeks",
+          "label": "3 weeks"
+        },
+        {
+          "value": "1 month",
+          "label": "1 month"
+        },
+        {
+          "value": "6 weeks",
+          "label": "6 weeks"
+        },
+        {
+          "value": "2 months",
+          "label": "2 months"
+        },
+        {
+          "value": "3 months",
+          "label": "3 months"
+        },
+        {
+          "value": "4 months",
+          "label": "4 months"
+        },
+        {
+          "value": "5 months",
+          "label": "5 months"
+        },
+        {
+          "value": "6 months",
+          "label": "6 months"
+        }
+      ],
+      "hideFromSearch": false
+    },
+    {
+      "name": "customText12",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 100,
+      "confidential": false,
+      "label": "Functional Area",
+      "optionsType": "SpecialtyText",
+      "optionsUrl": "https://rest22.bullhornstaffing.com/rest-services/987up/options/SpecialtyText",
+      "hideFromSearch": false
+    },
+    {
+      "name": "customText13",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 100,
+      "confidential": false,
+      "label": "Expat or Local Current Salary?",
+      "options": [
+        {
+          "value": "Expat",
+          "label": "Expat"
+        },
+        {
+          "value": "Local",
+          "label": "Local"
+        }
+      ],
+      "hideFromSearch": false
+    },
+    {
+      "name": "customText14",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 100,
+      "confidential": false,
+      "label": "Salary Currency",
+      "options": [
+        {
+          "value": "USD",
+          "label": "USD"
+        },
+        {
+          "value": "GBP",
+          "label": "GBP"
+        },
+        {
+          "value": "AUD",
+          "label": "AUD"
+        },
+        {
+          "value": "CAD",
+          "label": "CAD"
+        },
+        {
+          "value": "ZAR",
+          "label": "ZAR"
+        },
+        {
+          "value": "EUR",
+          "label": "EUR"
+        },
+        {
+          "value": "BRL",
+          "label": "BRL"
+        },
+        {
+          "value": "CDF",
+          "label": "CDF"
+        },
+        {
+          "value": "CHF",
+          "label": "CHF"
+        },
+        {
+          "value": "CLP",
+          "label": "CLP"
+        },
+        {
+          "value": "NAD",
+          "label": "NAD"
+        },
+        {
+          "value": "NOK",
+          "label": "NOK"
+        },
+        {
+          "value": "NZD",
+          "label": "NZD"
+        },
+        {
+          "value": "OMR",
+          "label": "OMR"
+        },
+        {
+          "value": "PEN",
+          "label": "PEN"
+        },
+        {
+          "value": "SAR",
+          "label": "SAR"
+        },
+        {
+          "value": "Other",
+          "label": "Other"
+        }
+      ],
+      "hideFromSearch": false
+    },
+    {
+      "name": "customText15",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 100,
+      "confidential": false,
+      "label": "Total Material Moved (MTPA)",
+      "hideFromSearch": false
+    },
+    {
+      "name": "customText16",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 100,
+      "confidential": false,
+      "label": "TIER",
+      "options": [
+        {
+          "value": "1",
+          "label": "1"
+        },
+        {
+          "value": "'2-1",
+          "label": "'2-1"
+        },
+        {
+          "value": "'2-2",
+          "label": "'2-2"
+        },
+        {
+          "value": "3",
+          "label": "3"
+        },
+        {
+          "value": "TBC",
+          "label": "TBC"
+        }
+      ],
+      "hideFromSearch": false
+    },
+    {
+      "name": "customText17",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 100,
+      "confidential": false,
+      "label": "Languages",
+      "optionsType": "SpecialtyText",
+      "optionsUrl": "https://rest22.bullhornstaffing.com/rest-services/987up/options/SpecialtyText",
+      "hideFromSearch": false
+    },
+    {
+      "name": "customText18",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 100,
+      "confidential": false,
+      "label": "Reports To",
+      "optionsType": "ClientText",
+      "optionsUrl": "https://rest22.bullhornstaffing.com/rest-services/987up/options/ClientText",
+      "hideFromSearch": false
+    },
+    {
+      "name": "customText19",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 100,
+      "confidential": false,
+      "label": "Company Type Preferred",
+      "optionsType": "SpecialtyText",
+      "optionsUrl": "https://rest22.bullhornstaffing.com/rest-services/987up/options/SpecialtyText",
+      "hideFromSearch": false
+    },
+    {
+      "name": "customText2",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 100,
+      "confidential": false,
+      "label": "FIFO Cycle (where relevant)",
+      "options": [
+        {
+          "value": "N/A",
+          "label": "N/A"
+        },
+        {
+          "value": "1/1",
+          "label": "1/1"
+        },
+        {
+          "value": "2/1",
+          "label": "2/1"
+        },
+        {
+          "value": "3/1",
+          "label": "3/1"
+        },
+        {
+          "value": "4/1",
+          "label": "4/1"
+        },
+        {
+          "value": "2/2",
+          "label": "2/2"
+        },
+        {
+          "value": "4/2",
+          "label": "4/2"
+        },
+        {
+          "value": "5/2",
+          "label": "5/2"
+        },
+        {
+          "value": "6/2",
+          "label": "6/2"
+        },
+        {
+          "value": "7/2",
+          "label": "7/2"
+        },
+        {
+          "value": "8/2",
+          "label": "8/2"
+        },
+        {
+          "value": "12/2",
+          "label": "12/2"
+        },
+        {
+          "value": "5/3",
+          "label": "5/3"
+        },
+        {
+          "value": "6/3",
+          "label": "6/3"
+        },
+        {
+          "value": "7/3",
+          "label": "7/3"
+        },
+        {
+          "value": "8/3",
+          "label": "8/3"
+        },
+        {
+          "value": "9/3",
+          "label": "9/3"
+        },
+        {
+          "value": "6/4",
+          "label": "6/4"
+        },
+        {
+          "value": "7/4",
+          "label": "7/4"
+        },
+        {
+          "value": "8/4",
+          "label": "8/4"
+        },
+        {
+          "value": "9/4",
+          "label": "9/4"
+        },
+        {
+          "value": "10/4",
+          "label": "10/4"
+        },
+        {
+          "value": "12/4",
+          "label": "12/4"
+        },
+        {
+          "value": "8/6",
+          "label": "8/6"
+        },
+        {
+          "value": "Other",
+          "label": "Other"
+        }
+      ],
+      "hideFromSearch": false
+    },
+    {
+      "name": "customText20",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 100,
+      "confidential": false,
+      "label": "Expected Salary (Local)",
+      "hideFromSearch": false
+    },
+    {
+      "name": "customText3",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 100,
+      "confidential": false,
+      "label": "Commodity Experience",
+      "optionsType": "SpecialtyText",
+      "optionsUrl": "https://rest22.bullhornstaffing.com/rest-services/987up/options/SpecialtyText",
+      "hideFromSearch": false
+    },
+    {
+      "name": "customText4",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 100,
+      "confidential": false,
+      "label": "Suitable Future Positions (internal)",
+      "optionsType": "CategoryText",
+      "optionsUrl": "https://rest22.bullhornstaffing.com/rest-services/987up/options/CategoryText",
+      "hideFromSearch": false
+    },
+    {
+      "name": "customText5",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 100,
+      "confidential": false,
+      "label": "Live On System",
+      "options": [
+        {
+          "value": "No",
+          "label": "No"
+        },
+        {
+          "value": "Yes",
+          "label": "Yes"
+        },
+        {
+          "value": "DNML",
+          "label": "DNML"
+        },
+        {
+          "value": "Pending - Update",
+          "label": "Pending - Update"
+        },
+        {
+          "value": "SC Sent",
+          "label": "SC Sent"
+        },
+        {
+          "value": "Info Withheld",
+          "label": "Info Withheld"
+        }
+      ],
+      "hideFromSearch": false
+    },
+    {
+      "name": "customText6",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 100,
+      "confidential": false,
+      "label": "Current Work Pattern",
+      "options": [
+        {
+          "value": "Please Select",
+          "label": "Please Select"
+        },
+        {
+          "value": "International FIFO",
+          "label": "International FIFO"
+        },
+        {
+          "value": "International Residential",
+          "label": "International Residential"
+        },
+        {
+          "value": "National FIFO",
+          "label": "National FIFO"
+        },
+        {
+          "value": "National Residential",
+          "label": "National Residential"
+        }
+      ],
+      "hideFromSearch": false
+    },
+    {
+      "name": "customText7",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 100,
+      "confidential": false,
+      "label": "Salary used for Reporting (Gross or Net etc)",
+      "options": [
+        {
+          "value": "Gross",
+          "label": "Gross"
+        },
+        {
+          "value": "Net",
+          "label": "Net"
+        },
+        {
+          "value": "Day Rate",
+          "label": "Day Rate"
+        },
+        {
+          "value": "Hourly Rate",
+          "label": "Hourly Rate"
+        }
+      ],
+      "hideFromSearch": false
+    },
+    {
+      "name": "customText8",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 100,
+      "confidential": false,
+      "label": "Expected Net Salary (USD)",
+      "hideFromSearch": false
+    },
+    {
+      "name": "customText9",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 100,
+      "confidential": false,
+      "label": "Nationality",
+      "options": [
+        {
+          "value": "--Please Select--",
+          "label": "--Please Select--"
+        },
+        {
+          "value": "Australia",
+          "label": "Australia"
+        },
+        {
+          "value": "Brazil",
+          "label": "Brazil"
+        },
+        {
+          "value": "Canada",
+          "label": "Canada"
+        },
+        {
+          "value": "Chile",
+          "label": "Chile"
+        },
+        {
+          "value": "Peru",
+          "label": "Peru"
+        },
+        {
+          "value": "South Africa",
+          "label": "South Africa"
+        },
+        {
+          "value": "United Kingdom",
+          "label": "United Kingdom"
+        },
+        {
+          "value": "United States",
+          "label": "United States"
+        },
+        {
+          "value": "-------------",
+          "label": "-------------"
+        },
+        {
+          "value": "Afghanistan",
+          "label": "Afghanistan"
+        },
+        {
+          "value": "Aland Islands",
+          "label": "Aland Islands"
+        },
+        {
+          "value": "Albania",
+          "label": "Albania"
+        },
+        {
+          "value": "Algeria",
+          "label": "Algeria"
+        },
+        {
+          "value": "American Samoa",
+          "label": "American Samoa"
+        },
+        {
+          "value": "Andorra",
+          "label": "Andorra"
+        },
+        {
+          "value": "Angola",
+          "label": "Angola"
+        },
+        {
+          "value": "Anguilla",
+          "label": "Anguilla"
+        },
+        {
+          "value": "Antarctica",
+          "label": "Antarctica"
+        },
+        {
+          "value": "Antigua and Barbuda",
+          "label": "Antigua and Barbuda"
+        },
+        {
+          "value": "Argentina",
+          "label": "Argentina"
+        },
+        {
+          "value": "Armenia",
+          "label": "Armenia"
+        },
+        {
+          "value": "Aruba",
+          "label": "Aruba"
+        },
+        {
+          "value": "Austria",
+          "label": "Austria"
+        },
+        {
+          "value": "Azerbaijan",
+          "label": "Azerbaijan"
+        },
+        {
+          "value": "Bahamas",
+          "label": "Bahamas"
+        },
+        {
+          "value": "Bahrain",
+          "label": "Bahrain"
+        },
+        {
+          "value": "Bangladesh",
+          "label": "Bangladesh"
+        },
+        {
+          "value": "Barbados",
+          "label": "Barbados"
+        },
+        {
+          "value": "Belarus",
+          "label": "Belarus"
+        },
+        {
+          "value": "Belgium",
+          "label": "Belgium"
+        },
+        {
+          "value": "Belize",
+          "label": "Belize"
+        },
+        {
+          "value": "Benin",
+          "label": "Benin"
+        },
+        {
+          "value": "Bermuda",
+          "label": "Bermuda"
+        },
+        {
+          "value": "Bhutan",
+          "label": "Bhutan"
+        },
+        {
+          "value": "Bolivia. Plurinational State",
+          "label": "Bolivia. Plurinational State"
+        },
+        {
+          "value": "Bosnia and Herzegovina",
+          "label": "Bosnia and Herzegovina"
+        },
+        {
+          "value": "Botswana",
+          "label": "Botswana"
+        },
+        {
+          "value": "Bouvet Island",
+          "label": "Bouvet Island"
+        },
+        {
+          "value": "British Indian Ocean Territory",
+          "label": "British Indian Ocean Territory"
+        },
+        {
+          "value": "Brunei Darussalam",
+          "label": "Brunei Darussalam"
+        },
+        {
+          "value": "",
+          "label": ""
+        },
+        {
+          "value": "Bulgaria",
+          "label": "Bulgaria"
+        },
+        {
+          "value": "Burkina Faso",
+          "label": "Burkina Faso"
+        },
+        {
+          "value": "Burma",
+          "label": "Burma"
+        },
+        {
+          "value": "Burundi",
+          "label": "Burundi"
+        },
+        {
+          "value": "Cambodia",
+          "label": "Cambodia"
+        },
+        {
+          "value": "Cameroon",
+          "label": "Cameroon"
+        },
+        {
+          "value": "Cape Verde",
+          "label": "Cape Verde"
+        },
+        {
+          "value": "Cayman Islands",
+          "label": "Cayman Islands"
+        },
+        {
+          "value": "Central African Republic",
+          "label": "Central African Republic"
+        },
+        {
+          "value": "Chad",
+          "label": "Chad"
+        },
+        {
+          "value": "Channel Islands",
+          "label": "Channel Islands"
+        },
+        {
+          "value": "China",
+          "label": "China"
+        },
+        {
+          "value": "Christmas Island",
+          "label": "Christmas Island"
+        },
+        {
+          "value": "Cocos (Keeling) Islands",
+          "label": "Cocos (Keeling) Islands"
+        },
+        {
+          "value": "Colombia",
+          "label": "Colombia"
+        },
+        {
+          "value": "Comoros",
+          "label": "Comoros"
+        },
+        {
+          "value": "Congo - Democratic Republic of",
+          "label": "Congo - Democratic Republic of"
+        },
+        {
+          "value": "Congo - Republic of",
+          "label": "Congo - Republic of"
+        },
+        {
+          "value": "Cook Islands",
+          "label": "Cook Islands"
+        },
+        {
+          "value": "Costa Rica",
+          "label": "Costa Rica"
+        },
+        {
+          "value": "Cote D'Ivoire",
+          "label": "Cote D'Ivoire"
+        },
+        {
+          "value": "Croatia",
+          "label": "Croatia"
+        },
+        {
+          "value": "Cuba",
+          "label": "Cuba"
+        },
+        {
+          "value": "Curacao",
+          "label": "Curacao"
+        },
+        {
+          "value": "Cyprus",
+          "label": "Cyprus"
+        },
+        {
+          "value": "Czech Republic",
+          "label": "Czech Republic"
+        },
+        {
+          "value": "Denmark",
+          "label": "Denmark"
+        },
+        {
+          "value": "Djibouti",
+          "label": "Djibouti"
+        },
+        {
+          "value": "Dominica",
+          "label": "Dominica"
+        },
+        {
+          "value": "Dominican Republic",
+          "label": "Dominican Republic"
+        },
+        {
+          "value": "Ecuador",
+          "label": "Ecuador"
+        },
+        {
+          "value": "Egypt",
+          "label": "Egypt"
+        },
+        {
+          "value": "El Salvador",
+          "label": "El Salvador"
+        },
+        {
+          "value": "Equatorial Guinea",
+          "label": "Equatorial Guinea"
+        },
+        {
+          "value": "Eritrea",
+          "label": "Eritrea"
+        },
+        {
+          "value": "Estonia",
+          "label": "Estonia"
+        },
+        {
+          "value": "Ethiopia",
+          "label": "Ethiopia"
+        },
+        {
+          "value": "Falkland Islands (Malvinas)",
+          "label": "Falkland Islands (Malvinas)"
+        },
+        {
+          "value": "Faroe Islands",
+          "label": "Faroe Islands"
+        },
+        {
+          "value": "Fiji",
+          "label": "Fiji"
+        },
+        {
+          "value": "Finland",
+          "label": "Finland"
+        },
+        {
+          "value": "France",
+          "label": "France"
+        },
+        {
+          "value": "French Guiana",
+          "label": "French Guiana"
+        },
+        {
+          "value": "French Polynesia",
+          "label": "French Polynesia"
+        },
+        {
+          "value": "French Southern Territories",
+          "label": "French Southern Territories"
+        },
+        {
+          "value": "Gabon",
+          "label": "Gabon"
+        },
+        {
+          "value": "Gambia",
+          "label": "Gambia"
+        },
+        {
+          "value": "Georgia",
+          "label": "Georgia"
+        },
+        {
+          "value": "Germany",
+          "label": "Germany"
+        },
+        {
+          "value": "Ghana",
+          "label": "Ghana"
+        },
+        {
+          "value": "Gibraltar",
+          "label": "Gibraltar"
+        },
+        {
+          "value": "Greece",
+          "label": "Greece"
+        },
+        {
+          "value": "Greenland",
+          "label": "Greenland"
+        },
+        {
+          "value": "Grenada",
+          "label": "Grenada"
+        },
+        {
+          "value": "Guadeloupe",
+          "label": "Guadeloupe"
+        },
+        {
+          "value": "Guam",
+          "label": "Guam"
+        },
+        {
+          "value": "Guatemala",
+          "label": "Guatemala"
+        },
+        {
+          "value": "Guernsey",
+          "label": "Guernsey"
+        },
+        {
+          "value": "Guinea",
+          "label": "Guinea"
+        },
+        {
+          "value": "Guinea-Bissau",
+          "label": "Guinea-Bissau"
+        },
+        {
+          "value": "Guyana",
+          "label": "Guyana"
+        },
+        {
+          "value": "Haiti",
+          "label": "Haiti"
+        },
+        {
+          "value": "Heard and McDonald Islands",
+          "label": "Heard and McDonald Islands"
+        },
+        {
+          "value": "Holy See (Vatican City State)",
+          "label": "Holy See (Vatican City State)"
+        },
+        {
+          "value": "Honduras",
+          "label": "Honduras"
+        },
+        {
+          "value": "Hong Kong",
+          "label": "Hong Kong"
+        },
+        {
+          "value": "Hungary",
+          "label": "Hungary"
+        },
+        {
+          "value": "Iceland",
+          "label": "Iceland"
+        },
+        {
+          "value": "India",
+          "label": "India"
+        },
+        {
+          "value": "Indonesia",
+          "label": "Indonesia"
+        },
+        {
+          "value": "Iran - Islamic Republic of",
+          "label": "Iran - Islamic Republic of"
+        },
+        {
+          "value": "Iraq",
+          "label": "Iraq"
+        },
+        {
+          "value": "Ireland",
+          "label": "Ireland"
+        },
+        {
+          "value": "Isle of Man",
+          "label": "Isle of Man"
+        },
+        {
+          "value": "Israel",
+          "label": "Israel"
+        },
+        {
+          "value": "Italy",
+          "label": "Italy"
+        },
+        {
+          "value": "Jamaica",
+          "label": "Jamaica"
+        },
+        {
+          "value": "Japan",
+          "label": "Japan"
+        },
+        {
+          "value": "Jersey",
+          "label": "Jersey"
+        },
+        {
+          "value": "Jordan",
+          "label": "Jordan"
+        },
+        {
+          "value": "Kazakhstan",
+          "label": "Kazakhstan"
+        },
+        {
+          "value": "Kenya",
+          "label": "Kenya"
+        },
+        {
+          "value": "Kiribati",
+          "label": "Kiribati"
+        },
+        {
+          "value": "Korea - Democratic People's Republic of (North)",
+          "label": "Korea - Democratic People's Republic of (North)"
+        },
+        {
+          "value": "Korea - Republic of (South)",
+          "label": "Korea - Republic of (South)"
+        },
+        {
+          "value": "Kosovo",
+          "label": "Kosovo"
+        },
+        {
+          "value": "Kuwait",
+          "label": "Kuwait"
+        },
+        {
+          "value": "Kyrgyzstan",
+          "label": "Kyrgyzstan"
+        },
+        {
+          "value": "Lao People's Democratic Republic",
+          "label": "Lao People's Democratic Republic"
+        },
+        {
+          "value": "Latvia",
+          "label": "Latvia"
+        },
+        {
+          "value": "Lebanon",
+          "label": "Lebanon"
+        },
+        {
+          "value": "Lesotho",
+          "label": "Lesotho"
+        },
+        {
+          "value": "Liberia",
+          "label": "Liberia"
+        },
+        {
+          "value": "Libyan Arab Jamahiriya",
+          "label": "Libyan Arab Jamahiriya"
+        },
+        {
+          "value": "Liechtenstein",
+          "label": "Liechtenstein"
+        },
+        {
+          "value": "Lithuania",
+          "label": "Lithuania"
+        },
+        {
+          "value": "Luxembourg",
+          "label": "Luxembourg"
+        },
+        {
+          "value": "Macau",
+          "label": "Macau"
+        },
+        {
+          "value": "Macedonia",
+          "label": "Macedonia"
+        },
+        {
+          "value": "Macedonia. The former Yugoslav Republic",
+          "label": "Macedonia. The former Yugoslav Republic"
+        },
+        {
+          "value": "Madagascar",
+          "label": "Madagascar"
+        },
+        {
+          "value": "Malawi",
+          "label": "Malawi"
+        },
+        {
+          "value": "Malaysia",
+          "label": "Malaysia"
+        },
+        {
+          "value": "Maldives - Republic of",
+          "label": "Maldives - Republic of"
+        },
+        {
+          "value": "Mali",
+          "label": "Mali"
+        },
+        {
+          "value": "Malta",
+          "label": "Malta"
+        },
+        {
+          "value": "Marshall Islands",
+          "label": "Marshall Islands"
+        },
+        {
+          "value": "Martinique",
+          "label": "Martinique"
+        },
+        {
+          "value": "Mauritania",
+          "label": "Mauritania"
+        },
+        {
+          "value": "Mauritius",
+          "label": "Mauritius"
+        },
+        {
+          "value": "Mayotte",
+          "label": "Mayotte"
+        },
+        {
+          "value": "Mexico",
+          "label": "Mexico"
+        },
+        {
+          "value": "Micronesia - Federated States of",
+          "label": "Micronesia - Federated States of"
+        },
+        {
+          "value": "Moldova - Republic of",
+          "label": "Moldova - Republic of"
+        },
+        {
+          "value": "Monaco",
+          "label": "Monaco"
+        },
+        {
+          "value": "Mongolia",
+          "label": "Mongolia"
+        },
+        {
+          "value": "Montenegro",
+          "label": "Montenegro"
+        },
+        {
+          "value": "Montserrat",
+          "label": "Montserrat"
+        },
+        {
+          "value": "Morocco",
+          "label": "Morocco"
+        },
+        {
+          "value": "Mozambique",
+          "label": "Mozambique"
+        },
+        {
+          "value": "Myanmar",
+          "label": "Myanmar"
+        },
+        {
+          "value": "Namibia",
+          "label": "Namibia"
+        },
+        {
+          "value": "Nauru",
+          "label": "Nauru"
+        },
+        {
+          "value": "Nepal",
+          "label": "Nepal"
+        },
+        {
+          "value": "Netherlands",
+          "label": "Netherlands"
+        },
+        {
+          "value": "Netherlands Antilles",
+          "label": "Netherlands Antilles"
+        },
+        {
+          "value": "New Caledonia",
+          "label": "New Caledonia"
+        },
+        {
+          "value": "New Zealand",
+          "label": "New Zealand"
+        },
+        {
+          "value": "Nicaragua",
+          "label": "Nicaragua"
+        },
+        {
+          "value": "Niger",
+          "label": "Niger"
+        },
+        {
+          "value": "Nigeria",
+          "label": "Nigeria"
+        },
+        {
+          "value": "Niue",
+          "label": "Niue"
+        },
+        {
+          "value": "Norfolk Island",
+          "label": "Norfolk Island"
+        },
+        {
+          "value": "Northern Mariana Islands",
+          "label": "Northern Mariana Islands"
+        },
+        {
+          "value": "Norway",
+          "label": "Norway"
+        },
+        {
+          "value": "Oman",
+          "label": "Oman"
+        },
+        {
+          "value": "Pakistan",
+          "label": "Pakistan"
+        },
+        {
+          "value": "Palau",
+          "label": "Palau"
+        },
+        {
+          "value": "Palestinian Territory. Occupied",
+          "label": "Palestinian Territory. Occupied"
+        },
+        {
+          "value": "Panama",
+          "label": "Panama"
+        },
+        {
+          "value": "Papua New Guinea",
+          "label": "Papua New Guinea"
+        },
+        {
+          "value": "Paraguay",
+          "label": "Paraguay"
+        },
+        {
+          "value": "Philippines",
+          "label": "Philippines"
+        },
+        {
+          "value": "Pitcairn",
+          "label": "Pitcairn"
+        },
+        {
+          "value": "Poland",
+          "label": "Poland"
+        },
+        {
+          "value": "Portugal",
+          "label": "Portugal"
+        },
+        {
+          "value": "Puerto Rico",
+          "label": "Puerto Rico"
+        },
+        {
+          "value": "Qatar",
+          "label": "Qatar"
+        },
+        {
+          "value": "Reunion",
+          "label": "Reunion"
+        },
+        {
+          "value": "Romania",
+          "label": "Romania"
+        },
+        {
+          "value": "Russian Federation",
+          "label": "Russian Federation"
+        },
+        {
+          "value": "Rwanda",
+          "label": "Rwanda"
+        },
+        {
+          "value": "Saint Barthelemy",
+          "label": "Saint Barthelemy"
+        },
+        {
+          "value": "Saint Helena. Ascension and Tristan da Cunha",
+          "label": "Saint Helena. Ascension and Tristan da Cunha"
+        },
+        {
+          "value": "Saint Kitts and Nevis",
+          "label": "Saint Kitts and Nevis"
+        },
+        {
+          "value": "Saint Lucia",
+          "label": "Saint Lucia"
+        },
+        {
+          "value": "Saint Martin",
+          "label": "Saint Martin"
+        },
+        {
+          "value": "Saint Pierre and Miquelon",
+          "label": "Saint Pierre and Miquelon"
+        },
+        {
+          "value": "Saint Vincent and Grenadines",
+          "label": "Saint Vincent and Grenadines"
+        },
+        {
+          "value": "Samoa",
+          "label": "Samoa"
+        },
+        {
+          "value": "San Marino",
+          "label": "San Marino"
+        },
+        {
+          "value": "Sao Tome and Principe",
+          "label": "Sao Tome and Principe"
+        },
+        {
+          "value": "Saudi Arabia",
+          "label": "Saudi Arabia"
+        },
+        {
+          "value": "Senegal",
+          "label": "Senegal"
+        },
+        {
+          "value": "Serbia",
+          "label": "Serbia"
+        },
+        {
+          "value": "Seychelles",
+          "label": "Seychelles"
+        },
+        {
+          "value": "Sierra Leone",
+          "label": "Sierra Leone"
+        },
+        {
+          "value": "Singapore",
+          "label": "Singapore"
+        },
+        {
+          "value": "Slovakia",
+          "label": "Slovakia"
+        },
+        {
+          "value": "Slovenia",
+          "label": "Slovenia"
+        },
+        {
+          "value": "Solomon Islands",
+          "label": "Solomon Islands"
+        },
+        {
+          "value": "Somalia",
+          "label": "Somalia"
+        },
+        {
+          "value": "South Georgia and South Sandwich Islands",
+          "label": "South Georgia and South Sandwich Islands"
+        },
+        {
+          "value": "Spain",
+          "label": "Spain"
+        },
+        {
+          "value": "Sri Lanka",
+          "label": "Sri Lanka"
+        },
+        {
+          "value": "Sudan",
+          "label": "Sudan"
+        },
+        {
+          "value": "Suriname",
+          "label": "Suriname"
+        },
+        {
+          "value": "Svalbard and Jan Mayen",
+          "label": "Svalbard and Jan Mayen"
+        },
+        {
+          "value": "Swaziland",
+          "label": "Swaziland"
+        },
+        {
+          "value": "Sweden",
+          "label": "Sweden"
+        },
+        {
+          "value": "Switzerland",
+          "label": "Switzerland"
+        },
+        {
+          "value": "Syrian Arab Republic",
+          "label": "Syrian Arab Republic"
+        },
+        {
+          "value": "Taiwan",
+          "label": "Taiwan"
+        },
+        {
+          "value": "Tajikistan",
+          "label": "Tajikistan"
+        },
+        {
+          "value": "Tanzania",
+          "label": "Tanzania"
+        },
+        {
+          "value": "Thailand",
+          "label": "Thailand"
+        },
+        {
+          "value": "Timor-Leste",
+          "label": "Timor-Leste"
+        },
+        {
+          "value": "Togo",
+          "label": "Togo"
+        },
+        {
+          "value": "Tokelau",
+          "label": "Tokelau"
+        },
+        {
+          "value": "Tonga",
+          "label": "Tonga"
+        },
+        {
+          "value": "Trinidad and Tobago",
+          "label": "Trinidad and Tobago"
+        },
+        {
+          "value": "Tunisia",
+          "label": "Tunisia"
+        },
+        {
+          "value": "Turkey",
+          "label": "Turkey"
+        },
+        {
+          "value": "Turkmenistan",
+          "label": "Turkmenistan"
+        },
+        {
+          "value": "Turks and Caicos Islands",
+          "label": "Turks and Caicos Islands"
+        },
+        {
+          "value": "Tuvalu",
+          "label": "Tuvalu"
+        },
+        {
+          "value": "Uganda",
+          "label": "Uganda"
+        },
+        {
+          "value": "Ukraine",
+          "label": "Ukraine"
+        },
+        {
+          "value": "United Arab Emirates",
+          "label": "United Arab Emirates"
+        },
+        {
+          "value": "United States Minor Outlying Islands",
+          "label": "United States Minor Outlying Islands"
+        },
+        {
+          "value": "Uruguay",
+          "label": "Uruguay"
+        },
+        {
+          "value": "Uzbekistan",
+          "label": "Uzbekistan"
+        },
+        {
+          "value": "Vanuatu",
+          "label": "Vanuatu"
+        },
+        {
+          "value": "Venezuela. Bolivarian Republic of",
+          "label": "Venezuela. Bolivarian Republic of"
+        },
+        {
+          "value": "Vietnam",
+          "label": "Vietnam"
+        },
+        {
+          "value": "Virgin Islands - British",
+          "label": "Virgin Islands - British"
+        },
+        {
+          "value": "Virgin Islands - US",
+          "label": "Virgin Islands - US"
+        },
+        {
+          "value": "Wallis and Futuna",
+          "label": "Wallis and Futuna"
+        },
+        {
+          "value": "Western Sahara",
+          "label": "Western Sahara"
+        },
+        {
+          "value": "Yemen",
+          "label": "Yemen"
+        },
+        {
+          "value": "Zambia",
+          "label": "Zambia"
+        },
+        {
+          "value": "Zimbabwe",
+          "label": "Zimbabwe"
+        }
+      ],
+      "hideFromSearch": false
+    },
+    {
+      "name": "customTextBlock1",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 2147483647,
+      "confidential": false,
+      "label": "Project/Operations Type Exposure",
+      "optionsType": "SpecialtyText",
+      "optionsUrl": "https://rest22.bullhornstaffing.com/rest-services/987up/options/SpecialtyText",
+      "hideFromSearch": false
+    },
+    {
+      "name": "customTextBlock2",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 2147483647,
+      "confidential": false,
+      "label": "Discipline",
+      "optionsType": "SpecialtyText",
+      "optionsUrl": "https://rest22.bullhornstaffing.com/rest-services/987up/options/SpecialtyText",
+      "hideFromSearch": false
+    },
+    {
+      "name": "customTextBlock3",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 2147483647,
+      "confidential": false,
+      "label": "Regions/Countries Worked",
+      "optionsType": "SpecialtyText",
+      "optionsUrl": "https://rest22.bullhornstaffing.com/rest-services/987up/options/SpecialtyText",
+      "hideFromSearch": false
+    },
+    {
+      "name": "customTextBlock4",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 2147483647,
+      "confidential": false,
+      "label": "Regions/Countries Preferred",
+      "optionsType": "SpecialtyText",
+      "optionsUrl": "https://rest22.bullhornstaffing.com/rest-services/987up/options/SpecialtyText",
+      "hideFromSearch": false
+    },
+    {
+      "name": "customTextBlock5",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 2147483647,
+      "confidential": false,
+      "label": "Salary, Benefit and Bonus Notes",
+      "hideFromSearch": false
+    },
+    {
+      "name": "dateAdded",
+      "type": "SCALAR",
+      "dataType": "Timestamp",
+      "confidential": false,
+      "label": "Date Added",
+      "hideFromSearch": false
+    },
+    {
+      "name": "dateAvailable",
+      "type": "SCALAR",
+      "dataType": "Timestamp",
+      "confidential": false,
+      "label": "And/Or DATE AVAILABLE",
+      "hideFromSearch": false
+    },
+    {
+      "name": "dateAvailableEnd",
+      "type": "SCALAR",
+      "dataType": "Timestamp",
+      "confidential": false,
+      "label": "Available Until",
+      "hideFromSearch": false
+    },
+    {
+      "name": "dateI9Expiration",
+      "type": "SCALAR",
+      "dataType": "Timestamp",
+      "confidential": false,
+      "label": "dateI9Expiration",
+      "hideFromSearch": true
+    },
+    {
+      "name": "dateLastComment",
+      "type": "SCALAR",
+      "dataType": "Timestamp",
+      "confidential": false,
+      "label": "Last Note",
+      "hideFromSearch": false
+    },
+    {
+      "name": "dateLastModified",
+      "type": "SCALAR",
+      "dataType": "Timestamp",
+      "confidential": false,
+      "label": "Date Last Modified",
+      "hideFromSearch": false
+    },
+    {
+      "name": "dateNextCall",
+      "type": "SCALAR",
+      "dataType": "Timestamp",
+      "confidential": false,
+      "label": "Date Next Call",
+      "hideFromSearch": false
+    },
+    {
+      "name": "dateOfBirth",
+      "type": "SCALAR",
+      "dataType": "Timestamp",
+      "confidential": false,
+      "label": "Birthday",
+      "hideFromSearch": false
+    },
+    {
+      "name": "dayRate",
+      "type": "SCALAR",
+      "dataType": "BigDecimal",
+      "confidential": false,
+      "label": "Day Rate",
+      "hideFromSearch": false
+    },
+    {
+      "name": "dayRateLow",
+      "type": "SCALAR",
+      "dataType": "BigDecimal",
+      "confidential": false,
+      "label": "Proj Dev (Personal Responsibility)",
+      "hideFromSearch": false
+    },
+    {
+      "name": "degreeList",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 2147483647,
+      "confidential": false,
+      "label": "Mine Ops - Mining Methods",
+      "optionsType": "SpecialtyText",
+      "optionsUrl": "https://rest22.bullhornstaffing.com/rest-services/987up/options/SpecialtyText",
+      "hideFromSearch": false
+    },
+    {
+      "name": "description",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 2147483647,
+      "confidential": false,
+      "label": "CV",
+      "hideFromSearch": false
+    },
+    {
+      "name": "desiredLocations",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 2147483647,
+      "confidential": false,
+      "label": "Flight Class",
+      "options": [
+        {
+          "value": "Business",
+          "label": "Business"
+        },
+        {
+          "value": "Economy",
+          "label": "Economy"
+        },
+        {
+          "value": "Combination",
+          "label": "Combination"
+        },
+        {
+          "value": "N/A",
+          "label": "N/A"
+        }
+      ],
+      "hideFromSearch": false
+    },
+    {
+      "name": "disability",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 1,
+      "confidential": false,
+      "label": "Disability",
+      "options": [
+        {
+          "value": "U",
+          "label": "Unknown"
+        },
+        {
+          "value": "Y",
+          "label": "Yes"
+        },
+        {
+          "value": "N",
+          "label": "No"
+        }
+      ],
+      "hideFromSearch": true
+    },
+    {
+      "name": "educationDegree",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 2147483647,
+      "confidential": false,
+      "label": "Education Completed",
+      "optionsType": "SpecialtyText",
+      "optionsUrl": "https://rest22.bullhornstaffing.com/rest-services/987up/options/SpecialtyText",
+      "options": [
+        {
+          "value": "Diploma (<3Y)",
+          "label": "Diploma (<3Y)"
+        },
+        {
+          "value": "Diploma/HND (Tertiary/3Y)",
+          "label": "Diploma/HND (Tertiary/3Y)"
+        },
+        {
+          "value": "Degree",
+          "label": "Degree"
+        },
+        {
+          "value": "Degree (Hons)",
+          "label": "Degree (Hons)"
+        },
+        {
+          "value": "Post Graduate Degree",
+          "label": "Post Graduate Degree"
+        },
+        {
+          "value": "Masters",
+          "label": "Masters"
+        },
+        {
+          "value": "MBA",
+          "label": "MBA"
+        },
+        {
+          "value": "MBL",
+          "label": "MBL"
+        },
+        {
+          "value": "PhD/Doctorate",
+          "label": "PhD/Doctorate"
+        },
+        {
+          "value": "Post-Doctorate",
+          "label": "Post-Doctorate"
+        },
+        {
+          "value": "None",
+          "label": "None"
+        },
+        {
+          "value": "TBC",
+          "label": "TBC"
+        }
+      ],
+      "hideFromSearch": false
+    },
+    {
+      "name": "educations",
+      "type": "TO_MANY",
+      "confidential": false,
+      "label": "Education",
+      "optionsType": "CandidateEducation",
+      "optionsUrl": "https://rest22.bullhornstaffing.com/rest-services/987up/options/CandidateEducation",
+      "hideFromSearch": false,
+      "associatedEntity": {
+        "entity": "CandidateEducation",
+        "entityMetaUrl": "https://rest22.bullhornstaffing.com/rest-services/987up/meta/CandidateEducation?fields=*",
+        "label": "Education",
+        "fields": [
+          {
+            "name": "id",
+            "type": "ID",
+            "dataType": "Integer"
+          }
+        ]
+      }
+    },
+    {
+      "name": "email",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 100,
+      "confidential": false,
+      "label": "Email 1 (Main/Personal)",
+      "hideFromSearch": false
+    },
+    {
+      "name": "email2",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 100,
+      "confidential": false,
+      "label": "Email 2 (Work)",
+      "hideFromSearch": false
+    },
+    {
+      "name": "email3",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 100,
+      "confidential": false,
+      "label": "Email 3 - linked to Outlook - can only be email",
+      "hideFromSearch": true
+    },
+    {
+      "name": "employeeType",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 30,
+      "confidential": false,
+      "label": "Current Employment Status",
+      "options": [
+        {
+          "value": "Fixed Term Contract",
+          "label": "Fixed Term Contract"
+        },
+        {
+          "value": "Interim / Consulting",
+          "label": "Interim / Consulting"
+        },
+        {
+          "value": "Permanent",
+          "label": "Permanent"
+        },
+        {
+          "value": "Unemployed",
+          "label": "Unemployed"
+        }
+      ],
+      "hideFromSearch": false
+    },
+    {
+      "name": "employmentPreference",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 200,
+      "confidential": false,
+      "label": "Employment Preference",
+      "options": [
+        {
+          "value": "Fixed Term Contract",
+          "label": "Fixed Term Contract"
+        },
+        {
+          "value": "Interim / Consulting",
+          "label": "Interim / Consulting"
+        },
+        {
+          "value": "Permanent",
+          "label": "Permanent"
+        }
+      ],
+      "hideFromSearch": false
+    },
+    {
+      "name": "ethnicity",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 50,
+      "confidential": false,
+      "label": "% of time spent on UG",
+      "options": [
+        {
+          "value": "0%",
+          "label": "0%"
+        },
+        {
+          "value": "5%",
+          "label": "5%"
+        },
+        {
+          "value": "10%",
+          "label": "10%"
+        },
+        {
+          "value": "15%",
+          "label": "15%"
+        },
+        {
+          "value": "20%",
+          "label": "20%"
+        },
+        {
+          "value": "25%",
+          "label": "25%"
+        },
+        {
+          "value": "30%",
+          "label": "30%"
+        },
+        {
+          "value": "35%",
+          "label": "35%"
+        },
+        {
+          "value": "40%",
+          "label": "40%"
+        },
+        {
+          "value": "45%",
+          "label": "45%"
+        },
+        {
+          "value": "50%",
+          "label": "50%"
+        },
+        {
+          "value": "55%",
+          "label": "55%"
+        },
+        {
+          "value": "60%",
+          "label": "60%"
+        },
+        {
+          "value": "65%",
+          "label": "65%"
+        },
+        {
+          "value": "70%",
+          "label": "70%"
+        },
+        {
+          "value": "75%",
+          "label": "75%"
+        },
+        {
+          "value": "80%",
+          "label": "80%"
+        },
+        {
+          "value": "85%",
+          "label": "85%"
+        },
+        {
+          "value": "90%",
+          "label": "90%"
+        },
+        {
+          "value": "95%",
+          "label": "95%"
+        },
+        {
+          "value": "100%",
+          "label": "100%"
+        }
+      ],
+      "hideFromSearch": false
+    },
+    {
+      "name": "experience",
+      "type": "SCALAR",
+      "dataType": "Integer",
+      "confidential": false,
+      "label": "Employees Managed - Direct",
+      "hideFromSearch": false
+    },
+    {
+      "name": "externalID",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 50,
+      "confidential": false,
+      "label": "External ID",
+      "hideFromSearch": false
+    },
+    {
+      "name": "fax",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 20,
+      "confidential": false,
+      "label": "fax",
+      "options": [
+        {
+          "value": "Yes",
+          "label": "Yes"
+        },
+        {
+          "value": "No",
+          "label": "No"
+        },
+        {
+          "value": "N/A",
+          "label": "N/A"
+        }
+      ],
+      "hideFromSearch": true
+    },
+    {
+      "name": "fax2",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 20,
+      "confidential": false,
+      "label": "Degree Yes or No?",
+      "options": [
+        {
+          "value": "0",
+          "label": "Yes"
+        },
+        {
+          "value": "1",
+          "label": "No"
+        }
+      ],
+      "hideFromSearch": false
+    },
+    {
+      "name": "fax3",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 20,
+      "confidential": false,
+      "label": "Work Phone Ext",
+      "hideFromSearch": false
+    },
+    {
+      "name": "federalAddtionalWitholdingsAmount",
+      "type": "SCALAR",
+      "dataType": "BigDecimal",
+      "confidential": false,
+      "label": "federalAddtionalWitholdingsAmount",
+      "hideFromSearch": true
+    },
+    {
+      "name": "federalExemptions",
+      "type": "SCALAR",
+      "dataType": "Integer",
+      "confidential": false,
+      "label": "federalExemptions",
+      "hideFromSearch": true
+    },
+    {
+      "name": "federalFilingStatus",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 1,
+      "confidential": false,
+      "label": "federalFilingStatus",
+      "hideFromSearch": true
+    },
+    {
+      "name": "fileAttachments",
+      "type": "TO_MANY",
+      "confidential": false,
+      "label": "File Attachments",
+      "optionsType": "CandidateFileAttachment",
+      "optionsUrl": "https://rest22.bullhornstaffing.com/rest-services/987up/options/CandidateFileAttachment",
+      "hideFromSearch": false,
+      "associatedEntity": {
+        "entity": "CandidateFileAttachment",
+        "entityMetaUrl": "https://rest22.bullhornstaffing.com/rest-services/987up/meta/CandidateFileAttachment?fields=*",
+        "label": "File Attachments",
+        "fields": [
+          {
+            "name": "id",
+            "type": "ID",
+            "dataType": "Integer"
+          }
+        ]
+      }
+    },
+    {
+      "name": "firstName",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 50,
+      "confidential": false,
+      "label": "First Name",
+      "hideFromSearch": false
+    },
+    {
+      "name": "gender",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 1,
+      "confidential": false,
+      "label": "Gender/Sex",
+      "options": [
+        {
+          "value": "Male",
+          "label": "Male"
+        },
+        {
+          "value": "Female",
+          "label": "Female"
+        }
+      ],
+      "hideFromSearch": true
+    },
+    {
+      "name": "hourlyRate",
+      "type": "SCALAR",
+      "dataType": "BigDecimal",
+      "confidential": false,
+      "label": "Hourly Rate",
+      "hideFromSearch": false
+    },
+    {
+      "name": "hourlyRateLow",
+      "type": "SCALAR",
+      "dataType": "BigDecimal",
+      "confidential": false,
+      "label": "Total CASH Salary (incl. Uplift)",
+      "hideFromSearch": true
+    },
+    {
+      "name": "i9OnFile",
+      "type": "SCALAR",
+      "dataType": "Integer",
+      "confidential": false,
+      "label": "I9 On File",
+      "hideFromSearch": false
+    },
+    {
+      "name": "interviews",
+      "type": "TO_MANY",
+      "confidential": false,
+      "label": "Interviews",
+      "optionsType": "Appointment",
+      "optionsUrl": "https://rest22.bullhornstaffing.com/rest-services/987up/options/Appointment",
+      "hideFromSearch": false,
+      "associatedEntity": {
+        "entity": "Appointment",
+        "entityMetaUrl": "https://rest22.bullhornstaffing.com/rest-services/987up/meta/Appointment?fields=*",
+        "label": "Appointment",
+        "fields": [
+          {
+            "name": "id",
+            "type": "ID",
+            "dataType": "Integer"
+          }
+        ]
+      }
+    },
+    {
+      "name": "isDayLightSavings",
+      "type": "SCALAR",
+      "dataType": "Boolean",
+      "confidential": false,
+      "label": "Is Day Light Savings",
+      "hideFromSearch": false
+    },
+    {
+      "name": "isDeleted",
+      "type": "SCALAR",
+      "dataType": "Boolean",
+      "confidential": false,
+      "label": "Is Deleted",
+      "hideFromSearch": false
+    },
+    {
+      "name": "isEditable",
+      "type": "SCALAR",
+      "dataType": "Boolean",
+      "confidential": false,
+      "label": "Allow candidate to edit profile",
+      "hideFromSearch": false
+    },
+    {
+      "name": "isLockedOut",
+      "type": "SCALAR",
+      "dataType": "Boolean",
+      "confidential": false,
+      "label": "Is Locked Out",
+      "hideFromSearch": false
+    },
+    {
+      "name": "lastName",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 50,
+      "confidential": false,
+      "label": "Last Name",
+      "hideFromSearch": false
+    },
+    {
+      "name": "leads",
+      "type": "TO_MANY",
+      "confidential": false,
+      "label": "Leads",
+      "optionsType": "Lead",
+      "optionsUrl": "https://rest22.bullhornstaffing.com/rest-services/987up/options/Lead",
+      "hideFromSearch": false,
+      "associatedEntity": {
+        "entity": "Lead",
+        "entityMetaUrl": "https://rest22.bullhornstaffing.com/rest-services/987up/meta/Lead?fields=*",
+        "label": "Lead",
+        "fields": [
+          {
+            "name": "id",
+            "type": "ID",
+            "dataType": "Integer"
+          }
+        ]
+      }
+    },
+    {
+      "name": "linkedPerson",
+      "type": "TO_ONE",
+      "confidential": false,
+      "label": "Linked Person",
+      "optionsType": "Person",
+      "optionsUrl": "https://rest22.bullhornstaffing.com/rest-services/987up/options/Person",
+      "hideFromSearch": false,
+      "associatedEntity": {
+        "entity": "Person",
+        "entityMetaUrl": "https://rest22.bullhornstaffing.com/rest-services/987up/meta/Person?fields=*",
+        "label": "Person",
+        "fields": [
+          {
+            "name": "id",
+            "type": "ID",
+            "dataType": "Integer"
+          },
+          {
+            "name": "_subtype",
+            "type": "SCALAR",
+            "dataType": "String",
+            "maxLength": 255
+          }
+        ]
+      }
+    },
+    {
+      "name": "localAddtionalWitholdingsAmount",
+      "type": "SCALAR",
+      "dataType": "BigDecimal",
+      "confidential": false,
+      "label": "localAddtionalWitholdingsAmount",
+      "hideFromSearch": true
+    },
+    {
+      "name": "localExemptions",
+      "type": "SCALAR",
+      "dataType": "Integer",
+      "confidential": false,
+      "label": "localExemptions",
+      "hideFromSearch": true
+    },
+    {
+      "name": "localFilingStatus",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 1,
+      "confidential": false,
+      "label": "localFilingStatus",
+      "hideFromSearch": true
+    },
+    {
+      "name": "localTaxCode",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 40,
+      "confidential": false,
+      "label": "localTaxCode",
+      "hideFromSearch": true
+    },
+    {
+      "name": "massMailOptOut",
+      "type": "SCALAR",
+      "dataType": "Boolean",
+      "confidential": false,
+      "label": "Opted Out",
+      "hideFromSearch": false
+    },
+    {
+      "name": "masterUserID",
+      "type": "SCALAR",
+      "dataType": "Integer",
+      "confidential": false,
+      "label": "Master User ID",
+      "hideFromSearch": false
+    },
+    {
+      "name": "middleName",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 50,
+      "confidential": false,
+      "label": "Middle name. DNU - Will insert field into name on searches",
+      "hideFromSearch": true
+    },
+    {
+      "name": "migrateGUID",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 36,
+      "confidential": false,
+      "label": "Migrate GUID",
+      "hideFromSearch": false
+    },
+    {
+      "name": "mobile",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 20,
+      "confidential": false,
+      "label": "Mobile Phone",
+      "hideFromSearch": false
+    },
+    {
+      "name": "name",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 100,
+      "confidential": false,
+      "label": "Name",
+      "hideFromSearch": false
+    },
+    {
+      "name": "namePrefix",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 5,
+      "confidential": false,
+      "label": "Salutation",
+      "options": [
+        {
+          "value": "Mr.",
+          "label": "Mr."
+        },
+        {
+          "value": "Mrs.",
+          "label": "Mrs."
+        },
+        {
+          "value": "Ms.",
+          "label": "Ms."
+        },
+        {
+          "value": "Dr.",
+          "label": "Dr."
+        },
+        {
+          "value": "Miss",
+          "label": "Miss"
+        }
+      ],
+      "hideFromSearch": true
+    },
+    {
+      "name": "nameSuffix",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 5,
+      "confidential": false,
+      "label": "SupAnn incl. in Gross on Cand Record",
+      "options": [
+        {
+          "value": "Yes",
+          "label": "Yes"
+        },
+        {
+          "value": "No",
+          "label": "No"
+        },
+        {
+          "value": "N/A",
+          "label": "N/A"
+        }
+      ],
+      "hideFromSearch": false
+    },
+    {
+      "name": "nickName",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 50,
+      "confidential": false,
+      "label": "Marital Status and Partner/Spouse's Name",
+      "hideFromSearch": false
+    },
+    {
+      "name": "notes",
+      "type": "TO_MANY",
+      "confidential": false,
+      "label": "Notes",
+      "optionsType": "Note",
+      "optionsUrl": "https://rest22.bullhornstaffing.com/rest-services/987up/options/Note",
+      "hideFromSearch": false,
+      "associatedEntity": {
+        "entity": "Note",
+        "entityMetaUrl": "https://rest22.bullhornstaffing.com/rest-services/987up/meta/Note?fields=*",
+        "label": "Note",
+        "fields": [
+          {
+            "name": "id",
+            "type": "ID",
+            "dataType": "Integer"
+          }
+        ]
+      }
+    },
+    {
+      "name": "numCategories",
+      "type": "SCALAR",
+      "dataType": "Integer",
+      "confidential": false,
+      "label": "Num Categories",
+      "hideFromSearch": false
+    },
+    {
+      "name": "numOwners",
+      "type": "SCALAR",
+      "dataType": "Integer",
+      "confidential": false,
+      "label": "Num Owners",
+      "hideFromSearch": false
+    },
+    {
+      "name": "occupation",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 50,
+      "confidential": false,
+      "label": "Job Title (Free Text)",
+      "hideFromSearch": false
+    },
+    {
+      "name": "owner",
+      "type": "TO_ONE",
+      "confidential": false,
+      "label": "Candidate Manager",
+      "optionsType": "CorporateUser",
+      "optionsUrl": "https://rest22.bullhornstaffing.com/rest-services/987up/options/CorporateUser",
+      "hideFromSearch": false,
+      "associatedEntity": {
+        "entity": "CorporateUser",
+        "entityMetaUrl": "https://rest22.bullhornstaffing.com/rest-services/987up/meta/CorporateUser?fields=*",
+        "label": "Corporate User",
+        "fields": [
+          {
+            "name": "id",
+            "type": "ID",
+            "dataType": "Integer"
+          },
+          {
+            "name": "firstName",
+            "type": "SCALAR",
+            "dataType": "String",
+            "maxLength": 50,
+            "confidential": false,
+            "label": "First Name",
+            "hideFromSearch": false
+          },
+          {
+            "name": "lastName",
+            "type": "SCALAR",
+            "dataType": "String",
+            "maxLength": 50,
+            "confidential": false,
+            "label": "Last Name",
+            "hideFromSearch": false
+          }
+        ]
+      }
+    },
+    {
+      "name": "pager",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 20,
+      "confidential": false,
+      "label": "Skype ID",
+      "hideFromSearch": false
+    },
+    {
+      "name": "paperWorkOnFile",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 2147483647,
+      "confidential": false,
+      "label": "paperWorkOnFile",
+      "hideFromSearch": true
+    },
+    {
+      "name": "password",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 30,
+      "confidential": false,
+      "label": "Password",
+      "hideFromSearch": false
+    },
+    {
+      "name": "personSubtype",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 13,
+      "confidential": false,
+      "label": "Person Subtype",
+      "hideFromSearch": false
+    },
+    {
+      "name": "phone",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 20,
+      "confidential": false,
+      "label": "Home Phone",
+      "hideFromSearch": false
+    },
+    {
+      "name": "phone2",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 20,
+      "confidential": false,
+      "label": "Site Mobile Phone",
+      "hideFromSearch": false
+    },
+    {
+      "name": "phone3",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 20,
+      "confidential": false,
+      "label": "Alternate Phone",
+      "hideFromSearch": false
+    },
+    {
+      "name": "placements",
+      "type": "TO_MANY",
+      "confidential": false,
+      "label": "Placements",
+      "optionsType": "Placement",
+      "optionsUrl": "https://rest22.bullhornstaffing.com/rest-services/987up/options/Placement",
+      "hideFromSearch": false,
+      "associatedEntity": {
+        "entity": "Placement",
+        "entityMetaUrl": "https://rest22.bullhornstaffing.com/rest-services/987up/meta/Placement?fields=*",
+        "label": "Placement",
+        "fields": [
+          {
+            "name": "id",
+            "type": "ID",
+            "dataType": "Integer"
+          }
+        ]
+      }
+    },
+    {
+      "name": "preferredContact",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 15,
+      "confidential": false,
+      "label": "Website Access (Candidate)",
+      "options": [
+        {
+          "value": "No",
+          "label": "No"
+        },
+        {
+          "value": "Token Sent",
+          "label": "Token Sent"
+        },
+        {
+          "value": "Yes",
+          "label": "Yes"
+        },
+        {
+          "value": "Reg Form Sent",
+          "label": "Reg Form Sent"
+        },
+        {
+          "value": "Form Completed",
+          "label": "Form Completed"
+        },
+        {
+          "value": "Token Not Used",
+          "label": "Token Not Used"
+        },
+        {
+          "value": "Access Denied",
+          "label": "Access Denied"
+        }
+      ],
+      "hideFromSearch": false
+    },
+    {
+      "name": "primarySkills",
+      "type": "TO_MANY",
+      "confidential": false,
+      "label": "Skills (Coded)",
+      "optionsType": "Skill",
+      "optionsUrl": "https://rest22.bullhornstaffing.com/rest-services/987up/options/Skill",
+      "hideFromSearch": false,
+      "associatedEntity": {
+        "entity": "Skill",
+        "entityMetaUrl": "https://rest22.bullhornstaffing.com/rest-services/987up/meta/Skill?fields=*",
+        "label": "Skill",
+        "fields": [
+          {
+            "name": "id",
+            "type": "ID",
+            "dataType": "Integer"
+          }
+        ]
+      }
+    },
+    {
+      "name": "recentClientList",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 2147483647,
+      "confidential": false,
+      "label": "Industry Qualifications & Memberships",
+      "hideFromSearch": false
+    },
+    {
+      "name": "references",
+      "type": "TO_MANY",
+      "confidential": false,
+      "label": "References",
+      "optionsType": "CandidateReference",
+      "optionsUrl": "https://rest22.bullhornstaffing.com/rest-services/987up/options/CandidateReference",
+      "hideFromSearch": false,
+      "associatedEntity": {
+        "entity": "CandidateReference",
+        "entityMetaUrl": "https://rest22.bullhornstaffing.com/rest-services/987up/meta/CandidateReference?fields=*",
+        "label": "Reference",
+        "fields": [
+          {
+            "name": "id",
+            "type": "ID",
+            "dataType": "Integer"
+          }
+        ]
+      }
+    },
+    {
+      "name": "referredBy",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 50,
+      "confidential": false,
+      "label": "Mobility Preferences",
+      "options": [
+        {
+          "value": "Inter-FIFO",
+          "label": "Inter-FIFO"
+        },
+        {
+          "value": "Inter-Res",
+          "label": "Inter-Res"
+        },
+        {
+          "value": "National-FIFO",
+          "label": "National-FIFO"
+        },
+        {
+          "value": "National-Res",
+          "label": "National-Res"
+        }
+      ],
+      "hideFromSearch": false
+    },
+    {
+      "name": "referredByPerson",
+      "type": "TO_ONE",
+      "confidential": false,
+      "label": "Referred by (database contact)",
+      "optionsType": "Person",
+      "optionsUrl": "https://rest22.bullhornstaffing.com/rest-services/987up/options/Person",
+      "hideFromSearch": false,
+      "associatedEntity": {
+        "entity": "Person",
+        "entityMetaUrl": "https://rest22.bullhornstaffing.com/rest-services/987up/meta/Person?fields=*",
+        "label": "Person",
+        "fields": [
+          {
+            "name": "id",
+            "type": "ID",
+            "dataType": "Integer"
+          },
+          {
+            "name": "_subtype",
+            "type": "SCALAR",
+            "dataType": "String",
+            "maxLength": 255
+          }
+        ]
+      }
+    },
+    {
+      "name": "salary",
+      "type": "SCALAR",
+      "dataType": "BigDecimal",
+      "confidential": false,
+      "label": "Save for Salary related fields",
+      "hideFromSearch": true
+    },
+    {
+      "name": "salaryLow",
+      "type": "SCALAR",
+      "dataType": "BigDecimal",
+      "confidential": false,
+      "label": "Proj Dev (Overall)",
+      "hideFromSearch": false
+    },
+    {
+      "name": "secondaryAddress",
+      "type": "COMPOSITE",
+      "dataType": "Address",
+      "confidential": false,
+      "label": "Secondary Address",
+      "hideFromSearch": false,
+      "fields": [
+        {
+          "name": "address1",
+          "type": "SCALAR",
+          "dataType": "String",
+          "maxLength": 40,
+          "confidential": false,
+          "label": "Industry Qualifications (Old - DNU)",
+          "optionsType": "SpecialtyText",
+          "optionsUrl": "https://rest22.bullhornstaffing.com/rest-services/987up/options/SpecialtyText",
+          "options": [
+            {
+              "value": "Blast Tick",
+              "label": "Blast Tick"
+            },
+            {
+              "value": "1stCl Mine Mgt Cert",
+              "label": "1stCl Mine Mgt Cert"
+            },
+            {
+              "value": "UG Mine Mgt Cert",
+              "label": "UG Mine Mgt Cert"
+            },
+            {
+              "value": "Cert of Competency - Mines and Works",
+              "label": "Cert of Competency - Mines and Works"
+            }
+          ],
+          "hideFromSearch": false
+        },
+        {
+          "name": "address2",
+          "type": "SCALAR",
+          "dataType": "String",
+          "maxLength": 40,
+          "confidential": false,
+          "label": "Address2",
+          "hideFromSearch": false
+        },
+        {
+          "name": "city",
+          "type": "SCALAR",
+          "dataType": "String",
+          "maxLength": 40,
+          "confidential": false,
+          "label": "Current WORK Town/City",
+          "hideFromSearch": false
+        },
+        {
+          "name": "state",
+          "type": "SCALAR",
+          "dataType": "String",
+          "maxLength": 30,
+          "confidential": false,
+          "label": "State/Region (Work)",
+          "optionsType": "StateText",
+          "optionsUrl": "https://rest22.bullhornstaffing.com/rest-services/987up/options/StateText",
+          "options": [
+            {
+              "value": "Avon",
+              "label": "Avon"
+            },
+            {
+              "value": "Bedfordshire",
+              "label": "Bedfordshire"
+            },
+            {
+              "value": "Berkshire",
+              "label": "Berkshire"
+            },
+            {
+              "value": "Borders",
+              "label": "Borders"
+            },
+            {
+              "value": "Buckinghamshire",
+              "label": "Buckinghamshire"
+            },
+            {
+              "value": "Cambridgeshire",
+              "label": "Cambridgeshire"
+            },
+            {
+              "value": "Central",
+              "label": "Central"
+            },
+            {
+              "value": "Cheshire",
+              "label": "Cheshire"
+            },
+            {
+              "value": "Cleveland",
+              "label": "Cleveland"
+            },
+            {
+              "value": "Clwyd",
+              "label": "Clwyd"
+            },
+            {
+              "value": "Cornwall",
+              "label": "Cornwall"
+            },
+            {
+              "value": "County Antrim",
+              "label": "County Antrim"
+            },
+            {
+              "value": "County Armagh",
+              "label": "County Armagh"
+            },
+            {
+              "value": "County Down",
+              "label": "County Down"
+            },
+            {
+              "value": "County Fermanagh",
+              "label": "County Fermanagh"
+            },
+            {
+              "value": "County Londonderry",
+              "label": "County Londonderry"
+            },
+            {
+              "value": "County Tyrone",
+              "label": "County Tyrone"
+            },
+            {
+              "value": "Cumbria",
+              "label": "Cumbria"
+            },
+            {
+              "value": "Derbyshire",
+              "label": "Derbyshire"
+            },
+            {
+              "value": "Devon",
+              "label": "Devon"
+            },
+            {
+              "value": "Dorset",
+              "label": "Dorset"
+            },
+            {
+              "value": "Dumfries and Galloway",
+              "label": "Dumfries and Galloway"
+            },
+            {
+              "value": "Durham",
+              "label": "Durham"
+            },
+            {
+              "value": "Dyfed",
+              "label": "Dyfed"
+            },
+            {
+              "value": "East Sussex",
+              "label": "East Sussex"
+            },
+            {
+              "value": "Essex",
+              "label": "Essex"
+            },
+            {
+              "value": "Fife",
+              "label": "Fife"
+            },
+            {
+              "value": "Gloucestershire",
+              "label": "Gloucestershire"
+            },
+            {
+              "value": "Grampian",
+              "label": "Grampian"
+            },
+            {
+              "value": "Greater Manchester",
+              "label": "Greater Manchester"
+            },
+            {
+              "value": "Gwent",
+              "label": "Gwent"
+            },
+            {
+              "value": "Gwynedd County",
+              "label": "Gwynedd County"
+            },
+            {
+              "value": "Hampshire",
+              "label": "Hampshire"
+            },
+            {
+              "value": "Herefordshire",
+              "label": "Herefordshire"
+            },
+            {
+              "value": "Hertfordshire",
+              "label": "Hertfordshire"
+            },
+            {
+              "value": "Highlands and Islands",
+              "label": "Highlands and Islands"
+            },
+            {
+              "value": "Humberside",
+              "label": "Humberside"
+            },
+            {
+              "value": "Isle of Wight",
+              "label": "Isle of Wight"
+            },
+            {
+              "value": "Kent",
+              "label": "Kent"
+            },
+            {
+              "value": "Lancashire",
+              "label": "Lancashire"
+            },
+            {
+              "value": "Leicestershire",
+              "label": "Leicestershire"
+            },
+            {
+              "value": "Lincolnshire",
+              "label": "Lincolnshire"
+            },
+            {
+              "value": "Lothian",
+              "label": "Lothian"
+            },
+            {
+              "value": "Merseyside",
+              "label": "Merseyside"
+            },
+            {
+              "value": "Mid Glamorgan",
+              "label": "Mid Glamorgan"
+            },
+            {
+              "value": "Norfolk",
+              "label": "Norfolk"
+            },
+            {
+              "value": "North Yorkshire",
+              "label": "North Yorkshire"
+            },
+            {
+              "value": "Northamptonshire",
+              "label": "Northamptonshire"
+            },
+            {
+              "value": "Northumberland",
+              "label": "Northumberland"
+            },
+            {
+              "value": "Nottinghamshire",
+              "label": "Nottinghamshire"
+            },
+            {
+              "value": "Oxfordshire",
+              "label": "Oxfordshire"
+            },
+            {
+              "value": "Powys",
+              "label": "Powys"
+            },
+            {
+              "value": "Rutland",
+              "label": "Rutland"
+            },
+            {
+              "value": "Shropshire",
+              "label": "Shropshire"
+            },
+            {
+              "value": "Somerset",
+              "label": "Somerset"
+            },
+            {
+              "value": "South Glamorgan",
+              "label": "South Glamorgan"
+            },
+            {
+              "value": "South Yorkshire",
+              "label": "South Yorkshire"
+            },
+            {
+              "value": "Staffordshire",
+              "label": "Staffordshire"
+            },
+            {
+              "value": "Strathclyde",
+              "label": "Strathclyde"
+            },
+            {
+              "value": "Suffolk",
+              "label": "Suffolk"
+            },
+            {
+              "value": "Surrey",
+              "label": "Surrey"
+            },
+            {
+              "value": "Tayside",
+              "label": "Tayside"
+            },
+            {
+              "value": "Tyne and Wear",
+              "label": "Tyne and Wear"
+            },
+            {
+              "value": "Warwickshire",
+              "label": "Warwickshire"
+            },
+            {
+              "value": "West Glamorgan",
+              "label": "West Glamorgan"
+            },
+            {
+              "value": "West Midlands",
+              "label": "West Midlands"
+            },
+            {
+              "value": "West Sussex",
+              "label": "West Sussex"
+            },
+            {
+              "value": "West Yorkshire",
+              "label": "West Yorkshire"
+            },
+            {
+              "value": "Wiltshire",
+              "label": "Wiltshire"
+            },
+            {
+              "value": "Worcestershire",
+              "label": "Worcestershire"
+            },
+            {
+              "value": "CARLOW",
+              "label": "CARLOW"
+            },
+            {
+              "value": "CAVAN",
+              "label": "CAVAN"
+            },
+            {
+              "value": "CORK",
+              "label": "CORK"
+            },
+            {
+              "value": "DONEGAL",
+              "label": "DONEGAL"
+            },
+            {
+              "value": "DUBLIN",
+              "label": "DUBLIN"
+            },
+            {
+              "value": "DUBLIN 1",
+              "label": "DUBLIN 1"
+            },
+            {
+              "value": "DUBLIN 2",
+              "label": "DUBLIN 2"
+            },
+            {
+              "value": "DUBLIN 3",
+              "label": "DUBLIN 3"
+            },
+            {
+              "value": "DUBLIN 4",
+              "label": "DUBLIN 4"
+            },
+            {
+              "value": "DUBLIN 5",
+              "label": "DUBLIN 5"
+            },
+            {
+              "value": "DUBLIN 6",
+              "label": "DUBLIN 6"
+            },
+            {
+              "value": "DUBLIN 6W",
+              "label": "DUBLIN 6W"
+            },
+            {
+              "value": "DUBLIN 7",
+              "label": "DUBLIN 7"
+            },
+            {
+              "value": "DUBLIN 8",
+              "label": "DUBLIN 8"
+            },
+            {
+              "value": "DUBLIN 9",
+              "label": "DUBLIN 9"
+            },
+            {
+              "value": "DUBLIN 10",
+              "label": "DUBLIN 10"
+            },
+            {
+              "value": "DUBLIN 11",
+              "label": "DUBLIN 11"
+            },
+            {
+              "value": "DUBLIN 12",
+              "label": "DUBLIN 12"
+            },
+            {
+              "value": "DUBLIN 13",
+              "label": "DUBLIN 13"
+            },
+            {
+              "value": "DUBLIN 14",
+              "label": "DUBLIN 14"
+            },
+            {
+              "value": "DUBLIN 15",
+              "label": "DUBLIN 15"
+            },
+            {
+              "value": "DUBLIN 16",
+              "label": "DUBLIN 16"
+            },
+            {
+              "value": "DUBLIN 17",
+              "label": "DUBLIN 17"
+            },
+            {
+              "value": "DUBLIN 18",
+              "label": "DUBLIN 18"
+            },
+            {
+              "value": "DUBLIN 20",
+              "label": "DUBLIN 20"
+            },
+            {
+              "value": "DUBLIN 22",
+              "label": "DUBLIN 22"
+            },
+            {
+              "value": "GALWAY",
+              "label": "GALWAY"
+            },
+            {
+              "value": "KERRY",
+              "label": "KERRY"
+            },
+            {
+              "value": "KILDARE",
+              "label": "KILDARE"
+            },
+            {
+              "value": "KILKENNY",
+              "label": "KILKENNY"
+            },
+            {
+              "value": "LAOIS",
+              "label": "LAOIS"
+            },
+            {
+              "value": "LEITRIM",
+              "label": "LEITRIM"
+            },
+            {
+              "value": "LIMERICK",
+              "label": "LIMERICK"
+            },
+            {
+              "value": "LONGFORD",
+              "label": "LONGFORD"
+            },
+            {
+              "value": "LOUTH",
+              "label": "LOUTH"
+            },
+            {
+              "value": "MAYO",
+              "label": "MAYO"
+            },
+            {
+              "value": "MEATH",
+              "label": "MEATH"
+            },
+            {
+              "value": "MONAGHAN",
+              "label": "MONAGHAN"
+            },
+            {
+              "value": "OFFALY",
+              "label": "OFFALY"
+            },
+            {
+              "value": "ROSCOMMON",
+              "label": "ROSCOMMON"
+            },
+            {
+              "value": "SLIGO",
+              "label": "SLIGO"
+            },
+            {
+              "value": "TIPPERARY",
+              "label": "TIPPERARY"
+            },
+            {
+              "value": "WATERFORD",
+              "label": "WATERFORD"
+            },
+            {
+              "value": "WESTMEATH",
+              "label": "WESTMEATH"
+            },
+            {
+              "value": "WEXFORD",
+              "label": "WEXFORD"
+            },
+            {
+              "value": "WICKLOW",
+              "label": "WICKLOW"
+            }
+          ],
+          "hideFromSearch": false
+        },
+        {
+          "name": "zip",
+          "type": "SCALAR",
+          "dataType": "String",
+          "maxLength": 15,
+          "confidential": false,
+          "label": "Post Code (Work)",
+          "hideFromSearch": false
+        },
+        {
+          "name": "countryID",
+          "type": "SCALAR",
+          "dataType": "Integer",
+          "confidential": false,
+          "label": "Current WORK Country",
+          "optionsType": "Country",
+          "optionsUrl": "https://rest22.bullhornstaffing.com/rest-services/987up/options/Country",
+          "hideFromSearch": false
+        },
+        {
+          "name": "countryName",
+          "type": "SCALAR",
+          "dataType": "String",
+          "maxLength": 0
+        }
+      ]
+    },
+    {
+      "name": "secondaryOwners",
+      "type": "TO_MANY",
+      "confidential": false,
+      "label": "Secondary Owners",
+      "optionsType": "CorporateUser",
+      "optionsUrl": "https://rest22.bullhornstaffing.com/rest-services/987up/options/CorporateUser",
+      "hideFromSearch": false,
+      "associatedEntity": {
+        "entity": "CorporateUser",
+        "entityMetaUrl": "https://rest22.bullhornstaffing.com/rest-services/987up/meta/CorporateUser?fields=*",
+        "label": "Corporate User",
+        "fields": [
+          {
+            "name": "id",
+            "type": "ID",
+            "dataType": "Integer"
+          },
+          {
+            "name": "firstName",
+            "type": "SCALAR",
+            "dataType": "String",
+            "maxLength": 50,
+            "confidential": false,
+            "label": "First Name",
+            "hideFromSearch": false
+          },
+          {
+            "name": "lastName",
+            "type": "SCALAR",
+            "dataType": "String",
+            "maxLength": 50,
+            "confidential": false,
+            "label": "Last Name",
+            "hideFromSearch": false
+          }
+        ]
+      }
+    },
+    {
+      "name": "secondarySkills",
+      "type": "TO_MANY",
+      "confidential": false,
+      "label": "Secondary Skills",
+      "optionsType": "Skill",
+      "optionsUrl": "https://rest22.bullhornstaffing.com/rest-services/987up/options/Skill",
+      "hideFromSearch": false,
+      "associatedEntity": {
+        "entity": "Skill",
+        "entityMetaUrl": "https://rest22.bullhornstaffing.com/rest-services/987up/meta/Skill?fields=*",
+        "label": "Skill",
+        "fields": [
+          {
+            "name": "id",
+            "type": "ID",
+            "dataType": "Integer"
+          }
+        ]
+      }
+    },
+    {
+      "name": "sendouts",
+      "type": "TO_MANY",
+      "confidential": false,
+      "label": "sendouts",
+      "optionsType": "Sendout",
+      "optionsUrl": "https://rest22.bullhornstaffing.com/rest-services/987up/options/Sendout",
+      "hideFromSearch": true,
+      "associatedEntity": {
+        "entity": "Sendout",
+        "entityMetaUrl": "https://rest22.bullhornstaffing.com/rest-services/987up/meta/Sendout?fields=*",
+        "label": "Client Submission",
+        "fields": [
+          {
+            "name": "id",
+            "type": "ID",
+            "dataType": "Integer"
+          }
+        ]
+      }
+    },
+    {
+      "name": "shifts",
+      "type": "TO_MANY",
+      "confidential": false,
+      "label": "Shifts",
+      "optionsType": "Shift",
+      "optionsUrl": "https://rest22.bullhornstaffing.com/rest-services/987up/options/Shift",
+      "hideFromSearch": false,
+      "associatedEntity": {
+        "entity": "Shift",
+        "entityMetaUrl": "https://rest22.bullhornstaffing.com/rest-services/987up/meta/Shift?fields=*",
+        "label": "Shift",
+        "fields": [
+          {
+            "name": "id",
+            "type": "ID",
+            "dataType": "Integer"
+          }
+        ]
+      }
+    },
+    {
+      "name": "skillSet",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 2147483647,
+      "confidential": false,
+      "label": "Connected to Parser - Will parse skills from CV",
+      "hideFromSearch": true
+    },
+    {
+      "name": "smsOptIn",
+      "type": "SCALAR",
+      "dataType": "Boolean",
+      "confidential": false,
+      "label": "Opted In - SMS Messages",
+      "options": [
+        {
+          "value": true,
+          "label": "Yes"
+        },
+        {
+          "value": false,
+          "label": "No"
+        }
+      ],
+      "hideFromSearch": false
+    },
+    {
+      "name": "source",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 200,
+      "confidential": false,
+      "label": "Source",
+      "options": [
+        {
+          "value": "Referral",
+          "label": "Referral"
+        },
+        {
+          "value": "Referral (CONFIDENTIAL)",
+          "label": "Referral (CONFIDENTIAL)"
+        },
+        {
+          "value": "Referral (Conversion IV Manager)",
+          "label": "Referral (Conversion IV Manager)"
+        },
+        {
+          "value": "Cold Call",
+          "label": "Cold Call"
+        },
+        {
+          "value": "Confidential Head Hunt",
+          "label": "Confidential Head Hunt"
+        },
+        {
+          "value": "Direct Research",
+          "label": "Direct Research"
+        },
+        {
+          "value": "InfoMine",
+          "label": "InfoMine"
+        },
+        {
+          "value": "Jobs4mining",
+          "label": "Jobs4mining"
+        },
+        {
+          "value": "LinkedIn",
+          "label": "LinkedIn"
+        },
+        {
+          "value": "Met at Conference",
+          "label": "Met at Conference"
+        },
+        {
+          "value": "Mining Job Search",
+          "label": "Mining Job Search"
+        },
+        {
+          "value": "Monster",
+          "label": "Monster"
+        },
+        {
+          "value": "Phone In/Direct Research",
+          "label": "Phone In/Direct Research"
+        },
+        {
+          "value": "Press Advert",
+          "label": "Press Advert"
+        },
+        {
+          "value": "Reed",
+          "label": "Reed"
+        },
+        {
+          "value": "Reference",
+          "label": "Reference"
+        },
+        {
+          "value": "Seek",
+          "label": "Seek"
+        },
+        {
+          "value": "Stratum Website",
+          "label": "Stratum Website"
+        },
+        {
+          "value": "Response to Marketing",
+          "label": "Response to Marketing"
+        },
+        {
+          "value": "Downloaded Report",
+          "label": "Downloaded Report"
+        },
+        {
+          "value": "Other Job Board",
+          "label": "Other Job Board"
+        },
+        {
+          "value": "Other",
+          "label": "Other"
+        }
+      ],
+      "hideFromSearch": false
+    },
+    {
+      "name": "specialties",
+      "type": "TO_MANY",
+      "confidential": false,
+      "label": "Career Foundation",
+      "optionsType": "Specialty",
+      "optionsUrl": "https://rest22.bullhornstaffing.com/rest-services/987up/options/Specialty",
+      "hideFromSearch": false,
+      "associatedEntity": {
+        "entity": "Specialty",
+        "entityMetaUrl": "https://rest22.bullhornstaffing.com/rest-services/987up/meta/Specialty?fields=*",
+        "label": "Specialty",
+        "fields": [
+          {
+            "name": "id",
+            "type": "ID",
+            "dataType": "Integer"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ssn",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 18,
+      "confidential": false,
+      "label": "% of time spent on OP",
+      "options": [
+        {
+          "value": "0%",
+          "label": "0%"
+        },
+        {
+          "value": "5%",
+          "label": "5%"
+        },
+        {
+          "value": "10%",
+          "label": "10%"
+        },
+        {
+          "value": "15%",
+          "label": "15%"
+        },
+        {
+          "value": "20%",
+          "label": "20%"
+        },
+        {
+          "value": "25%",
+          "label": "25%"
+        },
+        {
+          "value": "30%",
+          "label": "30%"
+        },
+        {
+          "value": "35%",
+          "label": "35%"
+        },
+        {
+          "value": "40%",
+          "label": "40%"
+        },
+        {
+          "value": "45%",
+          "label": "45%"
+        },
+        {
+          "value": "50%",
+          "label": "50%"
+        },
+        {
+          "value": "55%",
+          "label": "55%"
+        },
+        {
+          "value": "60%",
+          "label": "60%"
+        },
+        {
+          "value": "65%",
+          "label": "65%"
+        },
+        {
+          "value": "70%",
+          "label": "70%"
+        },
+        {
+          "value": "75%",
+          "label": "75%"
+        },
+        {
+          "value": "80%",
+          "label": "80%"
+        },
+        {
+          "value": "85%",
+          "label": "85%"
+        },
+        {
+          "value": "90%",
+          "label": "90%"
+        },
+        {
+          "value": "95%",
+          "label": "95%"
+        },
+        {
+          "value": "100%",
+          "label": "100%"
+        }
+      ],
+      "hideFromSearch": false
+    },
+    {
+      "name": "stateAddtionalWitholdingsAmount",
+      "type": "SCALAR",
+      "dataType": "BigDecimal",
+      "confidential": false,
+      "label": "stateAddtionalWitholdingsAmount",
+      "hideFromSearch": true
+    },
+    {
+      "name": "stateExemptions",
+      "type": "SCALAR",
+      "dataType": "Integer",
+      "confidential": false,
+      "label": "stateExemptions",
+      "hideFromSearch": true
+    },
+    {
+      "name": "stateFilingStatus",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 1,
+      "confidential": false,
+      "label": "stateFilingStatus",
+      "hideFromSearch": true
+    },
+    {
+      "name": "status",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 100,
+      "confidential": false,
+      "label": "STATUS",
+      "options": [
+        {
+          "value": "New Candidate - To Process",
+          "label": "New Candidate - To Process"
+        },
+        {
+          "value": "Available",
+          "label": "Available"
+        },
+        {
+          "value": "Active",
+          "label": "Active"
+        },
+        {
+          "value": "Passive",
+          "label": "Passive"
+        },
+        {
+          "value": "Passive (Placed)",
+          "label": "Passive (Placed)"
+        },
+        {
+          "value": "Outside Discipline",
+          "label": "Outside Discipline"
+        },
+        {
+          "value": "Tier 3 - DNC",
+          "label": "Tier 3 - DNC"
+        },
+        {
+          "value": "Admin-Screening",
+          "label": "Admin-Screening"
+        }
+      ],
+      "hideFromSearch": false
+    },
+    {
+      "name": "submissions",
+      "type": "TO_MANY",
+      "confidential": false,
+      "label": "Submissions",
+      "optionsType": "JobSubmission",
+      "optionsUrl": "https://rest22.bullhornstaffing.com/rest-services/987up/options/JobSubmission",
+      "hideFromSearch": false,
+      "associatedEntity": {
+        "entity": "JobSubmission",
+        "entityMetaUrl": "https://rest22.bullhornstaffing.com/rest-services/987up/meta/JobSubmission?fields=*",
+        "label": "Short Listed",
+        "fields": [
+          {
+            "name": "id",
+            "type": "ID",
+            "dataType": "Integer"
+          }
+        ]
+      }
+    },
+    {
+      "name": "tasks",
+      "type": "TO_MANY",
+      "confidential": false,
+      "label": "Tasks",
+      "optionsType": "Task",
+      "optionsUrl": "https://rest22.bullhornstaffing.com/rest-services/987up/options/Task",
+      "hideFromSearch": false,
+      "associatedEntity": {
+        "entity": "Task",
+        "entityMetaUrl": "https://rest22.bullhornstaffing.com/rest-services/987up/meta/Task?fields=*",
+        "label": "Task",
+        "fields": [
+          {
+            "name": "id",
+            "type": "ID",
+            "dataType": "Integer"
+          }
+        ]
+      }
+    },
+    {
+      "name": "taxID",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 18,
+      "confidential": false,
+      "label": "% of Superannuation",
+      "hideFromSearch": true
+    },
+    {
+      "name": "taxState",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 30,
+      "confidential": false,
+      "label": "taxState",
+      "hideFromSearch": true
+    },
+    {
+      "name": "tearsheets",
+      "type": "TO_MANY",
+      "confidential": false,
+      "label": "Tearsheets",
+      "optionsType": "Tearsheet",
+      "optionsUrl": "https://rest22.bullhornstaffing.com/rest-services/987up/options/Tearsheet",
+      "hideFromSearch": false,
+      "associatedEntity": {
+        "entity": "Tearsheet",
+        "entityMetaUrl": "https://rest22.bullhornstaffing.com/rest-services/987up/meta/Tearsheet?fields=*",
+        "label": "Tearsheet",
+        "fields": [
+          {
+            "name": "id",
+            "type": "ID",
+            "dataType": "Integer"
+          }
+        ]
+      }
+    },
+    {
+      "name": "timeZoneOffsetEST",
+      "type": "SCALAR",
+      "dataType": "Integer",
+      "confidential": false,
+      "label": "timeZoneOffsetEST",
+      "hideFromSearch": true
+    },
+    {
+      "name": "travelLimit",
+      "type": "SCALAR",
+      "dataType": "Integer",
+      "confidential": false,
+      "label": "Superann - WIP",
+      "options": [
+        {
+          "value": 1,
+          "label": "Yes"
+        },
+        {
+          "value": 2,
+          "label": "No"
+        },
+        {
+          "value": 3,
+          "label": "N/A"
+        }
+      ],
+      "hideFromSearch": true
+    },
+    {
+      "name": "travelMethod",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 100,
+      "confidential": false,
+      "label": "Travel Method",
+      "hideFromSearch": false
+    },
+    {
+      "name": "type",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 100,
+      "confidential": false,
+      "label": "Flying Time",
+      "options": [
+        {
+          "value": "Company Time",
+          "label": "Company Time"
+        },
+        {
+          "value": "Personal Time",
+          "label": "Personal Time"
+        },
+        {
+          "value": "Combinaton",
+          "label": "Combinaton"
+        },
+        {
+          "value": "N/A",
+          "label": "N/A"
+        }
+      ],
+      "hideFromSearch": false
+    },
+    {
+      "name": "userType",
+      "type": "TO_ONE",
+      "confidential": false,
+      "label": "User Type",
+      "optionsType": "UserType",
+      "optionsUrl": "https://rest22.bullhornstaffing.com/rest-services/987up/options/UserType",
+      "hideFromSearch": false,
+      "associatedEntity": {
+        "entity": "UserType",
+        "entityMetaUrl": "https://rest22.bullhornstaffing.com/rest-services/987up/meta/UserType?fields=*",
+        "label": "User Type",
+        "fields": [
+          {
+            "name": "id",
+            "type": "ID",
+            "dataType": "Integer"
+          }
+        ]
+      }
+    },
+    {
+      "name": "username",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 100,
+      "confidential": false,
+      "label": "Username",
+      "hideFromSearch": false
+    },
+    {
+      "name": "veteran",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 1,
+      "confidential": false,
+      "label": "Salary used for reporting (Gross or Net etc) old DNU - only 1 character",
+      "optionsType": "SpecialtyText",
+      "optionsUrl": "https://rest22.bullhornstaffing.com/rest-services/987up/options/SpecialtyText",
+      "hideFromSearch": false
+    },
+    {
+      "name": "webResponses",
+      "type": "TO_MANY",
+      "confidential": false,
+      "label": "Web Responses",
+      "optionsType": "JobSubmission",
+      "optionsUrl": "https://rest22.bullhornstaffing.com/rest-services/987up/options/JobSubmission",
+      "hideFromSearch": false,
+      "associatedEntity": {
+        "entity": "JobSubmission",
+        "entityMetaUrl": "https://rest22.bullhornstaffing.com/rest-services/987up/meta/JobSubmission?fields=*",
+        "label": "Short Listed",
+        "fields": [
+          {
+            "name": "id",
+            "type": "ID",
+            "dataType": "Integer"
+          }
+        ]
+      }
+    },
+    {
+      "name": "willRelocate",
+      "type": "SCALAR",
+      "dataType": "Boolean",
+      "confidential": false,
+      "label": "OLD Aus Only - SupAnn incl. in Gross on Reg Form",
+      "options": [
+        {
+          "value": false,
+          "label": "Yes"
+        },
+        {
+          "value": false,
+          "label": "No"
+        }
+      ],
+      "hideFromSearch": true
+    },
+    {
+      "name": "workAuthorized",
+      "type": "SCALAR",
+      "dataType": "Boolean",
+      "confidential": false,
+      "label": "workAuthorised",
+      "options": [
+        {
+          "value": false,
+          "label": "Yes"
+        },
+        {
+          "value": true,
+          "label": "No"
+        }
+      ],
+      "hideFromSearch": true
+    },
+    {
+      "name": "workHistories",
+      "type": "TO_MANY",
+      "confidential": false,
+      "label": "Work History",
+      "optionsType": "CandidateWorkHistory",
+      "optionsUrl": "https://rest22.bullhornstaffing.com/rest-services/987up/options/CandidateWorkHistory",
+      "hideFromSearch": false,
+      "associatedEntity": {
+        "entity": "CandidateWorkHistory",
+        "entityMetaUrl": "https://rest22.bullhornstaffing.com/rest-services/987up/meta/CandidateWorkHistory?fields=*",
+        "label": "Work History",
+        "fields": [
+          {
+            "name": "id",
+            "type": "ID",
+            "dataType": "Integer"
+          }
+        ]
+      }
+    },
+    {
+      "name": "workPhone",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 20,
+      "confidential": false,
+      "label": "Work Phone",
+      "hideFromSearch": false
+    }
+  ]
+}

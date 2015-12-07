@@ -1,0 +1,167 @@
+Stratum\Model\FormResult
+form exists
+respondentId: string(9) "511704349"
+surveyId: string(6) "990032"
+completed: string(1) "1"
+submitDateTime: string(25) "2015-10-29T18:21:36-04:00"
+response exists
+Question Q1 Q1.A1 
+Question Q2 Q2.A2 
+Value: David
+Question Q2 Q2.A3 
+Value: Block
+Question Q2 Q2.A4 
+Value: 25/12/1970
+Question Q2 Q2.A5 
+Value: married, 2, 14, 16
+Question Q3 Q3.A3 
+Question Q4 Q4.A1 
+Question Q5 Q5.A9 
+Question Q6 Q6.A2 
+Question Q8 Q8.A1 
+Value: dave@blockhousehold.net
+Question Q8 Q8.A2 
+Value: dave@northcreek.ca
+Question Q8 Q8.A3 
+Value: 1-780-604-2602
+Question Q8 Q8.A4 
+Value: 1-780-604-2603
+Question Q8 Q8.A5 
+Value: 1-780-604-2604
+Question Q8 Q8.A6 
+Value: 1111
+Question Q8 Q8.A7 
+Value: davidablock
+Question Q9 Q9.A3 
+Question Q10 Q10.A39 
+Question Q11 Q11.A1 
+Value: Edmonton
+Question Q11 Q11.A2 
+Value: Onoway
+Question Q12 Q12.A3 Q12.A3.C2
+Question Q12 Q12.A4 Q12.A4.C1
+Question Q12 Q12.A5 Q12.A5.C3
+Question Q14 Q14.A1 
+Question Q15  
+Question Q16 Q16.A2 
+Question Q18 Q18.A1 
+Value: B. C. M. from Bethany Bible Institute
+Question Q19 Q19.A6 
+Question Q19 Q19.A13 
+Question Q19 Q19.A16 
+Value: JavaWorld
+Question Q20 Q20.A20 Q20.A20.C2
+Question Q20 Q20.A29 Q20.A29.C1
+Question Q22 Q22.A1 
+Value: Founder
+Question Q22 Q22.A2 
+Value: North Creek Consulting, Inc.
+Question Q23 Q23.A1 
+Question Q24 Q24.A1 
+Question Q25 Q25.A2 
+Question Q26 Q26.A1 
+Value: CEO
+Question Q27 Q27.A1 
+Question Q27 Q27.A4 
+Question Q28 Q28.A3 
+Question Q29 Q29.A5 
+Question Q32 Q32.A1 
+Question Q33 Q33.A2 
+Question Q35 Q35.A2 
+Question Q36 Q36.A2 
+Question Q40 Q40.A1 
+Value: 100000
+Question Q40 Q40.A2 
+Value: 75000
+Question Q41 Q41.A1 
+Question Q44 Q44.A2 
+Question Q45 Q45.A1 
+Value: 10000
+Question Q45 Q45.A3 
+Value: 40 %
+Question Q48 Q48.A1 
+Value: Performance
+Question Q50 Q50.A1 
+Question Q51 Q51.A1 
+Question Q52 Q52.A1 
+Question Q53 Q53.A1 
+Value: Managing Director
+Question Q53 Q53.A2 
+Value: $ 100,000
+Question Q53 Q53.A3 
+Value: 120000
+Question Q53 Q53.A4 
+Value: CAD
+Question Q54 Q54.A2 
+Question Q55 Q55.A4 
+Question Q55 Q55.A5 
+Question Q55 Q55.A6 
+Question Q56 Q56.A1 
+Question Q56 Q56.A3 
+Question Q57 Q57.A7 
+Question Q57 Q57.A9 
+Question Q57 Q57.A10 
+Question Q57 Q57.A12 
+Question Q57 Q57.A14 
+Question Q59 Q59.A1 Q59.A1.C3
+Question Q59 Q59.A5 Q59.A5.C2
+Question Q59 Q59.A23 Q59.A23.C1
+Question Q60 Q60.A10 Q60.A10.C3
+Question Q60 Q60.A15 Q60.A15.C2
+Question Q60 Q60.A75 Q60.A75.C1
+Question Q62 Q62.A8 
+Question Q62 Q62.A9 
+Question Q63 Q63.A1 
+Question Q63 Q63.A3 
+Question Q65 Q65.A2 
+Question Q68 Q68.A2 Q68.A2.C3
+Question Q68 Q68.A14 Q68.A14.C2
+Question Q68 Q68.A15 Q68.A15.C1
+Question Q69 Q69.A1 
+Value: 50
+Question Q69 Q69.A2 
+Value: 50
+Question Q70 Q70.A2 Q70.A2.C3
+Question Q70 Q70.A7 Q70.A7.C2
+Question Q70 Q70.A10 Q70.A10.C1
+Question Q72 Q72.A1 
+Value: Other experience would go here.
+Question Q75 Q75.A13 Q75.A13.C5
+Question Q75 Q75.A16 Q75.A16.C4
+Question Q75 Q75.A17 Q75.A17.C3
+Question Q75 Q75.A23 Q75.A23.C1
+Question Q75 Q75.A24 Q75.A24.C2
+Question Q86 Q86.A3 
+Question Q86 Q86.A4 
+Question Q86 Q86.A14 
+Question Q96 Q96.A1 
+Value: Theo
+Question Q96 Q96.A2 
+Value: Block
+Question Q96 Q96.A3 
+Value: Academy
+Question Q96 Q96.A4 
+Value: Labourer
+Question Q96 Q96.A5 
+Value: 1-780-719-6275
+Question Q96 Q96.A6 
+Value: feosue@gmail.com
+Question Q96 Q96.A7 
+Value: Father
+Question Q97 Q97.A1 
+Value: Debbra
+Question Q97 Q97.A2 
+Value: Block
+Question Q97 Q97.A3 
+Value: AHS
+Question Q97 Q97.A4 
+Value: Nurse
+Question Q97 Q97.A5 
+Value: 1-780-604-4420
+Question Q97 Q97.A6 
+Value: deb@blockhousehold.net
+Question Q97 Q97.A7 
+Value: husband
+Question Q98 Q98.A1 
+configs exists
+---------------------------

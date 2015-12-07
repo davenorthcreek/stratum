@@ -1,0 +1,16 @@
+A1	Ability to Read - Electrical Single Line Drawings
+A2	Ability to Read - Process & Instrumentation Diagrams
+A3	Budgeting / Cost Controls
+A4 	Estimating
+A5	Extended Site/Field Experience
+A6	External Stakeholder Management
+A7	FEL 1-4
+A8	FIDIC Contracts
+A9	Project Controls Management
+A10	Project Finance
+A11	Project Implementation / Execution
+A12	Project Planning
+A13	Project Scheduling
+A14	Quantity Man Hour Reporting
+A15	Trending
+A16	Work Breakdown Structures

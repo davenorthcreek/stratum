@@ -1,0 +1,54 @@
+A1	Diploma - Business Admin / Management
+A2	Diploma - Business Law
+A3	Diploma - Chemical Engineering
+A4 	Diploma - Civil Engineering
+A5	Diploma - Design
+A6	Diploma - Economics
+A7	Diploma - Electrical Engineering
+A8	Diploma - Engineering
+A9	Diploma - Environment
+A10	Diploma - Finance
+A11	Diploma - Geochemistry
+A12	Diploma - Geology
+A13	Diploma - Geophysics
+A14	Diploma - Geotechnical Engineering
+A15	Diploma - Human Resources
+A16	Diploma - Hydrogeology / Hydrology
+A17	Diploma - Industrial Safety
+A18	Diploma - IT
+A19	Diploma - Engineering and Maintenance
+A20	Diploma - Explosives
+A21	Diploma - Mechanical Engineering
+A22	Diploma - Metalifferous Mining
+A23	Diploma - Metallurgy
+A24	Diploma - Mine Engineering
+A25	Diploma - Mining Technology
+A26	Diploma - Project Management
+A27	Diploma - Science
+A28	HND - Business Admin / Management
+A29	HND - Business Law
+A30	HND - Chemical Engineering
+A31	HND - Civil Engineering
+A32	HND - Design
+A33	HND - Economics
+A34	HND - Electrical Engineering
+A35	HND - Engineering
+A36	HND - Environment
+A37	HND - Finance
+A38	HND - Geochemistry
+A39	HND - Geology
+A40	HND - Geophysics
+A41	HND - Geotechnical Engineering
+A42	HND - Human Resources
+A43	HND - Hydrogeology / Hydrology
+A44	HND - Industrial Safety
+A45	HND - IT
+A46	HND - Engineering and Maintenance
+A47	HND - Explosives
+A48	HND - Mechanical Engineering
+A49	HND - Metalifferous Mining
+A50	HND - Metallurgy
+A51	HND - Mine Engineering
+A52	HND - Mining Technology
+A53	HND - Project Management
+A54	HND - Science

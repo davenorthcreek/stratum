@@ -1,0 +1,40 @@
+A1	AICD Directors Course 
+A2	AUS Authorised Mine Surveyors Cert 
+A3	AUS Cert - Surface Coal Mining 
+A4	AUS Cert - UG Coal Mining 
+A5	AUS Cert of Competency - First Class Mine Managers 
+A6	AUS Cert of Competency - Quarry Managers 
+A7	AUS Cert of Competency - Restricted Quarry Managers 
+A8	AUS Cert of Competency - UG Mine Managers 
+A9	AUS Cert of Competency - UG Supervisors 
+A10	Blasting Certificate / Ticket 
+A11	Blasting License 
+A12	CAPM - Certified Associate in Project Management 
+A13	CHRP - Certified Human Resource Professional 
+A14	CPD - Management Modules and Courses 
+A15	CPPM - Certified Practising Project Manager 
+A16	First Aid Course 
+A17	Ghana Cert of Competency - Mine Manager 
+A18	Health &amp; Safety Awareness / Management 
+A19	Leadership Development Course 
+A20	Metalliferous Mining Cert 
+A21	Mine Manager Certificate - Indonesia 
+A22	Mine Manager Certificate - PNG 
+A23	Mine Manager Certificate - Turkey 
+A24	Mine Rescue 
+A25	Mine and Quarries Certificate of Competency (UK) 
+A26	MSP - Managing Successful Programmes 
+A27	PgMP - Certified Programme Management Professional 
+A28	PMP - Certified Project Management Professional 
+A29	PRINCE2 Practitioner 
+A30	Quarry Managers Cert 
+A31	SA Cert of Competency - Electrical Engineering 
+A32	SA Cert of Competency - Mechanical Engineering 
+A33	SA Cert of Competency - Mine Manager 
+A34	SA Cert of Competency - Mine Overseer 
+A35	SA Cert of Competency - Mines and Works 
+A36	SA Cert of Competency - Risk Management 
+A37	Shift Boss Cert 
+A38	Shotfirers Cert 
+A39	Zambia Cert of Competency - Mine Manager 
+A40	Other 

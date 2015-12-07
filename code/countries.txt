@@ -1,0 +1,251 @@
+A1	Afghanistan
+A2	Aland Islands
+A3	Albania
+A4	Algeria
+A5	American Samoa
+A6	Andorra
+A7	Angola
+A8	Anguilla
+A9	Antarctica
+A10	Antigua and Barbuda
+A11	Argentina
+A12	Armenia
+A13	Aruba
+A14	Australia
+A15	Austria
+A16	Azerbaijan
+A17	Bahamas
+A18	Bahrain
+A19	Bangladesh
+A20	Barbados
+A21	Belarus
+A22	Belgium
+A23	Belize
+A24	Benin
+A25	Bermuda
+A26	Bhutan
+A27	Bosnia and Herzegovina
+A28	Botswana
+A29	Bouvet Island
+A30	Brazil
+A31	British Indian Ocean Territory
+A32	Brunei Darussalam
+A33	Bulgaria
+A34	Burkina Faso
+A35	Burma
+A36	Burundi
+A37	Cambodia
+A38	Cameroon
+A39	Canada
+A40	Cape Verde
+A41	Cayman Islands
+A42	Central African Republic
+A43	Chad
+A44	Channel Islands
+A45	Chile
+A46	China
+A47	Christmas Island
+A48	Cocos (Keeling) Islands
+A49	Colombia
+A50	Comoros
+A51	Cook Islands
+A52	Costa Rica
+A53	Cote D'Ivoire
+A54	Croatia
+A55	Cuba
+A56	Curacao
+A57	Cyprus
+A58	Czech Republic
+A59	Denmark
+A60	Djibouti
+A61	Dominica
+A62	Dominican Republic
+A63	Ecuador
+A64	Egypt
+A65	El Salvador
+A66	Equatorial Guinea
+A67	Eritrea
+A68	Estonia
+A69	Ethiopia
+A70	Falkland Islands (Malvinas)
+A71	Faroe Islands
+A72	Fiji
+A73	Finland
+A74	France
+A75	French Guiana
+A76	French Polynesia
+A77	French Southern Territories
+A78	Gabon
+A79	Gambia
+A80	Georgia
+A81	Germany
+A82	Ghana
+A83	Gibraltar
+A84	Greece
+A85	Greenland
+A86	Grenada
+A87	Guadeloupe
+A88	Guam
+A89	Guatemala
+A90	Guernsey
+A91	Guinea
+A92	Guinea-Bissau
+A93	Guyana
+A94	Haiti
+A95	Heard and McDonald Islands
+A96	Holy See (Vatican City State)
+A97	Honduras
+A98	Hong Kong
+A99	Hungary
+A100	Iceland
+A101	India
+A102	Indonesia
+A103	Iraq
+A104	Ireland
+A105	Isle of Man
+A106	Israel
+A107	Italy
+A108	Jamaica
+A109	Japan
+A110	Jersey
+A111	Jordan
+A112	Kazakhstan
+A113	Kenya
+A114	Kiribati
+A115	Kosovo
+A116	Kuwait
+A117	Kyrgyzstan
+A118	Lao People's Democratic Republic
+A119	Latvia
+A120	Lebanon
+A121	Lesotho
+A122	Liberia
+A123	Libyan Arab Jamahiriya
+A124	Liechtenstein
+A125	Lithuania
+A126	Luxembourg
+A127	Macau
+A128	Macedonia
+A129	Madagascar
+A130	Malawi
+A131	Malaysia
+A132	Mali
+A133	Malta
+A134	Marshall Islands
+A135	Martinique
+A136	Mauritania
+A137	Mauritius
+A138	Mayotte
+A139	Mexico
+A140	Monaco
+A141	Mongolia
+A142	Montenegro
+A143	Montserrat
+A144	Morocco
+A145	Mozambique
+A146	Myanmar
+A147	Namibia
+A148	Nauru
+A149	Nepal
+A150	Netherlands
+A151	Netherlands Antilles
+A152	New Caledonia
+A153	New Zealand
+A154	Nicaragua
+A155	Niger
+A156	Nigeria
+A157	Niue
+A158	Norfolk Island
+A159	Northern Mariana Islands
+A160	Norway
+A161	Oman
+A162	Pakistan
+A163	Palau
+A164	Panama
+A165	Papua New Guinea
+A166	Paraguay
+A167	Peru
+A168	Philippines
+A169	Pitcairn
+A170	Poland
+A171	Portugal
+A172	Puerto Rico
+A173	Qatar
+A174	Reunion
+A175	Romania
+A176	Russia
+A177	Rwanda
+A178	Saint Barthelemy
+A179	Saint Kitts and Nevis
+A180	Saint Lucia
+A181	Saint Martin
+A182	Saint Pierre And Miquelon
+A183	Saint Vincent and Grenadines
+A184	Samoa
+A185	San Marino
+A186	Sao Tome and Principe
+A187	Saudi Arabia
+A188	Senegal
+A189	Serbia
+A190	Seychelles
+A191	Sierra Leone
+A192	Singapore
+A193	Slovakia
+A194	Slovenia
+A195	Solomon Islands
+A196	Somalia
+A197	South Africa
+A198	South Georgia and the South Sandwich Islands
+A199	Spain
+A200	Sri Lanka
+A201	Sudan
+A202	Suriname
+A203	Svalbard And Jan Mayen
+A204	Swaziland
+A205	Sweden
+A206	Switzerland
+A207	Syrian Arab Republic
+A208	Taiwan
+A209	Tajikistan
+A210	Tanzania
+A211	Thailand
+A212	Timor-Leste
+A213	Togo
+A214	Tokelau
+A215	Tonga
+A216	Trinidad and Tobago
+A217	Tunisia
+A218	Turkey
+A219	Turkmenistan
+A220	Turks and Caicos Islands
+A221	Tuvalu
+A222	Uganda
+A223	Ukraine
+A224	United Arab Emirates
+A225	United Kingdom
+A226	United States
+A227	United States Minor Outlying Islands
+A228	Uruguay
+A229	Uzbekistan
+A230	Vanuatu
+A231	Vietnam
+A232	Wallis and Futuna
+A233	Western Sahara
+A234	Yemen
+A235	Zambia
+A236	Zimbabwe
+A237	Congo; Republic of
+A238	Bolivia; Plurinational State
+A239	Korea; Republic Of (South)
+A240	Korea; Democratic People's Republic Of (North)
+A241	Saint Helena; Ascension and Tristan Da Cunha
+A242	Iran; Islamic Republic of
+A243	Venezuela; Bolivarian Republic of
+A244	Virgin Islands; U.S.
+A245	Congo; Democratic Republic of
+A246	Moldova; Republic of
+A247	Virgin Islands; British
+A248	Palestinian Territory; Occupied
+A249	Maldives; Republic of
+A250	Macedonia; the Former Yugoslav Republic
+A251	Micronesia; Federated States of

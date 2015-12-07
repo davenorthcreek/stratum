@@ -1,0 +1,16 @@
+{
+    "require": {
+        "slim/slim": "^2.6",
+	    "lusitanian/oauth": "~0.3",
+	    "monolog/monolog": "*",
+	    "flynsarmy/slim-monolog": "*"
+        },
+    "require-dev": {
+        "phpunit/phpunit": "*"
+        },
+    "autoload": {
+        "psr-4": {
+            "Stratum\\": ["src/", "test/"]
+        }
+    }
+}

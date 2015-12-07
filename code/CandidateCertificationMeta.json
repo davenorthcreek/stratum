@@ -1,0 +1,247 @@
+{
+  "entity": "CandidateCertification",
+  "entityMetaUrl": "https://rest22.bullhornstaffing.com/rest-services/987up/meta/CandidateCertification?fields=*",
+  "label": "Certification",
+  "fields": [
+    {
+      "name": "id",
+      "type": "ID",
+      "dataType": "Integer"
+    },
+    {
+      "name": "boardCertification",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 100,
+      "confidential": false,
+      "label": "Board Certification",
+      "options": [
+        {
+          "value": "NA",
+          "label": "NA"
+        },
+        {
+          "value": "Board Certified",
+          "label": "Board Certified"
+        },
+        {
+          "value": "Board Elligible",
+          "label": "Board Elligible"
+        }
+      ],
+      "hideFromSearch": false
+    },
+    {
+      "name": "candidate",
+      "type": "TO_ONE",
+      "confidential": false,
+      "label": "Candidate",
+      "optionsType": "Candidate",
+      "optionsUrl": "https://rest22.bullhornstaffing.com/rest-services/987up/options/Candidate",
+      "hideFromSearch": false,
+      "associatedEntity": {
+        "entity": "Candidate",
+        "entityMetaUrl": "https://rest22.bullhornstaffing.com/rest-services/987up/meta/Candidate?fields=*",
+        "label": "Candidate",
+        "fields": [
+          {
+            "name": "id",
+            "type": "ID",
+            "dataType": "Integer"
+          },
+          {
+            "name": "firstName",
+            "type": "SCALAR",
+            "dataType": "String",
+            "maxLength": 50,
+            "confidential": false,
+            "label": "First Name",
+            "hideFromSearch": false
+          },
+          {
+            "name": "lastName",
+            "type": "SCALAR",
+            "dataType": "String",
+            "maxLength": 50,
+            "confidential": false,
+            "label": "Last Name",
+            "hideFromSearch": false
+          }
+        ]
+      }
+    },
+    {
+      "name": "certification",
+      "type": "TO_ONE",
+      "confidential": false,
+      "label": "Certification",
+      "optionsType": "Certification",
+      "optionsUrl": "https://rest22.bullhornstaffing.com/rest-services/987up/options/Certification",
+      "hideFromSearch": false,
+      "associatedEntity": {
+        "entity": "Certification",
+        "entityMetaUrl": "https://rest22.bullhornstaffing.com/rest-services/987up/meta/Certification?fields=*",
+        "label": "Certification",
+        "fields": [
+          {
+            "name": "id",
+            "type": "ID",
+            "dataType": "Integer"
+          }
+        ]
+      }
+    },
+    {
+      "name": "comments",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 2147483647,
+      "confidential": false,
+      "label": "Comments",
+      "hideFromSearch": false
+    },
+    {
+      "name": "compact",
+      "type": "SCALAR",
+      "dataType": "Boolean",
+      "confidential": false,
+      "label": "Compact",
+      "hideFromSearch": false
+    },
+    {
+      "name": "copyOnFile",
+      "type": "SCALAR",
+      "dataType": "Boolean",
+      "confidential": false,
+      "label": "Copy On File",
+      "hideFromSearch": false
+    },
+    {
+      "name": "dateCertified",
+      "type": "SCALAR",
+      "dataType": "Timestamp",
+      "confidential": false,
+      "label": "Date Certified",
+      "hideFromSearch": false
+    },
+    {
+      "name": "dateExpiration",
+      "type": "SCALAR",
+      "dataType": "Timestamp",
+      "confidential": false,
+      "label": "Date Expiration",
+      "hideFromSearch": false
+    },
+    {
+      "name": "dateLastModified",
+      "type": "SCALAR",
+      "dataType": "Timestamp",
+      "confidential": false,
+      "label": "Date Last Modified",
+      "hideFromSearch": false
+    },
+    {
+      "name": "issuedBy",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 100,
+      "confidential": false,
+      "label": "Issued By",
+      "options": [
+        {
+          "value": "NA",
+          "label": "NA"
+        },
+        {
+          "value": "American Heart Association",
+          "label": "American Heart Association"
+        }
+      ],
+      "hideFromSearch": false
+    },
+    {
+      "name": "licenseNumber",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 100,
+      "confidential": false,
+      "label": "License Number",
+      "hideFromSearch": false
+    },
+    {
+      "name": "licenseType",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 30,
+      "confidential": false,
+      "label": "License Type",
+      "hideFromSearch": false
+    },
+    {
+      "name": "location",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 100,
+      "confidential": false,
+      "label": "Location",
+      "hideFromSearch": false
+    },
+    {
+      "name": "modifyingUser",
+      "type": "TO_ONE",
+      "confidential": false,
+      "label": "Modifying User",
+      "optionsType": "CorporateUser",
+      "optionsUrl": "https://rest22.bullhornstaffing.com/rest-services/987up/options/CorporateUser",
+      "hideFromSearch": false,
+      "associatedEntity": {
+        "entity": "CorporateUser",
+        "entityMetaUrl": "https://rest22.bullhornstaffing.com/rest-services/987up/meta/CorporateUser?fields=*",
+        "label": "Corporate User",
+        "fields": [
+          {
+            "name": "id",
+            "type": "ID",
+            "dataType": "Integer"
+          },
+          {
+            "name": "firstName",
+            "type": "SCALAR",
+            "dataType": "String",
+            "maxLength": 50,
+            "confidential": false,
+            "label": "First Name",
+            "hideFromSearch": false
+          },
+          {
+            "name": "lastName",
+            "type": "SCALAR",
+            "dataType": "String",
+            "maxLength": 50,
+            "confidential": false,
+            "label": "Last Name",
+            "hideFromSearch": false
+          }
+        ]
+      }
+    },
+    {
+      "name": "results",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 255,
+      "confidential": false,
+      "label": "Results",
+      "hideFromSearch": false
+    },
+    {
+      "name": "status",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 30,
+      "confidential": false,
+      "label": "Status",
+      "hideFromSearch": false
+    }
+  ]
+}

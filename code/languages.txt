@@ -1,0 +1,48 @@
+A1	Afrikaans
+A2	Dutch
+A3	English
+A4 	French
+A5	German
+A6	Italian
+A7	Polish
+A8	Portuguese
+A9	Russian
+A10	Spanish
+A11	Arabic
+A12	Armenian
+A13	Bahasa / Indonesian
+A14	Bemba
+A15	Bengali
+A16	Bulgarian
+A17	Cantonese
+A18	Czech
+A19	Fanagalo
+A20	Farsi / Persian
+A21	Greek
+A22	Gujarati
+A23	Hebrew
+A24	Hindi
+A25	Japanese
+A26	Korean
+A27	Lao
+A28	Malayalam
+A29	Mandarin
+A30	Marathi
+A31	PNG - Pidgeon
+A32	Punjabi
+A33	Romanian
+A34	Serbian
+A35	Sindhi
+A36	Swahili / Kiswahali
+A37	Swedish
+A38	Tagalog
+A39	Tajik / Tajik Persian
+A40	Tamil
+A41	Thai
+A42	Tok Pisin
+A43	Turkish
+A44	Twi
+A45	Urdu
+A46	Welsh
+A47	Zulu
+A48	Other

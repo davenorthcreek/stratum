@@ -1,0 +1,19 @@
+A1	Business partnering
+A2	Collective Bargaining
+A3	Compensation and Benefits
+A4 	Cultural Development
+A5	Employee Relations
+A6	Employment Law
+A7	General HR
+A8	HR Systems & Policy Implementation
+A9	Leadership Development
+A10	Mentoring - Expatriate
+A11	Mentoring - Nationals
+A12	Organisational Development
+A13	Performance Management
+A14	Recruitment
+A15	Strategic HR
+A16	Succession Planning
+A17	Talent Management
+A18	Training And Development
+A19	Other 

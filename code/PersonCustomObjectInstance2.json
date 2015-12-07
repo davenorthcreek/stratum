@@ -1,0 +1,38 @@
+{
+  "entity": "PersonCustomObjectInstance2",
+  "entityMetaUrl": "https://rest22.bullhornstaffing.com/rest-services/987up/meta/PersonCustomObjectInstance2?fields=*",
+  "label": "Executive Summary",
+  "fields": [
+    {
+      "name": "id",
+      "type": "ID",
+      "dataType": "Integer"
+    },
+    {
+      "name": "dateAdded",
+      "type": "SCALAR",
+      "dataType": "Timestamp",
+      "confidential": false,
+      "label": "Date Added",
+      "hideFromSearch": false
+    },
+    {
+      "name": "text1",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 100,
+      "confidential": false,
+      "label": "Executive Summary",
+      "hideFromSearch": false
+    },
+    {
+      "name": "textBlock1",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 1073741823,
+      "confidential": false,
+      "label": "Candidate Summary",
+      "hideFromSearch": false
+    }
+  ]
+}

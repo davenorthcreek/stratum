@@ -1,0 +1,17 @@
+A1	CM - Construction/Commissioning Phase
+A2	CM - Cradle to Grave
+A3	CM - FEED
+A4	CM - Studies
+A5	EM - Construction/Commissioning Phase
+A6	EM - Cradle to Grave
+A7	EM - FEED
+A8	EM - Studies
+A9	PCM - Construction/Commissioning Phase
+A10	PCM - Cradle to Grave
+A11	PCM - FEED
+A12	PCM - Studies
+A13	PM - Construction/Commissioning Phase
+A14	PM - Cradle to Grave
+A15	PM - FEED
+A16	PM - Studies
+A17	Other

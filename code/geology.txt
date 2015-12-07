@@ -1,0 +1,26 @@
+A1	Geo - Competent Person Reporting
+A2	Geo - Data Reconciliation
+A3	Geo - Database Management
+A4 	Geo - Drill Hole Analysis
+A5	Geo - Drilling Program Design
+A6	Geo - Drilling Program Management
+A7	Geo - Due Diligence
+A8	Geo - Exploration Project Management
+A9	Geo - Geological Modelling
+A10	Geo - Geophysical Surveys
+A11	Geo - Geostatistical Analysis
+A12	Geo - GIS Analysis
+A13	Geo - Grade Control
+A14	Geo - Grade Interpolation
+A15	Geo - Grassroots Exploration
+A16	Geo - Logging
+A17	Geo - Mine Geology
+A18	Geo - Near Mine Exploration
+A19	Geo - QA/QC
+A20	Geo - Resource Development / Definition
+A21	Geo - Resource Estimation
+A22	Geo - Resource Interpretation
+A23	Geo - Sampling
+A24	Geo - Studies
+A25	Geo - Successful Discoveries
+A26	Geo - Tenement Management

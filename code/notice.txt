@@ -1,0 +1,11 @@
+A1	None
+A2	1 week
+A3	2 weeks
+A4 	3 weeks
+A5	1 month
+A6	6 weeks
+A7	2 months
+A8	3 months
+A9	4 months
+A10	5 months
+A11	6 months

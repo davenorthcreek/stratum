@@ -1,0 +1,32 @@
+A1	Alumina
+A2	Aluminium
+A3	Bauxite
+A4 	Chrome
+A5	Coal
+A6	Cobalt
+A7	Copper
+A8	Diamonds
+A9	Gemstones
+A10	Gold
+A11	Graphite
+A12	Iron Ore
+A13	Lead
+A14	Manganese
+A15	Mineral Sands
+A16	Molybdenum
+A17	Nickel
+A18	Phosphate
+A19	Platinum Group – PGM
+A20	Potash
+A21	Rare Earth Metals
+A22	Secondary Metal
+A23	Selenium
+A24	Silver
+A25	Steel
+A26	Talc
+A27	Tin
+A28	Titanium
+A29	Tungsten
+A30	Uranium
+A31	Zinc
+A32	Other

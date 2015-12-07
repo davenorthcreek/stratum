@@ -1,0 +1,262 @@
+A1	Australia
+A2	Brazil
+A3	Canada
+A4	Chile
+A5	France
+A6	Germany
+A7	Peru
+A8	South Africa
+A9	United Kingdom
+A10	United States
+	______________
+A11	Aland Islands
+A12	Albania
+A13	Algeria
+A14	American Samoa
+A15	Andorra
+A16	Angola
+A17	Anguilla
+A18	Antarctica
+A19	Antigua and Barbuda
+A20	Argentina
+A21	Armenia
+A22	Aruba
+A23	Australia
+A24	Austria
+A25	Azerbaijan
+A26	Bahamas
+A27	Bahrain
+A28	Bangladesh
+A29	Barbados
+A30	Belarus
+A31	Belgium
+A32	Belize
+A33	Benin
+A34	Bermuda
+A35	Bhutan
+A36	Bolivia; Plurinational State
+A37	Bosnia and Herzegovina
+A38	Botswana
+A39	Bouvet Island
+A40	Brazil
+A41	British Indian Ocean Territory
+A42	Brunei Darussalam
+A43	Bulgaria
+A44	Burkina Faso
+A45	Burma
+A46	Burundi
+A47	Cambodia
+A48	Cameroon
+A49	Canada
+A50	Cape Verde
+A51	Cayman Islands
+A52	Central African Republic
+A53	Chad
+A54	Channel Islands
+A55	Chile
+A56	China
+A57	Christmas Island
+A58	Cocos (Keeling) Islands
+A59	Colombia
+A60	Comoros
+A61	Congo; Democratic Republic of
+A62	Congo; Republic of
+A63	Cook Islands
+A64	Costa Rica
+A65	Cote D'Ivoire
+A66	Croatia
+A67	Cuba
+A68	Curacao
+A69	Cyprus
+A70	Czech Republic
+A71	Denmark
+A72	Djibouti
+A73	Dominica
+A74	Dominican Republic
+A75	Ecuador
+A76	Egypt
+A77	El Salvador
+A78	Equatorial Guinea
+A79	Eritrea
+A80	Estonia
+A81	Ethiopia
+A82	Falkland Islands (Malvinas)
+A83	Faroe Islands
+A84	Fiji
+A85	Finland
+A86	France
+A87	French Guiana
+A88	French Polynesia
+A89	French Southern Territories
+A90	Gabon
+A91	Gambia
+A92	Georgia
+A93	Germany
+A94	Ghana
+A95	Gibraltar
+A96	Greece
+A97	Greenland
+A98	Grenada
+A99	Guadeloupe
+A100	Guam
+A101	Guatemala
+A102	Guernsey
+A103	Guinea
+A104	Guinea-Bissau
+A105	Guyana
+A106	Haiti
+A107	Heard and McDonald Islands
+A108	Holy See (Vatican City State)
+A109	Honduras
+A110	Hong Kong
+A111	Hungary
+A112	Iceland
+A113	India
+A114	Indonesia
+A115	Iran; Islamic Republic of
+A116	Iraq
+A117	Ireland
+A118	Isle of Man
+A119	Israel
+A120	Italy
+A121	Jamaica
+A122	Japan
+A123	Jersey
+A124	Jordan
+A125	Kazakhstan
+A126	Kenya
+A127	Kiribati
+A128	Korea; Democratic People's Republic Of (North)
+A129	Korea; Republic Of (South)
+A130	Kosovo
+A131	Kuwait
+A132	Kyrgyzstan
+A133	Lao People's Democratic Republic
+A134	Latvia
+A135	Lebanon
+A136	Lesotho
+A137	Liberia
+A138	Libyan Arab Jamahiriya
+A139	Liechtenstein
+A140	Lithuania
+A141	Luxembourg
+A142	Macau
+A143	Macedonia
+A144	Macedonia; the Former Yugoslav Republic
+A145	Madagascar
+A146	Malawi
+A147	Malaysia
+A148	Maldives; Republic of
+A149	Mali
+A150	Malta
+A151	Marshall Islands
+A152	Martinique
+A153	Mauritania
+A154	Mauritius
+A155	Mayotte
+A156	Mexico
+A157	Micronesia; Federated States of
+A158	Moldova; Republic of
+A159	Monaco
+A160	Mongolia
+A161	Montenegro
+A162	Montserrat
+A163	Morocco
+A164	Mozambique
+A165	Myanmar
+A166	Namibia
+A167	Nauru
+A168	Nepal
+A169	Netherlands
+A170	Netherlands Antilles
+A171	New Caledonia
+A172	New Zealand
+A173	Nicaragua
+A174	Niger
+A175	Nigeria
+A176	Niue
+A177	Norfolk Island
+A178	Northern Mariana Islands
+A179	Norway
+A180	Oman
+A181	Pakistan
+A182	Palau
+A183	Palestinian Territory; Occupied
+A184	Panama
+A185	Papua New Guinea
+A186	Paraguay
+A187	Peru
+A188	Philippines
+A189	Pitcairn
+A190	Poland
+A191	Portugal
+A192	Puerto Rico
+A193	Qatar
+A194	Reunion
+A195	Romania
+A196	Russia
+A197	Rwanda
+A198	Saint Barthelemy
+A199	Saint Helena; Ascension and Tristan Da Cunha
+A200	Saint Kitts and Nevis
+A201	Saint Lucia
+A202	Saint Martin
+A203	Saint Pierre And Miquelon
+A204	Saint Vincent and Grenadines
+A205	Samoa
+A206	San Marino
+A207	Sao Tome and Principe
+A208	Saudi Arabia
+A209	Senegal
+A210	Serbia
+A211	Seychelles
+A212	Sierra Leone
+A213	Singapore
+A214	Slovakia
+A215	Slovenia
+A216	Solomon Islands
+A217	Somalia
+A218	South Africa
+A219	South Georgia and the South Sandwich Islands
+A220	Spain
+A221	Sri Lanka
+A222	Sudan
+A223	Suriname
+A224	Svalbard And Jan Mayen
+A225	Swaziland
+A226	Sweden
+A227	Switzerland
+A228	Syrian Arab Republic
+A229	Taiwan
+A230	Tajikistan
+A231	Tanzania
+A232	Thailand
+A233	Timor-Leste
+A234	Togo
+A235	Tokelau
+A236	Tonga
+A237	Trinidad and Tobago
+A238	Tunisia
+A239	Turkey
+A240	Turkmenistan
+A241	Turks and Caicos Islands
+A242	Tuvalu
+A243	Uganda
+A244	Ukraine
+A245	United Arab Emirates
+A246	United Kingdom
+A247	United States
+A248	United States Minor Outlying Islands
+A249	Uruguay
+A250	Uzbekistan
+A251	Vanuatu
+A252	Venezuela; Bolivarian Republic of
+A253	Vietnam
+A254	Virgin Islands; British
+A255	Virgin Islands; U.S.
+A256	Wallis and Futuna
+A257	Western Sahara
+A258	Yemen
+A259	Zambia
+A260	Zimbabwe
+

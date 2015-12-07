@@ -1,0 +1,441 @@
+{
+  "entity": "CandidateEducation",
+  "entityMetaUrl": "https://rest22.bullhornstaffing.com/rest-services/987up/meta/CandidateEducation?fields=*",
+  "label": "Education",
+  "fields": [
+    {
+      "name": "id",
+      "type": "ID",
+      "dataType": "Integer"
+    },
+    {
+      "name": "candidate",
+      "type": "TO_ONE",
+      "confidential": false,
+      "label": "Candidate",
+      "optionsType": "Candidate",
+      "optionsUrl": "https://rest22.bullhornstaffing.com/rest-services/987up/options/Candidate",
+      "hideFromSearch": false,
+      "associatedEntity": {
+        "entity": "Candidate",
+        "entityMetaUrl": "https://rest22.bullhornstaffing.com/rest-services/987up/meta/Candidate?fields=*",
+        "label": "Candidate",
+        "fields": [
+          {
+            "name": "id",
+            "type": "ID",
+            "dataType": "Integer"
+          },
+          {
+            "name": "firstName",
+            "type": "SCALAR",
+            "dataType": "String",
+            "maxLength": 50,
+            "confidential": false,
+            "label": "First Name",
+            "hideFromSearch": false
+          },
+          {
+            "name": "lastName",
+            "type": "SCALAR",
+            "dataType": "String",
+            "maxLength": 50,
+            "confidential": false,
+            "label": "Last Name",
+            "hideFromSearch": false
+          }
+        ]
+      }
+    },
+    {
+      "name": "certification",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 100,
+      "confidential": false,
+      "label": "Certification",
+      "hideFromSearch": false
+    },
+    {
+      "name": "city",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 40,
+      "confidential": false,
+      "label": "City",
+      "hideFromSearch": false
+    },
+    {
+      "name": "comments",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 2147483647,
+      "confidential": false,
+      "label": "Comments",
+      "hideFromSearch": false
+    },
+    {
+      "name": "customDate1",
+      "type": "SCALAR",
+      "dataType": "Timestamp",
+      "confidential": false,
+      "label": "customDate1",
+      "hideFromSearch": false
+    },
+    {
+      "name": "customDate2",
+      "type": "SCALAR",
+      "dataType": "Timestamp",
+      "confidential": false,
+      "label": "customDate2",
+      "hideFromSearch": false
+    },
+    {
+      "name": "customDate3",
+      "type": "SCALAR",
+      "dataType": "Timestamp",
+      "confidential": false,
+      "label": "customDate3",
+      "hideFromSearch": false
+    },
+    {
+      "name": "customDate4",
+      "type": "SCALAR",
+      "dataType": "Timestamp",
+      "confidential": false,
+      "label": "customDate4",
+      "hideFromSearch": false
+    },
+    {
+      "name": "customDate5",
+      "type": "SCALAR",
+      "dataType": "Timestamp",
+      "confidential": false,
+      "label": "customDate5",
+      "hideFromSearch": false
+    },
+    {
+      "name": "customFloat1",
+      "type": "SCALAR",
+      "dataType": "Double",
+      "confidential": false,
+      "label": "customFloat1",
+      "hideFromSearch": false
+    },
+    {
+      "name": "customFloat2",
+      "type": "SCALAR",
+      "dataType": "Double",
+      "confidential": false,
+      "label": "customFloat2",
+      "hideFromSearch": false
+    },
+    {
+      "name": "customFloat3",
+      "type": "SCALAR",
+      "dataType": "Double",
+      "confidential": false,
+      "label": "customFloat3",
+      "hideFromSearch": false
+    },
+    {
+      "name": "customFloat4",
+      "type": "SCALAR",
+      "dataType": "Double",
+      "confidential": false,
+      "label": "customFloat4",
+      "hideFromSearch": false
+    },
+    {
+      "name": "customFloat5",
+      "type": "SCALAR",
+      "dataType": "Double",
+      "confidential": false,
+      "label": "customFloat5",
+      "hideFromSearch": false
+    },
+    {
+      "name": "customInt1",
+      "type": "SCALAR",
+      "dataType": "Integer",
+      "confidential": false,
+      "label": "customInt1",
+      "hideFromSearch": false
+    },
+    {
+      "name": "customInt2",
+      "type": "SCALAR",
+      "dataType": "Integer",
+      "confidential": false,
+      "label": "customInt2",
+      "hideFromSearch": false
+    },
+    {
+      "name": "customInt3",
+      "type": "SCALAR",
+      "dataType": "Integer",
+      "confidential": false,
+      "label": "customInt3",
+      "hideFromSearch": false
+    },
+    {
+      "name": "customInt4",
+      "type": "SCALAR",
+      "dataType": "Integer",
+      "confidential": false,
+      "label": "customInt4",
+      "hideFromSearch": false
+    },
+    {
+      "name": "customInt5",
+      "type": "SCALAR",
+      "dataType": "Integer",
+      "confidential": false,
+      "label": "customInt5",
+      "hideFromSearch": false
+    },
+    {
+      "name": "customText1",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 500,
+      "confidential": false,
+      "label": "customText1",
+      "hideFromSearch": false
+    },
+    {
+      "name": "customText2",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 500,
+      "confidential": false,
+      "label": "customText2",
+      "hideFromSearch": false
+    },
+    {
+      "name": "customText3",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 500,
+      "confidential": false,
+      "label": "customText3",
+      "hideFromSearch": false
+    },
+    {
+      "name": "customText4",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 500,
+      "confidential": false,
+      "label": "customText4",
+      "hideFromSearch": false
+    },
+    {
+      "name": "customText5",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 500,
+      "confidential": false,
+      "label": "customText5",
+      "hideFromSearch": false
+    },
+    {
+      "name": "customTextBlock1",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 255,
+      "confidential": false,
+      "label": "Coded Qualifications",
+      "hideFromSearch": false
+    },
+    {
+      "name": "customTextBlock2",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 255,
+      "confidential": false,
+      "label": "customTextBlock2",
+      "hideFromSearch": false
+    },
+    {
+      "name": "customTextBlock3",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 255,
+      "confidential": false,
+      "label": "customTextBlock3",
+      "hideFromSearch": false
+    },
+    {
+      "name": "dateAdded",
+      "type": "SCALAR",
+      "dataType": "Timestamp",
+      "confidential": false,
+      "label": "Date Added",
+      "hideFromSearch": false
+    },
+    {
+      "name": "degree",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 100,
+      "confidential": false,
+      "label": "Level - Degree, Diploma etc",
+      "hideFromSearch": false
+    },
+    {
+      "name": "endDate",
+      "type": "SCALAR",
+      "dataType": "Timestamp",
+      "confidential": false,
+      "label": "End Date",
+      "hideFromSearch": false
+    },
+    {
+      "name": "expirationDate",
+      "type": "SCALAR",
+      "dataType": "Timestamp",
+      "confidential": false,
+      "label": "Expiration Date",
+      "hideFromSearch": false
+    },
+    {
+      "name": "gpa",
+      "type": "SCALAR",
+      "dataType": "Double",
+      "confidential": false,
+      "label": "GPA",
+      "hideFromSearch": false
+    },
+    {
+      "name": "graduationDate",
+      "type": "SCALAR",
+      "dataType": "Timestamp",
+      "confidential": false,
+      "label": "Graduation Date",
+      "hideFromSearch": false
+    },
+    {
+      "name": "isDeleted",
+      "type": "SCALAR",
+      "dataType": "Boolean",
+      "confidential": false,
+      "label": "Is Deleted",
+      "hideFromSearch": false
+    },
+    {
+      "name": "major",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 100,
+      "confidential": false,
+      "label": "Major",
+      "options": [
+        {
+          "value": "Accounting",
+          "label": "Accounting"
+        },
+        {
+          "value": "Finance",
+          "label": "Finance"
+        },
+        {
+          "value": "Marketing",
+          "label": "Marketing"
+        },
+        {
+          "value": "Business Admin",
+          "label": "Business Admin"
+        },
+        {
+          "value": "Liberal Arts",
+          "label": "Liberal Arts"
+        },
+        {
+          "value": "Economics",
+          "label": "Economics"
+        },
+        {
+          "value": "Math",
+          "label": "Math"
+        },
+        {
+          "value": "Computer Science",
+          "label": "Computer Science"
+        },
+        {
+          "value": "English",
+          "label": "English"
+        },
+        {
+          "value": "Political Science",
+          "label": "Political Science"
+        },
+        {
+          "value": "Law",
+          "label": "Law"
+        },
+        {
+          "value": "Human Resources",
+          "label": "Human Resources"
+        },
+        {
+          "value": "Engineering",
+          "label": "Engineering"
+        },
+        {
+          "value": "Secretarial Sciences",
+          "label": "Secretarial Sciences"
+        },
+        {
+          "value": "Organisational Development",
+          "label": "Organisational Development"
+        },
+        {
+          "value": "Psychology",
+          "label": "Psychology"
+        },
+        {
+          "value": "Other",
+          "label": "Other"
+        }
+      ],
+      "hideFromSearch": false
+    },
+    {
+      "name": "migrateGUID",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 36,
+      "confidential": false,
+      "label": "Migrate GUID",
+      "hideFromSearch": false
+    },
+    {
+      "name": "school",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 100,
+      "confidential": false,
+      "label": "School / Centre for Education",
+      "hideFromSearch": false
+    },
+    {
+      "name": "startDate",
+      "type": "SCALAR",
+      "dataType": "Timestamp",
+      "confidential": false,
+      "label": "Start Date",
+      "hideFromSearch": false
+    },
+    {
+      "name": "state",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 50,
+      "confidential": false,
+      "label": "County",
+      "hideFromSearch": false
+    }
+  ]
+}

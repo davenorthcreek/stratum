@@ -1,0 +1,49 @@
+A1	Aggregates
+A2	Alloy
+A3	Andalucite
+A4 	Antimony
+A5	Barite
+A6	Basalt
+A7	Base Metals
+A8	Bentonite
+A9	Beolites
+A10	Bismuth
+A11	Cement
+A12	Coke
+A13	Coltan
+A14	Diatomaceous Earth
+A15	Ferro Alloys
+A16	Ferrous Metals
+A17	Fluorspar
+A18	Galvanised Steel
+A19	Germanium
+A20	Ilmenite
+A21	Indium
+A22	Industrial Minerals
+A23	Ironsand
+A24	Kaolin
+A25	Limestone
+A26	Lithium
+A27	Magnesia
+A28	Magnesium
+A29	Magnetite
+A30	Niobium
+A31	Nitrogen
+A32	Non-Ferrous Metals
+A33	Oil Sands
+A34	Primary Metals
+A35	Rhenium
+A36	Salt
+A37	Sheelite
+A38	Special Metals
+A39	Sulphur
+A40	Sulphuric Acid
+A41	Tantalum
+A42	Tar Sands
+A43	Tellurium
+A44	Trona
+A45	Tronabarite
+A46	Vanadium
+A47	Vermiculite
+A48	Zircon
+A49	Other

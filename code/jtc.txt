@@ -1,0 +1,199 @@
+A1	Associate
+A2	Associate Snr
+A3	Board Director
+A4	Business Analyst
+A5	CEO / MD
+A6	CFO
+A7	Chairman
+A8	Civil Engineer
+A9	Commercial Director
+A10	Commercial Mgr
+A11	Commercial Supt
+A12	Commissioning Mgr
+A13	Community Relations Mgr / Director
+A14	Construction Director
+A15	Construction Mgr
+A16	Construction Supt
+A17	Contracts Administrator
+A18	Contracts Mgr
+A19	COO
+A20	Corporate & BD
+A21	Corporate & BD VP
+A22	Cost Controller Lead
+A23	Cost Controller Snr
+A24	Cost Engineer
+A25	Cost Engineer Lead
+A26	Cost Engineer Snr
+A27	Country Mgr
+A28	CSR Mgr
+A29	Database Geologist
+A30	Document Controller
+A31	Drill & Blast Supt
+A32	Electrical Engineer   
+A33	Electrical Engineer Area
+A34	Electrical Engineer Lead Area
+A35	Electrical Engineer Snr
+A36	Electrical Engineer Systems
+A37	Engineering Mgr
+A38	Engineering Mgr Group
+A39	Engineering Supt
+A40	Environmental Mgr
+A41	Environmental Supt
+A42	Estimating Director
+A43	Estimating VP
+A44	Estimator
+A45	Estimator Chief
+A46	Estimator Lead  
+A47	Estimator Lead Global
+A48	Estimator Regional
+A49	Estimator Snr
+A50	Executive Mgr
+A51	Exploration / Geology VP
+A52	Exploration Consultant
+A53	Exploration Data Mgr
+A54	Exploration Director
+A55	Exploration Geologist
+A56	Exploration Geologist Snr
+A57	Exploration Mgr  
+A58	Exploration Mgr Regional
+A59	Finance / Billing Administrator
+A60	Finance Auditor
+A61	Finance Director Corporate
+A62	Finance Director Projects
+A63	Finance Mgr Corporate
+A64	Finance Mgr Projects
+A65	Finance Mgr Site Based
+A66	Finance Supt
+A67	Finance VP Corporate
+A68	Finance VP Projects
+A69	Geologist Mine
+A70	Geologist Mine Snr
+A71	Geology Chief Exploration
+A72	Geology Chief Mining
+A73	Geology Director
+A74	Geology Mgr
+A75	Geology Supt
+A76	Geophysicist
+A77	Geophysicist Snr
+A78	Geophysics Mgr
+A79	Geotechnical Engineer
+A80	Geotechnical Engineer Principal
+A81	Geotechnical Engineer Snr
+A82	Geotechnical Supt
+A83	H&S Advisor
+A84	H&S Director
+A85	H&S Mgr
+A86	H&S Supt
+A87	HR Advisor Snr
+A88	HR Director / VP
+A89	HR Generalist
+A90	HR Mgr
+A91	HR Supt
+A92	Industrial Relations
+A93	Investor Relations Manager
+A94	Investor Relations VP
+A95	IT Director
+A96	IT Mgr
+A97	Laboratory Supervisor
+A98	Legal Group Head
+A99	Maintenance & Engineering Mgr
+A100	Maintenance & Engineering VP
+A101	Maintenance GM
+A102	Maintenance Mgr FP
+A103	Maintenance Mgr ME
+A104	Maintenance Supervisor FP
+A105	Maintenance Supervisor ME
+A106	Maintenance Supt FP
+A107	Maintenance Supt ME
+A108	Mechanical / Reliability Engineer
+A109	Mechanical Engineer Area
+A110	Mechanical Engineer Lead Area
+A111	Mechanical Engineer Snr
+A112	Metallurgist 
+A113	Metallurgist Snr
+A114	Metallurgy & Processing Chief / Principal
+A115	Metallurgy & Processing Engineer
+A116	Metallurgy & Processing Engineer Snr
+A117	Metallurgy & Processing GM
+A118	Metallurgy & Processing Mgr
+A119	Metallurgy & Processing Supervisor
+A120	Metallurgy & Processing Supt
+A121	Metallurgy & Processing VP
+A122	Mine Engineering Mgr Corporate
+A123	Mine Engineering Mgr OP
+A124	Mine Engineering Mgr UG
+A125	Mining Engineer
+A126	Mining Engineer Chief
+A127	Mining Engineer Group
+A128	Mining Engineer Principal
+A129	Mining Engineer Snr
+A130	Mining Mgr
+A131	Mining Mgr OP
+A132	Mining Mgr UG
+A133	Mining Supt
+A134	Mining VP
+A135	NED
+A136	Operations GM
+A137	Operations Mgr
+A138	Operations VP
+A139	PA / EA / Administrator
+A140	Partner
+A141	Planner
+A142	Planner Scheduler Lead  
+A143	Planner Scheduler Lead Global
+A144	Planner Snr
+A145	Planning Mgr
+A146	Port GM
+A147	Procurement Mgr
+A148	Project Controls Director
+A149	Project Controls Lead  
+A150	Project Controls Lead Global
+A151	Project Controls Mgr
+A152	Project Controls Specialist
+A153	Project Controls VP
+A154	Project Director
+A155	Project Engineer
+A156	Project Mgr
+A157	Project Mgr / Director Group
+A158	Project Planner
+A159	Project Scheduler
+A160	Project Services Director
+A161	Project Services Mgr
+A162	Project Services VP
+A163	Project VP
+A164	Quantity Surveyor
+A165	Rail GM
+A166	Recruiter
+A167	Recruitment Director
+A168	Recruitment Mgr
+A169	Resource Director Minerals
+A170	Resource Geologist
+A171	Resource Geologist Snr
+A172	Resource Geology Mgr
+A173	Rewards & Compensation Director
+A174	Rewards & Compensation Mgr
+A175	Risk Mgr
+A176	Sales Mgr
+A177	Scheduler
+A178	Scheduler Snr
+A179	Security Mgr
+A180	Site Agent
+A181	Site Mgr Construction
+A182	Strategy VP
+A183	Study Mgr
+A184	Study Mgr Engineering
+A185	Study Mgr Projects
+A186	Supply Supt
+A187	Sustainability Director
+A188	Sustainability Mgr
+A189	Sustainability VP
+A190	Technical Director Group
+A191	Technical Services Director
+A192	Technical Services GM
+A193	Technical Services Mgr
+A194	Technical Services Supt
+A195	Technical Services VP
+A196	Trainer/Assessor
+A197	Training Mgr
+A198	University Professor / Dean / Associate Dean
+

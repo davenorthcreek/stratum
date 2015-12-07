@@ -1,0 +1,34 @@
+A1	OP - Competent Person Reporting
+A2	OP - Drill and Blast
+A3	OP - Due Diligence
+A4 	OP - Equipment Selection
+A5	OP - LOM Planning / Economic Modelling
+A6	OP - Mine Design
+A7	OP - Mine Planning - Long Term
+A8	OP - Mine Planning - Medium Term
+A9	OP - Mine Planning - Short Term
+A10	OP - Optimisation
+A11	OP - Product Scheduling
+A12	OP - Project Management
+A13	OP - Reserve Estimation
+A14	OP - Strategic Scheduling
+A15	OP - Studies
+A16	OP - Supply Chain Scheduling
+A17	UG - Competent Person Reporting
+A18	UG - Drill and Blast
+A19	UG - Due Diligence
+A20	UG - Equipment Selection
+A21	UG - LOM Planning / Economic Modelling
+A22	UG - Mine Design
+A23	UG - Mine Planning - Long Term
+A24	UG - Mine Planning - Medium Term
+A25	UG - Mine Planning - Short Term
+A26	UG - Optimisation
+A27	UG - Production Scheduling
+A28	UG - Project Management
+A29	UG - Reserve Estimation
+A30	UG - Shaft Sinking
+A31	UG - Strategic Scheduling
+A32	UG - Studies
+A33	UG - Supply Chain Scheduling
+A34	UG - Ventilation

@@ -1,0 +1,6 @@
+candidate_data.json
+candidate_marshalled.json
+test/strposTest.php
+vendor/phpunit/phpunit/build/bin
+vendor/phpunit/phpunit/build/binary-phar-autoload.php.in
+vendor/phpunit/phpunit/build/library-phar-autoload.php.in

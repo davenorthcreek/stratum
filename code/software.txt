@@ -1,0 +1,35 @@
+A1	ARCGIS
+A2	Aspen kBase
+A3	AutoCAD
+A4 	CAD
+A5	Datamine
+A6	Deswick CAD
+A7	GEMS
+A8	Geo Modeller
+A9	InSite
+A10	Isatis
+A11	JD Edwards
+A12	Leap Frog
+A13	Map Info
+A14	Micromine
+A15	Mine 2-4D
+A16	Minescape
+A17	Minesight
+A18	Minex
+A19	MS Projects
+A20	NPV Scheduler
+A21	P3
+A22	P5
+A23	P6
+A24	PCBC
+A25	Procon
+A26	Pronto
+A27	SAP
+A28	Surpac
+A29	Talpac
+A30	UniPhi
+A31	Vulcan
+A32	Whittle
+A33	Xact
+A34	Xeras
+A35	XPAC

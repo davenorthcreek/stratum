@@ -1,0 +1,50 @@
+{
+  "entity": "Skill",
+  "entityMetaUrl": "https://rest22.bullhornstaffing.com/rest-services/987up/meta/Skill?fields=*",
+  "label": "Skill",
+  "fields": [
+    {
+      "name": "id",
+      "type": "ID",
+      "dataType": "Integer"
+    },
+    {
+      "name": "categories",
+      "type": "TO_MANY",
+      "confidential": false,
+      "label": "Categories",
+      "optionsType": "Category",
+      "optionsUrl": "https://rest22.bullhornstaffing.com/rest-services/987up/options/Category",
+      "hideFromSearch": false,
+      "associatedEntity": {
+        "entity": "Category",
+        "entityMetaUrl": "https://rest22.bullhornstaffing.com/rest-services/987up/meta/Category?fields=*",
+        "label": "Category",
+        "fields": [
+          {
+            "name": "id",
+            "type": "ID",
+            "dataType": "Integer"
+          }
+        ]
+      }
+    },
+    {
+      "name": "enabled",
+      "type": "SCALAR",
+      "dataType": "Boolean",
+      "confidential": false,
+      "label": "Enabled",
+      "hideFromSearch": false
+    },
+    {
+      "name": "name",
+      "type": "SCALAR",
+      "dataType": "String",
+      "maxLength": 100,
+      "confidential": false,
+      "label": "Name",
+      "hideFromSearch": false
+    }
+  ]
+}
