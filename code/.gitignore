@@ -1,0 +1,10 @@
+/vendor
+/composer.lock
+/phpunit.xml
+/credentials.json.bak
+/credentials.json
+/composer.phar
+/composer.lock
+/bullhorn.txt
+/src/log
+/.env
