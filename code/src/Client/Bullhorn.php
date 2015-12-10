@@ -15,7 +15,6 @@
 
 use \OAuth\Common\Storage\Session;
 use \OAuth\Common\Consumer\Credentials;
-use \OAuth\Common\Http\Client\CurlClient;
 use \Stratum\OAuth\OAuth2\Service\BullhornService;
 
 
@@ -180,7 +179,7 @@ class Bullhorn {
 	}
 	
 	private function authorize($bullhornService, $httpClient, $servicesCredentials) {
-		$uri2 = $bullhornService->getAuthorizationUri(['password'=>'644_london']);
+		$uri2 = $bullhornService->getAuthorizationUri();
 		$this->log_debug("Attempting an authorization");
 		$this->var_debug($uri2);
 		$authResponse = $httpClient->retrieveResponse($uri2, '', [], 'GET');

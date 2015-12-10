@@ -10,6 +10,7 @@ use OAuth\Common\Consumer\CredentialsInterface;
 use OAuth\Common\Http\Client\ClientInterface;
 use OAuth\Common\Storage\TokenStorageInterface;
 use OAuth\Common\Http\Uri\UriInterface;
+use \DotEnv\DotEnv;
 
 /**
  * Bullhorn service, based on Dropbox service
@@ -94,13 +95,19 @@ class BullhornService extends AbstractService
      */
     public function getAuthorizationUri(array $additionalParameters = array())
     {
+		$dotEnv = new DotEnv(__DIR__);
+		$dotEnv->load();
+		$username = $_ENV['BULLHORN_USERNAME'];
+		$password = $_ENV['BULLHORN_PASSWORD'];
+		
         $parameters = array_merge(
             $additionalParameters,
             array(
                 'client_id'     => $this->credentials->getConsumerId(),
                 'response_type'	=> 'code',
                 'redirect_uri'	=> 'http://www.bullhorn.com',
-                'username'		=> 'stratum.api',
+                'username'		=> $username,
+                'password'      => $password,
                 'action'		=> 'Login'
             )
         );
