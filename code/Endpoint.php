@@ -48,8 +48,62 @@ $app->post('/endpoint/:id', function ($endpoint) use ($log) {
     $controller->setLogger($log);
 	$controller->submit($candidate);
 
-	
-	
+});
+
+$app->get('launch', function (Request $request, Response $response) use ($log) {
+    //load the id from the request
+    $id = $request->getAttribute('entityid');
+    
+    //set up the controllers and their loggers
+    $wcontroller = new \Stratum\Controller\WorldappController();
+    $bcontroller = new \Stratum\Controller\BullhornController();
+    $bcontroller->setLogger($log);
+    $wcontroller->setLogger($log);
+    
+    //find the correct form
+    $form = $wcontroller->find_form_by_name('Registration Form - Stratum International');
+    
+    //load the candidate data from Bullhorn
+    $candidate = new Stratum\Model\Candidate();
+    $candidate->set("id", $id);
+    $bcontroller->load($candidate);
+    
+    //find the edited email template
+    $template = $candidate->get('customTextBlock5');
+    
+    //autofilled fields to be extracted from candidate
+    //id,firstName,lastName,dateOfBirth,nickName,email,email2,mobile,phone,workPhone,fax3,pager,customTextBlock2
+    $firstName =        $candidate->get("firstName");
+    $lastName =         $candidate->get("lastName");
+    $dateOfBirth =      $candidate->getDateOfBirthWithFormat("d/m/Y");
+    $maritalStatus =    $candidate->get("nickName");
+    $email =            $candidate->get("email");
+    $workEmail =        $candidate->get("email2");
+    $mobile =           $candidate->get("mobile");
+    $homePhone =        $candidate->get("phone");
+    $workPhone =        $candidate->get("workPhone");
+    $fax =              $candidate->get("fax3");
+    $skype =            $candidate->get("pager");
+    $types =            $candidate->get("customTextBlock2");
+    //$types is an array, must translate to String
+    $type = '';
+    if (is_array($types)) {
+        foreach ($types as $t) {
+            $type .= $t.";";
+        }
+    }
+    $type = substr($type, 0, strlen($type)-1); //remove last semi-colon
+    
+    $autofill = ['21741440'=>[$id,$firstName, $lastName, $dateOfBirth, $maritalStatus],
+					 '21741491'=>[$type],
+					 '21741451'=>[$email,
+								  $workEmail,
+								  $mobile,
+								  $homePhone,
+								  $workPhone,
+                                  $fax,
+								  $skype]];
+    $send = self::$wcontroller->sendUrlWithAutofill($form->id, $email, $autofill);
 });
 
 $app->run();

@@ -261,6 +261,17 @@ class Candidate extends ModelObject
 		}
 		return $wa;
 	}
+    
+    public function getDateOfBirthWithFormat($format = "d/m/Y") {
+        $date = $this->get("dateOfBirth") / 1000; //int
+        
+        $dateObject = new \DateTime();
+        $dateObject->setTimeStamp($date);
+        
+        $string = $dateObject->format($format);
+        $this->log_debug($string);
+        return $string;
+    }
 	
 	public function getBullhornFieldList() {
 		$list = "";
@@ -375,6 +386,7 @@ class Candidate extends ModelObject
 					   $attr == 'references' || 			//references are handled separately
 					   $attr == 'diploma' ||  //must be added to CandidateEducation somehow
 					   $attr == 'reportToPerson' || //this is for ClientContact
+                       $attr == 'NONE'  ||          //Q42 Daily or Hourly rate...
 					   $attr == 'employerAtRegistration') { //??
 				//skip
 			} else if (preg_match("/(recommender\d)_(.*)/", $attr)) {
@@ -434,7 +446,7 @@ class Candidate extends ModelObject
 	}
 		
 	
-	public function compare(\Stratum\Model\Candidate $other) {
+	public function compare(\Stratum\Model\ModelObject $other) {
 		$same = true;
 		$this->log_debug("Comparing candidates");
 		foreach ($other->expose_set() as $attr=>$value) {

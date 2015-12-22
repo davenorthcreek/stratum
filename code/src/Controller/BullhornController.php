@@ -78,12 +78,16 @@ class BullhornController {
 			//re-initialize
 			$candidate = new \Stratum\Model\Candidate();
 			$candidate->setLogger($this->_logger);
-		} 
+		}
+        /**
+         *  debug only 
+         * 
 		if ($bullhornClient->confirm($candidate)) {
 			$this->log_debug("<p>Success!</p>");
 		} else {
 			$this->log_debug("Failure: please examine log files");
 		}
+        **/
 		return $candidate;
 	}
 	
@@ -97,6 +101,7 @@ class BullhornController {
 			//we have a successful submission
 			$this->submit_references($candidate);
 			$this->submit_custom_object($candidate);
+            $bullhornClient->submit_skills($candidate);
 		}		
 		//returns an array with 'error' or 'id' and other data
 		return $retval;
@@ -151,29 +156,4 @@ class BullhornController {
 		}
 	}
 	
-	function submit_skills($candidate) {
-		$bullhornClient = $this->getClient();
-		
-		//now we update the skills
-		$skills = $candidate->loadSkills(); //returns an array of Skill objects
-		$this->log_debug("looking up candidate skills");
-		$sk_data = $bullhornClient->find_candidate_skills($candidate); //an array of skill data (if exists)
-		foreach ($skills as $skill) {
-			$sk_name = $skill->get("name");
-			$found = false;
-			foreach ($sk_data as $sk) {
-				if ($sk_name == $sk['name']) {
-					$found = true;
-					$skill->set("id", $sk['id']);
-				}
-			}
-			if (!$found) {
-				$newSkId = $bullhornClient->submit_skill($skill, $candidate);
-				if ($newSkId) {
-					$skill->set("id", $newSkId);
-				}
-			}
-			$skill->dump();
-		}
-	}
 }

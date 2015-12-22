@@ -10,7 +10,7 @@ use OAuth\Common\Consumer\CredentialsInterface;
 use OAuth\Common\Http\Client\ClientInterface;
 use OAuth\Common\Storage\TokenStorageInterface;
 use OAuth\Common\Http\Uri\UriInterface;
-use \DotEnv\DotEnv;
+use \Dotenv\Dotenv;
 
 /**
  * Bullhorn service, based on Dropbox service
@@ -95,10 +95,15 @@ class BullhornService extends AbstractService
      */
     public function getAuthorizationUri(array $additionalParameters = array())
     {
-		$dotEnv = new DotEnv(__DIR__);
+		$directory = __DIR__;
+		echo "Currently at ".$directory."\n";
+		$newdir = preg_replace("|\/src\/OAuth\/OAuth2\/Service|", "", $directory);
+		echo "Now at ".$newdir."\n";
+		
+		$dotEnv = new Dotenv($newdir);
 		$dotEnv->load();
-		$username = $_ENV['BULLHORN_USERNAME'];
-		$password = $_ENV['BULLHORN_PASSWORD'];
+		$username = getenv('BULLHORN_USERNAME');
+		$password = getenv('BULLHORN_PASSWORD');
 		
         $parameters = array_merge(
             $additionalParameters,

@@ -93,7 +93,6 @@ class Bullhorn {
 		//$currentUri = $uriFactory->createFromSuperGlobalArray($_SERVER);
 		$currentUri = $uriFactory->createFromAbsolute("http://localhost");
 		$currentUri->setQuery('');
-		//$this->var_debug($currentUri);
 		
 		$httpClient = new \OAuth\Common\Http\Client\CurlClient();
 		
@@ -111,15 +110,34 @@ class Bullhorn {
 		$this->log_debug("Creating new BullhornService");
 		$bullhornService = new \Stratum\OAuth\OAuth2\Service\BullhornService($credentials, $httpClient, $storage, array());
 		
-		$attempt = 0;
-		
-		if (empty($servicesCredentials['bullhorn']['lastRefreshToken'])) {
-			$this->log_debug("Authorize");
-			$this->authorize($bullhornService, $httpClient, $servicesCredentials);
-		} else {
-			$this->log_debug("Get access via refresh");
-			$this->load_refresh($bullhornService, $httpClient, $servicesCredentials);
-		}
+        $no_session_key = true;
+		if (!empty($servicesCredentials['bullhorn']['BhRestToken']) && 
+            !empty($servicesCredentials['bullhorn']['base_url'])) {
+            //there is a BhRestToken in ServicesCredentials
+            $this->log_debug("Attempting to use previous session key");
+            $this->base_url = $servicesCredentials['bullhorn']['base_url'];
+            $test_uri = $bullhornService->getRestUri($this->base_url."entity/Candidate/10809", 
+                                                     $servicesCredentials['bullhorn']['BhRestToken'], 
+                                                     ['fields'=>'id']);
+            $response = $httpClient->retrieveResponse($test_uri, '',  [], 'GET');
+            $decoded = $this->extract_json($response);
+            if (array_key_exists("errorCode", $decoded)) {
+                $this->log_debug("Unable to use previous session key");
+            } else {
+                $this->log_debug("Reusing previous session key, saving some time");
+                $no_session_key = false;
+                $this->session_key = $servicesCredentials['bullhorn']['BhRestToken'];
+            }
+        }
+        if ($no_session_key) {
+            if (empty($servicesCredentials['bullhorn']['lastRefreshToken'])) {
+                $this->log_debug("Authorize");
+                $this->authorize($bullhornService, $httpClient, $servicesCredentials);
+            } else {
+                $this->log_debug("Get access via refresh");
+                $this->load_refresh($bullhornService, $httpClient, $servicesCredentials);
+            }
+        }
 		$this->service = $bullhornService;
 		$this->httpClient = $httpClient;	
 	}
@@ -167,13 +185,15 @@ class Bullhorn {
 	private function get_login($ref, $token, $bullhornService, $httpClient, $servicesCredentials) {
 		$this->log_debug("At login function with refresh $ref and token $token");
 		$servicesCredentials['bullhorn']['lastRefreshToken'] = $ref;
-		file_put_contents('credentials.json', json_encode($servicesCredentials));
 		$login = $bullhornService->getLoginUri($token);
 		$response2 = $httpClient->retrieveResponse($login, '', []);
 		$decoded2 = $this->extract_json($response2);
 		$this->log_debug("Login json decoded:");
 		$this->var_debug($decoded2);
 		$this->session_key = $decoded2["BhRestToken"];
+        $servicesCredentials['bullhorn']['BhRestToken'] = $decoded2["BhRestToken"];
+        $servicesCredentials['bullhorn']['base_url'] = $decoded2["restUrl"];
+		file_put_contents('credentials.json', json_encode($servicesCredentials));
 		$this->base_url = $decoded2["restUrl"];
 		$this->log_debug("Successfully logged in to Bullhorn");
 	}
@@ -262,6 +282,7 @@ class Bullhorn {
 		
 		if (array_key_exists('data', $decoded_cand)) {
 			$candidate->populateFromData($decoded_cand['data']);
+            $this->load_skills($candidate);
 			//$candidate->dump();
 		} else {
 			$this->log_debug("Error Response from Bullhorn:");
@@ -380,51 +401,36 @@ class Bullhorn {
 		return $subm_ref_decoded['changedEntityId'];
 	}
 	
-	public function find_or_create_skill(\Stratum\Model\Skill $skill) {
-		//query/Skill?fields=id,name&where=name='Geo\ -\ Exploration\ Project\ Management'&BhRestToken=
-		$name = $skill->get("name");
-		$query_ref_url = $this->base_url."query/Skill";
-		$query_ref_uri = $this->service->getRestUri($query_ref_url, $this->session_key, ['fields'=>'id,name,isDeleted', 
-			'where'=>'name='.$name.' AND isDeleted=false']);
-		$query_ref = $this->httpClient->retrieveResponse($query_ref_uri, '', [], 'GET');
-		$query_ref_decoded = $this->extract_json($query_ref);
-		$data = $query_ref_decoded['data'];
-		if ($data) {
-			$id = $data[0]['id']; //???
-			$skill->set("id", $id);
-		} else {
-			//there is no skill with that name
-			//read-only field via rest api
-		}
-		$this->var_debug($query_ref_decoded);
+	public function find_skill($skill_name) {
+        $skill_json = file_get_contents("Skills.json");
+        $skill_list = json_decode($skill_json, true)['data'];
+        $skill = new \Stratum\Model\Skill();
+        foreach ($skill_list as $valLabel) {
+            if ($valLabel['label'] == $skill_name) {
+                $skill->set("id", $valLabel['value']);
+                $skill->set("name", $valLabel['label']);
+            }
+        }
 		return $skill;
 	}
-	
-	public function find_candidate_skills($candidate) {
-		//query/Skill?fields=id%2Cname%2Ccandidate&where=candidate.id=10991&BhRestToken=
-		$id = $candidate->get("id");
-		$query_ref_url = $this->base_url."query/Skill";
-		$query_ref_uri = $this->service->getRestUri($query_ref_url, $this->session_key, ['fields'=>'id,name,isDeleted', 
-			'where'=>'name='.$name.' AND isDeleted=false']);
-		$query_ref = $this->httpClient->retrieveResponse($query_ref_uri, '', [], 'GET');
-		$query_ref_decoded = $this->extract_json($query_ref);
-		$this->var_debug($query_ref_decoded);
-		return $query_ref_decoded['data'];
-	}
-	
-	public function submit_skill($sk, $candidate) {
-		//$sk is a Skill object
-		//https://rest.bullhorn.com/e999/entity/Candidate/3084/primarySkills/964,684,253
-		$id = $candidate->get("id");
-		$sk_id = $sk->get("id");
-		$subm_sk_url = $this->base_url."entity/Candidate/$id/primarySkills/$sk_id";
-		$subm_sk_uri = $this->service->getRestUri($subm_sk_url, $this->session_key);
-		$subm_sk = $this->httpClient->retrieveResponse($subm_sk_uri, '', [], 'PUT');
-		$subm_sk_decoded = $this->extract_json($subm_sk);
-		$this->log_debug("Submitted candidate $id skill: $sk_id");
-		$this->var_debug($subm_sk_decoded);
-		return $subm_sk_decoded['changedEntityId'];  //throws error if array key does not exist
-	}
+    
+    public function load_skills($candidate) {
+        $skill_string = "";
+        $skill_json = file_get_contents("Skills.json");
+        $full_skill_list = json_decode($skill_json, true)['data'];
+        //check primarySkills to see what's there
+        $skill_ids = $candidate->get("primarySkills");
+        foreach ($skill_ids['data'] as $skill_id) {
+            foreach ($full_skill_list as $valLabel) {
+                if ($skill_id['id'] == $valLabel['value']) {
+                    $skill_string .= $valLabel['label']."\n";
+                }
+            }
+        }
+        $candidate->set("skillID", rtrim($skill_string));
+    }
+            
+        
 	
 	function delete_custom_object($id, $candidate_id) {
 		//https://rest22.bullhornstaffing.com/rest-services/987up/entity/Candidate/10809/customObject1s/123
@@ -489,6 +495,34 @@ class Bullhorn {
 		$this->var_debug($subm_co_decoded);
 		return $subm_co_decoded;
 	}
+    
+    public function submit_skills($candidate) {
+        //https://rest.bullhorn.com/rest-services/e999/entity/Candidate/3084/primarySkills/964,684,253
+        $id = $candidate->get("id");
+		$subm_sk_url = $this->base_url."entity/Candidate/$id/primarySkills/";
+        $skills = $candidate->get("skillID");
+        $skill_objs = [];
+        //may not be any
+        if ($skills) {
+            $skill_list = preg_split("/\n/", $skills);
+            $flag = false;
+            foreach ($skill_list as $s) {
+                $skill = $this->find_skill($s);
+                $subm_sk_url .= $skill->get("id").",";
+                $flag = true;
+            }
+            if ($flag) {
+                $subm_sk_url = substr($subm_sk_url, 0, strlen($subm_sk_url)-1); //remove last semi-colon
+            }
+        }
+		$subm_sk_uri = $this->service->getRestUri($subm_sk_url, $this->session_key);
+
+		$subm_sk = $this->httpClient->retrieveResponse($subm_sk_uri, '', [], 'PUT');
+		$subm_sk_decoded = $this->extract_json($subm_sk);
+		$this->log_debug("Submitted primarySkills: ");
+		$this->var_debug($subm_sk_decoded);
+		return $subm_sk_decoded;
+    }
 
 	
 	public function confirm($candidate) {
