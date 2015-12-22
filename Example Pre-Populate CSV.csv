@@ -1,0 +1,6 @@
+id,firstName,lastName,dateOfBirth,nickName,email,email2,mobile,phone,workPhone,fax3,pager,customTextBlock2
+11124,Catniss,Everdeen,,,symah.razaq@stratum-int.com,,0,0,0,,,EX:Geology ; EO:Executive (Board)
+11123,James,Bond,01/01/1980,very single,info@stratum-int.com,,007 007 007 007,0,0,7,james@007,PRC:Project Controls ; SE:Human Resources & Training
+11122,Harry,Potter,12/01/2015,single,admin@stratum-int.com,harry.potter@stratum-int.com,7789287133,0,0,,harrypotter,EX:Geology
+11119,Bella,Swan,,,lisa.gregory@stratum-int.com,,0,,0,,,PR:Project Management ; MO:General & Mine Management
+10558,Bruce,Wayne,10/26/2015,Selina Kyle,brucewayne@stratum.com,TBC,20362732710,20362732710,0044 123 4567 89,203,batma1,EO:Executive (Board)

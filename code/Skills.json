@@ -1,0 +1,1072 @@
+{
+  "data": [
+    {
+      "value": 439915,
+      "label": "Ability to Read - Electrical Single Line Drawings"
+    },
+    {
+      "value": 439916,
+      "label": "Ability to Read - Process & Instrumentation Diagrams"
+    },
+    {
+      "value": 439984,
+      "label": "Acid Rock Drainage"
+    },
+    {
+      "value": 446580,
+      "label": "Albion Process"
+    },
+    {
+      "value": 314342,
+      "label": "Asset Management/ LT Planning"
+    },
+    {
+      "value": 244073,
+      "label": "Asset Sales"
+    },
+    {
+      "value": 138775,
+      "label": "Audit & Compliance"
+    },
+    {
+      "value": 440022,
+      "label": "Autogenous Mill (AG)"
+    },
+    {
+      "value": 302776,
+      "label": "Automated Ore Sorting"
+    },
+    {
+      "value": 446575,
+      "label": "Bacterial Oxidation (BIOX)"
+    },
+    {
+      "value": 440036,
+      "label": "Bateman Pulsed Column SX"
+    },
+    {
+      "value": 302553,
+      "label": "Bench Scale Lab Techniques"
+    },
+    {
+      "value": 439975,
+      "label": "Bio / Bacterial Leaching"
+    },
+    {
+      "value": 12621,
+      "label": "Bridges"
+    },
+    {
+      "value": 439907,
+      "label": "Budgeting / Cost Controls"
+    },
+    {
+      "value": 5246,
+      "label": "Business Development"
+    },
+    {
+      "value": 139396,
+      "label": "Business partnering"
+    },
+    {
+      "value": 302783,
+      "label": "Calcining"
+    },
+    {
+      "value": 440040,
+      "label": "Camp / Buildings"
+    },
+    {
+      "value": 314326,
+      "label": "Capex Budgeting"
+    },
+    {
+      "value": 439976,
+      "label": "Carbon Adsorption"
+    },
+    {
+      "value": 14452,
+      "label": "Change management"
+    },
+    {
+      "value": 440044,
+      "label": "Chemical Extraction Plants"
+    },
+    {
+      "value": 92314,
+      "label": "Chlorination"
+    },
+    {
+      "value": 439977,
+      "label": "CIC - Carbon in Column"
+    },
+    {
+      "value": 439978,
+      "label": "CIL - Carbon in Leach"
+    },
+    {
+      "value": 439979,
+      "label": "CIP - Carbon in Pulp"
+    },
+    {
+      "value": 439970,
+      "label": "Clarification / Thickening"
+    },
+    {
+      "value": 439893,
+      "label": "CM - Construction/Commissioning Phase"
+    },
+    {
+      "value": 439894,
+      "label": "CM - Cradle to Grave"
+    },
+    {
+      "value": 439892,
+      "label": "CM - FEED"
+    },
+    {
+      "value": 439891,
+      "label": "CM - Studies"
+    },
+    {
+      "value": 314346,
+      "label": "CMMS Implementation"
+    },
+    {
+      "value": 47642,
+      "label": "Collective Bargaining"
+    },
+    {
+      "value": 7003,
+      "label": "Community Relations"
+    },
+    {
+      "value": 157873,
+      "label": "Compensation and Benefits"
+    },
+    {
+      "value": 11494,
+      "label": "Concentrators"
+    },
+    {
+      "value": 441366,
+      "label": "Construction / Commissioning Phase (Ops Only)"
+    },
+    {
+      "value": 28484,
+      "label": "CONTRACT MANAGEMENT"
+    },
+    {
+      "value": 52318,
+      "label": "Contract Negotiation"
+    },
+    {
+      "value": 233223,
+      "label": "Contractor Management"
+    },
+    {
+      "value": 47189,
+      "label": "Conveyors"
+    },
+    {
+      "value": 440029,
+      "label": "Counter Current Decantation (CCD)"
+    },
+    {
+      "value": 122655,
+      "label": "Crushers"
+    },
+    {
+      "value": 138694,
+      "label": "crushing"
+    },
+    {
+      "value": 440037,
+      "label": "Crystallisation"
+    },
+    {
+      "value": 302746,
+      "label": "Cultural Development"
+    },
+    {
+      "value": 446579,
+      "label": "Cyanide Destruction Process"
+    },
+    {
+      "value": 440038,
+      "label": "Cyanide Remediation"
+    },
+    {
+      "value": 439971,
+      "label": "Cyclone / Classification"
+    },
+    {
+      "value": 252790,
+      "label": "Dewatering"
+    },
+    {
+      "value": 446583,
+      "label": "Dredging (Projects Only)"
+    },
+    {
+      "value": 12272,
+      "label": "Drying"
+    },
+    {
+      "value": 302787,
+      "label": "Electroforming"
+    },
+    {
+      "value": 101530,
+      "label": "Electroplating"
+    },
+    {
+      "value": 302786,
+      "label": "Electrorefining"
+    },
+    {
+      "value": 440027,
+      "label": "Electrostatic Separation"
+    },
+    {
+      "value": 439983,
+      "label": "Electrowinning (EW)"
+    },
+    {
+      "value": 439897,
+      "label": "EM - Construction/Commissioning Phase"
+    },
+    {
+      "value": 439898,
+      "label": "EM - Cradle to Grave"
+    },
+    {
+      "value": 439896,
+      "label": "EM - FEED"
+    },
+    {
+      "value": 439895,
+      "label": "EM - Studies"
+    },
+    {
+      "value": 6789,
+      "label": "Employee Relations"
+    },
+    {
+      "value": 19603,
+      "label": "Employment Law"
+    },
+    {
+      "value": 79228,
+      "label": "EQUIPMENT SELECTION"
+    },
+    {
+      "value": 44213,
+      "label": "Estimating"
+    },
+    {
+      "value": 439908,
+      "label": "Extended Site/Field Experience"
+    },
+    {
+      "value": 302922,
+      "label": "External Stakeholder Management"
+    },
+    {
+      "value": 439909,
+      "label": "FEL 1-4"
+    },
+    {
+      "value": 345005,
+      "label": "FIDIC Contracts"
+    },
+    {
+      "value": 12280,
+      "label": "Filtration"
+    },
+    {
+      "value": 451799,
+      "label": "Flash Floatation"
+    },
+    {
+      "value": 89963,
+      "label": "Flotation"
+    },
+    {
+      "value": 314334,
+      "label": "FPM - Chemical Extraction"
+    },
+    {
+      "value": 314335,
+      "label": "FPM - Electro Extraction"
+    },
+    {
+      "value": 439787,
+      "label": "FPM - Handling"
+    },
+    {
+      "value": 314333,
+      "label": "FPM - Sizing"
+    },
+    {
+      "value": 302775,
+      "label": "Froth Flotation"
+    },
+    {
+      "value": 102532,
+      "label": "General HR"
+    },
+    {
+      "value": 439840,
+      "label": "Geo - Competent Person Reporting"
+    },
+    {
+      "value": 439841,
+      "label": "Geo - Data Reconciliation"
+    },
+    {
+      "value": 439842,
+      "label": "Geo - Database Management"
+    },
+    {
+      "value": 439843,
+      "label": "Geo - Drill Hole Analysis"
+    },
+    {
+      "value": 439844,
+      "label": "Geo - Drilling Program Design"
+    },
+    {
+      "value": 439845,
+      "label": "Geo - Drilling Program Management"
+    },
+    {
+      "value": 439846,
+      "label": "Geo - Due Diligence"
+    },
+    {
+      "value": 439847,
+      "label": "Geo - Exploration Project Management"
+    },
+    {
+      "value": 439848,
+      "label": "Geo - Geological Modelling"
+    },
+    {
+      "value": 595662,
+      "label": "Geo - Geophysical Surveys"
+    },
+    {
+      "value": 439849,
+      "label": "Geo - Geostatistical Analysis"
+    },
+    {
+      "value": 439850,
+      "label": "Geo - GIS Analysis"
+    },
+    {
+      "value": 439851,
+      "label": "Geo - Grade Control"
+    },
+    {
+      "value": 439852,
+      "label": "Geo - Grade Interpolation"
+    },
+    {
+      "value": 439853,
+      "label": "Geo - Grassroots Exploration"
+    },
+    {
+      "value": 439854,
+      "label": "Geo - Logging"
+    },
+    {
+      "value": 439855,
+      "label": "Geo - Mine Geology"
+    },
+    {
+      "value": 439856,
+      "label": "Geo - Near Mine Exploration"
+    },
+    {
+      "value": 439863,
+      "label": "Geo - QA/QC"
+    },
+    {
+      "value": 439858,
+      "label": "Geo - Resource Development / Definition"
+    },
+    {
+      "value": 439864,
+      "label": "Geo - Resource Estimation"
+    },
+    {
+      "value": 439859,
+      "label": "Geo - Resource Interpretation"
+    },
+    {
+      "value": 439860,
+      "label": "Geo - Sampling"
+    },
+    {
+      "value": 439861,
+      "label": "Geo - Studies"
+    },
+    {
+      "value": 440999,
+      "label": "Geo - Successful Discoveries"
+    },
+    {
+      "value": 439862,
+      "label": "Geo - Tenement Management"
+    },
+    {
+      "value": 75826,
+      "label": "GOVERNMENT RELATIONS"
+    },
+    {
+      "value": 302552,
+      "label": "Gravity Separation"
+    },
+    {
+      "value": 439972,
+      "label": "Grinding / Milling"
+    },
+    {
+      "value": 92342,
+      "label": "Hazop"
+    },
+    {
+      "value": 302778,
+      "label": "Heap leaching"
+    },
+    {
+      "value": 446574,
+      "label": "High Intensity Smelting (HIsmelt)"
+    },
+    {
+      "value": 439980,
+      "label": "High Pressure Acid Leaching (HPAL)"
+    },
+    {
+      "value": 439973,
+      "label": "High Pressure Grinding"
+    },
+    {
+      "value": 439784,
+      "label": "High Voltage Switching"
+    },
+    {
+      "value": 440018,
+      "label": "HR Systems & Policy Implementation"
+    },
+    {
+      "value": 314345,
+      "label": "Hydrocarbon Management"
+    },
+    {
+      "value": 439974,
+      "label": "Hydrocyclone / Dense Media Separation"
+    },
+    {
+      "value": 314336,
+      "label": "IM - Camp Facilities"
+    },
+    {
+      "value": 439785,
+      "label": "IM - Port Facilities"
+    },
+    {
+      "value": 314339,
+      "label": "IM - Power Plants"
+    },
+    {
+      "value": 439786,
+      "label": "IM - Rail Facilities"
+    },
+    {
+      "value": 314340,
+      "label": "IM - Water / Sewage Plants"
+    },
+    {
+      "value": 302777,
+      "label": "In-situ leaching"
+    },
+    {
+      "value": 446576,
+      "label": "Intensive Cyanide Leaching"
+    },
+    {
+      "value": 6974,
+      "label": "Investor Relations"
+    },
+    {
+      "value": 302780,
+      "label": "Ion Extraction"
+    },
+    {
+      "value": 9750,
+      "label": "IPO"
+    },
+    {
+      "value": 440024,
+      "label": "Isamill"
+    },
+    {
+      "value": 398082,
+      "label": "Isasmelt"
+    },
+    {
+      "value": 439989,
+      "label": "Joint Venture Negotiation"
+    },
+    {
+      "value": 446581,
+      "label": "Leachox Process"
+    },
+    {
+      "value": 70561,
+      "label": "Leadership Development"
+    },
+    {
+      "value": 80195,
+      "label": "Lean methodologies"
+    },
+    {
+      "value": 302551,
+      "label": "Magnetic Separation"
+    },
+    {
+      "value": 314343,
+      "label": "Maintenance Scheduling"
+    },
+    {
+      "value": 17586,
+      "label": "Marine"
+    },
+    {
+      "value": 314331,
+      "label": "MEM- Light Vehicle"
+    },
+    {
+      "value": 314330,
+      "label": "MEM- Medium Vehicle"
+    },
+    {
+      "value": 439789,
+      "label": "MEM- Open Pit Mining Fleet"
+    },
+    {
+      "value": 314329,
+      "label": "MEM- Underground Mining Fleet"
+    },
+    {
+      "value": 440019,
+      "label": "Mentoring - Expatriate"
+    },
+    {
+      "value": 440020,
+      "label": "Mentoring - Nationals"
+    },
+    {
+      "value": 439981,
+      "label": "Merill-Crowe Process"
+    },
+    {
+      "value": 302781,
+      "label": "Metal Chelation"
+    },
+    {
+      "value": 302788,
+      "label": "Metallurgical Testing"
+    },
+    {
+      "value": 440021,
+      "label": "Microwave Enhanced Processing"
+    },
+    {
+      "value": 440030,
+      "label": "Miller Chlorination"
+    },
+    {
+      "value": 446577,
+      "label": "Miller Process"
+    },
+    {
+      "value": 12291,
+      "label": "Milling"
+    },
+    {
+      "value": 328297,
+      "label": "Mine Earthworks"
+    },
+    {
+      "value": 439990,
+      "label": "NGO Management"
+    },
+    {
+      "value": 82467,
+      "label": "NUCLEAR PLANT"
+    },
+    {
+      "value": 15613,
+      "label": "Oil & Gas"
+    },
+    {
+      "value": 439806,
+      "label": "OP - Competent Person Reporting"
+    },
+    {
+      "value": 439807,
+      "label": "OP - Drill and Blast"
+    },
+    {
+      "value": 439808,
+      "label": "OP - Due Diligence"
+    },
+    {
+      "value": 439809,
+      "label": "OP - Equipment Selection"
+    },
+    {
+      "value": 439810,
+      "label": "OP - LOM Planning / Economic Modelling"
+    },
+    {
+      "value": 439811,
+      "label": "OP - Mine Design"
+    },
+    {
+      "value": 439814,
+      "label": "OP - Mine Planning - Long Term"
+    },
+    {
+      "value": 439813,
+      "label": "OP - Mine Planning - Medium Term"
+    },
+    {
+      "value": 439812,
+      "label": "OP - Mine Planning - Short Term"
+    },
+    {
+      "value": 439815,
+      "label": "OP - Optimisation"
+    },
+    {
+      "value": 446582,
+      "label": "OP - Production Scheduling"
+    },
+    {
+      "value": 439817,
+      "label": "OP - Project Management"
+    },
+    {
+      "value": 439818,
+      "label": "OP - Reserve Estimation"
+    },
+    {
+      "value": 439819,
+      "label": "OP - Strategic Scheduling"
+    },
+    {
+      "value": 439820,
+      "label": "OP - Studies"
+    },
+    {
+      "value": 439821,
+      "label": "OP - Supply Chain Scheduling"
+    },
+    {
+      "value": 314327,
+      "label": "Opex Budgeting"
+    },
+    {
+      "value": 94190,
+      "label": "Organisational Development"
+    },
+    {
+      "value": 8296,
+      "label": "Other"
+    },
+    {
+      "value": 439905,
+      "label": "PCM - Construction/Commissioning Phase"
+    },
+    {
+      "value": 439906,
+      "label": "PCM - Cradle to Grave"
+    },
+    {
+      "value": 439904,
+      "label": "PCM - FEED"
+    },
+    {
+      "value": 439903,
+      "label": "PCM - Studies"
+    },
+    {
+      "value": 92921,
+      "label": "Pelletizing"
+    },
+    {
+      "value": 6796,
+      "label": "Performance Management"
+    },
+    {
+      "value": 10189,
+      "label": "Permitting"
+    },
+    {
+      "value": 439865,
+      "label": "Pharmaceutical Plant"
+    },
+    {
+      "value": 302554,
+      "label": "Pilot Scale Lab Techniques"
+    },
+    {
+      "value": 439901,
+      "label": "PM - Construction/Commissioning Phase"
+    },
+    {
+      "value": 439902,
+      "label": "PM - Cradle to Grave"
+    },
+    {
+      "value": 439900,
+      "label": "PM - FEED"
+    },
+    {
+      "value": 439899,
+      "label": "PM - Studies"
+    },
+    {
+      "value": 10284,
+      "label": "PORT"
+    },
+    {
+      "value": 53093,
+      "label": "Power Plant"
+    },
+    {
+      "value": 302782,
+      "label": "Precipitation"
+    },
+    {
+      "value": 446578,
+      "label": "Pressure Oxidation (POX)"
+    },
+    {
+      "value": 439788,
+      "label": "Preventative Engineering"
+    },
+    {
+      "value": 5275,
+      "label": "Procurement"
+    },
+    {
+      "value": 441365,
+      "label": "Project Controls Management (PC Form only)"
+    },
+    {
+      "value": 439911,
+      "label": "Project Economic Reviews / Evaluations"
+    },
+    {
+      "value": 20073,
+      "label": "Project Finance"
+    },
+    {
+      "value": 439912,
+      "label": "Project Implementation / Execution"
+    },
+    {
+      "value": 54332,
+      "label": "Project Planning"
+    },
+    {
+      "value": 20075,
+      "label": "Project Scheduling"
+    },
+    {
+      "value": 7011,
+      "label": "Proposal Writing"
+    },
+    {
+      "value": 439866,
+      "label": "Pulp & Paper Plant"
+    },
+    {
+      "value": 439913,
+      "label": "Quantity Man Hour Reporting"
+    },
+    {
+      "value": 17063,
+      "label": "Rail"
+    },
+    {
+      "value": 311112,
+      "label": "Raising Finance"
+    },
+    {
+      "value": 439985,
+      "label": "Reclaimation"
+    },
+    {
+      "value": 440042,
+      "label": "Reclaimers"
+    },
+    {
+      "value": 9021,
+      "label": "Recruitment"
+    },
+    {
+      "value": 12064,
+      "label": "Refineries"
+    },
+    {
+      "value": 32944,
+      "label": "Refining"
+    },
+    {
+      "value": 92444,
+      "label": "Reliability Engineering"
+    },
+    {
+      "value": 10204,
+      "label": "Remediation"
+    },
+    {
+      "value": 117598,
+      "label": "Renewables"
+    },
+    {
+      "value": 440033,
+      "label": "RIL - Resin in Leach"
+    },
+    {
+      "value": 440032,
+      "label": "RIP - Resin in Pulp"
+    },
+    {
+      "value": 10207,
+      "label": "Risk Assessment"
+    },
+    {
+      "value": 107609,
+      "label": "roads"
+    },
+    {
+      "value": 302784,
+      "label": "Roasting"
+    },
+    {
+      "value": 77027,
+      "label": "SCREENING"
+    },
+    {
+      "value": 440023,
+      "label": "Semi-Autogenous Mill (SAG)"
+    },
+    {
+      "value": 328301,
+      "label": "Shaft Refurbishment"
+    },
+    {
+      "value": 314162,
+      "label": "Shaft Sinking"
+    },
+    {
+      "value": 440035,
+      "label": "Shear Reactor"
+    },
+    {
+      "value": 440043,
+      "label": "Ship Loaders"
+    },
+    {
+      "value": 10117,
+      "label": "Six Sigma"
+    },
+    {
+      "value": 383646,
+      "label": "SMELTERS"
+    },
+    {
+      "value": 253676,
+      "label": "Smelting"
+    },
+    {
+      "value": 439982,
+      "label": "Solution Extraction (SX)"
+    },
+    {
+      "value": 219350,
+      "label": "Stackers"
+    },
+    {
+      "value": 451798,
+      "label": "Steel Plant / Steelworks"
+    },
+    {
+      "value": 299302,
+      "label": "strategic HR"
+    },
+    {
+      "value": 114494,
+      "label": "STRATEGY DEVELOPMENT"
+    },
+    {
+      "value": 441472,
+      "label": "Studies - Bankable Feasibility Studies (Ops Only)"
+    },
+    {
+      "value": 441473,
+      "label": "Studies - Feasibility Studies (Ops Only)"
+    },
+    {
+      "value": 441474,
+      "label": "Studies - Metallurgical Studies (Ops Only)"
+    },
+    {
+      "value": 439994,
+      "label": "Studies - Study Management"
+    },
+    {
+      "value": 6824,
+      "label": "Succession Planning"
+    },
+    {
+      "value": 439986,
+      "label": "Tailings Backfill"
+    },
+    {
+      "value": 440041,
+      "label": "Tailings Facility"
+    },
+    {
+      "value": 94199,
+      "label": "Talent Management"
+    },
+    {
+      "value": 104617,
+      "label": "Telecoms"
+    },
+    {
+      "value": 440031,
+      "label": "The Minataur Process"
+    },
+    {
+      "value": 440034,
+      "label": "Thiosulfate Leaching"
+    },
+    {
+      "value": 440025,
+      "label": "Tower Mill / Vertical Mill"
+    },
+    {
+      "value": 79559,
+      "label": "Training And Development"
+    },
+    {
+      "value": 114734,
+      "label": "TRENDING"
+    },
+    {
+      "value": 439822,
+      "label": "UG - Competent Person Reporting"
+    },
+    {
+      "value": 439823,
+      "label": "UG - Drill and Blast"
+    },
+    {
+      "value": 439824,
+      "label": "UG - Due Diligence"
+    },
+    {
+      "value": 439825,
+      "label": "UG - Equipment Selection"
+    },
+    {
+      "value": 439826,
+      "label": "UG - LOM Planning / Economic Modelling"
+    },
+    {
+      "value": 439827,
+      "label": "UG - Mine Design"
+    },
+    {
+      "value": 439830,
+      "label": "UG - Mine Planning - Long Term"
+    },
+    {
+      "value": 439829,
+      "label": "UG - Mine Planning - Medium Term"
+    },
+    {
+      "value": 439828,
+      "label": "UG - Mine Planning - Short Term"
+    },
+    {
+      "value": 439831,
+      "label": "UG - Optimisation"
+    },
+    {
+      "value": 439832,
+      "label": "UG - Production Scheduling"
+    },
+    {
+      "value": 439833,
+      "label": "UG - Project Management"
+    },
+    {
+      "value": 439834,
+      "label": "UG - Reserve Estimation"
+    },
+    {
+      "value": 439835,
+      "label": "UG - Shaft Sinking"
+    },
+    {
+      "value": 439836,
+      "label": "UG - Strategic Scheduling"
+    },
+    {
+      "value": 439837,
+      "label": "UG - Studies"
+    },
+    {
+      "value": 439838,
+      "label": "UG - Supply Chain Scheduling"
+    },
+    {
+      "value": 439839,
+      "label": "UG - Ventilation"
+    },
+    {
+      "value": 446573,
+      "label": "Ultrafine Grinding (UFG)"
+    },
+    {
+      "value": 477667,
+      "label": "Vacumn Pressure Flotation"
+    },
+    {
+      "value": 302779,
+      "label": "Vat leaching"
+    },
+    {
+      "value": 440026,
+      "label": "Vertimill"
+    },
+    {
+      "value": 204955,
+      "label": "Water Treatment Plant"
+    },
+    {
+      "value": 439914,
+      "label": "Work Breakdown Structures"
+    }
+  ]
+}
