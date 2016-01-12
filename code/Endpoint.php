@@ -51,6 +51,9 @@ $app->post('/endpoint/:id', function ($endpoint) use ($log) {
 });
 
 $app->get('launch', function (Request $request, Response $response) use ($log) {
+    
+    // this is all the happy path assuming everything is set up properly from the Bullhorn side
+    
     //load the id from the request
     $id = $request->getAttribute('entityid');
     
@@ -68,8 +71,28 @@ $app->get('launch', function (Request $request, Response $response) use ($log) {
     $candidate->set("id", $id);
     $bcontroller->load($candidate);
     
-    //find the edited email template
-    $template = $candidate->get('customTextBlock5');
+    //find the corporateUser Owner of this candidate (for From and ReplyTo email address)
+    $ownerId = $candidate->get("owner")["id"];
+    $owner = new \Stratum\Model\CorporateUser();
+    $owner->set("id", $ownerId);
+    $bcontroller->loadCorporateUser($owner);
+    
+    //load the custom Object that contains the template information
+    $obj = $this->candidate->loadCustomObject(3);
+    
+    //download and store the original template (so we can convert back)
+    $emailTemplate = $wcontroller->getEmailTemplate($form->id);
+    
+    //set up the correct template
+    $newTemplate = [];
+    $newTemplate['formId'] =    $form->id;
+    $newTemplate['from'] =      $owner->get("email");
+    $newTemplate['replyTo'] =   $owner->get("email");
+    $newTemplate['subject'] =   $emailTemplate->subject;
+    $newTemplate['content'] =   $obj->get("customTextBlock1");
+    
+    //set the correct template on the WorldApp server
+    self::$wcontroller->setEmailTemplate($newTemplate);
     
     //autofilled fields to be extracted from candidate
     //id,firstName,lastName,dateOfBirth,nickName,email,email2,mobile,phone,workPhone,fax3,pager,customTextBlock2
@@ -95,15 +118,27 @@ $app->get('launch', function (Request $request, Response $response) use ($log) {
     $type = substr($type, 0, strlen($type)-1); //remove last semi-colon
     
     $autofill = ['21741440'=>[$id,$firstName, $lastName, $dateOfBirth, $maritalStatus],
-					 '21741491'=>[$type],
-					 '21741451'=>[$email,
-								  $workEmail,
-								  $mobile,
-								  $homePhone,
-								  $workPhone,
-                                  $fax,
-								  $skype]];
+                 '21741491'=>[$type],
+                 '21741451'=>[$email,
+							  $workEmail,
+							  $mobile,
+                              $homePhone,
+                              $workPhone,
+                              $fax,
+                              $skype]];
     $send = self::$wcontroller->sendUrlWithAutofill($form->id, $email, $autofill);
+    
+    //return the email template to the original
+    $returnTemplate = [];
+    $returnTemplate['formId'] =  $form->id;
+    $returnTemplate['from'] =    $emailTemplate->from;
+    $returnTemplate['replyTo'] = $emailTemplate->replyTo;
+    $returnTemplate['subject'] = $emailTemplate->subject;
+    $returnTemplate['content'] = $emailTemplate->content;
+    
+    self::$wcontroller->setEmailTemplate($returnTemplate);
+    
+    
 });
 
 $app->run();

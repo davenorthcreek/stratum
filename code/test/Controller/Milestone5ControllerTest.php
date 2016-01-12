@@ -50,15 +50,16 @@ class Milestone5ControllerTest extends \PHPUnit_Framework_TestCase {
 		
         
 	}
-    
+
+/**  
     public function testGetEmailTemplate() {
         
         $emailTemplate = self::$wcontroller->getEmailTemplate($this->form->id);
         var_dump($emailTemplate);
         
     }
+**/
         
-
     public function testSetEmailTemplate() {
 
         //userid=0&entitytype=candidate&entityid=99&privatelabelid=105&height=yy&width=xx
@@ -79,6 +80,14 @@ class Milestone5ControllerTest extends \PHPUnit_Framework_TestCase {
 		self::$bcontroller->load($this->candidate);
         
         $this->assertNotNull($this->candidate);
+        
+        $ownerId = $this->candidate->get("owner")["id"];
+        $owner = new \Stratum\Model\CorporateUser();
+        $owner->set("id", $ownerId);
+        self::$bcontroller->loadCorporateUser($owner);
+
+        $this->assertNotNull($owner);
+        
         $emailTemplate = self::$wcontroller->getEmailTemplate($this->form->id);
         
         
@@ -86,22 +95,27 @@ class Milestone5ControllerTest extends \PHPUnit_Framework_TestCase {
         var_dump($emailTemplate);
         
         $newTemplate = [];
-        $newTemplate['formId'] = $this->form->id;
-        $newTemplate['from'] = $emailTemplate->from;
-        $newTemplate['replyTo'] = $emailTemplate->replyTo;
-        $newTemplate['subject'] = $emailTemplate->subject;
+        $newTemplate['formId'] =    $this->form->id;
+        $newTemplate['from'] =      $owner->get("email");
+        $newTemplate['replyTo'] =   $owner->get("email");
+        $newTemplate['subject'] =   $emailTemplate->subject;
         
         $types = $this->candidate->get("customTextBlock2");
-        //$types is an array, must translate to String
-        $type = '';
-        if (is_array($types)) {
-            foreach ($types as $t) {
-                $type .= $t.";";
+        $obj = $this->candidate->loadCustomObject(3);
+        if (!$obj) {
+            //$types is an array, must translate to String
+            $type = '';
+            if (is_array($types)) {
+                foreach ($types as $t) {
+                    $type .= $t.";";
+                }
             }
+            $type = substr($type, 0, strlen($type)-1); //remove last semi-colon
+            
+            $newTemplate['content'] = $type;
+        } else {
+            $newTemplate['content'] = $obj->get("customTextBlock1");
         }
-        $type = substr($type, 0, strlen($type)-1); //remove last semi-colon
-        
-        $newTemplate['content'] = $type;
         echo "Here is what we are sending to them:\n";
         var_dump($newTemplate);
         
@@ -131,12 +145,11 @@ class Milestone5ControllerTest extends \PHPUnit_Framework_TestCase {
         echo "And this is what is on the server now that all is back as it should be:\n";
         var_dump($foundTemplate2);
     }
-
 	
 	public function testGetActiveForm() {
     
         //userid=0&entitytype=candidate&entityid=99&privatelabelid=105&height=yy&width=xx
-        $upload = "http://northcreek.ca/bhwidget/?userid=0&entitytype=candidate&entityid=10809&privatelabelid=105&height=yy&width=xx";
+        $upload = "http://northcreek.ca/launch/?userid=0&entitytype=candidate&entityid=10809&privatelabelid=105&height=yy&width=xx";
         $url_components = preg_split("/[?&]/", $upload);
         $id = 0;
         foreach ($url_components as $piece) {
@@ -167,6 +180,37 @@ class Milestone5ControllerTest extends \PHPUnit_Framework_TestCase {
         $fax =              $this->candidate->get("fax3");
         $skype =            $this->candidate->get("pager");
         $types =            $this->candidate->get("customTextBlock2");
+        $ownerId =          $this->candidate->get("owner")["id"];
+        $owner = new \Stratum\Model\CorporateUser();
+        $owner->set("id", $ownerId);
+        self::$bcontroller->loadCorporateUser($owner);
+        $obj =              $this->candidate->loadCustomObject(3);
+        if ($obj) {
+            $radio =        $obj->get("text1");
+            $content =      $obj->get("textBlock1");
+        
+            if ($radio == "No – Generic Email") {
+                echo "will send generic email\n";
+            } else if ($radio == "Yes - Free Text") {
+                if ($content == "") {
+                    echo "will not send anything, no-op\n";
+                } else {
+                    echo "will send with content:\n";
+                    echo $content."\n";
+                }
+            } else if ($radio == "Yes - Template") {
+                if ($content == "") {
+                    echo "must load template data into customObj3->textBlock1\n";
+                } else {
+                    echo "will send with content:\n";
+                    echo $content."\n";
+                }
+            } else {
+                echo "Found this value for Radio: $radio\n";
+                echo "Found this value for content:\n$content\n";
+            }
+        }
+        
         //$types is an array, must translate to String
         $type = '';
         if (is_array($types)) {
@@ -185,6 +229,7 @@ class Milestone5ControllerTest extends \PHPUnit_Framework_TestCase {
 								  $workPhone,
                                   $fax,
 								  $skype]];
+        var_dump($autofill);
 		//$send = self::$wcontroller->sendUrlWithAutofill($form->id, $email, $autofill);
 		//var_dump($send);
 	}

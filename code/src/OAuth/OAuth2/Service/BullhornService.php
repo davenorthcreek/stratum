@@ -239,11 +239,15 @@ class BullhornService extends AbstractService
 		return $uri;
 	}
     
-    public function getFindUri($base_url, $session_key, $id, $fieldList) {
-		$uri = new Uri($base_url."entity/Candidate/".$id);
+    public function getFindEntityUri($entityType, $base_url, $session_key, $id, $fieldList) {
+        $uri = new Uri($base_url."entity/".$entityType."/".$id);
 		$uri->addToQuery("BhRestToken", $session_key);
 		$uri->addToQuery("fields", $fieldList);
 		return $uri;
+    }
+    
+    public function getFindUri($base_url, $session_key, $id, $fieldList) {
+		return $this->getFindEntityUri("Candidate", $base_url, $session_key, $id, $fieldList);
 	}
 	
 	public function getSearchUri($base_url, $session_key, $query, $count=1) {

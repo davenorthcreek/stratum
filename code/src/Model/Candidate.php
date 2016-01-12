@@ -262,15 +262,19 @@ class Candidate extends ModelObject
 		return $wa;
 	}
     
-    public function getDateOfBirthWithFormat($format = "d/m/Y") {
-        $date = $this->get("dateOfBirth") / 1000; //int
+    public function getDateWithFormat($label, $format = "d/m/Y") {
+        $date = $this->get($label) / 1000; //int
         
         $dateObject = new \DateTime();
         $dateObject->setTimeStamp($date);
         
         $string = $dateObject->format($format);
-        $this->log_debug($string);
+        $this->log_debug("$label: $string");
         return $string;
+    }
+    
+    public function getDateOfBirthWithFormat($format = "d/m/Y") {
+        return $this->getDateWithFormat("dateOfBirth", $format);
     }
 	
 	public function getBullhornFieldList() {
@@ -288,18 +292,19 @@ class Candidate extends ModelObject
 		return $list;
 	}
 	
-	public function loadCustomObject() {
-		$customObject = $this->get("customObject1s");
+	public function loadCustomObject($index = 1) {
+        $name = "customObject".$index."s";
+		$customObject = $this->get($name);
 		if ($customObject) {
 			return $customObject;
 		}
-		//so there is nothing in that empty array
+        $this->log_debug("nothing there in $name");
 		$there = false; //are there any relevant fields in the form submission?
 		$co = new \Stratum\Model\CustomObject();
 		$co->setLogger($this->_logger);
 		foreach ($this->expose_set() as $attr=>$value) {
 			//now we filter based on what we have vs. what Bullhorn knows
-			if (preg_match("/customObject1\.(.*)/", $attr, $m)) {
+			if (preg_match("/customObject".$index."\.(.*)/", $attr, $m)) {
 				$there = true;
 				if ($m[1] == 'textBlock3') {
 					$value = preg_replace("/Additional Candidate Notes: /", "", $value);
@@ -308,9 +313,11 @@ class Candidate extends ModelObject
 			}
 		}
 		if ($there) {
-			$this->set("customObject1s", $co);
+			$this->set($name, $co);
+            $this->log_debug("Found a custom object $name");
 			return $co;
 		} else {
+            $this->log_debug("Still nothing there after traversing candidate ".$this->get("id"));
 			return null;
 		}
 	}

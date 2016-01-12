@@ -66,8 +66,10 @@ class CandidateController
 			$this->collate($candidate, $key, $formResult);
 		}
 		$candidate->dump();
-		$this->log_debug("Loading custom Object");
-		$candidate->loadCustomObject();
+		$this->log_debug("Loading custom Object 1");
+		$candidate->loadCustomObject(1);
+		$this->log_debug("Loading custom Object 3");
+		$candidate->loadCustomObject(3);
 		$this->log_debug("Loading references");
 		$candidate->loadReferences();
 		return $candidate;

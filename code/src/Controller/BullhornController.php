@@ -65,6 +65,22 @@ class BullhornController {
 		
 		return $candidates;
 	}
+    
+    public function loadCorporateUser(\Stratum\Model\CorporateUser $user) {
+		$bullhornClient = $this->getClient();
+		$userController = new \Stratum\Controller\CorporateUserController();
+		$userController->setLogger($this->_logger);
+
+		//load $user based on ID currently in $user
+		$user = $bullhornClient->findCorporateUser($user);
+		if ($user == null) {
+			//error condition according to Stratum
+			//re-initialize
+			$user = new \Stratum\Model\CorporateUser();
+			$user->setLogger($this->_logger);
+		}
+		return $user;
+	}
 	
 	public function load(\Stratum\Model\Candidate $candidate) {
 		$bullhornClient = $this->getClient();

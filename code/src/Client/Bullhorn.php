@@ -260,6 +260,35 @@ class Bullhorn {
 		}
 		return $candidates;
 	}
+    
+    public function findCorporateUser($user) {
+		//use REST API to look up user
+		//based on attributes in $user
+		//return result of query 
+		
+		$bullhornService = $this->service;
+		
+		$fieldList = $user->getBullhornFieldList();
+		
+		$find_uri = $bullhornService->getFindEntityUri("CorporateUser", $this->base_url, $this->session_key, $user->get("id"), $fieldList);
+		$this->log_debug("Looking for user ID ".$user->get("id")."");
+		//$this->var_debug($find_uri);
+		$client = $this->httpClient;
+		$response = $client->retrieveResponse($find_uri, '', [], 'GET');
+		
+		$decoded_user = $this->extract_json($response);
+		
+		//all fields from Bullhorn saved in $user
+		
+		if (array_key_exists('data', $decoded_user)) {
+			$user->populateFromData($decoded_user['data']);
+			//$user->dump();
+		} else {
+			$this->log_debug("Error Response from Bullhorn:");
+			$this->var_debug($decoded_user);	
+		}
+		return $user;
+	}
 	
 	public function find($candidate) {
 		//use REST API to look up candidate
