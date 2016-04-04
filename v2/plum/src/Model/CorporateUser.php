@@ -55,7 +55,7 @@ class CorporateUser extends ModelObject
 						  'customText19'=>'',
 						  'customText20'=>'',
 						  'dateLastComment'=>'',
-					    'departmentIdList'=>'',
+					      'departmentIdList'=>'',
 						  'departments'=>'',
 						  'email'=>'',
 						  'email2'=>'',
@@ -79,7 +79,7 @@ class CorporateUser extends ModelObject
 						  'massMailOptOut'=>'',
 						  'masterUserID'=>'',
 						  'middleName'=>'',
-              'name'=>'',
+                          'name'=>'',
 						  'namePrefix'=>'',
 						  'nameSuffix'=>'',
 						  'nickName'=>'',
@@ -98,6 +98,7 @@ class CorporateUser extends ModelObject
 						  'userType'=>'',
 						  'username'=>''
 						  ];
+    private $assocCandidates = [];
 
 	//OVERRIDE
 	public function set($attribute, $value) {
@@ -141,7 +142,7 @@ class CorporateUser extends ModelObject
      */
 	public function getName()
 	{
-		$this->log_debug("At getName() in Candidate");
+		$this->log_debug("At getName() in CorporateUser");
 		$name = $this->get("name");
 		if ($name) {
 			return $name;
@@ -253,6 +254,14 @@ class CorporateUser extends ModelObject
 		}
 		return $same;
 	}
+
+    public function getAssocCandidates() {
+        return $this->assocCandidates;
+    }
+
+    public function setAssocCandidates($list) {
+        $this->assocCandidates = $list;
+    }
 
 	public function dump() {
 		$this->log_debug("---------------------------");

@@ -1,5 +1,5 @@
 Q1
-Q1.A1   boolean confirmAgree    NONE    Please Tick Yes
+Q1.A1   boolean confirmAgree    NONE    Agree to T&C Yes
 Q2  multiple
 Q2.A1   General(50) id  General(50) Candidate Ref Number
 Q2.A2	Text(50)    firstName   Text(50)    First Name
@@ -81,8 +81,8 @@ Q33.A1	During Company Time
 Q33.A2	During Own Time
 Q33.A3	Combination
 Q35	choice	customText7	Salary Used for Reporting
-Q35.A1	Net  
-Q35.A2	Gross  
+Q35.A1	Net
+Q35.A2	Gross
 Q36	List	currencies.txt	customText14	Salary Currency
 Q37	Text	customObject1.textBlock3	Text(100)	Additional Candidate Notes: Other Currency
 Q38	multiple
@@ -102,7 +102,7 @@ Q42.A1	Daily Rate
 Q42.A2	Hourly Rate
 Q43 multiple
 Q43.A1	text	dayrate	Number(20)	Day Rate
-Q43.A2	text	hourlyRate	Number(20)	Hourly Rate	
+Q43.A2	text	hourlyRate	Number(20)	Hourly Rate
 Q44	choice	customText13	Expat or Local Current Salary
 Q44.A1	Expat
 Q44.A2	Local
@@ -211,7 +211,10 @@ Q65.A16	SE: HSE
 Q65.A17	SE: Human Resources & Training
 Q65.A18	SE: Procurement
 Q65.A19	SE: Supply & Logistics
-Q65.A20	SE: Sustainability
+Q65.A20	SE: Sustainability (incl. CSR & Environment)
+Q65.A21 SE: Other
+Q65.A21 SE: IT
+Q65.A21 SE: Legal
 Q68	choice	customTextBlock1	Project/Operations Type
 Q68.A1	Brownfield Expansion
 Q68.A2	Greenfield Start Up
@@ -264,7 +267,7 @@ Q92	List	commodities.txt	customObject1.text11	Commodity
 Q93	choice	customObject1.text12	Underground / Open Pit
 Q93.A1	Open Pit
 Q93.A2	Underground
-Q94	Text	customObject1.textBlock4	Text	Description 
+Q94	Text	customObject1.textBlock4	Text	Description
 Q96	multiple	recommender1	Recommender 1
 Q96.A1	Text	referenceFirstName	Text(50)	Reference First Name
 Q96.A2	Text	referenceLastName	Text(50)	Reference Last Name
