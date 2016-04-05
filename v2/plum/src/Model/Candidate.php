@@ -248,19 +248,31 @@ class Candidate extends ModelObject
 
 	public function getWorldAppLabel($bh, $form) {
 		$wa = "";
-		$mappings = $form->get("BHMappings");
-		if (array_key_exists($bh, $mappings)) {
-			$this->log_debug("Found $bh");
-			$qmaps = $mappings[$bh];
-			foreach ($qmaps as $qmap) {
+        $qmaps = $this->getQuestionMappings($bh, $form);
+        if ($qmaps) {
+            foreach ($qmaps as $qmap) {
 				$wa = $qmap->get("WorldAppAnswerName");
 				if ($wa) {
 					$this->log_debug("$wa");
 				}
 			}
 		}
+        //returns the last worldapp label found in the list
+        //but logs all of them if you're interested
 		return $wa;
 	}
+
+    public function getQuestionMappings($fieldname, $form) {
+        //multiple questions map to the same bullhorn field
+        $mappings = $form->get("BHMappings");
+		if (array_key_exists($bh, $mappings)) {
+			$this->log_debug("Found $bh");
+			return $mappings[$bh];
+        }
+        return null;
+    }
+
+
 
     public function getDateWithFormat($label, $format = "d/m/Y") {
         $date = $this->get($label) / 1000; //int

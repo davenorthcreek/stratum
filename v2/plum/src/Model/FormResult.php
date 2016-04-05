@@ -222,7 +222,7 @@ class FormResult extends ModelObject
 	}
 
     public function exportToHTML($candidate) {
-        $this->dump(); //list of questions with answers (not mappings)
+        //$this->dump(); //list of questions with answers (not mappings)
         $form = $this->get('form');
         //$form->dump(); //mappings
         $questionMaps = $form->get('questionMappings');

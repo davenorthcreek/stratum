@@ -4,12 +4,9 @@
     <div class='row'>
         <div class='col-md-6'>
             <!-- Box -->
-            <div class="box box-primary">
-                    {{$formResult->exportToHTML($candidate) }}
-                <div class="box-footer">
 
-                </div><!-- /.box-footer-->
-            </div><!-- /.box -->
+                    {{$formResult->exportToHTML($candidate) }}
+                
         </div><!-- /.col -->
 
     </div><!-- /.row -->

@@ -21,6 +21,7 @@ class Question extends ModelObject
      * @var array of tag/values
      */
     protected $_fields = [ //put various fields in here
+                          'questionMapping'=>'',
 						  '@type'=>'',
 						  'questionId'=>'',
 						  'humanQuestionId'=>'',
@@ -36,6 +37,7 @@ class Question extends ModelObject
 
 	public function init($theQuestion, $form) {
 		$jsonToHuman = $form->get("jsonToHuman");
+        $this->set("form", $form);
 		$this->check_and_add("@type", $theQuestion);
 		$this->check_and_add("questionId", $theQuestion);
 		$this->check_and_add("weight", $theQuestion);
@@ -62,16 +64,28 @@ class Question extends ModelObject
 			$human = $jsonToHuman["Q".$questionId];
 			//echo "Human: ".$human."\n\n";
 			$this->set('humanQuestionId', $human);
+            $qmap = $form->getQuestion("Q".$questionId);
+            if ($qmap) {
+                $this->set("questionMapping", $qmap);
+            }
 		}
 		if (array_key_exists($qa, $jsonToHuman)) {
 			$humanQA = $jsonToHuman[$qa];
 			//echo "HumanQA: ".$humanQA."\n\n";
 			$this->set('humanQAId', $humanQA);
+            $qmap = $form->getQuestion($qa);
+            if ($qmap) { //always go for the most detailed qmap we can
+                $this->set("questionMapping", $qmap);
+            }
 		}
 		if (array_key_exists($qac, $jsonToHuman)) {
 			$humanQAC = $jsonToHuman[$qac];
 			//echo "HumanQAC: ".$humanQAC."\n\n";
 			$this->set('humanQACId', $humanQAC);
+            $qmap = $form->getQuestion($qac);
+            if ($qmap) {
+                $this->set("questionMapping", $qmap);
+            }
 		}
 		// this seems wrong... no reference to the question here
 		if (array_key_exists("answerId", $jsonToHuman)) {
