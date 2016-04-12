@@ -50,6 +50,7 @@ Route::group(['middleware' => ['web']], function () {
 
 
     Route::get('/home', 'CorporateUserController@index');
+    Route::get('/refresh', 'CorporateUserController@refresh');
 
     Route::get('/', function () {
       return redirect('/home');
@@ -59,3 +60,5 @@ Route::group(['middleware' => ['web']], function () {
   });
 
 });
+
+Route::post('upload', 'UploadController@upload');

@@ -125,6 +125,252 @@ class QuestionMapping extends ModelObject
 		}
 		return $this;
 	}
+    /*
+    public function exportToHTML($configs) {
+        //PREFACE
+        $type = $this->get("type");
+        $id = $this->getBestId();
+        $mult = $this->get("multipleAnswers");
+        $waan = $this->get("WorldAppAnswerName");
+        $file = $this->get("configFile");
+        $answers = [];
+        if ($mult && ($type != 'choice')) {
+            foreach ($this->get("answerMappings") as $q2) {
+                $theId = $q2->getBestId();
+                $answers[$theId] = $q2;
+                if (!$waan) {
+                    $waan = $q2->get("WorldAppAnswerName");
+                }
+            }
+        } else {
+            $answers[$id] = $this;
+        }
+        if ($type == 'boolean') {
+            //remove trailing yes or no
+            $waanLabel = substr($waan, 0, strrpos($waan, ' '));
+        } else {
+            $waanLabel = $waan;
+        }
+        $label = $waanLabel;
+        $qlabel = preg_replace("/ /", "_", $waan);
+        //OUTPUT
+        echo "\n<div class='form-group'>";
+        echo "\n<button class='btn btn-info btn-sm'>".$label."</button>";
+        echo("\n<label for='$qlabel'>$label</label>\n");
+        if ($type == 'boolean') {
+            //$waan ends with yes or no
+            $yn = substr($waan, strrpos($waan, ' '));
+            $shorter = substr($waan, 0, strrpos($waan, ' '));
+            echo "<label class='radio-inline'><input type='radio' name='$shorter' value='yes'";
+            echo ">Yes</label>\n";
+            echo "<label class='radio-inline'><input type='radio' name='$shorter' value='no'";
+            echo ">No</label>\n";
+        } else if ($file) {
+            //must look up
+            if (array_key_exists($file, $configs)) {
+                $configFile = $configs[$file];
+                //now render a select form input
+                echo "<select class='form-control' id='$qlabel' name='$qlabel'>\n";
+                foreach ($configFile as $op) {
+                    echo '<option VALUE="'.$op.'">'.$op."\n";
+                }
+                echo "</select>";
+            }
+        } else if ($type == 'choice') {
+            echo "<select class='form-control' id='$qlabel' name='$qlabel'>\n";
+            foreach ($this->get('answerMappings') as $amap) {
+                $aval = $amap->get("Value");
+                if ($aval) {
+                    echo '<option VALUE="'.$aval.'">'.$aval."\n";
+                }
+            }
+            echo "</select>";
+        } else {
+            echo("<input class='form-control' type='text' >");
+        }
+        echo "\n</div>\n";
+    }
+    */
+
+    public function exportToHTML($human, $configs, $qbyq, $formResult) {
+        $form = $this->get('form');
+        $questionMaps = $form->get('questionMappings');
+        $mult = false;
+        $valueMap = [];
+        $answermap=null;
+        $qanswers = [];
+        if (array_key_exists($human, $qbyq)) {
+            $qanswers = $qbyq[$human]; //an array!
+        }
+        $values = [];
+        foreach ($qanswers as $q) {
+            $qlabel = $q->get("humanQACId");
+            if (!$qlabel || !array_key_exists($qlabel, $questionMaps)) {
+                $qlabel = $q->get("humanQAId");
+            }
+            if (!$qlabel || !array_key_exists($qlabel, $questionMaps)) {
+                $qlabel = $q->get("humanQuestionId");
+            }
+            if ($human == 'Q27') {
+                $this->log_debug("Q27 using $qlabel");
+            }
+            $answermap = $questionMaps[$qlabel];
+            $mult = $answermap->get('multipleAnswers');
+            $values = $formResult->getValue($qlabel, $q, $answermap, $values);
+        }
+        if ($human == 'Q27') {
+            $this->var_debug($values);
+            $answermap->dump();
+        }
+        foreach ($values as $akey=>$value) {
+            if (is_numeric($akey)) {
+                $valueMap[$value] = $akey;
+            } else {
+                $valueMap[$value['value']] = 1;
+                if (array_key_exists('combined', $value)) {
+                    $mult = true;
+                    foreach(explode(', ', $value['combined']) as $theval) {
+                        $valueMap[$theval] = 1;
+                    }
+                }
+            }
+        }
+        if ($human == 'Q27') {
+            $this->log_debug("ValueMap");
+            $this->var_debug($valueMap);
+            if ($mult) {
+                $this->log_debug("Multiple is true");
+            } else {
+                $this->log_debug("Multiple is false");
+            }
+        }
+        if (count($valueMap)>1) {
+            $mult = true;
+        }
+        $val = implode(',', array_keys($valueMap));
+        $noAnswer = false;
+        $type = $this->get("type");
+        $id = $this->getBestId();
+        $waan = $this->get("WorldAppAnswerName");
+        $file = $this->get("configFile");
+        if (array_key_exists($human, $qbyq)) {
+            $qanswers = $qbyq[$human]; //an array!
+        }
+        $qlabel = '';
+        if (!$qanswers) {
+            $qlabel = $human;
+            $noAnswer = true;
+            //there doesn't have to be an answer to every question
+        } else {
+            $qlabel = $qanswers[0]->get("humanQACId");
+            if (!$qlabel || !array_key_exists($qlabel, $questionMaps)) {
+                $qlabel = $qanswers[0]->get("humanQAId");
+            }
+            if (!$qlabel || !array_key_exists($qlabel, $questionMaps)) {
+                $qlabel = $qanswers[0]->get("humanQuestionId");
+            }
+            //$this->log_debug("Q Label     : ".$qlabel);
+        }
+        $answermap = $questionMaps[$qlabel];
+        $waan = $answermap->get("WorldAppAnswerName");
+        if (!$waan) {
+            //go one deeper, if it is there
+            foreach ($answermap->get("answerMappings") as $q2) {
+                $waan = $q2->get("WorldAppAnswerName");
+                if ($waan) {
+                    break;
+                }
+            }
+        }
+        $label = $qlabel;
+        $visible = $waan;
+        if ($type == 'boolean') {
+            //remove trailing yes or no
+            $visible = substr($visible, 0, strrpos($visible, ' '));
+        }
+        $label .= " ".$visible;
+        $label = preg_replace("/\s/", "_", $waan);
+        //now we repeat for every response in $q
+        if ($qanswers) {
+            //foreach ($qanswers as $q) {
+                //now have to look at $answermap again, based on THIS $qanswer
+                $qlabel = $q->get("humanQACId");
+                if (!$qlabel || !array_key_exists($qlabel, $questionMaps)) {
+                    $qlabel = $q->get("humanQAId");
+                }
+                if (!$qlabel || !array_key_exists($qlabel, $questionMaps)) {
+                    $qlabel = $q->get("humanQuestionId");
+                }
+                $answermap = $questionMaps[$qlabel];
+                echo "\n<div class='form-group'>";
+                echo "\n<button class='btn btn-info btn-sm'>".$qlabel."</button>";
+                echo("\n<label for='$label'>$visible</label>\n");
+                if ($q && $answermap) {
+                    //there is an answer
+
+                    $file = $this->get("configFile");
+                    if ($type == 'boolean') {
+                        $waan = $answermap->get("WorldAppAnswerName");
+                        //$waan ends with yes or no
+                        $yn = substr($waan, strrpos($waan, ' '));
+                        $shorter = substr($waan, 0, strrpos($waan, ' '));
+                        echo "<label class='radio-inline'><input type='radio' name='$shorter' value='yes'";
+                        if (strcasecmp($yn, " no")) {
+                            echo " CHECKED";
+                        }
+                        echo ">Yes</label>\n";
+                        echo "<label class='radio-inline'><input type='radio' name='$shorter' value='no'";
+                        if (strcasecmp($yn, " yes")) {
+                            echo " CHECKED";
+                        }
+                        echo ">No</label>\n";
+                    } else if ($file) {
+                        //must look up
+                        if (array_key_exists($file, $configs)) {
+                            $configFile = $configs[$file];
+                            //now render a select form input
+                            echo "<select class='form-control select2' ";
+                            if ($mult) {
+                                echo "multiple='multiple'";
+                            }
+                            echo " id='$label' data-placeholder='$visible' name='$label'";
+                            echo " style='width: 100%;'>\n";
+                            foreach ($configFile as $op) {
+                                echo "<option ";
+                                if (array_key_exists($op, $valueMap)) {
+                                    echo("SELECTED ");
+                                }
+                                echo 'VALUE="'.$op.'">'.$op."\n";
+                            }
+                            echo "</select>";
+                        }
+                    } else if ($type == 'choice') {
+                        echo "<select class='form-control select2' ";
+                        if ($mult) {
+                            echo "multiple='multiple'";
+                        }
+                        echo " id='$label' data-placeholder='$visible' name='$label'";
+                        echo " style='width: 100%;'>\n";
+                        $qmap2 = $questionMaps[$human];
+                        foreach ($qmap2->get('answerMappings') as $amap) {
+                            $aval = $amap->get("Value");
+                            if ($aval) {
+                                echo "<option ";
+                                if (array_key_exists($aval, $valueMap)) {
+                                    echo "SELECTED ";
+                                }
+                                echo 'VALUE="'.$aval.'">'.$aval."\n";
+                            }
+                        }
+                        echo "</select>";
+                    } else {
+                        echo("<input class='form-control' type='text' value='".$val."'>");
+                    }
+                }
+                echo "\n</div>\n";
+            //}
+        }
+    }
 
 	public function dump($recursion = 0) {
 		$tab = "";

@@ -206,9 +206,9 @@ class Bullhorn {
 		$authResponse = $httpClient->retrieveResponse($uri2, '', [], 'GET');
 		$html_start = strpos($authResponse, '<!DOCTYPE html>');
 		$headers = substr($authResponse, 0, $html_start);
-		$this->log_debug($headers."");
+		$this->log_debug($headers);
 		if (preg_match("|Location: (https?://\S+)|", $headers, $m)) {
-			$this->log_debug("Location: ".$m[1]."");
+			$this->log_debug("Location: ".$m[1]);
 			if (preg_match("|code=(\S+)\&client_id|", $m[1], $n)) {
 				$code = urldecode($n[1]);
 				$servicesCredentials['bullhorn']['code'] = $code;

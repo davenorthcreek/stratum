@@ -26,6 +26,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
   <!-- https://tuts.codingo.me/upload-and-edit-image-using-croppic-jquery-plugin -->
   <link rel="stylesheet" href="{{ asset ("bower_components/croppic/croppic.css") }}"/>
+  <!-- Select2 -->
+  <link rel="stylesheet" href="{{ asset ("bower_components/admin-lte/plugins/select2/select2.min.css") }}"/>
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->

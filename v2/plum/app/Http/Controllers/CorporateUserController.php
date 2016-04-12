@@ -55,6 +55,11 @@ class CorporateUserController extends Controller
       Cache::forget("user".$id);
   }
 
+  public function refresh() {
+      $this->flushCandidatesFromCache();
+      return $this->index();
+  }
+
   private function loadCorporateUser() {
       $user = Auth::user();
       $id = $user->bullhorn_id;

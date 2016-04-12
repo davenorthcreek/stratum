@@ -64,7 +64,7 @@ class Question extends ModelObject
 			$human = $jsonToHuman["Q".$questionId];
 			//echo "Human: ".$human."\n\n";
 			$this->set('humanQuestionId', $human);
-            $qmap = $form->getQuestion("Q".$questionId);
+            $qmap = $form->get_question("Q".$questionId);
             if ($qmap) {
                 $this->set("questionMapping", $qmap);
             }
@@ -73,7 +73,7 @@ class Question extends ModelObject
 			$humanQA = $jsonToHuman[$qa];
 			//echo "HumanQA: ".$humanQA."\n\n";
 			$this->set('humanQAId', $humanQA);
-            $qmap = $form->getQuestion($qa);
+            $qmap = $form->get_question($qa);
             if ($qmap) { //always go for the most detailed qmap we can
                 $this->set("questionMapping", $qmap);
             }
@@ -82,7 +82,7 @@ class Question extends ModelObject
 			$humanQAC = $jsonToHuman[$qac];
 			//echo "HumanQAC: ".$humanQAC."\n\n";
 			$this->set('humanQACId', $humanQAC);
-            $qmap = $form->getQuestion($qac);
+            $qmap = $form->get_question($qac);
             if ($qmap) {
                 $this->set("questionMapping", $qmap);
             }

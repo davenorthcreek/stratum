@@ -19,7 +19,7 @@ class FormResponseController extends Controller
       $cuc = new CorporateUserController();
       $controller = new \Stratum\Controller\FormController();
       $ccontroller = new \Stratum\Controller\CandidateController();
-      $entityBody = Storage::disk('local')->get('formInput4.txt');
+      $entityBody = Storage::disk('local')->get($id.'.txt');
       $formResult = $controller->parse($entityBody);
       $candidate = new \Stratum\Model\Candidate();
       $candidate = $ccontroller->populate($candidate, $formResult);

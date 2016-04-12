@@ -85,10 +85,10 @@ class CandidateController
 			$pt1 = '';
 			$pt2 = '';
 			if (array_key_exists('Expected Local Gross Salary', $arr)) {
-				$pt1 = $arr['Expected Local Gross Salary'];
+				$pt1 = $arr['Expected Local Gross Salary']['value'];
 			}
 			if (array_key_exists('Expected Local Salary Currency', $arr)) {
-				$pt2 = $arr['Expected Local Salary Currency'];
+				$pt2 = $arr['Expected Local Salary Currency']['value'];
 			}
 			$total = $pt1.' ('.$pt2.')';
 			$candidate->set($the_key, $total);
@@ -136,7 +136,7 @@ class CandidateController
 				}
 			} else {
 				foreach ($arr as $key=>$res) {
-					$total .= ($multiple? "$key: ":"").$res.$separator;
+					$total .= ($multiple? "$key: ":"").$res['value'].$separator;
 				}
 			}
 			//clip the last, trailing comma and space

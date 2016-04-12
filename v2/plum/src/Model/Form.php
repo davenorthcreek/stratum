@@ -24,14 +24,15 @@ class Form extends ModelObject
      * @var array of tag/values
      */
     protected $_fields = [ //put various fields in here
-						  'humanToJson'=>'',
-						  'jsonToHuman'=>'',
-						  'questionConfig'=>"",   //map of configs
-						  'questionMappings'=>"", //by Q#
-                          'sections'=>[],
-						  'WAMappings'=>"",       //by WA Answer Name
-						  'BHMappings'=>"",        //by BH Field
-						  'SNMappings'=>""
+						  'humanToJson'       =>'',
+						  'jsonToHuman'       =>'',
+						  'questionConfig'    =>"", //map of configs
+						  'questionMappings'  =>"", //by Q#
+                          'sections'          =>[],
+                          'sectionHeaders'    =>[],
+						  'WAMappings'        =>"", //by WA Answer Name
+						  'BHMappings'        =>"", //by BH Field
+						  'SNMappings'        =>""  //
 						  ];
 
 	public function get_question($qId) {
@@ -54,8 +55,9 @@ class Form extends ModelObject
 		$this->set('jsonToHuman', $inverted);
 		//Load Question Config file
 		$answers = [];
-        $sectionCounter = 0;
+        $sectionCounter = -1;  //so first section header goes to 0
         $sections = [];
+        $sectionHeaders = [];
 		$handle = fopen(base_path()."/storage/app/QandA.txt", "r");
 		$questionMappings = $this->get("questionMappings");
 		$waMappings = $this->get("WAMappings");
@@ -68,14 +70,15 @@ class Form extends ModelObject
 			//for recommenders 1 and 2, we need prefixes
 			$bullhorn_prefix = "";
 			$wa_prefix = "";
-			while (($line = fgets($handle)) !== false
-					&& !preg_match("/\*\*\*\*\*/", $line)) {
+			while (($line = fgets($handle)) !== false) {
 				// process the line read.
 				//answerId first, then text value
 				$elements = preg_split("/\s+/", $line);
 				$first = $elements[0];
-
-				if (preg_match("/Q\d+\.A\d+/", $first)) {
+                if ($first == "Section") {
+                    $sectionCounter++;
+                    $sectionHeaders[$sectionCounter] = $this->collectMultiWordString($elements, 1);
+				} else if (preg_match("/Q\d+\.A\d+/", $first)) {
 					//full line
 					$q = new QuestionMapping();
 					$q->set("form", $this);
@@ -113,15 +116,6 @@ class Form extends ModelObject
 						}
 						$answers[] = $currentQ;
                         $sections[$sectionCounter][] = $currentQ;
-                        preg_match('/^Q(\d+)/', $first, $new_match);
-                        $newQnum = $new_match[1];
-                        preg_match('/Q(\d+)/', $currentQ->get('QId'), $old_match);
-                        $oldQnum = $old_match[1];
-                        if ($oldQnum && $newQnum && ($newQnum - 1) > $oldQnum) {
-                            //both labels are valid, increment between is more than 1
-                            $sectionCounter++;
-                            //therefore there is a new section
-                        }
 						$questionMappings[$mapKey] = $currentQ;
 						//$currentQ->dump();
 						$bullhorn_prefix = "";
@@ -187,6 +181,7 @@ class Form extends ModelObject
 			fclose($handle);
 			$this->set("questionMappings", $questionMappings);
             $this->set("sections", $sections);
+            $this->set("sectionHeaders", $sectionHeaders);
 		} else {
 			// error opening the file.
 			die ("Unable to open form input file");

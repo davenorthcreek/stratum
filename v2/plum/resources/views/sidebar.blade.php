@@ -32,10 +32,10 @@
     <ul class="sidebar-menu">
       <li class="header">MENU</li>
       <!-- Optionally, you can add icons to the links -->
-      <li class="active"><a href="{{url("/")}}"><i class="fa fa-link"></i> <span>Home</span></a></li>
+      <li class="active"><a href="{{url("/")}}"><i class="fa fa-home"></i> <span>Home</span></a></li>
       @if(array_key_exists('No', $candidates))
           <li class="treeview">
-            <a href="#"><i class="fa fa-link"></i> <span>New Candidates</span> <i class="fa fa-angle-left pull-right"></i></a>
+            <a href="#"><i class="fa fa-star"></i> <span>New Candidates</span> <i class="fa fa-angle-left pull-right"></i></a>
             <ul class="treeview-menu">
               @foreach($candidates['No'] as $candidate)
                   <?PHP $id = $candidate->get("id"); ?>
@@ -46,7 +46,7 @@
       @endif
       @if(array_key_exists('RFS', $candidates))
           <li class="treeview">
-            <a href="#"><i class="fa fa-link"></i> <span>Reg Form Sent</span> <i class="fa fa-angle-left pull-right"></i></a>
+            <a href="#"><i class="fa fa-upload"></i> <span>Reg Form Sent</span> <i class="fa fa-angle-left pull-right"></i></a>
             <ul class="treeview-menu">
               @foreach($candidates['RFS'] as $candidate)
                   <?PHP $id = $candidate->get("id"); ?>
@@ -57,7 +57,7 @@
       @endif
       @if(array_key_exists('FC', $candidates))
           <li class="treeview">
-            <a href="#"><i class="fa fa-link"></i> <span>Form Completed</span> <i class="fa fa-angle-left pull-right"></i></a>
+            <a href="#"><i class="fa fa-download"></i> <span>Form Completed</span> <i class="fa fa-angle-left pull-right"></i></a>
             <ul class="treeview-menu">
               @foreach($candidates['FC'] as $candidate)
                   <?PHP $id = $candidate->get("id"); ?>
@@ -77,6 +77,7 @@
             </ul>
           </li>
       @endif
+      <li class="active"><a href="{{url("/refresh")}}"><i class="fa fa-refresh"></i> <span>Refresh Candidate List</span></a></li>
     </ul>
     <!-- /.sidebar-menu -->
   </section>
