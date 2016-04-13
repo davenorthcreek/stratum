@@ -5,7 +5,7 @@
         <div class='col-md-6'>
             <!-- Box -->
 
-                    {{$formResult->exportToHTML($candidate) }}
+                    {{$formResult->exportToHTML($form) }}
 
         </div><!-- /.col -->
 
@@ -14,7 +14,7 @@
 
 @section('local_scripts')
 <!-- Select2 -->
-<script src="/bower_components/admin-lte/plugins/select2/select2.full.min.js"></script>
+<script src={{ asset("/bower_components/admin-lte/plugins/select2/select2.full.min.js") }}></script>
 <script>
     $(function () {
       // Replace the <textarea id="editor1"> with a CKEditor
