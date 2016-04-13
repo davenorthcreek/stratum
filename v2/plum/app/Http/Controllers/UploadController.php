@@ -19,17 +19,17 @@ class UploadController extends Controller
     public function upload(Request $request) {
         $entityBody = file_get_contents('php://input');
     	Log::debug($entityBody);
-    	$formController = new Stratum\Controller\FormController();
+    	$formController = new \Stratum\Controller\FormController();
     	Log::debug("parsing input data");
     	$formResult = $formController->parse($entityBody);
         Log::Debug("parsed input data");
     	//form has updated mappings for each question
 
-    	$candidate = new Stratum\Model\Candidate();
-    	$candidateController = new Stratum\Controller\CandidateController();
+    	$candidate = new \Stratum\Model\Candidate();
+    	$candidateController = new \Stratum\Controller\CandidateController();
     	$candidate = $candidateController->populate($candidate, $formResult);
     	Log::debug("Form Completed for ".$candidate->getName());
-        $controller = new Stratum\Controller\BullhornController();
+        $controller = new \Stratum\Controller\BullhornController();
         $controller->updateCandidateStatus($candidate, "Form Completed");
 
         //Now to store form results in local storage
