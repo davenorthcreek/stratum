@@ -33,6 +33,6 @@ class UploadController extends Controller
         $controller->updateCandidateStatus($candidate, "Form Completed");
 
         //Now to store form results in local storage
-        $entityBody = Storage::disk('local')->put($candidate->get("id").".txt");
+        $entityBody = Storage::disk('local')->put($candidate->get("id").".txt", $entityBody);
     }
 }
