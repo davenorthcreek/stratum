@@ -108,14 +108,9 @@ class FormResult extends ModelObject
 				$value = "No";
 			}
 		} else if ($qmap->get("type")=="choice") {
-            $this->log_debug("Choice ".$qid);
-            if ($qid=='Q23') {
-                $qmap->dump();
-            }
 			$value = $qmap->get("Value");
 		} else if ($qmap->get("type")=="object") {
 			$obj = $q->get("objects");
-			//$this->var_debug($obj);
 			if (array_key_exists('objectName', $obj)) {
 				$value = $obj['objectName'];
 			}
@@ -123,9 +118,7 @@ class FormResult extends ModelObject
 			$value = $this->find_answer_in_file($q, $qmap, $qid);
 			if (!$value) {
 				$this->log_debug("Unable to find a value:");
-				$q->dump();
 				$qmap->dump();
-				die("Unable to find a value");
 			}
 		}
         if ($qac) {
@@ -168,9 +161,14 @@ class FormResult extends ModelObject
         }
         $question = $form->get_question($qid);
         $file = $qmap->get("configFile");
-        $qa = preg_split("/\./", $answerId);
-        $aId = $qa[1];
         if ($file) {
+            $qa = preg_split("/\./", $answerId);
+            $aId = $answerId;
+            if (count($qa) > 1) {
+                $aId = $qa[1];
+            } else {
+                $q->dump();
+            }
             $this->parse_option_file($file);
             $configs = $this->get("configs");
             if (array_key_exists($file, $configs)) {

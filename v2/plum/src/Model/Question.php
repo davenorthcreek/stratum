@@ -107,9 +107,15 @@ class Question extends ModelObject
 		$this->log_debug("---------------------------");
 		$this->log_debug("Stratum\Model\Question");
 		foreach ($this->_fields as $key=>$there) {
-			if ($there) {
+            if ($key == "form") {
+                $this->log_debug("Form available");
+            } else if ($there) {
 				$this->log_debug($key.": ");
-				$this->var_debug($there);
+                if (is_a($there, "\Stratum\Model\ModelObject")) {
+                    $there->dump();
+                } else {
+				    $this->var_debug($there);
+                }
 			}
 		}
 		$this->log_debug("---------------------------");
