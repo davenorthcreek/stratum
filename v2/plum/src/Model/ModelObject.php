@@ -133,6 +133,41 @@ class ModelObject
 		return $this;
 	}
 
+    public function exportToHTML($form) {
+        echo '<div class="box box-primary collapsed-box">';
+        echo '<div class="box-header with-border">';
+        echo "\n\t<h3 class='box-title'>Candidate Data</h3>";
+        echo "\n\t".'<div class="box-tools pull-right">';
+        echo "\n\t\t".'<button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse/Expand"><i class="fa fa-plus"></i></button>';
+        echo "\n\t</div>";
+        echo "\n</div>";
+        echo "\n<div class='box-body' style='display: none;'>\n";
+        foreach ($this->_fields as $key=>$there) {
+            if ($there) {
+                if (is_a($there, "\Stratum\Model\ModelObject")) {
+                    $there->exportToHTML($form);
+                } else if (is_array($there)) {
+                    echo "\n<div class='form-group'>";
+                    echo "\n<button class='btn btn-info btn-sm'>".$key."</button>";
+                    echo "\n<label for='$key'>$key</label>\n";
+                    foreach($there as $index=>$detail) {
+                        echo "\n<div class='form-group'>";
+                        echo "\n<button class='btn btn-info btn-sm'>".$index."</button>";
+                        echo "\n<label for='$index'>$index</label>\n";
+                        echo "\n<label>$detail</label>\n";
+                        echo "</div>\n";
+                    }
+                } else {
+                    echo "\n<div class='form-group'>";
+                    echo "\n<button class='btn btn-info btn-sm'>".$key."</button>";
+                    echo "\n<label for='$key'>$key</label>\n";
+                    echo "\n<label>$there</label>\n";
+                    echo "</div>\n";
+                }
+            }
+        }
+    }
+
 	public function compare(\Stratum\Model\ModelObject $other) {
 		$same = true;
 		foreach ($other->expose_set() as $attr=>$value) {

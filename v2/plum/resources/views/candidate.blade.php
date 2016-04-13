@@ -22,9 +22,7 @@
                           <button id="launchButton" value="Launch">Edit Template and Launch Form</button>
                         </form>
                     @endif
-                    @foreach($decoded as $field=>$value)
-                        <p>{{$field}}: <?php var_dump($value); ?></p>
-                    @endforeach
+                    <?php $thecandidate->exportToHTML($form) ?>
                 </div><!-- /.box-body -->
                 <div class="box-footer">
 

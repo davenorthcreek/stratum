@@ -23,6 +23,7 @@ class FormResponseController extends Controller
       $formResult = $controller->parse($entityBody);
       $candidate = new \Stratum\Model\Candidate();
       $candidate = $ccontroller->populate($candidate, $formResult);
+      $data['form'] = $formResult->get("form");
       $data['candidate'] = $candidate;
       $data['formResult'] = $formResult;
       $data['candidates'] = $cuc->load_candidates();

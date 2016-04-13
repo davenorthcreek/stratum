@@ -192,7 +192,7 @@ class QuestionMapping extends ModelObject
     }
     */
 
-    public function exportToHTML($human, $configs, $qbyq, $formResult) {
+    public function exportQMToHTML($human, $configs, $qbyq, $formResult) {
         $form = $this->get('form');
         $questionMaps = $form->get('questionMappings');
         $mult = false;
@@ -235,6 +235,9 @@ class QuestionMapping extends ModelObject
                 }
             }
         }
+        if (count($valueMap)>1) {
+            $mult = true;
+        }
         if ($human == 'Q27') {
             $this->log_debug("ValueMap");
             $this->var_debug($valueMap);
@@ -243,9 +246,6 @@ class QuestionMapping extends ModelObject
             } else {
                 $this->log_debug("Multiple is false");
             }
-        }
-        if (count($valueMap)>1) {
-            $mult = true;
         }
         $val = implode(',', array_keys($valueMap));
         $noAnswer = false;
@@ -302,9 +302,16 @@ class QuestionMapping extends ModelObject
                     $qlabel = $q->get("humanQuestionId");
                 }
                 $answermap = $questionMaps[$qlabel];
+                $this->log_debug(strpos($qlabel, 'Q65'));
+                if (strpos($qlabel, 'Q65') === 0) {
+                    $visible = "Discipline - for display purposes only, will not be changed in Bullhorn";
+                }
                 echo "\n<div class='form-group'>";
                 echo "\n<button class='btn btn-info btn-sm'>".$qlabel."</button>";
                 echo("\n<label for='$label'>$visible</label>\n");
+                if (strpos($qlabel, 'Q65') === 0) {
+                    $visible = "Discipline";
+                }
                 if ($q && $answermap) {
                     //there is an answer
 

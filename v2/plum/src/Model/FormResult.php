@@ -228,7 +228,7 @@ class FormResult extends ModelObject
 		return $this;
 	}
 
-    public function exportToHTML($candidate) {
+    public function exportToHTML($form) {
         //$this->dump(); //list of questions with answers (not mappings)
         $form = $this->get('form');
         //$form->dump(); //mappings
@@ -275,7 +275,7 @@ class FormResult extends ModelObject
                 /****************************************
                  second pass, export to html with answers
                  ************************************** */
-                 $qmap->exportToHTML($human, $this->get("configs"), $qbyq, $this);
+                 $qmap->exportQMToHTML($human, $this->get("configs"), $qbyq, $this);
             }
             echo "\n</div>\n";
             echo '<div class="box-footer"></div><!-- /.box-footer-->';

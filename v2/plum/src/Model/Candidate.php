@@ -265,9 +265,9 @@ class Candidate extends ModelObject
     public function getQuestionMappings($fieldname, $form) {
         //multiple questions map to the same bullhorn field
         $mappings = $form->get("BHMappings");
-		if (array_key_exists($bh, $mappings)) {
-			$this->log_debug("Found $bh");
-			return $mappings[$bh];
+		if (array_key_exists($fieldname, $mappings)) {
+			$this->log_debug("Found $fieldname");
+			return $mappings[$fieldname];
         }
         return null;
     }
@@ -445,7 +445,7 @@ class Candidate extends ModelObject
 			//should be secondaryAddress and address
 			$json[$label] = $address;
 		}
-		/**
+		/*
 		 *
 		 * This section would continually add new custom objects
 		 * to the Candidate record
@@ -453,7 +453,7 @@ class Candidate extends ModelObject
 			//there is something there
 			$json['customObject1s'] = $this->marshalCustomObject();
 		}
-		**/
+		*/
 		$encoded = json_encode($json, true);
 		$this->log_debug($encoded);
 		return $encoded;
@@ -495,6 +495,115 @@ class Candidate extends ModelObject
 		}
 		return $same;
 	}
+
+    public function exportToHTML($form) {
+        echo '<div class="box box-primary collapsed-box">';
+        echo '<div class="box-header with-border">';
+        echo "\n\t<h3 class='box-title'>Candidate Data</h3>";
+        echo "\n\t".'<div class="box-tools pull-right">';
+        echo "\n\t\t".'<button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse/Expand"><i class="fa fa-plus"></i></button>';
+        echo "\n\t</div>";
+        echo "\n</div>";
+        echo "\n<div class='box-body' style='display: none;'>\n";
+        echo "\n<div class='form-group'>";
+        echo "\n<button class='btn btn-info btn-sm'>Bullhorn Fieldname</button>";
+        echo "\n<button class='btn btn-secondary btn-sm'>WorldApp (Human-Readable) Name</button>";
+        echo "\n<label>Value</label>\n";
+        echo "\n</div>\n";
+        //loop through form questions instead of candidate fields (which are alphabetical and not Human-Readable)
+        foreach ($form->get("questionMappings") as $qmap) {
+            $wa = $qmap->get("WorldAppAnswerName");
+            $bh = $qmap->get("BullhornField");
+            $value = $this->get($bh);
+            if (!$value) {
+                //no value
+                continue;
+            }
+            $type = $this->get("type");
+            if (strpos('yes', $wa) > 0) {
+                preg_match("/(.*)\s(yes|no)/", $wa, $m);
+                $wa2 = $m[1];
+                $yn = $m[2];
+                $this->log_debug("Boolean: $wa");
+                $this->log_debug("wa2: $wa2");
+                $this->log_debug("yn: $yn");
+            }
+            if (is_a($value, "\Stratum\Model\ModelObject")) {
+                $value->exportToHTML($form);
+            } else if (is_array($value)) {
+                echo "\n<div class='form-group'>";
+                echo "\n<button class='btn btn-info btn-sm'>".$bh."</button>";
+                echo "\n<button class='btn btn-secondary btn-sm'>".$wa."</button>";
+                //now go through the details
+                foreach($value as $index=>$detail) {
+                    //$this->log_debug("index is $index");
+                    $wa2 = $this->getWorldAppLabel($index, $form);
+                    if (!$wa2) {
+                        $wa2 = $index;
+                    }
+                    //$this->log_debug("wa2 is $wa2");
+                    $string = '';
+                    if (is_array($detail)) {
+                        $this->log_debug("detail is an array");
+                        $this->var_debug($detail);
+                        foreach ($detail as $micro) {
+                            if (is_array($micro)) {
+                                $this->log_debug("micro is an array");
+                                $string .= implode(", ", $micro);
+                            }
+                            else {
+                                $string .= $micro;
+                            }
+                        }
+                    } else {
+                        $string = $detail;
+                    }
+                    //$this->log_debug("String is $string");
+                    if ($string) {
+                        echo "\n<div class='form-group'>";
+                        echo "\n<button class='btn btn-info btn-sm'>".$index."</button>";
+                        echo "\n<button class='btn btn-secondary btn-sm'>".$wa2."</button>";
+                        echo "\n<label>$string</label>\n";
+                        echo "</div>\n";
+                    }
+                }
+            } else {
+                echo "\n<div class='form-group'>";
+                echo "\n<button class='btn btn-info btn-sm'>".$bh."</button>";
+                echo "\n<button class='btn btn-secondary btn-sm'>".$wa."</button>";
+                echo "\n<label>$value</label>\n";
+                echo "</div>\n";
+            }
+
+        }
+        //$this->var_debug(array_keys($typeArray));
+        /*
+        foreach ($this->_fields as $key=>$there) {
+            if ($there) {
+                if ($key == 'categories') {
+                    continue;
+                } else if (is_a($there, "\Stratum\Model\ModelObject")) {
+                    $there->exportToHTML($form);
+                } else if (is_array($there)) {
+                    $this->log_debug("There is an array");
+                    $wa = $this->getWorldAppLabel($key, $form);
+                    echo "\n<div class='form-group'>";
+                    echo "\n<button class='btn btn-info btn-sm'>".$key."</button>";
+                    echo "\n<button class='btn btn-secondary btn-sm'>".$wa."</button>";
+
+
+                } else {
+                    $wa = $this->getWorldAppLabel($key, $form);
+                    echo "\n<div class='form-group'>";
+                    echo "\n<button class='btn btn-info btn-sm'>".$key."</button>";
+                    echo "\n<button class='btn btn-secondary btn-sm'>".$wa."</button>";
+                    echo "\n<label>$there</label>\n";
+                    echo "</div>\n";
+                }
+            }
+        }
+        */
+    }
 
 	public function dump() {
 		$this->log_debug("---------------------------");

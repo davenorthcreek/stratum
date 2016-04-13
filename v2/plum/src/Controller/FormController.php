@@ -31,14 +31,19 @@ class FormController {
 		//string starts with "data="
 		$entity2 = substr($entityDecoded, 5);
 		$this->jsonDecoded = json_decode($entity2, true);
-		$this->form = new \Stratum\Model\Form();
-		$this->form->parse_mapping();
+		$this->setupForm();
 		$formResult = new \Stratum\Model\FormResult();
 		$formResult->init($this->jsonDecoded, $this->form);
 		$questions = $this->mapQuestions($this->jsonDecoded, $this->form);
 		$formResult->set("questions", $questions);
 		//$formResult->dump();
 		return $formResult;
+	}
+
+	public function setupForm() {
+		$this->form = new \Stratum\Model\Form();
+		$this->form->parse_mapping();
+		return $this->form;
 	}
 
 	public function mapQuestions($jsonDecoded, $form) {

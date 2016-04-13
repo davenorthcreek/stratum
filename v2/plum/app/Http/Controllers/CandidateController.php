@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use \Stratum\Controller\BullhornController;
+use \Stratum\Controller\FormController;
 use \Stratum\Model\Candidate;
 use Log;
 use Cache;
@@ -31,6 +32,8 @@ class CandidateController extends Controller
           Cache::add($id, $candidate, 60);
       }
       $data['thecandidate'] = $candidate;
+      $fc = new \Stratum\Controller\FormController();
+      $data['form'] = $fc->setupForm();
       $cuc = new CorporateUserController();
       $data['candidates'] = $cuc->load_candidates();
       return view('candidate')->with($data);
