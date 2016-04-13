@@ -22,7 +22,7 @@
                           <button id="launchButton" value="Launch">Edit Template and Launch Form</button>
                         </form>
                     @endif
-                    <?php $thecandidate->exportToHTML($form) ?>
+                    <?php $thecandidate->exportSummaryToHTML($form) ?>
                 </div><!-- /.box-body -->
                 <div class="box-footer">
 

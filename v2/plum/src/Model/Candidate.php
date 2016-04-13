@@ -496,6 +496,63 @@ class Candidate extends ModelObject
 		return $same;
 	}
 
+    public function exportSummaryToHTML($form) {
+        echo '<div class="box box-primary">';
+        echo '<div class="box-header with-border">';
+        echo "\n\t<h3 class='box-title'>Candidate Data</h3>";
+        echo "\n\t".'<div class="box-tools pull-right">';
+        echo "\n\t\t".'<button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse/Expand"><i class="fa fa-minus"></i></button>';
+        echo "\n\t</div>";
+        echo "\n</div>";
+        echo "\n<div class='box-body'>\n";
+        echo "\n<div class='table-responsive'>";
+        echo "\n<table class='table'>\n";
+        echo "\n<thead>\n<tr>";
+        echo "\n<th><button class='btn btn-info btn-sm'>Bullhorn Fieldname</button></th>";
+        echo "\n<th><button class='btn btn-secondary btn-sm'>WorldApp (Human-Readable) Name</button></th>";
+        echo "\n<th><label>Value</label></th>\n";
+        echo "\n</tr></thead>";
+        echo "\n<tbody>";
+        $summary = ["id", "firstName", "lastName", "dateOfBirth", "nickName", "email", "email2", "mobile", "phone", "workPhone", "fax3", "pager", "customTextBlock2"];
+        foreach ($summary as $item) {
+            $value = '';
+            if ($item=="customTextBlock2") {
+                $types = $this->get($item);
+                if (is_array($types)) {
+                    foreach ($types as $t) {
+                        $value .= $t.";";
+                    }
+                }
+                $value = substr($value, 0, strlen($value)-1); //remove last semi-colon
+            } else if ($item == "dateOfBirth") {
+                $value = $this->getDateOfBirthWithFormat("d/m/Y");
+            } else {
+                $value = $this->get($item);
+            }
+            //we have value
+            $wa = $this->getWorldAppLabel($item, $form);
+            //we have human-readable label
+            //let's display this!
+            echo "\n<tr>";
+            //echo "\n<div class='form-group'>";
+            echo "\n<td>";
+            echo "\n<button class='btn btn-info btn-sm'>".$item."</button>";
+            echo "\n</td><td>";
+            echo "\n<button class='btn btn-secondary btn-sm'>".$wa."</button>";
+            echo "\n</td><td>";
+            echo "\n<label>$value</label>\n";
+            echo "\n</td></tr>";
+            //echo "</div>\n";
+        }
+        echo "\n</tbody>";
+        echo "\n</table>";
+        echo "</div>\n"; //table-responsive
+        echo "</div>\n"; //box-body
+        echo "</div>\n"; //box
+
+    }
+
+
     public function exportToHTML($form) {
         echo '<div class="box box-primary collapsed-box">';
         echo '<div class="box-header with-border">';
