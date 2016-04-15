@@ -35,9 +35,7 @@ Route::group(['middleware' => ['web']], function () {
 
   Route::group(['middleware' => ['auth']], function () {
     //these routes need both web and auth middleware
-    Route::get('/admin', function () {
-      return view('admin_template');
-    });
+    Route::get('/admin', 'CorporateUserController@index');
 
     Route::get('test', 'TestController@index');
     Route::get('candidate', 'CandidateController@index');
@@ -52,9 +50,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/home', 'CorporateUserController@index');
     Route::get('/refresh', 'CorporateUserController@refresh');
 
-    Route::get('/', function () {
-      return redirect('/home');
-    });
+    Route::get('/', 'CorporateUserController@index');
     Route::controller('/profile', 'UsersController');
 
   });
