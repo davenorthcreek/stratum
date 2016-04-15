@@ -28,6 +28,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <link rel="stylesheet" href="{{ asset ("bower_components/croppic/croppic.css") }}"/>
   <!-- Select2 -->
   <link rel="stylesheet" href="{{ asset ("bower_components/admin-lte/plugins/select2/select2.min.css") }}"/>
+  <link rel="stylesheet" href="{{ asset ("bower_components/admin-lte/plugins/select2/select2-bootstrap.min.css") }}"/>
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -100,7 +101,7 @@ desired effect
 <!-- REQUIRED JS SCRIPTS -->
 
 <!-- jQuery 2.1.4 -->
-<script src="{{ asset ("/bower_components/admin-lte/plugins/jQuery/jQuery-2.1.4.min.js") }}"></script>
+<script src="{{ asset ("/bower_components/admin-lte/plugins/jQuery/jQuery-2.2.0.min.js") }}"></script>
 <!-- jQuery UI 1.11.4 -->
 <script src="{{ asset ("/bower_components/admin-lte/plugins/jQueryUI/jquery-ui.min.js") }}"></script>
 <!-- Bootstrap 3.3.5 -->

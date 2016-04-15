@@ -275,7 +275,11 @@ class Candidate extends ModelObject
 
 
     public function getDateWithFormat($label, $format = "d/m/Y") {
-        $date = $this->get($label) / 1000; //int
+        $date = $this->get($label);
+        if (!$date) {
+            return "0/0/0000";
+        }
+        $date = $date / 1000; //int
 
         $dateObject = new \DateTime();
         $dateObject->setTimeStamp($date);
@@ -334,8 +338,14 @@ class Candidate extends ModelObject
 		}
 	}
 
-	public function marshalCustomObject() {
-		return $this->loadCustomObject()->marshalToArray();
+	public function marshalCustomObject($index = 1) {
+        $obj = $this->loadCustomObject($index);
+        if ($obj && is_a($obj, "\Stratum\Model\CustomObject")) {
+            $this->var_debug($obj);
+		    return $obj->marshalToArray();
+        } else {
+            return null;
+        }
 	}
 
 	public function loadReferences() {
@@ -449,11 +459,15 @@ class Candidate extends ModelObject
 		 *
 		 * This section would continually add new custom objects
 		 * to the Candidate record
-		if ($this->loadCustomObject()) {
+         */
+        for ($i=1; $i<=3; $i++) {
+		    if ($this->loadCustomObject($i)) {
 			//there is something there
-			$json['customObject1s'] = $this->marshalCustomObject();
+			    $json['customObject'.$i.'s'] = $this->marshalCustomObject();
+            }
 		}
-		*/
+
+
 		$encoded = json_encode($json, true);
 		$this->log_debug($encoded);
 		return $encoded;
@@ -577,8 +591,16 @@ class Candidate extends ModelObject
                 continue;
             }
             $type = $this->get("type");
-            if (strpos('yes', $wa) > 0) {
-                preg_match("/(.*)\s(yes|no)/", $wa, $m);
+            if (strpos('Yes', $wa) > 0) {
+                preg_match("/(.*)\s(Yes)/", $wa, $m);
+                $wa2 = $m[1];
+                $yn = $m[2];
+                $this->log_debug("Boolean: $wa");
+                $this->log_debug("wa2: $wa2");
+                $this->log_debug("yn: $yn");
+            }
+            if (strpos('No', $wa) > 0) {
+                preg_match("/(.*)\s(No)/", $wa, $m);
                 $wa2 = $m[1];
                 $yn = $m[2];
                 $this->log_debug("Boolean: $wa");

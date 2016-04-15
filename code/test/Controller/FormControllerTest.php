@@ -13,7 +13,7 @@ class FormControllerTest extends \PHPUnit_Framework_TestCase {
 	protected function setUp() {
 		$this->controller = new \Stratum\Controller\FormController();
 		$this->candidate = new \Stratum\Model\Candidate();
-		$this->entityBody = file_get_contents("formInput4.txt");
+		$this->entityBody = file_get_contents("arya.txt");
 	}
 	
 	//public function testParse() {

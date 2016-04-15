@@ -19,7 +19,11 @@
     $(function () {
       // Replace the <textarea id="editor1"> with a CKEditor
       // instance, using default configuration.
-      $(".select2").select2();
+      $(".select2").select2({theme: "bootstrap"});
+    });
+
+    $('#collapseAll').click(function () {
+        $("[data-widget='collapse']").click();
     });
 </script>
 @endsection
