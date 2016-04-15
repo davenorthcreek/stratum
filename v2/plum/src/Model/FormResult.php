@@ -239,6 +239,8 @@ class FormResult extends ModelObject
         }
         $sections = $form->get("sections");
         $headers = $form->get("sectionHeaders");
+        //expand/collapse all button
+        
         for ($i = 0; $i < count($sections); $i++) {
             //foreach ($form->get("sections") as $section) {
             $section = $sections[$i];
