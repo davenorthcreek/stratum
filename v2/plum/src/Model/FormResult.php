@@ -240,7 +240,7 @@ class FormResult extends ModelObject
         $sections = $form->get("sections");
         $headers = $form->get("sectionHeaders");
         //expand/collapse all button
-        
+
         for ($i = 0; $i < count($sections); $i++) {
             //foreach ($form->get("sections") as $section) {
             $section = $sections[$i];
@@ -255,27 +255,40 @@ class FormResult extends ModelObject
             echo "\n<div class='box-body' style='display: none;'>\n";
             $sectionQs=null;
             foreach ($section as $qmap) {
+                $theId = $qmap->getBestId();
                 /******************************
                  first pass, find subquestions
                 /**************************** */
                 $mult = $qmap->get("multipleAnswers"); //boolean
                 $type = $qmap->get("type");
-                if ($mult && ($type!='choice')) {
+                $this->log_debug("Displaying $theId $type");
+                if ($mult && ($type!='choice') && ($type !='boolean')) {
+                    $this->log_debug("Mult and type != choice");
                     foreach ($qmap->get("answerMappings") as $q2) {
                         $theId = $q2->getBestId();
                         $sectionQs[$theId] = $q2;
+                        $this->log_debug("setting $theId to be the answer");
                     }
+                } else if ($type == "boolean") {
+                    //booleans are a special case
+                    $theId = $qmap->getBestId();
+                    $this->log_debug("At boolean: $theId");
+                    if (array_key_exists($theId, $questionMaps)) {
+                        $this->log_debug("array key exists");
+                        $sectionQs[$theId] = $qmap;
+                    }
+                    $waan = $qmap->get("WorldAppAnswerName");
+                    $shorter = substr($waan, 0, strrpos($waan, ' '));
                 } else {
                     $theId = $qmap->getBestId();
                     $sectionQs[$theId] = $qmap;
                 }
             }
             foreach ($sectionQs as $human=>$qmap) {
-
                 /****************************************
-                 second pass, export to html with answers
-                 ************************************** */
-                 $qmap->exportQMToHTML($human, $this->get("configs"), $qbyq, $this);
+                second pass, export to html with answers
+                ************************************** */
+                $qmap->exportQMToHTML($human, $this->get("configs"), $qbyq, $this);
             }
             echo "\n</div>\n";
             echo '<div class="box-footer"></div><!-- /.box-footer-->';
