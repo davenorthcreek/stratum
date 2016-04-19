@@ -248,15 +248,11 @@ class QuestionMapping extends ModelObject
             }
             echo ">No</label>\n";
         } else if ($file) {
-            $this->log_debug("List or object");
-            if ($type == 'object') {
-                $this->dump();
-                $this->var_debug($valueMap);
-                //have to create configFile entry
-                if (!array_key_exists($file, $configs)) {
-                    $this->log_debug("looking up $file");
-                    $configs = $this->parse_option_file($file, $configs);
-                }
+
+            //may have to create configFile entry
+            if (!array_key_exists($file, $configs)) {
+                $this->log_debug("looking up $file");
+                $configs = $this->parse_option_file($file, $configs);
             }
             //must look up
             if (array_key_exists($file, $configs)) {
@@ -268,6 +264,9 @@ class QuestionMapping extends ModelObject
                 }
                 echo " id='$label' data-placeholder='$visible' name='$label'";
                 echo " style='width: 100%;'>\n";
+                if (!$mult) {
+                    echo "<option></option>\n";
+                }
                 foreach ($configFile as $op) {
                     echo "<option ";
                     if ($valueMap && array_key_exists($op, $valueMap)) {
