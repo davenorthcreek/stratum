@@ -125,72 +125,7 @@ class QuestionMapping extends ModelObject
 		}
 		return $this;
 	}
-    /*
-    public function exportToHTML($configs) {
-        //PREFACE
-        $type = $this->get("type");
-        $id = $this->getBestId();
-        $mult = $this->get("multipleAnswers");
-        $waan = $this->get("WorldAppAnswerName");
-        $file = $this->get("configFile");
-        $answers = [];
-        if ($mult && ($type != 'choice')) {
-            foreach ($this->get("answerMappings") as $q2) {
-                $theId = $q2->getBestId();
-                $answers[$theId] = $q2;
-                if (!$waan) {
-                    $waan = $q2->get("WorldAppAnswerName");
-                }
-            }
-        } else {
-            $answers[$id] = $this;
-        }
-        if ($type == 'boolean') {
-            //remove trailing yes or no
-            $waanLabel = substr($waan, 0, strrpos($waan, ' '));
-        } else {
-            $waanLabel = $waan;
-        }
-        $label = $waanLabel;
-        $qlabel = preg_replace("/ /", "_", $waan);
-        //OUTPUT
-        echo "\n<div class='form-group'>";
-        echo "\n<button class='btn btn-info btn-sm'>".$label."</button>";
-        echo("\n<label for='$qlabel'>$label</label>\n");
-        if ($type == 'boolean') {
-            //$waan ends with yes or no
-            $yn = substr($waan, strrpos($waan, ' '));
-            $shorter = substr($waan, 0, strrpos($waan, ' '));
-            echo "<label class='radio-inline'><input type='radio' name='$shorter' value='yes'";
-            echo ">Yes</label>\n";
-            echo "<label class='radio-inline'><input type='radio' name='$shorter' value='no'";
-            echo ">No</label>\n";
-        } else if ($file) {
-            //must look up
-            if (array_key_exists($file, $configs)) {
-                $configFile = $configs[$file];
-                //now render a select form input
-                echo "<select class='form-control' id='$qlabel' name='$qlabel'>\n";
-                foreach ($configFile as $op) {
-                    echo '<option VALUE="'.$op.'">'.$op."\n";
-                }
-                echo "</select>";
-            }
-        } else if ($type == 'choice') {
-            echo "<select class='form-control' id='$qlabel' name='$qlabel'>\n";
-            foreach ($this->get('answerMappings') as $amap) {
-                $aval = $amap->get("Value");
-                if ($aval) {
-                    echo '<option VALUE="'.$aval.'">'.$aval."\n";
-                }
-            }
-            echo "</select>";
-        } else {
-            echo("<input class='form-control' type='text' >");
-        }
-        echo "\n</div>\n";
-    }
-    */
+
 
     public function exportQMToHTML($human, $configs, $qbyq, $formResult) {
         $form = $this->get('form');
@@ -232,10 +167,8 @@ class QuestionMapping extends ModelObject
             $mult = true;
         }
         $val = implode(',', array_keys($valueMap));
-        $noAnswer = false;
         $type = $this->get("type");
         $id = $this->getBestId();
-        $waan = $this->get("WorldAppAnswerName");
         $file = $this->get("configFile");
         if (array_key_exists($human, $qbyq)) {
             $qanswers = $qbyq[$human]; //an array!
@@ -243,7 +176,6 @@ class QuestionMapping extends ModelObject
         $qlabel = '';
         if (!$qanswers) {
             $qlabel = $human;
-            $noAnswer = true;
             //there doesn't have to be an answer to every question
         } else {
             $qlabel = $qanswers[0]->get("humanQACId");
@@ -316,6 +248,16 @@ class QuestionMapping extends ModelObject
             }
             echo ">No</label>\n";
         } else if ($file) {
+            $this->log_debug("List or object");
+            if ($type == 'object') {
+                $this->dump();
+                $this->var_debug($valueMap);
+                //have to create configFile entry
+                if (!array_key_exists($file, $configs)) {
+                    $this->log_debug("looking up $file");
+                    $configs = $this->parse_option_file($file, $configs);
+                }
+            }
             //must look up
             if (array_key_exists($file, $configs)) {
                 $configFile = $configs[$file];
@@ -362,6 +304,31 @@ class QuestionMapping extends ModelObject
             //}
         //}
     }
+
+    public function parse_option_file($theFileName, $configs) {
+		if (array_key_exists($theFileName, $configs)) {
+			return $configs;
+		}
+		//load provided txt file
+		$answers = [];
+        $fullFileName = base_path()."/storage/app/".$theFileName;
+		$handle = fopen($fullFileName, "r");
+		if ($handle) {
+			while (($line = fgets($handle)) !== false) {
+				// process the line read.
+				//answerId first, then text value
+                $keyvalue = preg_split("/[\s]+/", $line, 2);
+				$answers[$keyvalue[0]]=trim($keyvalue[1]);
+                //$this->log_debug("Answer: ".$keyvalue[0]." Value: ".$keyvalue[1]."");
+			}
+			fclose($handle);
+		} else {
+			$this->log_debug("Error opening ".$theFileName);
+		}
+		$configs[$theFileName] = $answers;
+		return $configs;
+	}
+
 
 	public function dump($recursion = 0) {
 		$tab = "";

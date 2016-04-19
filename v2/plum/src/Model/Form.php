@@ -131,7 +131,8 @@ class Form extends ModelObject
 					} else if ($elements[1]=="List") {
 						//select from a list instead of individual answers
 						//echo "Looking up answer for ".$first." in file ".$elements[2]."\n";
-						$list_file = $elements[2];
+                        $currentQ->set("type", "list");
+                        $list_file = $elements[2];
 						$currentQ->set("configFile", $list_file);
 						$currentQ->set("BullhornField", $elements[3]);
 						$waName =  $this->collectMultiWordString($elements, 4);
@@ -139,6 +140,8 @@ class Form extends ModelObject
 						$bhMappings[$elements[3]][] = $currentQ;
 						$waMappings[$waName][] = $currentQ;
 					} else if ($elements[1] == "multiple") {
+                        $currentQ->set("type", "multiple");
+                        $currentQ->set("multiple", true);
 						if (count($elements) > 3) {
 							$bullhorn_prefix = $elements[2]."_";
 						}
@@ -154,12 +157,13 @@ class Form extends ModelObject
 						$currentQ->set("WorldAppAnswerName", $waName);
 						$choice_flag = true;
 					} else if ($elements[1] == 'object') {
-						$currentQ->set("BullhornField", $elements[2]);
+                        $currentQ->set("configFile", $elements[2]);
+						$currentQ->set("BullhornField", $elements[3]);
 						$currentQ->set("type", "object");
-						$waName = $this->collectMultiWordString($elements, 3);
+						$waName = $this->collectMultiWordString($elements, 4);
 						$currentQ->set("WorldAppAnswerName", $waName);
 						$waMappings[$waName][] = $currentQ;
-						$bhMappings[$elements[2]][] = $currentQ;
+						$bhMappings[$elements[3]][] = $currentQ;
 					} else {
 						//this is a normal field assigned to a top-level question ID
 						$currentQ->set("type", $elements[1]);

@@ -261,27 +261,24 @@ class FormResult extends ModelObject
                 /**************************** */
                 $mult = $qmap->get("multipleAnswers"); //boolean
                 $type = $qmap->get("type");
-                $this->log_debug("Displaying $theId $type");
-                if ($mult && ($type!='choice') && ($type !='boolean')) {
-                    $this->log_debug("Mult and type != choice");
+                $this->log_debug("$theId $type");
+                if ($mult && ($type=-'multiple')) {
+                    $this->log_debug("Mult and not choice or boolean");
                     foreach ($qmap->get("answerMappings") as $q2) {
                         $theId = $q2->getBestId();
                         $sectionQs[$theId] = $q2;
-                        $this->log_debug("setting $theId to be the answer");
+                        $this->log_debug("Setting answer $theId ".$q2->get("value"));
                     }
                 } else if ($type == "boolean") {
-                    //booleans are a special case
                     $theId = $qmap->getBestId();
-                    $this->log_debug("At boolean: $theId");
                     if (array_key_exists($theId, $questionMaps)) {
-                        $this->log_debug("array key exists");
+                        $this->log_debug("using $theId ".$qmap->get("WorldAppAnswerName"));
                         $sectionQs[$theId] = $qmap;
                     }
-                    $waan = $qmap->get("WorldAppAnswerName");
-                    $shorter = substr($waan, 0, strrpos($waan, ' '));
                 } else {
                     $theId = $qmap->getBestId();
                     $sectionQs[$theId] = $qmap;
+                    $this->log_debug("default case");
                 }
             }
             foreach ($sectionQs as $human=>$qmap) {
