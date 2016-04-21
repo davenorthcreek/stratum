@@ -251,14 +251,19 @@ class Candidate extends ModelObject
         $qmaps = $this->getQuestionMappings($bh, $form);
         if ($qmaps) {
             foreach ($qmaps as $qmap) {
-				$wa = $qmap->get("WorldAppAnswerName");
-				if ($wa) {
-					$this->log_debug("$wa");
-				}
+				$wa2 = $qmap->get("WorldAppAnswerName");
+                if ($wa2) {
+                    if ($wa2 == $wa) {
+                        //ignore
+                    } else {
+                        $wa = $wa2;
+                        $this->log_debug("WAAN: $wa");
+                    }
+                }
 			}
 		}
         //returns the last worldapp label found in the list
-        //but logs all of them if you're interested
+        //but logs all the different ones if you're interested
 		return $wa;
 	}
 
@@ -266,7 +271,7 @@ class Candidate extends ModelObject
         //multiple questions map to the same bullhorn field
         $mappings = $form->get("BHMappings");
 		if (array_key_exists($fieldname, $mappings)) {
-			$this->log_debug("Found $fieldname");
+			$this->log_debug("QM Found $fieldname");
 			return $mappings[$fieldname];
         }
         return null;
@@ -376,12 +381,16 @@ class Candidate extends ModelObject
 	public function marshalReferences() {
 		$json = [];
 		$references = $this->loadReferences();
-		foreach ($references as $label=>$ref) {
-			//we need to submit these references as new BH objects
-			//then attach their ids to the Candidate within BH
+        $this->var_debug($references);
 
-			$json['references'][$label] = $ref->marshalToJSON();
+		foreach ($references as $label=>$ref) {
+        	//we need to submit these references as new BH objects
+			//then attach their ids to the Candidate within BH
+            if (is_a($ref, "\Stratum\Model\CandidateReference")) {
+			    $json['references'][$label] = $ref->marshalToJSON();
+            }
 		}
+        $this->log_debug($json);
 		return $json;
 	}
 
@@ -684,7 +693,14 @@ class Candidate extends ModelObject
         */
     }
 
-	public function dump() {
+
+
+
+    public function validField($key) {
+        return array_key_exists($key, $this->_fields);
+    }
+
+    public function dump() {
 		$this->log_debug("---------------------------");
 		$this->log_debug("Stratum\Model\Candidate:");
 		foreach ($this->_fields as $key=>$there) {

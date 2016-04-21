@@ -45,6 +45,8 @@ Route::group(['middleware' => ['web']], function () {
     Route::post('/formtemplate/{id}/launch-form', ['uses'=>'FormTemplateController@postLaunchForm', 'as'=>'candidateLaunchForm']);
     Route::get('/formresponse/{id}', ['uses'=>'FormResponseController@index', 'as'=>'formResponseDisplay']);
 
+    Route::post('/formresponse/{id}/confirm', ['uses'=>'FormResponseController@confirmValues', 'as'=>'confirmValues']);
+
 
 
     Route::get('/home', 'CorporateUserController@index');

@@ -109,6 +109,8 @@ class FormResult extends ModelObject
 			}
 		} else if ($qmap->get("type")=="choice") {
 			$value = $qmap->get("Value");
+        } else if ($qmap->get("type")=="multichoice") {
+			$value = $qmap->get("Value");
 		} else if ($qmap->get("type")=="object") {
 			$obj = $q->get("objects");
 			if (array_key_exists('objectName', $obj)) {
@@ -226,71 +228,50 @@ class FormResult extends ModelObject
 		return $this;
 	}
 
-    public function exportToHTML($form) {
-        //$this->dump(); //list of questions with answers (not mappings)
-        $form = $this->get('form');
-        //$form->dump(); //mappings
+    public function exportSectionToHTML($form, $section, $qbyq) {
+        $sectionQs=null;
         $questionMaps = $form->get('questionMappings');
-        $questions = $this->get('questions');
-        $qbyq = [];
-        foreach ($questions as $q1) {
-            $qbyq[$q1->get("humanQuestionId")][] = $q1;
-            $qbyq[$q1->get('humanQAId')][] = $q1;
-        }
-        $sections = $form->get("sections");
-        $headers = $form->get("sectionHeaders");
-        //expand/collapse all button
-
-        for ($i = 0; $i < count($sections); $i++) {
-            //foreach ($form->get("sections") as $section) {
-            $section = $sections[$i];
-            $label = $headers[$i];
-            echo '<div class="box box-primary collapsed-box">';
-            echo '<div class="box-header with-border">';
-            echo "\n\t<h3 class='box-title'>$label</h3>";
-            echo "\n\t".'<div class="box-tools pull-right">';
-            echo "\n\t\t".'<button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse/Expand"><i class="fa fa-plus"></i></button>';
-            echo "\n\t</div>";
-            echo "\n</div>";
-            echo "\n<div class='box-body' style='display: none;'>\n";
-            $sectionQs=null;
-            foreach ($section as $qmap) {
-                $theId = $qmap->getBestId();
+        foreach ($section as $qmap) {
+            $theId = $qmap->getBestId();
                 /******************************
                  first pass, find subquestions
                 /**************************** */
-                $mult = $qmap->get("multipleAnswers"); //boolean
-                $type = $qmap->get("type");
-                $this->log_debug("$theId $type");
-                if ($mult && ($type=-'multiple')) {
-                    $this->log_debug("Mult and not choice or boolean");
-                    foreach ($qmap->get("answerMappings") as $q2) {
-                        $theId = $q2->getBestId();
-                        $sectionQs[$theId] = $q2;
-                        $this->log_debug("Setting answer $theId ".$q2->get("value"));
-                    }
-                } else if ($type == "boolean") {
-                    $theId = $qmap->getBestId();
-                    if (array_key_exists($theId, $questionMaps)) {
-                        $this->log_debug("using $theId ".$qmap->get("WorldAppAnswerName"));
-                        $sectionQs[$theId] = $qmap;
-                    }
-                } else {
-                    $theId = $qmap->getBestId();
+            $mult = $qmap->get("multipleAnswers"); //boolean
+            $type = $qmap->get("type");
+            $this->log_debug("$theId $type");
+            if ($type == "boolean") {
+                $theId = $qmap->getBestId();
+                if (array_key_exists($theId, $questionMaps)) {
+                    $this->log_debug("using $theId ".$qmap->get("WorldAppAnswerName"));
                     $sectionQs[$theId] = $qmap;
-                    $this->log_debug("default case");
+                }
+            } else if ($mult && ($type!='choice') && ($type != "list") && ($type != "multichoice")) {
+                $this->log_debug("Mult and not choice, multichoice, boolean, or list");
+                foreach ($qmap->get("answerMappings") as $q2) {
+                    $theId = $q2->getBestId();
+                    $sectionQs[$theId] = $q2;
+                    $this->log_debug("Setting answer $theId ".$q2->get("value"));
+                }
+            } else {
+                $theId = $qmap->getBestId();
+                $sectionQs[$theId] = $qmap;
+                $this->log_debug("default case");
+                if ($type == "object" && array_key_exists($theId, $qbyq)) {
+                    $qmap->dump();
+                    $qanswers = $qbyq[$theId]; //an array!
+                    foreach ($qanswers as $q) {
+                        $q->dump();
+                        $this->log_debug($this->getValue($theId, $q, $qmap, []));
+                    }
                 }
             }
-            foreach ($sectionQs as $human=>$qmap) {
+        }
+        foreach ($sectionQs as $human=>$qmap) {
                 /****************************************
                 second pass, export to html with answers
                 ************************************** */
-                $qmap->exportQMToHTML($human, $this->get("configs"), $qbyq, $this);
-            }
-            echo "\n</div>\n";
-            echo '<div class="box-footer"></div><!-- /.box-footer-->';
-            echo '</div><!-- /.box -->';
-		}
+            $qmap->exportQMToHTML($human, $this->get("configs"), $qbyq, $this);
+        }
     }
 
 	public function dump() {

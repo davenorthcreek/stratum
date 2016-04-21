@@ -19,7 +19,7 @@ class CandidateController extends Controller
       return $this->show(10809);
   }
 
-  public function show($id) {
+  function load($id) {
       $candidate = null;
       if (Cache::has($id)) {
           $candidate = Cache::get($id);
@@ -31,11 +31,18 @@ class CandidateController extends Controller
           $bc->load($candidate);
           Cache::add($id, $candidate, 60);
       }
+      return $candidate;
+  }
+
+  public function show($id) {
+      $message = "Candidate Information";
+      $candidate = $this->load($id);
       $data['thecandidate'] = $candidate;
       $fc = new \Stratum\Controller\FormController();
       $data['form'] = $fc->setupForm();
       $cuc = new CorporateUserController();
       $data['candidates'] = $cuc->load_candidates();
+      $data['message'] = $message;
       return view('candidate')->with($data);
   }
 

@@ -26,6 +26,15 @@ class CandidateController
 		$this->_logger = $lgr;
 	}
 
+    function var_debug($object=null) {
+        ob_start();                    // start buffer capture
+        var_dump( $object );           // dump the values
+        $contents = ob_get_contents(); // put the buffer into a variable
+        ob_end_clean();                // end capture
+        $this->log_debug( $contents ); // log contents of the result of var_dump( $object )
+    }
+
+
 	protected function log_debug($str) {
 		if (!is_null($this->_logger)) {
 			$e = debug_backtrace(true, 2);
@@ -80,6 +89,12 @@ class CandidateController
 
 	private function collate($candidate, $the_key, $formResult) {
 		$arr = $formResult->findByBullhorn($the_key);
+        $this->collateWithArray($candidate, $the_key, $arr);
+    }
+
+    private function collateWithArray($candidate, $the_key, $arr) {
+        //$arr has either index numbers or waan as keys
+        //and the values in an array
 		$total = "";
 		if ($the_key == 'customText20') {
 			$pt1 = '';
@@ -155,5 +170,114 @@ class CandidateController
 		return $name;
 		$candidate->set("name", $name);
 	}
+
+    public function populateFromRequest($candidate, $req, $c2, $formResult) {
+        //we have an existing formResult for this person - let's use that
+        //to set up the keys for the candidate - that has been debugged
+        //that candidate is $c2
+        $id = $req["id"];
+        $this->log_debug($id);
+        foreach ($req as $key=>$values) {
+            $waan = "";
+            $this->log_debug("key: $key");
+            if ($key == "_token") {
+            } else if (preg_match("/customObject(\d)_(.*)/", $key, $m)) {
+                //$this->log_debug("Found Custom Object".$m[1]." data: ".$m[2]);
+                $cos[$m[1]][$m[2]] = $values;
+            } else if (preg_match("/recommender(\d)_(.*)/", $key, $m)) {
+                //$this->log_debug("Found Recommender".$m[1]." data: ".$m[2]);
+                $refs[$m[1]][$m[2]] = $values;
+            } else if ($key == "skillID") {
+                //$this->log_debug("Skill ID");
+            } else if ($key == "specialtyCategoryID") {
+                //$this->log_debug("specialtyCategoryID");
+            } else if ($key == "id") {
+                $id = $values[0];
+                $candidate->set("id", $id);
+                $this->log_debug("Set candidate id to $id");
+            } else if ($candidate->validField($key)) {
+                $qmaps = $formResult->findByBullhorn($key);
+                //$qmaps is a Human Readable (WAAN) label and
+                //an array of answers (from WorldApp result)
+
+                $this->var_debug($qmaps);
+                if ($qmaps && is_numeric(array_keys($qmaps)[0])) {
+                    $toSort = array_keys($qmaps);
+                    sort($toSort);
+                    foreach ($toSort as $numKey) {
+                        $this->log_debug("FormResult(numeric): $numKey: ".$qmaps[$numKey]);
+                    }
+                } else {
+                    foreach($qmaps as $waan=>$frvals) {
+                        if (is_array($frvals)) {
+                            foreach (array_keys($frvals) as $frlabel) {
+                                $frval = $frvals[$frlabel];
+                                if (is_array($frval)) {
+                                    if (array_key_exists("combined", $frval)) {
+                                        $frval = $frval['combined'];
+                                    } else if ($array_key_exists("value", $frval)) {
+                                        $frval = $frval['value'];
+                                    } else {
+                                        $frval = "can't parse";
+                                    }
+                                    $this->log_debug("FormResult: $waan: $frlabel: $frval");
+                                } else {
+                                    //frval is not an array
+                                    $this->log_debug("FormResult: $waan: $frlabel: $frval");
+                                }
+                            }
+                        } else {
+                            //frvals is not an array
+                            $this->log_debug("FormResult: $waan: $frvals");
+                        }
+                    }
+                }
+                foreach($values as $val) {
+                    $this->log_debug("Request:    $waan: $val");
+                }
+                $value = implode(", ", $values);
+                $this->log_debug("setting $key to $value");
+                $candidate->set($key, $value);
+            } else {
+                $this->log_debug("Invalid Field: $key");
+                $this->var_debug($values);
+            }
+        }
+        $this->loadReferencesFromRequest($candidate, $refs);
+        $this->loadCustomObjectFromRequest($candidate, $cos);
+        return $candidate;
+    }
+
+    private function loadCustomObjectFromRequest($candidate, $cos) {
+        foreach ($cos as $index=>$co) {
+            $obj = new \Stratum\Model\CustomObject();
+            foreach ($co as $key=>$values) {
+                $value = implode(",", $values);
+                $obj->set($key, $value);
+                //$this->log_debug("Setting custom object ".$index." $key to $value");
+            }
+            $label = "customObject".$index."s";
+            $candidate->set($label, $obj);
+        }
+
+    }
+
+    private function loadReferencesFromRequest($candidate, $refs) {
+        $reference[0] = new \Stratum\Model\CandidateReference();
+        $reference[1] = new \Stratum\Model\CandidateReference();
+        $index = 0;
+        foreach ($refs as $ref) {
+
+            foreach ($ref as $key=>$values) {
+                $value = implode(",", $values);
+                $reference[$index]->set($key, $value);
+                //$this->log_debug("Setting reference ".($index + 1)." $key to $value");
+            }
+            $index++;
+        }
+        $candidate->set("references", $reference);
+    }
+
+
 
 }

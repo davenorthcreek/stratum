@@ -35,7 +35,7 @@ class ModelObject
 		var_dump( $object );           // dump the values
 		$contents = ob_get_contents(); // put the buffer into a variable
 		ob_end_clean();                // end capture
-		$this->log_debug( $contents );        // log contents of the result of var_dump( $object )
+		$this->log_debug( $contents ); // log contents of the result of var_dump( $object )
 	}
 
 	protected function log_debug($str) {

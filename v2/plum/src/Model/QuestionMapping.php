@@ -168,6 +168,9 @@ class QuestionMapping extends ModelObject
         }
         $val = implode(',', array_keys($valueMap));
         $type = $this->get("type");
+        if ($type == "multichoice") {
+            $mult = true;
+        }
         $id = $this->getBestId();
         $file = $this->get("configFile");
         if (array_key_exists($human, $qbyq)) {
@@ -189,6 +192,18 @@ class QuestionMapping extends ModelObject
         }
         $answermap = $questionMaps[$qlabel];
         $waan = $answermap->get("WorldAppAnswerName");
+        $bh = $this->get("BullhornField");
+        if (!$bh) {
+            $bh = $answermap->get("BullhornField");
+            if (!$bh) {
+                foreach ($answermap->get("answerMappings") as $q2) {
+                    $bh = $q2->get("BullhornField");
+                    if ($bh) {
+                        break;
+                    }
+                }
+            }
+        }
         if (!$waan) {
             //go one deeper, if it is there
             foreach ($answermap->get("answerMappings") as $q2) {
@@ -198,14 +213,17 @@ class QuestionMapping extends ModelObject
                 }
             }
         }
-        $label = $qlabel;
+        if ($bh) {
+            $label = $bh;
+        } else {
+            $label = $qlabel;
+        }
         $visible = $waan;
         if ($type == 'boolean') {
             //remove trailing yes or no
             $visible = substr($visible, 0, strrpos($visible, ' '));
         }
-        $label .= " ".$visible;
-        $label = preg_replace("/\s/", "_", $waan);
+        $label .= "[]";
         //now we repeat for every response in $q
         $answermap = null;
         if ($qanswers) {
@@ -237,12 +255,12 @@ class QuestionMapping extends ModelObject
             //$waan ends with yes or no
             $yn = substr($waan, strrpos($waan, ' '));
             $shorter = substr($waan, 0, strrpos($waan, ' '));
-            echo "<label class='radio-inline'><input type='radio' name='$shorter' value='yes'";
+            echo "<label class='radio-inline'><input type='radio' name='$label' value='yes'";
             if ($answermap && strcasecmp($yn, " no")) {
                 echo " CHECKED";
             }
             echo ">Yes</label>\n";
-            echo "<label class='radio-inline'><input type='radio' name='$shorter' value='no'";
+            echo "<label class='radio-inline'><input type='radio' name='$label' value='no'";
             if ($answermap && strcasecmp($yn, " yes")) {
                 echo " CHECKED";
             }
@@ -259,14 +277,15 @@ class QuestionMapping extends ModelObject
                 $configFile = $configs[$file];
                 //now render a select form input
                 echo "<select class='form-control select2' ";
-                if ($mult) {
+                //if ($mult) {
                     echo "multiple='multiple'";
-                }
+                //}
                 echo " id='$label' data-placeholder='$visible' name='$label'";
-                echo " style='width: 100%;'>\n";
-                if (!$mult) {
-                    echo "<option></option>\n";
-                }
+                echo " style='width: 100%;'";
+                echo ">\n";
+                //if (!$mult) {
+                //    echo "<option></option>\n";
+                //}
                 foreach ($configFile as $op) {
                     echo "<option ";
                     if ($valueMap && array_key_exists($op, $valueMap)) {
@@ -276,13 +295,14 @@ class QuestionMapping extends ModelObject
                 }
                 echo "</select>";
             }
-        } else if ($type == 'choice') {
+        } else if ($type == 'choice' || $type == 'multichoice') {
             echo "<select class='form-control select2' ";
-            if ($mult) {
+            if ($type == 'multichoice') {
                 echo "multiple='multiple'";
             }
             echo " id='$label' data-placeholder='$visible' name='$label'";
-            echo " style='width: 100%;'>\n";
+            echo " style='width: 100%;'";
+            echo ">\n";
             $qmap2 = $questionMaps[$human];
             foreach ($qmap2->get('answerMappings') as $amap) {
                 $aval = $amap->get("Value");
@@ -296,7 +316,7 @@ class QuestionMapping extends ModelObject
             }
             echo "</select>";
         } else {
-            echo("<input class='form-control' type='text' value='".$val."'>");
+            echo("<input class='form-control' name='$label' type='text' value='".$val."'>");
         }
             //}
         echo "\n</div>\n";
@@ -352,7 +372,7 @@ class QuestionMapping extends ModelObject
 			$this->log_debug("Sub Question ".$sub->get("QAId"));
 			$sub->dump($recursion);
 		}
-		$this->log_debug("\n".$tab."End of QuestionMapping\n".$tab);
+		$this->log_debug($tab."End of QuestionMapping");
 	}
 
 }

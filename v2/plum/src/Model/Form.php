@@ -76,16 +76,23 @@ class Form extends ModelObject
 				$elements = preg_split("/\s+/", $line);
 				$first = $elements[0];
                 if ($first == "Section") {
+                    if ($currentQ) {
+                        $sections[$sectionCounter][] = $currentQ;
+                        $answers[] = $currentQ;
+                        $questionMappings[$mapKey] = $currentQ;
+                        $currentQ = null;
+                        $choice_flag = false;
+                    }
                     $sectionCounter++;
                     $sectionHeaders[$sectionCounter] = $this->collectMultiWordString($elements, 1);
 				} else if (preg_match("/Q\d+\.A\d+/", $first)) {
-					//full line
+					//full line (QXAX something something something)
 					$q = new QuestionMapping();
 					$q->set("form", $this);
 					$q->set("QAId", $elements[0]);
 					if ($choice_flag) {
-						//this is just one of the options
-						$q->set("type", "choice");
+						//this is just one of the options in a choice list
+						$q->set("type", $currentQ->get("type"));
 						$value = $this->collectMultiWordString($elements, 1);
 						$q->set("Value", $value);  //only time answer value is in QandA.txt!
 						$q->set("BullhornField", $currentQ->get("BullhornField"));
@@ -107,8 +114,8 @@ class Form extends ModelObject
 				} else if (preg_match("/Q\d+/", $first)) {
 					//store previous question
                     //check for increment in section
-					if ($currentQ) {
-						$choice_flag = false; //reset
+                    $choice_flag = false; //reset
+                    if ($currentQ) {
 						if ($currentQ->get("multipleAnswers")) {
 							$currentQ->set("BullhornField", NULL);
 							$currentQ->set("WorldAppAnswerName", NULL);
@@ -116,7 +123,7 @@ class Form extends ModelObject
 						}
 						$answers[] = $currentQ;
                         $sections[$sectionCounter][] = $currentQ;
-						$questionMappings[$mapKey] = $currentQ;
+                        $questionMappings[$mapKey] = $currentQ;
 						//$currentQ->dump();
 						$bullhorn_prefix = "";
 						$wa_prefix = "";
@@ -140,6 +147,7 @@ class Form extends ModelObject
 						$bhMappings[$elements[3]][] = $currentQ;
 						$waMappings[$waName][] = $currentQ;
 					} else if ($elements[1] == "multiple") {
+                        //multiple subquestions under this question
                         $currentQ->set("type", "multiple");
                         $currentQ->set("multiple", true);
 						if (count($elements) > 3) {
@@ -153,6 +161,13 @@ class Form extends ModelObject
 						//choose one of the following options, like boolean
 						$currentQ->set("BullhornField", $elements[2]);
 						$currentQ->set("type", "choice");
+						$waName = $this->collectMultiWordString($elements, 3);
+						$currentQ->set("WorldAppAnswerName", $waName);
+						$choice_flag = true;
+                    } else if ($elements[1] == "multichoice") {
+                        //choose one or more of the following options
+                        $currentQ->set("BullhornField", $elements[2]);
+						$currentQ->set("type", "multichoice");
 						$waName = $this->collectMultiWordString($elements, 3);
 						$currentQ->set("WorldAppAnswerName", $waName);
 						$choice_flag = true;
