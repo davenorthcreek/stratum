@@ -45,7 +45,7 @@ class FormResult extends ModelObject
 		$this->set("response", $jsonDecoded["response"]); //all questions answered in "response" array
 	}
 
-	//returns an array of QuestionMapping objects
+	//returns an array of labels and answers
 	private function examine_mappings($key, $mapType) {
 		$questions = $this->get("questions");
 		$form = $this->get("form");

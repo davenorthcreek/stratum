@@ -425,6 +425,8 @@ class Bullhorn {
 		if (array_key_exists('data', $decoded_cand)) {
 			$candidate->populateFromData($decoded_cand['data']);
             $this->load_skills($candidate);
+			$this->load_categories($candidate);
+			$this->load_specialties($candidate);
 			//$candidate->dump();
 		} else {
 			$this->log_debug("Error Response from Bullhorn:");
@@ -454,14 +456,36 @@ class Bullhorn {
 
 		$country_ID = 0;
 		$second_ID  = 0;
+		$object = false;
 
 		//look up country ids from country names in Address fields
 		$addr_country = $candidate->get('address(countryID)');
+		if (!$addr_country) {
+			//look up Address object
+			$addr = $candidate->get("address");
+			if ($addr) {
+				$addr_country = $addr->get("countryID");
+				$object = true;
+			}
+		}
 		if ($addr_country) {
 			$country_ID = $this->lookup_country($addr_country);
-			$candidate->set('address(countryID)', $country_ID);
+			if ($object) {
+				$addr = $candidate->get("address");
+				$addr->set("countryID", $country_ID);
+				$candidate->set("address", $addr);
+			} else {
+				$candidate->set('address(countryID)', $country_ID);
+			}
 		}
 		$second_country = $candidate->get('secondaryAddress(countryID)');
+		if (!$second_country) {
+			//look up Address object
+			$addr2 = $candidate->get("secondaryAddress");
+			if ($addr2) {
+				$second_country = $addr2->get("countryID");
+			}
+		}
 		if ($second_country) {
 			if ($second_country == $addr_country) {
 				//skip unnecessary duplicate lookup
@@ -469,7 +493,13 @@ class Bullhorn {
 			} else {
 				$second_ID = $this->lookup_country($second_country);
 			}
-			$candidate->set('secondaryAddress(countryID)', $second_ID);
+			if ($object) {
+				$addr2 = $candidate->get("secondaryAddress");
+				$addr2->set("countryID", $second_ID);
+				$candidate->set("secondaryAddress", $addr2);
+			} else {
+				$candidate->set('secondaryAddress(countryID)', $second_ID);
+			}
 		}
 
 		//first, does the candidate have an id?
@@ -567,6 +597,32 @@ class Bullhorn {
 		return $skill;
 	}
 
+	public function find_category($skill_name) {
+		$skill_json = \Storage::get("Categories.json");
+		$skill_list = json_decode($skill_json, true)['data'];
+		$skill = new \Stratum\Model\Skill();
+		foreach ($skill_list as $valLabel) {
+			if ($valLabel['label'] == $skill_name) {
+				$skill->set("id", $valLabel['value']);
+				$skill->set("name", $valLabel['label']);
+			}
+		}
+		return $skill;
+	}
+
+	public function find_specialty($skill_name) {
+		$skill_json = \Storage::get("Specialties.json");
+		$skill_list = json_decode($skill_json, true)['data'];
+		$skill = new \Stratum\Model\Skill();
+		foreach ($skill_list as $valLabel) {
+			if ($valLabel['label'] == $skill_name) {
+				$skill->set("id", $valLabel['value']);
+				$skill->set("name", $valLabel['label']);
+			}
+		}
+		return $skill;
+	}
+
     public function load_skills($candidate) {
         $skill_string = "";
         $skill_json = \Storage::get("Skills.json");
@@ -582,6 +638,38 @@ class Bullhorn {
         }
         $candidate->set("skillID", rtrim($skill_string));
     }
+
+	public function load_categories($candidate) {
+		$skill_string = "";
+		$skill_json = \Storage::get("Categories.json");
+		$full_skill_list = json_decode($skill_json, true)['data'];
+		//check primarySkills to see what's there
+		$skill_ids = $candidate->get("categories");
+		foreach ($skill_ids['data'] as $skill_id) {
+			foreach ($full_skill_list as $valLabel) {
+				if ($skill_id['id'] == $valLabel['value']) {
+					$skill_string .= $valLabel['label']."\n";
+				}
+			}
+		}
+		$candidate->set("skillID", rtrim($skill_string));
+	}
+	public function load_specialties($candidate) {
+        $skill_string = "";
+        $skill_json = \Storage::get("Specialties.json");
+        $full_skill_list = json_decode($skill_json, true)['data'];
+        //check primarySkills to see what's there
+        $skill_ids = $candidate->get("specialties");
+        foreach ($skill_ids['data'] as $skill_id) {
+            foreach ($full_skill_list as $valLabel) {
+                if ($skill_id['id'] == $valLabel['value']) {
+                    $skill_string .= $valLabel['label']."\n";
+                }
+            }
+        }
+        $candidate->set("skillID", rtrim($skill_string));
+    }
+
 
 
 
@@ -614,7 +702,7 @@ class Bullhorn {
 			foreach ($ids as $discard) {
 				$the = $discard['id'];
 				if ($the != $keep) {
-					$this->delete_custom_object($the);
+					$this->delete_custom_object($the, $id);
 				}
 			}
 		}
@@ -657,6 +745,7 @@ class Bullhorn {
         $skill_objs = [];
         //may not be any
         if ($skills) {
+			$this->log_debug("Skills: $skills");
             $skill_list = preg_split("/\n/", $skills);
             $flag = false;
             foreach ($skill_list as $s) {
@@ -676,6 +765,67 @@ class Bullhorn {
 		$this->var_debug($subm_sk_decoded);
 		return $subm_sk_decoded;
     }
+
+	public function submit_categories($candidate) {
+        //https://rest.bullhorn.com/rest-services/e999/entity/Candidate/3084/primarySkills/964,684,253
+        $id = $candidate->get("id");
+		$subm_sk_url = $this->base_url."entity/Candidate/$id/category/";
+        $skills = $candidate->get("categoryID");
+        $skill_objs = [];
+        //may not be any
+        if ($skills) {
+			$this->log_debug("Categories: $skills");
+            $skill_list = preg_split("/\n/", $skills);
+            $flag = false;
+            foreach ($skill_list as $s) {
+                $skill = $this->find_category($s);
+                $subm_sk_url .= $skill->get("id").",";
+                $flag = true;
+            }
+            if ($flag) {
+                $subm_sk_url = substr($subm_sk_url, 0, strlen($subm_sk_url)-1); //remove last semi-colon
+				$this->log_debug($subm_sk_url);
+            }
+        }
+		$subm_sk_uri = $this->service->getRestUri($subm_sk_url, $this->session_key);
+
+		$subm_sk = $this->httpClient->retrieveResponse($subm_sk_uri, '', [], 'PUT');
+		$subm_sk_decoded = $this->extract_json($subm_sk);
+		$this->log_debug("Submitted categories: ");
+		$this->var_debug($subm_sk_decoded);
+		return $subm_sk_decoded;
+    }
+
+	public function submit_specialties($candidate) {
+		//https://rest.bullhorn.com/rest-services/e999/entity/Candidate/3084/primarySkills/964,684,253
+		$id = $candidate->get("id");
+		$subm_sk_url = $this->base_url."entity/Candidate/$id/specialty/";
+		$skills = $candidate->get("specialtyCategoryID");
+		$skill_objs = [];
+		//may not be any
+		if ($skills) {
+			$this->log_debug("Specialties: $skills");
+			$skill_list = preg_split("/\n/", $skills);
+			$flag = false;
+			foreach ($skill_list as $s) {
+				$skill = $this->find_specialty($s);
+				$subm_sk_url .= $skill->get("id").",";
+				$flag = true;
+			}
+			if ($flag) {
+				$subm_sk_url = substr($subm_sk_url, 0, strlen($subm_sk_url)-1); //remove last semi-colon
+				$this->log_debug($subm_sk_url);
+			}
+		}
+		$subm_sk_uri = $this->service->getRestUri($subm_sk_url, $this->session_key);
+
+		$subm_sk = $this->httpClient->retrieveResponse($subm_sk_uri, '', [], 'PUT');
+		$subm_sk_decoded = $this->extract_json($subm_sk);
+		$this->log_debug("Submitted Specialties: ");
+		$this->var_debug($subm_sk_decoded);
+		return $subm_sk_decoded;
+	}
+
 
 
 	public function confirm($candidate) {

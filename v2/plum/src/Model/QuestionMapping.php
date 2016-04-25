@@ -223,7 +223,9 @@ class QuestionMapping extends ModelObject
             //remove trailing yes or no
             $visible = substr($visible, 0, strrpos($visible, ' '));
         }
-        $label .= "[]";
+        //going to put both bullhorn and worldapp in the label
+        $label .= "*".$waan."[]";
+
         //now we repeat for every response in $q
         $answermap = null;
         if ($qanswers) {

@@ -175,67 +175,184 @@ class CandidateController
         //we have an existing formResult for this person - let's use that
         //to set up the keys for the candidate - that has been debugged
         //that candidate is $c2
+        $refs = [];
+        $cos = [];
+        $address = [];
+        $address2 = [];
         $id = $req["id"];
+        //for customText20
+        $pt1 = "";
+        $pt2 = "";
+        $ctb5 = [];
         $this->log_debug($id);
-        foreach ($req as $key=>$values) {
+        $this->var_debug($req);
+        foreach ($req as $jointkey=>$values) {
+            $this->log_debug("key: $jointkey");
+            if (!$values || $values == " ") {
+                $this->log_debug("nothing in Values, skipping");
+                continue;
+            }
+            if (is_array($values) && count($values)==1 && $values[0]=="") {
+                $this->log_debug("nothing in Values, skipping");
+                continue;
+            } else {
+                $this->var_debug($values);
+            }
+            //now split key and we get both bh and waan
+            $key = "";
             $waan = "";
-            $this->log_debug("key: $key");
-            if ($key == "_token") {
+            $star = strpos($jointkey, "*");
+            if ($star) {
+                $key = substr($jointkey, 0, $star);
+                $waan = substr($jointkey, $star + 1);
+            }
+            $waan = preg_replace("/_/", " ", $waan);
+            $this->log_debug("BH: $key");
+            $this->log_debug("WAAN: $waan");
+            if ($jointkey == "_token" || $jointkey == "id") {
             } else if (preg_match("/customObject(\d)_(.*)/", $key, $m)) {
-                //$this->log_debug("Found Custom Object".$m[1]." data: ".$m[2]);
-                $cos[$m[1]][$m[2]] = $values;
+                $this->log_debug("Found Custom Object".$m[1]." field: ".$m[2]);
+                if ($key == "customObject1_textBlock3") {
+
+                    $waan2 = preg_replace("/Additional Candidate Notes: /", "", $waan);
+                    $values = "$waan2: ".$values[0];
+                    $this->log_debug("Values now $values");
+                }
+                $existing = "";
+                if (array_key_exists($m[1], $cos) && array_key_exists($m[2], $cos[$m[1]])) {
+                    $existing = $cos[$m[1]][$m[2]];
+                }
+                if ($existing) {
+                    $cos[$m[1]][$m[2]] = "$existing\n\n$values";
+                } else {
+                    $cos[$m[1]][$m[2]] = $values;
+                }
             } else if (preg_match("/recommender(\d)_(.*)/", $key, $m)) {
                 //$this->log_debug("Found Recommender".$m[1]." data: ".$m[2]);
                 $refs[$m[1]][$m[2]] = $values;
-            } else if ($key == "skillID") {
-                //$this->log_debug("Skill ID");
-            } else if ($key == "specialtyCategoryID") {
-                //$this->log_debug("specialtyCategoryID");
+            } else if (preg_match("/address\((.*)\)/", $key, $m)) {
+                $address[$m[1]] = $values;
+            } else if (preg_match("/secondaryAddress\((.*)\)/", $key, $m)) {
+                $address2[$m[1]] = $values;
+            } else if ($key == "specialtyCategoryID" || $key == "categoryID" || $key == "skillID") {
+                $this->log_debug($key);
+                $this->var_debug($values);
+                $existing = $candidate->get($key);
+                if ($existing) {
+                    $values[] = $existing;
+                }
+                $value = "";
+                foreach ($values as $val) {
+                    $value .= $val."\n";
+                }
+                $value = substr($value, 0, strlen($value)-1);
+                $candidate->set($key, $value);
             } else if ($key == "id") {
-                $id = $values[0];
+                $this->var_debug($values[0]);
+                $id = $values[0]; //repeat of $id=$req["id"]?
                 $candidate->set("id", $id);
-                $this->log_debug("Set candidate id to $id");
+                $this->log_debug("Set candidate id to ".$id);
             } else if ($candidate->validField($key)) {
+
+                $previous = $candidate->get($key);
+
                 $qmaps = $formResult->findByBullhorn($key);
                 //$qmaps is a Human Readable (WAAN) label and
                 //an array of answers (from WorldApp result)
 
+                $splitvals = []; //this will be the definitive formResult list
+                $splithash = []; // and this is the uniqued version
+                $rhash = [];     // and this is the unique list of req values
                 $this->var_debug($qmaps);
                 if ($qmaps && is_numeric(array_keys($qmaps)[0])) {
                     $toSort = array_keys($qmaps);
                     sort($toSort);
                     foreach ($toSort as $numKey) {
                         $this->log_debug("FormResult(numeric): $numKey: ".$qmaps[$numKey]);
+                        $splitvals[] = $qmaps[$numKey];
+                    }
+                    foreach ($splitvals as $v) {
+                        $splithash[$v] = 1;
                     }
                 } else {
-                    foreach($qmaps as $waan=>$frvals) {
+                    foreach($qmaps as $frwaan=>$frvals) {
                         if (is_array($frvals)) {
                             foreach (array_keys($frvals) as $frlabel) {
                                 $frval = $frvals[$frlabel];
                                 if (is_array($frval)) {
                                     if (array_key_exists("combined", $frval)) {
                                         $frval = $frval['combined'];
-                                    } else if ($array_key_exists("value", $frval)) {
+                                        $splitvals = array_merge($splitvals, explode(", ", $frval));
+                                        foreach ($splitvals as $splitval) {
+                                            $this->log_debug("Split into $splitval");
+                                        }
+                                    } else if (array_key_exists("value", $frval)) {
                                         $frval = $frval['value'];
+                                        $splitvals[] = $frval;
                                     } else {
                                         $frval = "can't parse";
                                     }
-                                    $this->log_debug("FormResult: $waan: $frlabel: $frval");
+                                    $this->log_debug("FormResult: $frwaan: $frlabel: $frval");
+
                                 } else {
                                     //frval is not an array
-                                    $this->log_debug("FormResult: $waan: $frlabel: $frval");
+                                    $this->log_debug("FormResult: $frwaan: $frlabel: $frval");
+                                    if ($frlabel == "combined") {
+                                        $splitvals = array_merge($splitvals, explode(", ", $frval));
+                                        foreach ($splitvals as $splitval) {
+                                            $this->log_debug("Split into $splitval");
+                                        }
+                                    } else {
+                                        $splitvals[] = $frval;
+                                    }
                                 }
                             }
                         } else {
                             //frvals is not an array
-                            $this->log_debug("FormResult: $waan: $frvals");
+                            $this->log_debug("FormResult: $frwaan: $frvals");
+                            $splitvals[] = $frvals;
+                        }
+                        foreach ($splitvals as $v) {
+                            $splithash[$v] = 1;
                         }
                     }
                 }
                 foreach($values as $val) {
-                    $this->log_debug("Request:    $waan: $val");
+                    if ($key == "customTextBlock5") {
+                        $val = "$waan: $val";
+                    }
+                    $rhash[$val] = 1;
+                    //now for customText20 specific stuff:
+                    if ($jointkey == 'customText20*Expected_Local_Gross_Salary') {
+                        $pt1 = $val;
+                    }
+                    if ($jointkey == 'customText20*Expected_Local_Salary_Currency') {
+                        $pt2 = $val;
+                    }
+
                 }
-                $value = implode(", ", $values);
+                foreach (explode(", ", $previous) as $valprev) {
+                    if ($valprev) {
+                        $rhash[$valprev] = 1;
+                    }
+                }
+                $final = [];
+                //add the formResult values in order
+                foreach ($splithash as $frval=>$nothing) {
+                    if (array_key_exists($frval, $rhash)) {
+                        $final[$frval] = 1;
+                    }
+                }
+                //now add the leftover request values
+                foreach ($rhash as $rval=>$nothing) {
+                    if (!array_key_exists($rval, $final)) {
+                        $final[$rval] = 1;
+                    }
+                }
+                $value = implode(", ", array_keys($final));
+                if ($key == 'customText20') {
+        			$value = $pt1.' ('.$pt2.')';
+        		}
                 $this->log_debug("setting $key to $value");
                 $candidate->set($key, $value);
             } else {
@@ -245,14 +362,50 @@ class CandidateController
         }
         $this->loadReferencesFromRequest($candidate, $refs);
         $this->loadCustomObjectFromRequest($candidate, $cos);
+        $this->loadAddressesFromRequest($candidate, $address, $address2);
         return $candidate;
+    }
+
+    private function loadAddressesFromRequest($candidate, $address, $address2) {
+        $add1 = $candidate->get("address");
+        if (!$add1) {
+            $add1 = new \Stratum\Model\Address();
+        }
+        $add2 = $candidate->get("secondaryAddress");
+        if (!$add2) {
+            $add2 = new \Stratum\Model\Address();
+        }
+        foreach ($address as $index=>$sub) {
+            $answerHash = [];
+            foreach ($sub as $subsub) {
+                $answerHash[$subsub] = 1;
+            }
+            $value = implode(", ", array_keys($answerHash));
+            $add1->set($index, $value);
+            $this->log_debug("Address 1: setting $index to $value");
+        }
+        foreach ($address2 as $index=>$sub) {
+            $answerHash = [];
+            foreach ($sub as $subsub) {
+                $answerHash[$subsub] = 1;
+            }
+            $value = implode(", ", array_keys($answerHash));
+            $add2->set($index, $value);
+            $this->log_debug("Address 2: setting $index to $value");
+        }
+        $candidate->set("address", $add1);
+        $candidate->set("secondaryAddress", $add2);
     }
 
     private function loadCustomObjectFromRequest($candidate, $cos) {
         foreach ($cos as $index=>$co) {
             $obj = new \Stratum\Model\CustomObject();
             foreach ($co as $key=>$values) {
-                $value = implode(",", $values);
+                if (is_array($values)) {
+                    $value = implode(",", $values);
+                } else {
+                    $value = $values;
+                }
                 $obj->set($key, $value);
                 //$this->log_debug("Setting custom object ".$index." $key to $value");
             }

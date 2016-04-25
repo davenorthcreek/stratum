@@ -116,20 +116,13 @@ class BullhornController {
 			return null;
 		}
 		$candidates = $bullhornClient->findAssocCandidatesIndexed($cuser);
-		/**
+		/*
 		This section replaced by 'Indexed' call
 		$candidatesNo  = $bullhornClient->findAssocCandidatesWithNo($cuser, 'No');
 		$candidatesRFS = $bullhornClient->findAssocCandidatesWithRFS($cuser, 'RFS');
 		$candidatesFC  = $bullhornClient->findAssocCandidatesWithFC($cuser, 'FC');
 		$candidatesIC  = $bullhornClient->findAssocCandidatesWithIC($cuser, 'IC');
-
-		$candidates = [
-			'No'  => $candidatesNo,
-			'RFS' => $candidatesRFS,
-			'FC'  => $candidatesFC,
-			'IC'  => $candidatesIC
-		];
-		**/
+		*/
 		if ($candidates == null) {
 			//error condition according to Stratum
 		}
@@ -149,15 +142,7 @@ class BullhornController {
 			$candidate = new \Stratum\Model\Candidate();
 			$candidate->setLogger($this->_logger);
 		}
-        /**
-         *  debug only
-         *
-		if ($bullhornClient->confirm($candidate)) {
-			$this->log_debug("<p>Success!</p>");
-		} else {
-			$this->log_debug("Failure: please examine log files");
-		}
-        **/
+
 		return $candidate;
 	}
 
@@ -172,6 +157,9 @@ class BullhornController {
 			$this->submit_references($candidate);
 			$this->submit_custom_object($candidate);
             $bullhornClient->submit_skills($candidate);
+			$bullhornClient->submit_categories($candidate);
+			$bullhornClient->submit_specialties($candidate);
+
 		}
 		//returns an array with 'error' or 'id' and other data
 		return $retval;

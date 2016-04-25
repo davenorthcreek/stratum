@@ -446,7 +446,9 @@ class Candidate extends ModelObject
 			} else if (preg_match("/ID$/", $attr)) {
 				//ID means a secondary object that must be added later
 				//skip for now
-			} else if (preg_match("/(.*ddress)\((.*)\)/", $attr, $m)) {
+			} else if ($attr == "address" || $attr == "secondaryAddress") {
+                //handle below
+            } else if (preg_match("/(.*ddress)\((.*)\)/", $attr, $m)) {
 				//these are address or secondaryAddress fields
 				$addrLabel = $m[1];
 				$addresses[$addrLabel][$m[2]] = $value;
@@ -464,6 +466,20 @@ class Candidate extends ModelObject
 			//should be secondaryAddress and address
 			$json[$label] = $address;
 		}
+        $addr1 = $this->get("address");
+        if (is_array($addr1)) {
+            //ignore for now
+        } else if ($addr1 && is_a($addr1, "\Stratum\Model\Address")) {
+            $jsonAddr1 = $addr1->marshalToJSON();
+            $json["address"] = json_decode($jsonAddr1, true);
+        }
+        $addr2 = $this->get("secondaryAddress");
+        if (is_array($addr2)) {
+            //ignore for now
+        } else if ($addr2 && is_a($addr2, "\Stratum\Model\Address")) {
+            $jsonAddr2 = $addr2->marshalToJSON();
+            $json["secondaryAddress"] = json_decode($jsonAddr2, true);
+        }
 		/*
 		 *
 		 * This section would continually add new custom objects
@@ -541,14 +557,23 @@ class Candidate extends ModelObject
             $value = '';
             if ($item=="customTextBlock2") {
                 $types = $this->get($item);
+                $this->log_debug("At Discipline, types is");
+                $this->var_debug($types);
                 if (is_array($types)) {
                     foreach ($types as $t) {
                         $value .= $t.";";
                     }
+                    $value = substr($value, 0, strlen($value)-1); //remove last semi-colon
+                } else {
+                    $value = $types;
                 }
-                $value = substr($value, 0, strlen($value)-1); //remove last semi-colon
             } else if ($item == "dateOfBirth") {
-                $value = $this->getDateOfBirthWithFormat("d/m/Y");
+                $dob = $this->get("dateOfBirth");
+                if (is_numeric($dob)) {
+                    $value = $this->getDateOfBirthWithFormat("d/m/Y");
+                } else {
+                    $value = $dob;
+                }
             } else {
                 $value = $this->get($item);
             }

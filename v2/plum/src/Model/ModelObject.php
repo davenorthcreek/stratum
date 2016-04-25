@@ -103,11 +103,13 @@ class ModelObject
 	public function marshalToJSON() {
 		$json = [];
 		foreach ($this->expose_set() as $attr=>$value) {
-			if (is_a($value, "ModelObject")) {
-				$json[$attr]['id'] = $value->get("id");
-			} else {
-				$json[$attr] = $value;
-			}
+            if ($value) {
+    			if (is_a($value, "ModelObject")) {
+    				$json[$attr]['id'] = $value->get("id");
+    			} else {
+    				$json[$attr] = $value;
+    			}
+            }
 		}
 		$encoded = json_encode($json, true);
 		return $encoded;

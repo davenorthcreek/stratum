@@ -41,7 +41,7 @@ class FormResponseController extends Controller
     }
 
   public function confirmValues(Request $request) {
-      $id = $request->input("id")[0];
+      $id = $request->input("id");
       $fc = new \Stratum\Controller\FormController();
       $cc = new \Stratum\Controller\CandidateController();
       $entityBody = Storage::disk('local')->get($id.'.txt');
@@ -51,18 +51,15 @@ class FormResponseController extends Controller
       $form = $formResult->get("form");
       $candidate = new \Stratum\Model\Candidate();
       $candidate = $cc->populateFromRequest($candidate, $request->all(), $c2, $formResult);
-      $acc = new \App\Http\Controllers\CandidateController();
-      $c3 = $acc->load($candidate->get("id"));
-      $c3->compare($candidate);
-      //$candidate->dump();
-
+      $bc = new \Stratum\Controller\BullhornController();
+      $bc->submit($candidate);
+      $bc->updateCandidateStatus($candidate, "IC");
       $data['thecandidate'] = $candidate;
       $fc = new \Stratum\Controller\FormController();
       $data['form'] = $fc->setupForm();
       $cuc = new CorporateUserController();
+      $cuc->flushCandidatesFromCache();
       $data['candidates'] = $cuc->load_candidates();
-      //$data['form'] = $form;
-      //$data['qbyq'] = $qbyq;
       $data['message'] = "Data Uploaded";
       return view('candidate')->with($data);
   }
