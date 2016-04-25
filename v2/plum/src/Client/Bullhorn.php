@@ -755,15 +755,17 @@ class Bullhorn {
             }
             if ($flag) {
                 $subm_sk_url = substr($subm_sk_url, 0, strlen($subm_sk_url)-1); //remove last semi-colon
+				$this->log_debug($subm_sk_url);
             }
-        }
-		$subm_sk_uri = $this->service->getRestUri($subm_sk_url, $this->session_key);
 
-		$subm_sk = $this->httpClient->retrieveResponse($subm_sk_uri, '', [], 'PUT');
-		$subm_sk_decoded = $this->extract_json($subm_sk);
-		$this->log_debug("Submitted primarySkills: ");
-		$this->var_debug($subm_sk_decoded);
-		return $subm_sk_decoded;
+			$subm_sk_uri = $this->service->getRestUri($subm_sk_url, $this->session_key);
+
+			$subm_sk = $this->httpClient->retrieveResponse($subm_sk_uri, '', [], 'PUT');
+			$subm_sk_decoded = $this->extract_json($subm_sk);
+			$this->log_debug("Submitted primarySkills: ");
+			$this->var_debug($subm_sk_decoded);
+			return $subm_sk_decoded;
+		}
     }
 
 	public function submit_categories($candidate) {
@@ -779,21 +781,23 @@ class Bullhorn {
             $flag = false;
             foreach ($skill_list as $s) {
                 $skill = $this->find_category($s);
-                $subm_sk_url .= $skill->get("id").",";
-                $flag = true;
+				if ($skill && $skill->get("id")) {
+                	$subm_sk_url .= $skill->get("id").",";
+                	$flag = true;
+				}
             }
             if ($flag) {
                 $subm_sk_url = substr($subm_sk_url, 0, strlen($subm_sk_url)-1); //remove last semi-colon
 				$this->log_debug($subm_sk_url);
             }
-        }
-		$subm_sk_uri = $this->service->getRestUri($subm_sk_url, $this->session_key);
+			$subm_sk_uri = $this->service->getRestUri($subm_sk_url, $this->session_key);
 
-		$subm_sk = $this->httpClient->retrieveResponse($subm_sk_uri, '', [], 'PUT');
-		$subm_sk_decoded = $this->extract_json($subm_sk);
-		$this->log_debug("Submitted categories: ");
-		$this->var_debug($subm_sk_decoded);
-		return $subm_sk_decoded;
+			$subm_sk = $this->httpClient->retrieveResponse($subm_sk_uri, '', [], 'PUT');
+			$subm_sk_decoded = $this->extract_json($subm_sk);
+			$this->log_debug("Submitted categories: ");
+			$this->var_debug($subm_sk_decoded);
+			return $subm_sk_decoded;
+		}
     }
 
 	public function submit_specialties($candidate) {
@@ -809,21 +813,25 @@ class Bullhorn {
 			$flag = false;
 			foreach ($skill_list as $s) {
 				$skill = $this->find_specialty($s);
-				$subm_sk_url .= $skill->get("id").",";
-				$flag = true;
+				if ($skill && $skill->get("id")) {
+					$this->log_debug("Specialty: $s, ".$skill->get("id"));
+					$subm_sk_url .= $skill->get("id").",";
+					$flag = true;
+				}
 			}
 			if ($flag) {
-				$subm_sk_url = substr($subm_sk_url, 0, strlen($subm_sk_url)-1); //remove last semi-colon
+				$subm_sk_url = substr($subm_sk_url, 0, strlen($subm_sk_url)-1); //remove last comma
 				$this->log_debug($subm_sk_url);
 			}
-		}
-		$subm_sk_uri = $this->service->getRestUri($subm_sk_url, $this->session_key);
 
-		$subm_sk = $this->httpClient->retrieveResponse($subm_sk_uri, '', [], 'PUT');
-		$subm_sk_decoded = $this->extract_json($subm_sk);
-		$this->log_debug("Submitted Specialties: ");
-		$this->var_debug($subm_sk_decoded);
-		return $subm_sk_decoded;
+			$subm_sk_uri = $this->service->getRestUri($subm_sk_url, $this->session_key);
+
+			$subm_sk = $this->httpClient->retrieveResponse($subm_sk_uri, '', [], 'PUT');
+			$subm_sk_decoded = $this->extract_json($subm_sk);
+			$this->log_debug("Submitted Specialties: ");
+			$this->var_debug($subm_sk_decoded);
+			return $subm_sk_decoded;
+		}
 	}
 
 
