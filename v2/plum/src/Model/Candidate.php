@@ -398,6 +398,7 @@ class Candidate extends ModelObject
 		$json = [];
 		$addresses = [];
 		$references = [];
+        $note = [];
 		foreach ($this->expose_set() as $attr=>$value) {
 			//now we filter based on what we have vs. what Bullhorn knows
 			if ($attr=='customFloat2') {
@@ -452,11 +453,9 @@ class Candidate extends ModelObject
 				$addrLabel = $m[1];
 				$addresses[$addrLabel][$m[2]] = $value;
 			} else if ($attr == 'Note') {
-				//$json['Additional Candidate Note'] = $value;
-			} else if ($attr == 'status') {
-				//was too long in test
-				$value = substr($value, 0, strpos($value, "(")-1);
-				$json[$attr] = $value;
+                foreach ($values as $val) {
+                    $note[] = "$waan: $val";
+                }
 			} else {
 				$json[$attr] = $value;
 			}

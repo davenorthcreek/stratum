@@ -43,7 +43,7 @@
             <div class="box box-primary">
                 <div class="box-header with-border">
                     <button type="submit" class="btn btn-danger" id="confirmV">Submit Values to Bullhorn</button>
-                    <button class="btn btn-mini btn-primary pull-right btn-click-action"
+                    <button role="button" class="btn btn-mini btn-primary pull-right btn-click-action"
                         data-widget="collapseAll" data-toggle="tooltip" title="Collapse/Expand All">
                         <i class='fa fa-plus'></i>
                     </button>
@@ -71,6 +71,7 @@
         $("i",this).toggleClass("fa fa-plus fa fa-minus");
 
         $("[data-widget='collapse']").click();
+        return false;
     }
 
     $('.btn-click-action').on('click', btnClassClick);

@@ -35,7 +35,7 @@ class CorporateUserController extends Controller
           //need to shorten these up
           $candidates = $this->replace_key_function($candidates, 'Reg Form Sent', 'RFS');
           $candidates = $this->replace_key_function($candidates, 'Form Completed', 'FC');
-          $candidates = $this->replace_key_function($candidates, 'Interview Completed', 'IC');
+          $candidates = $this->replace_key_function($candidates, 'Interview Done', 'IC');
           //Log::debug($candidates);
           if ($candidates != null) {
               Log::debug("Storing candidates with corporate user");

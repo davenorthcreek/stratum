@@ -53,7 +53,7 @@ class FormResponseController extends Controller
       $candidate = $cc->populateFromRequest($candidate, $request->all(), $c2, $formResult);
       $bc = new \Stratum\Controller\BullhornController();
       $bc->submit($candidate);
-      $bc->updateCandidateStatus($candidate, "IC");
+      $bc->updateCandidateStatus($candidate, "Interview Done");
       $data['thecandidate'] = $candidate;
       $fc = new \Stratum\Controller\FormController();
       $data['form'] = $fc->setupForm();
