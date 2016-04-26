@@ -51,6 +51,10 @@ class FormResponseController extends Controller
       $form = $formResult->get("form");
       $candidate = new \Stratum\Model\Candidate();
       $candidate = $cc->populateFromRequest($candidate, $request->all(), $c2, $formResult);
+      $now = new \DateTime();
+      $stamp = $now->format("d/m/Y");
+      $candidate->set("customDate1", $stamp);
+      $candidate->set("customDate2", $stamp);
       $bc = new \Stratum\Controller\BullhornController();
       $bc->submit($candidate);
       $bc->updateCandidateStatus($candidate, "Interview Done");

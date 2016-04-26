@@ -408,9 +408,9 @@ class Candidate extends ModelObject
 					$value = $m[1];
 				}
 			}
-			if ($attr=='dateOfBirth' && $value) {
+			if (preg_match("/date/", $attr) && $value) {
 				//need to convert to Unix timestamp
-                $this->log_debug("Date of Birth: ".$value);
+                $this->log_debug("$attr: ".$value);
 				$date = \DateTime::createFromFormat("d/m/Y", $value);
                 if (!$date) {
                     //assume we're going the other way
@@ -453,8 +453,9 @@ class Candidate extends ModelObject
 				$addrLabel = $m[1];
 				$addresses[$addrLabel][$m[2]] = $value;
 			} else if ($attr == 'Note') {
-                foreach ($values as $val) {
-                    $note[] = "$waan: $val";
+                foreach ($value as $val) {
+                    $this->log_debug("$attr: $val");
+                    //$note[] = "$waan: $val";
                 }
 			} else {
 				$json[$attr] = $value;

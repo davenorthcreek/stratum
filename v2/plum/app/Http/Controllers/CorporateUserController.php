@@ -49,10 +49,15 @@ class CorporateUserController extends Controller
   }
 
   public function flushCandidatesFromCache() {
+      Cache::flush();
+  }
+
+  public function flushCandidateStatusFromCache() {
       $cuser = $this->loadCorporateUser();
       $id = $cuser->get("id");
       Log::debug("Removing corporate user ".$id." from cache");
       Cache::forget("user".$id);
+
   }
 
   public function refresh() {
