@@ -286,6 +286,9 @@ class CandidateController
                 $this->log_debug("Set candidate id to ".$id);
             } else if ($key == "Note") {
                 //build a Note object, PUT it with an association to the Candidate
+                if ($this->endsWith($waan, "Yes") || $this->endsWith($waan, "No")) {
+                    $waan = substr($waan, 0, strrpos($waan, ' '));
+                }
                 foreach ($values as $val) {
                     $note[] = "$waan: $val";
                 }
@@ -404,6 +407,11 @@ class CandidateController
         return $candidate;
     }
 
+    private function endsWith($haystack, $needle) {
+        // search forward starting from end minus needle length characters
+        return $needle === "" || (($temp = strlen($haystack) - strlen($needle)) >= 0 && strpos($haystack, $needle, $temp) !== false);
+    }
+
     private function loadAddressesFromRequest($candidate, $address, $address2) {
         $add1 = $candidate->get("address");
         if (!$add1) {
@@ -435,11 +443,16 @@ class CandidateController
 
     private function loadNoteFromRequest($candidate, $note) {
         $existing = $candidate->get("Note");
-
+        $newNote = [];
         $comment = "";
+        if ($existing) {
+            $comment = $existing["comments"];
+        }
         foreach ($note as $noteDetail) {
             $comment .= $noteDetail."\n";
         }
+        $newNote["comments"] = $comment;
+        $candidate->set("Note", $newNote);
     }
 
     private function loadCustomObjectFromRequest($candidate, $cos) {

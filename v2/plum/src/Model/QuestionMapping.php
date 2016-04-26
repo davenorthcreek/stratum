@@ -319,10 +319,17 @@ class QuestionMapping extends ModelObject
             $qmap2 = $questionMaps[$human];
             foreach ($qmap2->get('answerMappings') as $amap) {
                 $aval = $amap->get("Value");
+                if ($human == "Q23") {
+                    $aval = preg_replace("/ \(.*\)/", "", $aval); //everything within parentheses
+                }
                 if ($aval) {
                     echo "<option ";
-                    if ($valueMap && array_key_exists($aval, $valueMap)) {
-                        echo "SELECTED ";
+                    if ($valueMap) {
+                        foreach (array_keys($valueMap) as $vm) {
+                            if (substr($vm, 0, strlen($aval)) === $aval) {
+                                echo "SELECTED ";
+                            }
+                        }
                     }
                     echo 'VALUE="'.$aval.'">'.$aval."\n";
                 }

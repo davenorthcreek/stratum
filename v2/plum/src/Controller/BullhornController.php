@@ -159,6 +159,7 @@ class BullhornController {
             $bullhornClient->submit_skills($candidate);
 			$bullhornClient->submit_categories($candidate);
 			$bullhornClient->submit_specialties($candidate);
+			$bullhornClient->submit_note($candidate);
 
 		}
 		//returns an array with 'error' or 'id' and other data

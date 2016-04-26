@@ -738,6 +738,40 @@ class Bullhorn {
 		return $subm_co_decoded;
 	}
 
+	public function submit_note($candidate) {
+		//https://rest9.bullhornstaffing.com/rest-services/{corpToken}/entity/Note?BhRestToken=...
+		$id = $candidate->get("id");
+		$subm_note_url = $this->base_url."entity/Note";
+		$subm_note_uri = $this->service->getRestUri($subm_note_url, $this->session_key);
+		//POST BODY: {"customObject2s":[{"id":3649,"int1":7},{"int1":4}]}
+		$note = $candidate->get("Note"); //has "comments"
+		//$note["candidates"]=[];
+		//$note["candidates"][]=["id"=>$id];
+		$note["personReference"]["id"]=$id;
+		$body = json_encode($note);
+		$this->log_debug($body);
+		$this->log_debug("Submitting this data as a note");
+		$subm_note = $this->httpClient->retrieveResponse($subm_note_uri, $body, [], 'PUT');
+		$subm_note_decoded = $this->extract_json($subm_note);
+		$this->log_debug("Submitted Note");
+		$this->var_debug($subm_note_decoded);
+		$noteId = $subm_note_decoded["changedEntityId"];
+		$subm_ne_url = $this->base_url."entity/NoteEntity";
+		$subm_ne_uri = $this->service->getRestUri($subm_ne_url, $this->session_key);
+		$ne = [];
+		$ne["note"]["id"] = $noteId;
+		$ne["targetEntityName"] = "User";
+		$ne["targetEntityID"] = $id;
+		$body2 = json_encode($ne);
+		$this->log_debug("Submitting this association as a noteEntity");
+		$this->log_debug($ne);
+		$subm_ne = $this->httpClient->retrieveResponse($subm_ne_uri, $body2, [], 'PUT');
+		$subm_ne_decoded = $this->extract_json($subm_ne);
+		$this->log_debug("Submitted NoteEntity");
+		$this->var_debug($subm_ne_decoded);
+		return $subm_note_decoded;
+	}
+
     public function submit_skills($candidate) {
         //https://rest.bullhorn.com/rest-services/e999/entity/Candidate/3084/primarySkills/964,684,253
         $id = $candidate->get("id");
@@ -777,7 +811,6 @@ class Bullhorn {
         $skill_objs = [];
         //may not be any
         if ($skills) {
-			$this->var_debug($skills);
             $flag = false;
             foreach ($skills as $skill) {
 				foreach ($skill as $sid=>$val) {
@@ -807,7 +840,6 @@ class Bullhorn {
 		$skill_objs = [];
 		//may not be any
 		if ($skills) {
-			$this->var_debug($skills);
             $flag = false;
             foreach ($skills as $skill) {
 				foreach ($skill as $sid=>$val) {
