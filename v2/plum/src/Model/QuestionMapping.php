@@ -128,6 +128,9 @@ class QuestionMapping extends ModelObject
 
 
     public function exportQMToHTML($human, $configs, $qbyq, $formResult) {
+        if ($human == "Q4" || $human == "Q6" || $human == "Q39" || $human == "Q41") {
+            return;
+        }
         $form = $this->get('form');
         $questionMaps = $form->get('questionMappings');
         $mult = false;
@@ -172,10 +175,6 @@ class QuestionMapping extends ModelObject
             $mult = true;
         }
         $id = $this->getBestId();
-        $file = $this->get("configFile");
-        if (array_key_exists($human, $qbyq)) {
-            $qanswers = $qbyq[$human]; //an array!
-        }
         $qlabel = '';
         if (!$qanswers) {
             $qlabel = $human;
@@ -223,6 +222,7 @@ class QuestionMapping extends ModelObject
             //remove trailing yes or no
             $visible = substr($visible, 0, strrpos($visible, ' '));
         }
+        $visible = preg_replace("/Additional Candidate Notes: /", "", $visible);
         //going to put both bullhorn and worldapp in the label
         $label .= "*".$waan."[]";
 
@@ -288,14 +288,25 @@ class QuestionMapping extends ModelObject
                 //if (!$mult) {
                 //    echo "<option></option>\n";
                 //}
+                if ($human == "Q3") {
+                    $this->var_debug($valueMap);
+                }
+                $flag = [];
+                foreach(array_keys($valueMap) as $v) {
+                    $flag[$v] = true;
+                }
+                $this->var_debug($flag);
                 foreach ($configFile as $op) {
                     echo "<option ";
-                    if ($valueMap && array_key_exists($op, $valueMap)) {
+                    if ($valueMap && array_key_exists($op, $valueMap) and $flag[$op]) {
                         echo("SELECTED ");
+                        $flag[$op] = false;
+                        $this->log_debug("Found $op in select for $human");
                     }
                     echo 'VALUE="'.$op.'">'.$op."\n";
                 }
                 echo "</select>";
+                $this->var_debug($flag);
             }
         } else if ($type == 'choice' || $type == 'multichoice') {
             echo "<select class='form-control select2' ";

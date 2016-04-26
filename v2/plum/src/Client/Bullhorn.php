@@ -454,11 +454,11 @@ class Bullhorn {
 
 		$decoded = [];
 
+
+		//look up country ids from country names in Address fields
 		$country_ID = 0;
 		$second_ID  = 0;
 		$object = false;
-
-		//look up country ids from country names in Address fields
 		$addr_country = $candidate->get('address(countryID)');
 		if (!$addr_country) {
 			//look up Address object
@@ -611,6 +611,7 @@ class Bullhorn {
 	}
 
 	public function find_specialty($skill_name) {
+		$skill_name = preg_replace("/–/", "-", $skill_name);
 		$skill_json = \Storage::get("Specialties.json");
 		$skill_list = json_decode($skill_json, true)['data'];
 		$skill = new \Stratum\Model\Skill();
@@ -771,19 +772,17 @@ class Bullhorn {
 	public function submit_categories($candidate) {
         //https://rest.bullhorn.com/rest-services/e999/entity/Candidate/3084/primarySkills/964,684,253
         $id = $candidate->get("id");
-		$subm_sk_url = $this->base_url."entity/Candidate/$id/category/";
-        $skills = $candidate->get("categoryID");
+		$subm_sk_url = $this->base_url."entity/Candidate/$id/categories/";
+        $skills = $candidate->get("categories");
         $skill_objs = [];
         //may not be any
         if ($skills) {
-			$this->log_debug("Categories: $skills");
-            $skill_list = preg_split("/\n/", $skills);
+			$this->var_debug($skills);
             $flag = false;
-            foreach ($skill_list as $s) {
-                $skill = $this->find_category($s);
-				if ($skill && $skill->get("id")) {
-                	$subm_sk_url .= $skill->get("id").",";
-                	$flag = true;
+            foreach ($skills as $skill) {
+				foreach ($skill as $sid=>$val) {
+            		$subm_sk_url .= $val.",";
+            		$flag = true;
 				}
             }
             if ($flag) {
@@ -803,22 +802,19 @@ class Bullhorn {
 	public function submit_specialties($candidate) {
 		//https://rest.bullhorn.com/rest-services/e999/entity/Candidate/3084/primarySkills/964,684,253
 		$id = $candidate->get("id");
-		$subm_sk_url = $this->base_url."entity/Candidate/$id/specialty/";
-		$skills = $candidate->get("specialtyCategoryID");
+		$subm_sk_url = $this->base_url."entity/Candidate/$id/specialties/";
+		$skills = $candidate->get("specialties");
 		$skill_objs = [];
 		//may not be any
 		if ($skills) {
-			$this->log_debug("Specialties: $skills");
-			$skill_list = preg_split("/\n/", $skills);
-			$flag = false;
-			foreach ($skill_list as $s) {
-				$skill = $this->find_specialty($s);
-				if ($skill && $skill->get("id")) {
-					$this->log_debug("Specialty: $s, ".$skill->get("id"));
-					$subm_sk_url .= $skill->get("id").",";
-					$flag = true;
+			$this->var_debug($skills);
+            $flag = false;
+            foreach ($skills as $skill) {
+				foreach ($skill as $sid=>$val) {
+            		$subm_sk_url .= $val.",";
+            		$flag = true;
 				}
-			}
+            }
 			if ($flag) {
 				$subm_sk_url = substr($subm_sk_url, 0, strlen($subm_sk_url)-1); //remove last comma
 				$this->log_debug($subm_sk_url);

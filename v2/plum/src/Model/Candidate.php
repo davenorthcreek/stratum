@@ -409,21 +409,21 @@ class Candidate extends ModelObject
 			}
 			if ($attr=='dateOfBirth' && $value) {
 				//need to convert to Unix timestamp
-        $this->log_debug("Date of Birth: ".$value);
+                $this->log_debug("Date of Birth: ".$value);
 				$date = \DateTime::createFromFormat("d/m/Y", $value);
-        if (!$date) {
-          //assume we're going the other way
-          $date = \DateTime::createFromFormat('U', ($value/1000));
-          if ($date) {
-              $value = $date->format("d/m/Y");
-          } else { //no value, no date
-              $value = '';
-          }
-        } else {
-          //no, we want the Unix timestamp
-				  $stamp = $date->format('U') * 1000;
-				  $value = $stamp;
-        }
+                if (!$date) {
+                    //assume we're going the other way
+                    $date = \DateTime::createFromFormat('U', ($value/1000));
+                    if ($date) {
+                        $value = $date->format("d/m/Y");
+                    } else { //no value, no date
+                        $value = '';
+                    }
+                } else {
+                    //no, we want the Unix timestamp
+                    $stamp = $date->format('U') * 1000;
+                    $value = $stamp;
+                }
 			}
 			if (is_a($value, "ModelObject")) {
 				$json[$attr]['id'] = $value->get("id");
@@ -432,9 +432,8 @@ class Candidate extends ModelObject
 					   $attr == 'anotherCitizenship' ||		//boolean
 					   $attr == 'provideNetAfterTax' ||		//boolean
 					   $attr == 'contactRecommendersConsent' || //boolean - recorded where?
-					   $attr == 'idealNextRole' ||  		//??
 					   $attr == 'references' || 			//references are handled separately
-					   $attr == 'diploma' ||  //must be added to CandidateEducation somehow
+					   $attr == 'diploma' ||  //boolean
 					   $attr == 'reportToPerson' || //this is for ClientContact
                        $attr == 'NONE'  ||          //Q42 Daily or Hourly rate...
 					   $attr == 'employerAtRegistration') { //??

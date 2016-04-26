@@ -257,16 +257,35 @@ class FormResult extends ModelObject
                 $sectionQs[$theId] = $qmap;
                 $this->log_debug("default case");
                 if ($type == "object" && array_key_exists($theId, $qbyq)) {
-                    $qmap->dump();
                     $qanswers = $qbyq[$theId]; //an array!
-                    foreach ($qanswers as $q) {
-                        $q->dump();
-                        $this->log_debug($this->getValue($theId, $q, $qmap, []));
-                    }
                 }
             }
         }
+        if (array_key_exists("Q3", $sectionQs)) {
+            //merge Q3/5/7 into one Nationality widget
+            $q_answers = $qbyq["Q3"];
+            if (array_key_exists("Q5", $qbyq)) {
+                foreach($qbyq["Q5"] as $theq) {
+                    $q_answers[] = $theq;
+                }
+                unset($qbyq["Q5"]);
+            }
+            if (array_key_exists("Q7", $qbyq)) {
+                foreach($qbyq["Q7"] as $theq) {
+                    $q_answers[] = $theq;
+                }
+                unset($qbyq["Q7"]);
+            }
+            $qbyq["Q3"] = $q_answers;
+            foreach($q_answers as $theq) {
+                $theq->dump();
+            }
+            unset($sectionQs["Q5"]);
+            unset($sectionQs["Q7"]);
+        }
+
         foreach ($sectionQs as $human=>$qmap) {
+
                 /****************************************
                 second pass, export to html with answers
                 ************************************** */

@@ -179,6 +179,7 @@ class CandidateController
         $cos = [];
         $address = [];
         $address2 = [];
+        $note = [];
         $id = $req["id"];
         //for customText20
         $pt1 = "";
@@ -234,7 +235,7 @@ class CandidateController
                 $address[$m[1]] = $values;
             } else if (preg_match("/secondaryAddress\((.*)\)/", $key, $m)) {
                 $address2[$m[1]] = $values;
-            } else if ($key == "specialtyCategoryID" || $key == "categoryID" || $key == "skillID") {
+            } else if ($key == "skillID") {
                 $this->log_debug($key);
                 $this->var_debug($values);
                 $existing = $candidate->get($key);
@@ -247,11 +248,47 @@ class CandidateController
                 }
                 $value = substr($value, 0, strlen($value)-1);
                 $candidate->set($key, $value);
+            } else if ($key == "specialtyCategoryID") {
+                $this->log_debug($key);
+                $this->var_debug($values);
+                $idvalues = [];
+                $existing = $candidate->get("specialties");
+                if ($existing) {
+                    $idvalues[] = $existing;
+                }
+                foreach ($values as $val) {
+                    $value = $this->find_specialty($val);
+                    $skillid = $value->get("id");
+                    $this->log_debug("Found specialty $val as $skillid");
+                    $this->var_debug($value);
+                    $idvalues[] = ["id"=>$skillid];
+                }
+                $candidate->set("specialties", $idvalues);
+            } else if ($key == "categoryID") {
+                $this->log_debug($key);
+                $this->var_debug($values);
+                $idvalues = [];
+                $existing = $candidate->get("categories");
+                if ($existing) {
+                    $idvalues[] = $existing;
+                }
+                foreach ($values as $val) {
+                    $value = $this->find_category($val);
+                    $skillid = $value->get("id");
+                    $this->log_debug("Found category $val as $skillid");
+                    $idvalues[] = ["id"=>$skillid];
+                }
+                $candidate->set("categories", $idvalues);
             } else if ($key == "id") {
                 $this->var_debug($values[0]);
                 $id = $values[0]; //repeat of $id=$req["id"]?
                 $candidate->set("id", $id);
                 $this->log_debug("Set candidate id to ".$id);
+            } else if ($key == "Note") {
+                //build a Note object, PUT it with an association to the Candidate
+                foreach ($values as $val) {
+                    $note[] = "$waan: $val";
+                }
             } else if ($candidate->validField($key)) {
 
                 $previous = $candidate->get($key);
@@ -363,6 +400,7 @@ class CandidateController
         $this->loadReferencesFromRequest($candidate, $refs);
         $this->loadCustomObjectFromRequest($candidate, $cos);
         $this->loadAddressesFromRequest($candidate, $address, $address2);
+        $this->loadNoteFromRequest($candidate, $note);
         return $candidate;
     }
 
@@ -382,7 +420,6 @@ class CandidateController
             }
             $value = implode(", ", array_keys($answerHash));
             $add1->set($index, $value);
-            $this->log_debug("Address 1: setting $index to $value");
         }
         foreach ($address2 as $index=>$sub) {
             $answerHash = [];
@@ -391,10 +428,18 @@ class CandidateController
             }
             $value = implode(", ", array_keys($answerHash));
             $add2->set($index, $value);
-            $this->log_debug("Address 2: setting $index to $value");
-        }
+                    }
         $candidate->set("address", $add1);
         $candidate->set("secondaryAddress", $add2);
+    }
+
+    private function loadNoteFromRequest($candidate, $note) {
+        $existing = $candidate->get("Note");
+
+        $comment = "";
+        foreach ($note as $noteDetail) {
+            $comment .= $noteDetail."\n";
+        }
     }
 
     private function loadCustomObjectFromRequest($candidate, $cos) {
@@ -431,6 +476,32 @@ class CandidateController
         $candidate->set("references", $reference);
     }
 
+    public function find_category($skill_name) {
+        $skill_json = \Storage::get("Categories.json");
+        $skill_list = json_decode($skill_json, true)['data'];
+        $skill = new \Stratum\Model\Skill();
+        foreach ($skill_list as $valLabel) {
+            if ($valLabel['label'] == $skill_name) {
+                $skill->set("id", $valLabel['value']);
+                $skill->set("name", $valLabel['label']);
+            }
+        }
+        return $skill;
+    }
+
+    public function find_specialty($skill_name) {
+        $skill_name = preg_replace("/–/", "-", $skill_name);
+        $skill_json = \Storage::get("Specialties.json");
+        $skill_list = json_decode($skill_json, true)['data'];
+        $skill = new \Stratum\Model\Skill();
+        foreach ($skill_list as $valLabel) {
+            if (strcmp($valLabel['label'], $skill_name) == 0) {
+                $skill->set("id", $valLabel['value']);
+                $skill->set("name", $valLabel['label']);
+            }
+        }
+        return $skill;
+    }
 
 
 }
