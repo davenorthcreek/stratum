@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\CandidateController as CanCon;
 use \Stratum\Controller\FormController;
 use \Stratum\Controller\CandidateController;
 use \Stratum\Model\FormResult;
@@ -23,6 +24,13 @@ class FormResponseController extends Controller
         $formResult = $controller->parse($entityBody);
         $candidate = new \Stratum\Model\Candidate();
         $candidate = $ccontroller->populate($candidate, $formResult);
+        $cc = new CanCon();
+        $c3 = $cc->load($id); //Bullhorn Candidate record, from cache if available
+        Log::debug("Bullhorn Category:");
+        Log::debug($c3->get("category"));
+        Log::debug($c3->get("categoryID"));
+        $candidate->set("categoryID", $c3->get("categoryID"));
+        $candidate->set("customText4", $c3->get("customText4"));
         $form = $formResult->get("form");
         $questions = $formResult->get('questions');
         $qbyq = [];
@@ -52,7 +60,7 @@ class FormResponseController extends Controller
       $candidate = new \Stratum\Model\Candidate();
       $candidate = $cc->populateFromRequest($candidate, $request->all(), $c2, $formResult);
       $now = new \DateTime();
-      $stamp = $now->format("d/m/Y");
+      $stamp = $now->format("U") * 1000;
       $candidate->set("customDate1", $stamp);
       $candidate->set("customDate2", $stamp);
       $bc = new \Stratum\Controller\BullhornController();

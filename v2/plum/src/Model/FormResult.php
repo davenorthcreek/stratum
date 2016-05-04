@@ -83,7 +83,7 @@ class FormResult extends ModelObject
                     }
 				}
 			}
-			//var_dump($answers);
+			$this->var_debug($answers);
 			return $answers;
 		} else {
 			//not found in first level search

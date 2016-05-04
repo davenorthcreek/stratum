@@ -75,6 +75,7 @@ class CandidateController
 		$form = $formResult->get("form");
 		foreach ($form->get("BHMappings") as $key=>$qmaps) {
 			//now all qmaps will be arrays of answers
+            $this->log_debug("Collating $key for ".$candidate->get("id"));
 			$this->collate($candidate, $key, $formResult);
 		}
 		//$candidate->dump();
@@ -106,6 +107,7 @@ class CandidateController
 				$pt2 = $arr['Expected Local Salary Currency']['value'];
 			}
 			$total = $pt1.' ('.$pt2.')';
+            $this->log_debug("Setting $the_key to $total");
 			$candidate->set($the_key, $total);
 		} else if ($arr) {
 			$multiple = false;
@@ -156,6 +158,7 @@ class CandidateController
 			}
 			//clip the last, trailing comma and space
 			$total = substr($total, 0, strlen($total)-$remove);
+            $this->log_debug("Setting $the_key to $total");
 			$candidate->set($the_key, $total);
 		}
 	}
@@ -293,6 +296,11 @@ class CandidateController
                     $note[] = "$waan: $val";
                 }
             } else if ($candidate->validField($key)) {
+
+                if ($key =="customTextBlock2") {
+                    //block Q65 values from going back to Bullhorn
+                    continue;
+                }
 
                 $previous = $candidate->get($key);
 

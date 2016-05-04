@@ -148,9 +148,6 @@ class BullhornController {
 
 	public function submit(\Stratum\Model\Candidate $candidate) {
 		$bullhornClient = $this->getClient();
-		//block Q65 values from going back to Bullhorn
-		$candidate->set("customTextBlock2", null);
-
 
 		$retval = $bullhornClient->submit_candidate($candidate);
 

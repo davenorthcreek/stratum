@@ -653,7 +653,7 @@ class Bullhorn {
 				}
 			}
 		}
-		$candidate->set("skillID", rtrim($skill_string));
+		$candidate->set("categoryID", rtrim($skill_string));
 	}
 	public function load_specialties($candidate) {
         $skill_string = "";
@@ -668,7 +668,7 @@ class Bullhorn {
                 }
             }
         }
-        $candidate->set("skillID", rtrim($skill_string));
+        $candidate->set("specialtyCategoryID", rtrim($skill_string));
     }
 
 
@@ -745,8 +745,6 @@ class Bullhorn {
 		$subm_note_uri = $this->service->getRestUri($subm_note_url, $this->session_key);
 		//POST BODY: {"customObject2s":[{"id":3649,"int1":7},{"int1":4}]}
 		$note = $candidate->get("Note"); //has "comments"
-		//$note["candidates"]=[];
-		//$note["candidates"][]=["id"=>$id];
 		$note["personReference"]["id"]=$id;
 		$body = json_encode($note);
 		$this->log_debug($body);
