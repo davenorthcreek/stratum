@@ -317,6 +317,20 @@ class QuestionMapping extends ModelObject
             echo " style='width: 100%;'";
             echo ">\n";
             $qmap2 = $questionMaps[$human];
+            if ($human == "Q103") {
+                $my103 = false;
+                if ($valueMap) {
+                    foreach (array_keys($valueMap) as $vm) {
+                        if ($vm) {
+                            //don't overwrite
+                            $my103 = true;
+                        }
+                    }
+                }
+                if (!$my103) {
+                    $valueMap['No'] = true;
+                }
+            }
             foreach ($qmap2->get('answerMappings') as $amap) {
                 $aval = $amap->get("Value");
                 if ($human == "Q23") {
