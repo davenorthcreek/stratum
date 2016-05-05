@@ -223,6 +223,8 @@ class CandidateController
                     $this->log_debug("Values now $values");
                 }
                 $existing = "";
+                $val_split = implode($values, ',');
+                $this->log_debug("Imploding to $val_split");
                 if (array_key_exists($m[1], $cos) && array_key_exists($m[2], $cos[$m[1]])) {
                     $existing = $cos[$m[1]][$m[2]];
                 }
