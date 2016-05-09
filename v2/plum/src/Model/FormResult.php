@@ -263,6 +263,7 @@ class FormResult extends ModelObject
         }
         if (array_key_exists("Q3", $sectionQs)) {
             //merge Q3/5/7 into one Nationality widget
+            $q_answers = [];
             if (array_key_exists("Q3", $qbyq)) {
                 $q_answers = $qbyq["Q3"];
             }
