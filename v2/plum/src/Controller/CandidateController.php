@@ -215,16 +215,18 @@ class CandidateController
             $this->log_debug("WAAN: $waan");
             if ($jointkey == "_token" || $jointkey == "id") {
             } else if (preg_match("/customObject(\d)_(.*)/", $key, $m)) {
+                $existing = "";
                 $this->log_debug("Found Custom Object".$m[1]." field: ".$m[2]);
                 if ($key == "customObject1_textBlock3") {
 
                     $waan2 = preg_replace("/Additional Candidate Notes: /", "", $waan);
                     $values = "$waan2: ".$values[0];
                     $this->log_debug("Values now $values");
+                } else {
+                    $val_split = implode($values, ',');
+                    $this->log_debug("Imploding to $val_split");
+                    $values = $val_split;
                 }
-                $existing = "";
-                $val_split = implode($values, ',');
-                $this->log_debug("Imploding to $val_split");
                 if (array_key_exists($m[1], $cos) && array_key_exists($m[2], $cos[$m[1]])) {
                     $existing = $cos[$m[1]][$m[2]];
                 }

@@ -263,7 +263,9 @@ class FormResult extends ModelObject
         }
         if (array_key_exists("Q3", $sectionQs)) {
             //merge Q3/5/7 into one Nationality widget
-            $q_answers = $qbyq["Q3"];
+            if (array_key_exists("Q3", $qbyq)) {
+                $q_answers = $qbyq["Q3"];
+            }
             if (array_key_exists("Q5", $qbyq)) {
                 foreach($qbyq["Q5"] as $theq) {
                     $q_answers[] = $theq;
@@ -278,7 +280,7 @@ class FormResult extends ModelObject
             }
             $qbyq["Q3"] = $q_answers;
             foreach($q_answers as $theq) {
-                $theq->dump();
+                $this->var_debug($theq);
             }
             unset($sectionQs["Q5"]);
             unset($sectionQs["Q7"]);
