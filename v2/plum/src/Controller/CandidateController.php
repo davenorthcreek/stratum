@@ -174,6 +174,17 @@ class CandidateController
 		$candidate->set("name", $name);
 	}
 
+    private function assign($candidate, $label, $value, $separator) {
+        $existing = $candidate->get($label);
+        if ($existing) {
+            //only if $value does not already exist in $existing
+            if (strpos($existing, $value) === false) {
+                $value = $existing.$separator.$value;
+            }
+        }
+        $candidate->set($label, $value);
+    }
+
     public function populateFromRequest($candidate, $req, $c2, $formResult) {
         //we have an existing formResult for this person - let's use that
         //to set up the keys for the candidate - that has been debugged
@@ -254,7 +265,7 @@ class CandidateController
                     $value .= $val."\n";
                 }
                 $value = substr($value, 0, strlen($value)-1);
-                $candidate->set($key, $value);
+                $candidate->set("skillID", $value);
             } else if ($key == "specialtyCategoryID") {
                 $this->log_debug($key);
                 $this->var_debug($values);
@@ -406,7 +417,7 @@ class CandidateController
         			$value = $pt1.' ('.$pt2.')';
         		}
                 $this->log_debug("setting $key to $value");
-                $candidate->set($key, $value);
+                $this->assign($candidate, $key, $value, "; ");
             } else {
                 $this->log_debug("Invalid Field: $key");
                 $this->var_debug($values);

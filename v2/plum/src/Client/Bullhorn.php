@@ -367,7 +367,7 @@ class Bullhorn {
 	}
 
 	public function findAssocCandidatesWithIC($user) {
-		return $this->findAssocCandidates($user, 'Interview Completed');
+		return $this->findAssocCandidates($user, 'Interview Done');
 	}
 
 	public function findAssocCandidates($user, $constraint) {
@@ -783,11 +783,16 @@ class Bullhorn {
             $flag = false;
             foreach ($skill_list as $s) {
                 $skill = $this->find_skill($s);
-                $subm_sk_url .= $skill->get("id").",";
-                $flag = true;
+				$sid = $skill->get("id");
+				if ($sid) {
+                	$subm_sk_url .= $sid.",";
+                	$flag = true;
+				} else {
+					$this->log_debug("Unable to find id for |$s|");
+				}
             }
             if ($flag) {
-                $subm_sk_url = substr($subm_sk_url, 0, strlen($subm_sk_url)-1); //remove last semi-colon
+                $subm_sk_url = substr($subm_sk_url, 0, strlen($subm_sk_url)-1); //remove last character
 				$this->log_debug($subm_sk_url);
             }
 
