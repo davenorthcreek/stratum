@@ -83,10 +83,10 @@ class FormResponseController extends Controller
       $stamp = $now->format("U") * 1000;
       $candidate->set("customDate1", $stamp);
       $candidate->set("customDate2", $stamp);
-      
+
       $bc = new \Stratum\Controller\BullhornController();
-      //$bc->submit($candidate);
-      //$bc->updateCandidateStatus($candidate, "Interview Done");
+      $bc->submit($candidate);
+      $bc->updateCandidateStatus($candidate, "Interview Done");
       $data['thecandidate'] = $candidate;
       $fc = new \Stratum\Controller\FormController();
       $data['form'] = $fc->setupForm();
