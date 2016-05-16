@@ -282,7 +282,7 @@ class Candidate extends ModelObject
     public function getDateWithFormat($label, $format = "d/m/Y") {
         $date = $this->get($label);
         if (!$date) {
-            return "0/0/0000";
+            return "01/01/0001";
         }
         $date = $date / 1000; //int
 
@@ -381,7 +381,7 @@ class Candidate extends ModelObject
 	public function marshalReferences() {
 		$json = [];
 		$references = $this->loadReferences();
-        $this->var_debug($references);
+        //$this->var_debug($references);
 
 		foreach ($references as $label=>$ref) {
         	//we need to submit these references as new BH objects
@@ -390,7 +390,7 @@ class Candidate extends ModelObject
 			    $json['references'][$label] = $ref->marshalToJSON();
             }
 		}
-        $this->log_debug($json);
+        //$this->log_debug($json);
 		return $json;
 	}
 
@@ -455,7 +455,6 @@ class Candidate extends ModelObject
 			} else if ($attr == 'Note') {
                 foreach ($value as $val) {
                     $this->log_debug("$attr: $val");
-                    //$note[] = "$waan: $val";
                 }
 			} else {
 				$json[$attr] = $value;

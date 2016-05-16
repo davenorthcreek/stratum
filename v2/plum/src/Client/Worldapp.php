@@ -85,16 +85,16 @@ class Worldapp {
 
 	private function getClient($wsdl) {
 		$directory = __DIR__;
-		//echo "Currently at ".$directory."\n";
+		//$this->log_debug("Currently at ".$directory);
 		$newdir = preg_replace("|\/src\/Client|", "", $directory);
-		//echo "Now at ".$newdir."\n";
+		//$this->log_debug("Now at ".$newdir);
 
 		$dotEnv = new Dotenv($newdir);
 		//Dotenv::load(__DIR__);
 		$dotEnv->load();
 		$username =  getenv('WORLDAPP_USERNAME');
 		$password =  getenv('WORLDAPP_PASSWORD');
-
+		//$this->log_debug("User/Pass: $username / $password");
 		$client = new SoapClient("$newdir/wsdl/$wsdl.wsdl",
 						array('login'          => $username,
                               'password'       => $password,
@@ -152,6 +152,18 @@ class Worldapp {
 		$question = $objResponse->return;
 
 		return $question;
+	}
+
+	public function getResponse($questionID, $respondentId) {
+
+		$client = $this->getClient("FormResultManagementService");
+
+		$objResponse = $client->getResponse(['respondentId'=>$respondentId,
+											 'questionId'=>$questionID]);
+
+		$response = $objResponse->return;
+
+		return $response;
 	}
 
 	public function sendUrlWithAutofillByEmail($formId, $email, $autofill) {

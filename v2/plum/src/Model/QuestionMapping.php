@@ -249,6 +249,9 @@ class QuestionMapping extends ModelObject
         if (strpos($qlabel, 'Q65') === 0) {
             $visible = "Discipline";
         }
+        if ($human == "Q92" || $human == "Q14" || $human == "Q45.A3") {
+            $this->var_debug($qanswers);
+        }
         $file = $this->get("configFile");
         if ($type == 'boolean') {
             if ($answermap) {
@@ -330,6 +333,9 @@ class QuestionMapping extends ModelObject
                 if (!$my103) {
                     $valueMap['No'] = true;
                 }
+            }
+            if ($human == "Q57" || $human == "Q92") {
+                $this->var_debug($valueMap);
             }
             foreach ($qmap2->get('answerMappings') as $amap) {
                 $aval = $amap->get("Value");

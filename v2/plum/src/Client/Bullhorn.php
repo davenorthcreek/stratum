@@ -747,7 +747,7 @@ class Bullhorn {
 		$note = $candidate->get("Note"); //has "comments"
 		$note["personReference"]["id"]=$id;
 		$body = json_encode($note);
-		$this->log_debug($body);
+		//$this->log_debug($body);
 		$this->log_debug("Submitting this data as a note");
 		$subm_note = $this->httpClient->retrieveResponse($subm_note_uri, $body, [], 'PUT');
 		$subm_note_decoded = $this->extract_json($subm_note);
@@ -761,8 +761,8 @@ class Bullhorn {
 		$ne["targetEntityName"] = "User";
 		$ne["targetEntityID"] = $id;
 		$body2 = json_encode($ne);
-		$this->log_debug("Submitting this association as a noteEntity");
-		$this->log_debug($ne);
+		//$this->log_debug("Submitting this association as a noteEntity");
+		//$this->log_debug($ne);
 		$subm_ne = $this->httpClient->retrieveResponse($subm_ne_uri, $body2, [], 'PUT');
 		$subm_ne_decoded = $this->extract_json($subm_ne);
 		$this->log_debug("Submitted NoteEntity");
@@ -865,6 +865,35 @@ class Bullhorn {
 		}
 	}
 
+	public function submit_file($candidate, $file) {
+		//PUT https://rest.bullhornstaffing.com/rest-services/{corpToken}/file/Candidate/$id/raw?externalID=Portfolio&fileType=SAMPLE
+		$id = $candidate->get("id");
+		$subm_file_url = $this->base_url."file/Candidate/$id/raw";
+
+		//may not be any
+		if ($file) {
+            $flag = false;
+            foreach ($skills as $skill) {
+				foreach ($skill as $sid=>$val) {
+            		$subm_file_url .= $val.",";
+            		$flag = true;
+				}
+            }
+			if ($flag) {
+				$subm_file_url = substr($subm_file_url, 0, strlen($subm_file_url)-1); //remove last comma
+				$this->log_debug($subm_file_url);
+			}
+
+			$subm_file_uri = $this->service->getRestUri($subm_file_url, $this->session_key);
+
+			$subm_file = $this->httpClient->retrieveResponse($subm_file_uri, $file,
+				['externalID'=>'Portfolio', 'fileType'=>'SAMPLE'], 'PUT');
+			$subm_file_decoded = $this->extract_json($subm_file);
+			$this->log_debug("Submitted File: ");
+			$this->var_debug($subm_file_decoded);
+			return $subm_file_decoded;
+		}
+	}
 
 
 	public function confirm($candidate) {

@@ -326,7 +326,7 @@ class CandidateController
                 $splitvals = []; //this will be the definitive formResult list
                 $splithash = []; // and this is the uniqued version
                 $rhash = [];     // and this is the unique list of req values
-                $this->var_debug($qmaps);
+                //$this->var_debug($qmaps);
                 if ($qmaps && is_numeric(array_keys($qmaps)[0])) {
                     $toSort = array_keys($qmaps);
                     sort($toSort);
@@ -413,7 +413,7 @@ class CandidateController
                     }
                 }
                 $value = implode(", ", array_keys($final));
-                if ($key == 'customText20') {
+                if ($key == 'customText20' && $pt1 && $pt2) {
         			$value = $pt1.' ('.$pt2.')';
         		}
                 $this->log_debug("setting $key to $value");
@@ -427,6 +427,10 @@ class CandidateController
         $this->loadCustomObjectFromRequest($candidate, $cos);
         $this->loadAddressesFromRequest($candidate, $address, $address2);
         $this->loadNoteFromRequest($candidate, $note);
+        $co1 = $candidate->loadCustomObject(1);
+        $mtpa = $co1->get("int1");
+        $candidate->set("customText15", $mtpa);
+        $this->log_debug("Just copied $mtpa from customobject1.int1 to customText15");
         return $candidate;
     }
 

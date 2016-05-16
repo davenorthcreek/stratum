@@ -86,7 +86,7 @@ class WorldappController {
 	}
 
 	public function find_active_form() {
-        return find_form_by_name('Registration Form - Stratum International');
+        return $this->find_form_by_name('Registration Form - Stratum International');
 	}
 
 	public function find_form_by_id($formID) {
@@ -102,6 +102,11 @@ class WorldappController {
 	public function get_question_by_id($formID, $qid, $withAnswer = true) {
 		$worldappClient = $this->getClient();
 		return $worldappClient->getQuestion($qid, $withAnswer);
+	}
+
+	public function get_response($qid, $respondentId) {
+		$worldappClient = $this->getClient();
+		return $worldappClient->getResponse($qid, $respondentId);
 	}
 
 	public function sendUrlWithAutofill($formId, $email, $autofill) {
