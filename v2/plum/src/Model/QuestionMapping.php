@@ -355,6 +355,8 @@ class QuestionMapping extends ModelObject
                 }
             }
             echo "</select>";
+        } else if ($human == "Q109" || $human == "Q110") {
+            echo("<textarea class='form-control' name='$label' rows='4' placeholder='Enter...'>$val</textarea>");
         } else {
             echo("<input class='form-control' name='$label' type='text' value='".$val."'>");
         }

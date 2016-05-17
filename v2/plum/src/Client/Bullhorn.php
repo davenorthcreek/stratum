@@ -867,6 +867,20 @@ class Bullhorn {
 
 	public function submit_file($candidate, $file) {
 		//PUT https://rest.bullhornstaffing.com/rest-services/{corpToken}/file/Candidate/$id/raw?externalID=Portfolio&fileType=SAMPLE
+
+		/*
+		We use a PUT command to attach a file to a candidate (not just resumes) but use the base64 option instead of the raw file. The uri looks like this -> /file/Candidate/{candidateId}. The json included with the body has the following fields:
+
+		fileContent = Base64 string representing the file content
+		externalID = portfolio
+		filename = file name
+		fileType = SAMPLE
+		description = file description
+		type = type of file (e.g. resume, writing sample, data sheet, etc.)
+		contentType = application/msword, application/pdf, etc.
+
+		This option should work fine for attaching your rest results.
+		*/
 		$id = $candidate->get("id");
 		$subm_file_url = $this->base_url."file/Candidate/$id/raw";
 

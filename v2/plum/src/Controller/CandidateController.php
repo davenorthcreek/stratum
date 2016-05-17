@@ -412,12 +412,35 @@ class CandidateController
                         $final[$rval] = 1;
                     }
                 }
+                if ($key == "recentClientList") {
+                    $this->var_debug($final);
+                }
+
                 $value = implode(", ", array_keys($final));
+
+                if ($key == "customFloat2") {
+                    $this->log_debug("Stripping trailing % from $value");
+                    $value = substr($value, 0, strlen($value)-2);
+                }
+                if ($key == "disability") {
+                    switch($value) {
+                        case "yes":
+                            $value = "Y";
+                            break;
+                        case "no":
+                            $value = "N";
+                            break;
+                        default:
+                            $value = "U";
+                    }
+                }
                 if ($key == 'customText20' && $pt1 && $pt2) {
         			$value = $pt1.' ('.$pt2.')';
-        		}
-                $this->log_debug("setting $key to $value");
-                $this->assign($candidate, $key, $value, "; ");
+                    $candidate->set($key, $value);
+        		} else {
+                    $this->log_debug("setting $key to $value");
+                    $this->assign($candidate, $key, $value, "; ");
+                }
             } else {
                 $this->log_debug("Invalid Field: $key");
                 $this->var_debug($values);
@@ -431,6 +454,10 @@ class CandidateController
         $mtpa = $co1->get("int1");
         $candidate->set("customText15", $mtpa);
         $this->log_debug("Just copied $mtpa from customobject1.int1 to customText15");
+        //ensure that "name" is populated
+        $candidate->set("preferredContact", "Interview Done");
+        $name = $candidate->getName();
+
         return $candidate;
     }
 

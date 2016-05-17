@@ -15,6 +15,7 @@ namespace Stratum\Controller;
 
 
 use Log;
+use Storage;
 
 class FormController {
 
@@ -37,6 +38,8 @@ class FormController {
 		$questions = $this->mapQuestions($this->jsonDecoded, $this->form);
 		$formResult->set("questions", $questions);
 		//$formResult->dump();
+		$responses = Storage::disk('local')->put($formResult->get("respondentId")."_decoded.json",
+			json_encode($formResult->get("response"), JSON_PRETTY_PRINT));
 		return $formResult;
 	}
 

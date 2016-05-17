@@ -152,7 +152,9 @@ class FormResult extends ModelObject
 				$waan == 'Regions/Countries Preferred') {
 				$separator = '; ';
 			}
-			$answers[$waan]['combined'] = $existing.$separator.$value;
+            if (strpos($existing, $value)===false) {
+			    $answers[$waan]['combined'] = $existing.$separator.$value;
+            }
 		} else {
 			$answers[$waan]['value'] = $value;
 		}
