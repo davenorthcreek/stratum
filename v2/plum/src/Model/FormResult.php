@@ -115,8 +115,20 @@ class FormResult extends ModelObject
 			$obj = $q->get("objects");
 			if (array_key_exists('objectName', $obj)) {
 				$value = $obj['objectName'];
-			}
-		} else {
+			} else if (count($obj) > 1) {
+                foreach ($obj as $thisObj) {
+                    if (array_key_exists("objectName", $thisObj)) {
+                        $value .= $thisObj["objectName"].", ";
+                    }
+                }
+                $value = substr($value, 0, strlen($value)-2); //remove last semi-colon and space
+                $answers[$waan]['combined'] = $value;
+                $answers[$waan]['value'] = $value;
+                return $answers;
+            }
+		} else  if ($q->get("objects") && count($q->get("objects")>1)) {
+            return $this->extractObjectValuesFromFile($q, $qmap);
+        } else {
 			$value = $this->find_answer_in_file($q, $qmap, $qid);
 			if (!$value) {
 				$this->log_debug("Unable to find a value:");
@@ -169,7 +181,11 @@ class FormResult extends ModelObject
             if (count($qa) > 1) {
                 $aId = $qa[1];
             } else {
-                $q->dump();
+                //could be a list of objects to look up in the file
+                $obj = $q->get("objects");
+                if ($obj && count($obj)>1) {
+                    return $this->extractObjectValuesFromFile($q, $obj, $file);
+                }
             }
             $this->parse_option_file($file);
             $configs = $this->get("configs");
@@ -184,6 +200,37 @@ class FormResult extends ModelObject
             }
         }
         return $value;
+    }
+
+    private function extractObjectValuesFromFile($q, $qmap) {
+        $waan = $qmap->get("WorldAppAnswerName");
+        $file = $qmap->get("configFile");
+        $obj = $q->get("objects");
+        $this->parse_option_file($file);
+        $configs = $this->get("configs");
+        $potential_value = [];
+        $value = "";
+        if (array_key_exists($file, $configs)) {
+            $answers = $configs[$file];
+            //now we have to parse the objectNames from the objects in $obj
+            foreach ($obj as $thisObj) {
+                if (array_key_exists("objectName", $thisObj)) {
+                    $potential_value[] = $thisObj["objectName"];
+                }
+            }
+            //now confirm that the values are in the list
+            foreach ($potential_value as $potv) {
+                foreach ($answers as $aId=>$a) {
+                    if ($potv == $a) {
+                        $value .= $a.", ";
+                    }
+                }
+            }
+            $value = substr($value, 0, strlen($value)-2); //remove last semi-colon and space
+        }
+        $the_answers[$waan]['value'] = $value;
+        $the_answers[$waan]['combined'] = $value;
+        return $the_answers;
     }
 
 	public function findByWorldApp($key) {

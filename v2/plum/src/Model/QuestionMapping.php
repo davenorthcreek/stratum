@@ -306,7 +306,7 @@ class QuestionMapping extends ModelObject
                         $flag[$op] = false;
                         $this->log_debug("Found $op in select for $human");
                     }
-                    echo 'VALUE="'.$op.'">'.$op."\n";
+                    echo 'VALUE="'.$op.'">'.$op."</option>\n";
                 }
                 echo "</select>";
                 $this->var_debug($flag);
@@ -351,7 +351,7 @@ class QuestionMapping extends ModelObject
                             }
                         }
                     }
-                    echo 'VALUE="'.$aval.'">'.$aval."\n";
+                    echo 'VALUE="'.$aval.'">'.$aval."</option>\n";
                 }
             }
             echo "</select>";
