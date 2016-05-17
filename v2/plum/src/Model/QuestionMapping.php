@@ -159,8 +159,16 @@ class QuestionMapping extends ModelObject
             } else {
                 $valueMap[$value['value']] = 1;
                 if (array_key_exists('combined', $value)) {
+                    $this->log_debug("combined $akey");
                     $mult = true;
-                    foreach(explode(', ', $value['combined']) as $theval) {
+                    $separator = ", ";
+                    if ($akey == 'Regions/Countries Worked' ||
+        				$akey == 'Regions/Countries Preferred') {
+                        $this->log_debug("Regions question: $akey");
+                        $this->var_debug($value);
+        				$separator = '; ';
+        			}
+                    foreach(explode($separator, $value['combined']) as $theval) {
                         $valueMap[$theval] = 1;
                     }
                 }
@@ -338,6 +346,7 @@ class QuestionMapping extends ModelObject
                     if ($valueMap) {
                         foreach (array_keys($valueMap) as $vm) {
                             if (substr($vm, 0, strlen($aval)) === $aval) {
+                                $this->log_debug("Found $vm matching $aval in $human");
                                 echo "SELECTED ";
                             }
                         }
