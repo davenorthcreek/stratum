@@ -132,7 +132,8 @@ class FormResult extends ModelObject
 			$value = $this->find_answer_in_file($q, $qmap, $qid);
 			if (!$value) {
 				$this->log_debug("Unable to find a value:");
-				$qmap->dump();
+                $this->var_debug($answers);
+				//$qmap->dump();
 			}
 		}
         if ($qac) {
@@ -165,12 +166,12 @@ class FormResult extends ModelObject
         $answerId = $q->get("humanQAId");
         if (!$answerId) {
             $this->log_debug("Going for humanQuestionId");
-            $q->dump();
+            //$q->dump();
             $answerId = $q->get("humanQuestionId");
         }
         if (!$answerId) {
             $this->log_debug("Going for QAC");
-            $q->dump();
+            //$q->dump();
             $answerId = $q->get("humanQACId");
         }
         $question = $form->get_question($qid);
@@ -327,9 +328,6 @@ class FormResult extends ModelObject
                 unset($qbyq["Q7"]);
             }
             $qbyq["Q3"] = $q_answers;
-            foreach($q_answers as $theq) {
-                $this->var_debug($theq);
-            }
             unset($sectionQs["Q5"]);
             unset($sectionQs["Q7"]);
         }
