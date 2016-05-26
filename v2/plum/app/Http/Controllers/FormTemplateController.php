@@ -38,7 +38,39 @@ class FormTemplateController extends Controller
 
 
         //default template is from WorldApp
-        $content = '<span style="font-size: 10pt; font-family: arial, helvetica, sans-serif;">Hello,</span><br /><br /><span style="font-size: 10pt; font-family: arial, helvetica, sans-serif;">Please find the link below to the Stratum Online Registration Form. </span><br /><br /><span style="font-size: 10pt; font-family: arial, helvetica, sans-serif;">In order to ensure accuracy during the candidate interview you must make sure you complete the form as fully as possible. On the form we are only looking for skills which you would considered an expert. Similarly we only want to know about areas of your work where you have had extensive experience. If there is anything else you would like to tell us about please do so during your registration interview. You may also clarify any points at this time as well.</span><br /><br /><span style="font-size: 10pt; font-family: arial, helvetica, sans-serif;">Should you have any difficulty accessing or using the form please contact the Stratum Administration team who will be happy to assist you. Contact details are in the signature below. </span><br /><br /><span style="font-size: 10pt; font-family: arial, helvetica, sans-serif;">Please click on the following link to access the form. This link is unique to you. Please do not forward it.</span><p><br /><span style="font-size: 10pt; font-family: arial, helvetica, sans-serif;"><strong>[S]</strong></span><br /><br /><br /><span style="font-size: 10pt; font-family: arial, helvetica, sans-serif;">Once you have completed and submitted the form to us, we will be in contact to arrange an interview.</span><br /><br /><span style="font-size: 10pt; font-family: arial, helvetica, sans-serif;">If you have any questions in the meantime please feel free to get in touch.</span><br /><br /><span style="font-size: 10pt; font-family: arial, helvetica, sans-serif;"><br />Kind Regards<br /></span><br /><br /><span style="font-family: arial, helvetica, sans-serif; font-size: 10pt;">The Stratum Team</span></p><p><span style="font-size: 10pt; font-family: arial, helvetica, sans-serif;"><strong>Stratum </strong><span style="color: #808000;"><strong>l</strong><strong> </strong></span>Talent <span style="color: #808000;"><strong>l </strong></span>Management<br /> <strong><br /> </strong>t: +44 (0) 203 627 3271</span></p><p><span style="font-size: 10pt; font-family: arial, helvetica, sans-serif;">a: 24 Greville Street, London, UK, EC1N 8SS</span><br /><span style="font-size: 10pt; font-family: arial, helvetica, sans-serif;">e: admin@stratum-int.com </span><br /><span style="font-size: 10pt; font-family: arial, helvetica, sans-serif;">w: <a href="http://www.stratum-international.com/">www.stratum-international.com</a></span></p><p><br /><br />';
+        $content = <<<EOC
+<span style="font-size: 10pt; font-family: arial, helvetica, sans-serif;"><p>Hi,</p>
+
+<p>Thank you for registering with Stratum International.</p>
+
+<p>Before we arrange an interview we&rsquo;d like a bit more information about you.</p>
+
+<p>Our online Registration Form will take ten to fifteen minutes to complete and will form the basis of your record with us, so it&rsquo;s important your answers are comprehensive and accurate.</p>
+
+<p>We&rsquo;ll ask about the skills areas in which you have expertise and the areas of mining in which you have the most experience. If you feel the form misses any vital information you can bring it up in your interview.</p>
+
+<p>Click on the link below to start completing the form. You can save your progress at any stage and return to it later but please aim to complete the form in the next ten days.</p>
+
+<p><strong>[S]</strong></p>
+
+<p>Note: this link is unique to you. Please do not forward it or share it.</p>
+
+<p>Once you have completed the form we&rsquo;ll get in touch to arrange your interview.</p>
+
+<p>If you have any difficulty accessing or using the form you can contact us on <a href="tel:%2B44%20%280%29%20203%20627%203271">+44 (0) 203 627 3271</a> or by email at <a href="mailto:admin@stratum-int.com">admin@stratum-int.com</a> and we&rsquo;ll be very happy to help.</p>
+
+<p>&nbsp;</p>
+
+<p>Kind Regards</p>
+
+<p>The Stratum Team<br />
+<strong>Stratum l </strong>Talent <strong>l </strong>Management</p>
+
+<p>t: <a href="tel:%2B44%20%280%29%20203%20627%203271">+44 (0) 203 627 3271</a><br />
+a: 24 Greville Street, London, UK, EC1N 8SS<br />
+e: <a href="mailto:admin@stratum-int.com">admin@stratum-int.com</a><br />
+w: <a href="http://www.stratum-international.com/">www.stratum-international.com</a></p>
+EOC;
 
         $template->set('content', $content);
 

@@ -314,6 +314,12 @@ class QuestionMapping extends ModelObject
                 $this->var_debug($flag);
             }
         } else if ($type == 'choice' || $type == 'multichoice') {
+            $all_listed = false;
+            foreach (array_keys($valueMap) as $vm) {
+                if ($vm == "All Listed") {
+                    $all_listed = true;
+                }
+            }
             echo "<select class='form-control select2' ";
             if ($type == 'multichoice') {
                 echo "multiple='multiple'";
@@ -345,7 +351,7 @@ class QuestionMapping extends ModelObject
                     echo "<option ";
                     if ($valueMap) {
                         foreach (array_keys($valueMap) as $vm) {
-                            if (substr($vm, 0, strlen($aval)) === $aval) {
+                            if ($all_listed  || substr($vm, 0, strlen($aval)) === $aval) {
                                 $this->log_debug("Found $vm matching $aval in $human");
                                 echo "SELECTED ";
                             }

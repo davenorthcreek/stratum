@@ -33,6 +33,10 @@ Route::group(['middleware' => ['web']], function () {
   Route::get('auth/register', 'Auth\AuthController@getRegister');
   Route::post('auth/register', 'Auth\AuthController@postRegister');
 
+  // Password reset routes...
+  Route::get('password/reset/{token}', 'Auth\PasswordController@getReset');
+  Route::post('password/reset', 'Auth\PasswordController@postReset');
+
   Route::group(['middleware' => ['auth']], function () {
     //these routes need both web and auth middleware
     Route::get('/admin', 'CorporateUserController@index');
@@ -46,8 +50,6 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/formresponse/{id}', ['uses'=>'FormResponseController@index', 'as'=>'formResponseDisplay']);
 
     Route::post('/formresponse/{id}/confirm', ['uses'=>'FormResponseController@confirmValues', 'as'=>'confirmValues']);
-
-
 
     Route::get('/home', 'CorporateUserController@index');
     Route::get('/refresh', 'CorporateUserController@refresh');

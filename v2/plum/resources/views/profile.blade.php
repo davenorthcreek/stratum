@@ -1,4 +1,4 @@
-@extends('app')
+@extends('admin_template')
 
 @section('content')
 
@@ -85,7 +85,7 @@
 Profile
 @endsection
 
-@section('scripts')
+@section('local_scripts')
 
     <script>
         $('form').on('submit', function (e) {

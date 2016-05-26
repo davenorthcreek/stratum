@@ -3,7 +3,7 @@
 @section('content')
 
     <div class='row'>
-        <div class='col-md-6'>
+        <div class='col-md-9'>
             <?PHP $id = $candidate->get('id'); ?>
             <form method="post" id="confirmValues" action='{{route("confirmValues", ["id" => $id])}}' >
                 {{csrf_field()}}
@@ -72,6 +72,13 @@
 
         $("[data-widget='collapse']").click();
         return false;
+    }
+
+    $("#checkbox").click(function(){
+        if($("#checkbox").is(':checked') ){
+            $("#e1 > option").prop("selected","selected");// Select All Options
+            $("#e1").trigger("change");// Trigger change to select 2
+        }
     }
 
     $('.btn-click-action').on('click', btnClassClick);
