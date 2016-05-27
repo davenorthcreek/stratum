@@ -177,7 +177,7 @@ class QuestionMapping extends ModelObject
         if (count($valueMap)>1) {
             $mult = true;
         }
-        $val = implode(',', array_keys($valueMap));
+        $val = htmlentities(implode(',', array_keys($valueMap)), ENT_QUOTES);
         $type = $this->get("type");
         if ($type == "multichoice") {
             $mult = true;
@@ -320,7 +320,11 @@ class QuestionMapping extends ModelObject
                     $all_listed = true;
                 }
             }
-            echo "<select class='form-control select2' ";
+            echo "<select class='form-control select2";
+            if ($human == "Q57" || $human == "Q62") {
+                echo " $human";
+            }
+            echo "' ";
             if ($type == 'multichoice') {
                 echo "multiple='multiple'";
             }
@@ -361,7 +365,14 @@ class QuestionMapping extends ModelObject
                 }
             }
             echo "</select>";
-        } else if ($human == "Q109" || $human == "Q110") {
+            if ($human == "Q57" || $human == "Q62") {
+                echo '<input type="checkbox" id="'.$human.'_checkbox"';
+                if ($all_listed) {
+                    echo ' CHECKED';
+                }
+                echo ' >Select All';
+            }
+        } else if ($human == "Q110" || $human == "Q111") {
             echo("<textarea class='form-control' name='$label' rows='4' placeholder='Enter...'>$val</textarea>");
         } else {
             echo("<input class='form-control' name='$label' type='text' value='".$val."'>");

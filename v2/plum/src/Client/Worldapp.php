@@ -19,6 +19,7 @@ use \OAuth\Common\Storage\Session;
 use \OAuth\Common\Consumer\Credentials;
 use \Dotenv\Dotenv;
 use SoapClient;
+use Illuminate\Support\Facades\Log as Log;
 
 class Worldapp {
 
@@ -50,7 +51,7 @@ class Worldapp {
 			$result .= ': '.$str;
 			$this->_logger->debug($result);
 		} else {  //no logger configured
-			echo $str."\n";
+			\Log::debug($str);
 		}
 	}
 
@@ -185,13 +186,13 @@ class Worldapp {
 							 'items'=>$items
 							]
 						]);
-			echo "response: ".$client->__getLastResponse()."\n";
+			$this->log_debug("response: ".$client->__getLastResponse());
 			return $objResponse;
 		} catch (\Exception $ex) {
-			echo "response: ".$client->__getLastResponse()."\n";
-			//var_dump($ex);
+			$this->log_debug("response: ".$client->__getLastResponse());
+			$this->var_debug($ex->detail);
 			//var_dump($ex->detail);
-			echo "request : ".$client->__getLastRequest()."\n";
+			$this->log_debug("request : ".$client->__getLastRequest());
 		}
 	}
 

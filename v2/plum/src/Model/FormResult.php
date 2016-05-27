@@ -334,13 +334,21 @@ class FormResult extends ModelObject
             unset($sectionQs["Q7"]);
         }
 
+        //store list of 'select all' checkboxes for javascript
+        $checkboxes = [];
+
         foreach ($sectionQs as $human=>$qmap) {
 
                 /****************************************
                 second pass, export to html with answers
                 ************************************** */
-            $qmap->exportQMToHTML($human, $this->get("configs"), $qbyq, $this);
+            $retval = $qmap->exportQMToHTML($human, $this->get("configs"), $qbyq, $this);
+            if ($retval) {
+                $checkboxes[] = $retval;
+            }
         }
+
+        //return $checkboxes;
     }
 
 	public function dump() {

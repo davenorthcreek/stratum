@@ -123,6 +123,7 @@ EOC;
 
       $send = $this->wcontroller->sendUrlWithAutofill($form->id, $candidate->get('email'), $autofill);
 
+
       $this->returnEmailTemplate($form, $template->get('emailTemplate'));
 
       $data['page_title'] = "Form Template";
@@ -239,8 +240,8 @@ EOC;
       $id =               $candidate->get('id');
       $firstName =        $candidate->get("firstName");
       $lastName =         $candidate->get("lastName");
-      $dateOfBirth =      $candidate->getDateOfBirthWithFormat("d/m/Y");
-      $maritalStatus =    $candidate->get("nickName");
+      //$dateOfBirth =      $candidate->getDateOfBirthWithFormat("d/m/Y");
+      //$maritalStatus =    $candidate->get("nickName");
       $email =            $candidate->get("email");
       $workEmail =        $candidate->get("email2");
       $mobile =           $candidate->get("mobile");
@@ -258,8 +259,8 @@ EOC;
       }
       $type = substr($type, 0, strlen($type)-1); //remove last semi-colon
 
-      $autofill = ['21741440'=>[$id, $firstName, $lastName, $dateOfBirth, $maritalStatus],
-                   '21741491'=>[$type],
+      $autofill = ['21741440'=>[$id, $firstName, $lastName],
+                   '21741491'=>[$type], // should be 21741516
                    '21741451'=>[$email,
                                 $workEmail,
                                 $mobile,
