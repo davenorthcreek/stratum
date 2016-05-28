@@ -161,7 +161,8 @@ class Candidate extends ModelObject
 						  'willRelocate'=>'',
 						  'workAuthorized'=>'',
 						  'workPhone'=>'',
-						  'references'=>[] //array of CandidateReference objects
+						  'references'=>[], //array of CandidateReference objects
+                          'files'=>''
 						  ];
 
 	//OVERRIDE
@@ -298,16 +299,26 @@ class Candidate extends ModelObject
         return $this->getDateWithFormat("dateOfBirth", $format);
     }
 
-	public function getBullhornFieldList() {
-		$list = "";
-		foreach (array_keys($this->_fields) as $key) {
+    private function getBullhornFields() {
+        $ret = [];
+        foreach (array_keys($this->_fields) as $key) {
 			//exceptions need to be here
 			if ($key == 'userDateAdded' ||
 				$key == 'webResponse' ||
+                $key == 'files' ||
+                //$key == 'specialties' ||
 				preg_match('/WithholdingsAmount/', $key)) {
 			} else {
-				$list .= $key.",";
-			}
+                $ret[] = $key;
+            }
+        }
+        return $ret;
+    }
+
+	public function getBullhornFieldList() {
+		$list = "";
+		foreach ($this->getBullhornFields() as $key) {
+			$list .= $key.",";
 		}
 		$list = substr($list, 0, strlen($list)-1); //remove last comma
 		return $list;
@@ -399,7 +410,7 @@ class Candidate extends ModelObject
 		$addresses = [];
 		$references = [];
         $note = [];
-		foreach ($this->expose_set() as $attr=>$value) {
+		foreach ($this->expose_bullhorn_set() as $attr=>$value) {
 			//now we filter based on what we have vs. what Bullhorn knows
 			if ($attr=='customFloat2') {
 				//bonus potential
@@ -532,6 +543,18 @@ class Candidate extends ModelObject
 		}
 		return $same;
 	}
+
+    public function expose_bullhorn_set() {
+        $set = array(); //array of set fields
+        foreach ($this->getBullhornFields() as $field) {
+            $value = $this->get($field);
+            if (!empty($value)) {
+                $set[$field] = $value;
+            }
+        }
+        //$this->log_debug(json_encode($set));
+        return $set;
+    }
 
     public function exportSummaryToHTML($form) {
         echo '<div class="box box-primary">';

@@ -32,6 +32,7 @@ class Bullhorn {
 
 	//allow someone to pass in a $logger
 	protected $_logger;
+	private $responseHeaders;
 
 	public function setLogger($lgr) {
 		//$lgr better be a logger of some sort -missing real OOP here
@@ -98,6 +99,7 @@ class Bullhorn {
 		$httpClient = new \OAuth\Common\Http\Client\CurlClient();
 
 		$httpClient->setCurlParameters([CURLOPT_HEADER=>true]);
+		$httpClient->setTimeout(60);
 
 		// Setup the credentials for the requests
 		$credentials = new \OAuth\Common\Consumer\Credentials(
@@ -865,11 +867,12 @@ class Bullhorn {
 		}
 	}
 
-	public function submit_file($candidate, $file) {
+	public function submit_files($candidate) {
 		//PUT https://rest.bullhornstaffing.com/rest-services/{corpToken}/file/Candidate/$id/raw?externalID=Portfolio&fileType=SAMPLE
 
 		/*
-		We use a PUT command to attach a file to a candidate (not just resumes) but use the base64 option instead of the raw file. The uri looks like this -> /file/Candidate/{candidateId}. The json included with the body has the following fields:
+		We use a PUT command to attach a file to a candidate (not just resumes) but use the base64 option instead of the raw file.
+		The uri looks like this -> /file/Candidate/{candidateId}. The json included with the body has the following fields:
 
 		fileContent = Base64 string representing the file content
 		externalID = portfolio
@@ -881,32 +884,68 @@ class Bullhorn {
 
 		This option should work fine for attaching your rest results.
 		*/
-		$id = $candidate->get("id");
-		$subm_file_url = $this->base_url."file/Candidate/$id/raw";
 
-		//may not be any
-		if ($file) {
-            $flag = false;
-            foreach ($skills as $skill) {
-				foreach ($skill as $sid=>$val) {
-            		$subm_file_url .= $val.",";
-            		$flag = true;
+		$filelist = $candidate->get("files");
+		$this->log_debug("Going to try to upload files $filelist");
+
+		$files = explode(",", $filelist);
+		$filename = '';
+		foreach ($files as $url) {
+			$ch = curl_init($url);
+
+			curl_setopt($ch, CURLOPT_HEADER, true);
+			curl_setopt($ch, CURLOPT_HEADERFUNCTION, array($this,'readHeader'));
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+			curl_setopt($ch, CURLOPT_BINARYTRANSFER, 1);
+			$response = curl_exec($ch);
+			$header_size = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
+			$header = substr($response, 0, $header_size);
+			$body = substr($response, $header_size);
+			curl_close($ch);
+			$this->var_debug($this->responseHeaders[$url]);
+			$filename = '';
+			foreach ($this->responseHeaders[$url] as $header_item) {
+				if (preg_match('/filename="(.*?)";/', $header_item, $matches)) {
+					$filename = $matches[1];
 				}
-            }
-			if ($flag) {
-				$subm_file_url = substr($subm_file_url, 0, strlen($subm_file_url)-1); //remove last comma
-				$this->log_debug($subm_file_url);
 			}
+			$this->log_debug($filename);
+			$file_base64 = base64_encode($body);
 
-			$subm_file_uri = $this->service->getRestUri($subm_file_url, $this->session_key);
+			//may not be any
+			if ($filename) {
 
-			$subm_file = $this->httpClient->retrieveResponse($subm_file_uri, $file,
-				['externalID'=>'Portfolio', 'fileType'=>'SAMPLE'], 'PUT');
-			$subm_file_decoded = $this->extract_json($subm_file);
-			$this->log_debug("Submitted File: ");
-			$this->var_debug($subm_file_decoded);
-			return $subm_file_decoded;
+				$id = $candidate->get("id");
+				$subm_file_url = $this->base_url."file/Candidate/$id";
+				$this->log_debug($subm_file_url);
+				$size = strlen($body);
+				if ($size < 10000) {
+					$this->log_debug($body);
+					$this->log_debug($file_base64);
+				}
+				$subm_file_uri = $this->service->getRestUri($subm_file_url, $this->session_key);
+
+				$subm_file = $this->httpClient->retrieveResponse($subm_file_uri,
+					json_encode(['fileContent'=>$file_base64,
+					 	'externalID'=>'Portfolio',
+					 	'name'=>$filename,
+					 	'fileType'=>'SAMPLE',
+					 	'description'=>'associated file',
+					 	'type'=>'CV'
+				 		]),
+					[],
+					'PUT');
+				$subm_file_decoded = $this->extract_json($subm_file);
+				$this->log_debug("Submitted File $url: ");
+				$this->var_debug($subm_file_decoded);
+			}
 		}
+	}
+
+	function readHeader($ch, $header) {
+        $url = curl_getinfo($ch, CURLINFO_EFFECTIVE_URL);
+        $this->responseHeaders[$url][] = $header;
+		return strlen($header);
 	}
 
 

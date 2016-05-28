@@ -39,24 +39,24 @@ class FormResponseController extends Controller
             $qbyq[$q1->get('humanQAId')][] = $q1;
         }
 
-        $wac = new \Stratum\Controller\WorldappController();
-        $theForm = $wac->find_active_form();
-        $theQuestions = $wac->get_questions($theForm->id);
+        //$wac = new \Stratum\Controller\WorldappController();
+        //$theForm = $wac->find_active_form();
+        //$theQuestions = $wac->get_questions($theForm->id);
         //Log::debug($theQuestions);
-        $qid = 0;
-        foreach($theQuestions as $theQ) {
-            $text = $theQ->text;
-            if (strpos($text, "If you have not already sent us a copy of your CV")) {
-                //this is the question we care about
-                $qid = $theQ->questionId;
-            }
-        }
-        if ($qid) {
-            $respondentId = $formResult->get("respondentId");
-            Log::debug("Getting response for $qid and $respondentId");
+        //$qid = 0;
+        //foreach($theQuestions as $theQ) {
+        //    $text = $theQ->text;
+        //    if (strpos($text, "If you have not already sent us a copy of your CV")) {
+        //        //this is the question we care about
+        //        $qid = $theQ->questionId;
+        //    }
+        //}
+        //if ($qid) {
+        //    $respondentId = $formResult->get("respondentId");
+        //    Log::debug("Getting response for $qid and $respondentId");
             //$response = $wac->get_response($qid, $respondentId);
             //Log::debug($response);
-        }
+        //}
 
         //expand/collapse all button
         $data['form'] = $form;
