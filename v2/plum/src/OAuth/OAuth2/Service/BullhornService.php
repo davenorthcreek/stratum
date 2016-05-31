@@ -266,9 +266,9 @@ class BullhornService extends AbstractService
         $uri = new Uri($base_url."search/Candidate");
         $uri->addToQuery("BhRestToken", $session_key);
         if ($constraint) {
-		    $uri->addToQuery("query", "owner.id:".$owner_id." AND isDeleted:false AND preferredContact:".$constraint);
+		    $uri->addToQuery("query", "owner.id:".$owner_id.' AND isDeleted:false AND status:"New Candidate - To Process" AND preferredContact:'.$constraint);
         } else {
-            $uri->addToQuery("query", "owner.id:".$owner_id." AND isDeleted:false");
+            $uri->addToQuery("query", "owner.id:".$owner_id.' AND isDeleted:false AND status:"New Candidate - To Process"');
         }
         $uri->addToQuery("fields", $fieldList);
         $uri->addToQuery("useV2", "true");

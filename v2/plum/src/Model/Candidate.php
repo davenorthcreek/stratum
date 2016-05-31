@@ -167,13 +167,35 @@ class Candidate extends ModelObject
 
 	//OVERRIDE
 	public function set($attribute, $value) {
+        if (!array_key_exists($attribute, $this->_fields)) {
+            $this->_fields[$attribute] = new Attribute();
+        }
 		if ($attribute == "name") {
 			$this->setName($value); //split name
 		} else {
-			parent::set($attribute,$value);
+            $attr = $this->_fields[$attribute];
+            if (!$attr) {
+                $attr = new Attribute();
+                $this->_fields[$attribute] = $attr;
+            }
+            $attr->set("value", $value);
+			//parent::set($attribute,$value);
 		}
 		return $this;
 	}
+
+    //OVERRIDE
+    public function get($attribute) {
+        if (!array_key_exists($attribute, $this->_fields)) {
+            return null;
+        }
+        $attr = $this->_fields[$attribute];
+        if (!$attr) {
+            $attr = new Attribute();
+            $this->_fields[$attribute] = $attr;
+        }
+        return $attr->get("value");
+    }
 
     /**
      * Set Name
@@ -183,7 +205,12 @@ class Candidate extends ModelObject
      */
     public function setName($name)
     {
-		$this->_fields["name"] = $name;
+        $attr = $this->_fields["name"];
+        if (!$attr) {
+            $attr = new Attribute();
+            $this->_fields["name"] = $attr;
+        }
+        $attr->set("value", $name);
 		$name_split = preg_split('#\s+#', $name, null, PREG_SPLIT_NO_EMPTY);
 		$this->log_debug(json_encode($name_split));
 		if (!empty($name_split[0])) {
@@ -212,7 +239,7 @@ class Candidate extends ModelObject
 		if ($name) {
 			return $name;
 		}
-		$first = $this->get("firstName");
+        $first = $this->get("firstName");
 		$middle = $this->get("middleName");
 		$last = $this->get("lastName");
 		$name .= $first;
@@ -222,7 +249,13 @@ class Candidate extends ModelObject
 		if ($last) {
 			$name .= " $last";
 		}
-		parent::set("name",$name); //no re-setting sub-names
+        $name_attr = $this->_fields["name"];
+        if (!$name_attr) {
+            $name_attr = new Attribute();
+            $this->_fields["name"] = $name_attr;
+        }
+        $name_attr->set("value", $name);
+        //parent::set("name",$name); //no re-setting sub-names
 		return $name;
 	}
 
@@ -568,12 +601,11 @@ class Candidate extends ModelObject
         echo "\n<div class='table-responsive'>";
         echo "\n<table class='table'>\n";
         echo "\n<thead>\n<tr>";
-        echo "\n<th><button class='btn btn-info btn-sm'>Bullhorn Fieldname</button></th>";
-        echo "\n<th><button class='btn btn-secondary btn-sm'>WorldApp (Human-Readable) Name</button></th>";
+        echo "\n<th><button class='btn btn-secondary btn-sm'>Field Name</button></th>";
         echo "\n<th><label>Value</label></th>\n";
         echo "\n</tr></thead>";
         echo "\n<tbody>";
-        $summary = ["id", "firstName", "lastName", "dateOfBirth", "nickName", "email", "email2", "mobile", "phone", "workPhone", "fax3", "pager", "customTextBlock2"];
+        $summary = ["id", "firstName", "lastName", "email", "email2", "mobile", "phone", "workPhone", "fax3", "pager", "customTextBlock2"];
         foreach ($summary as $item) {
             $value = '';
             if ($item=="customTextBlock2") {
@@ -605,8 +637,6 @@ class Candidate extends ModelObject
             echo "\n<tr>";
             //echo "\n<div class='form-group'>";
             echo "\n<td>";
-            echo "\n<button class='btn btn-info btn-sm'>".$item."</button>";
-            echo "\n</td><td>";
             echo "\n<button class='btn btn-secondary btn-sm'>".$wa."</button>";
             echo "\n</td><td>";
             echo "\n<label>$value</label>\n";
