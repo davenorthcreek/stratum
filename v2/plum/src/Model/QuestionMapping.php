@@ -351,7 +351,7 @@ class QuestionMapping extends ModelObject
                 if ($human == "Q23") {
                     $aval = preg_replace("/ \(.*\)/", "", $aval); //everything within parentheses
                 }
-                if ($aval) {
+                if ($aval && $aval != "All Listed") { //skip the all listed option
                     echo "<option ";
                     if ($valueMap) {
                         foreach (array_keys($valueMap) as $vm) {
