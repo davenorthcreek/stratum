@@ -128,7 +128,7 @@ class QuestionMapping extends ModelObject
 
 
     public function exportQMToHTML($human, $configs, $qbyq, $formResult) {
-        if ($human == "Q4" || $human == "Q6" || $human == "Q39" || $human == "Q41") {
+        if ($human == "Q4" || $human == "Q6" || $human == "Q39" || $human == "Q41" || $human == "Q64") {
             return;
         }
         $form = $this->get('form');
