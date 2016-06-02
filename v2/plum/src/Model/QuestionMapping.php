@@ -251,8 +251,19 @@ class QuestionMapping extends ModelObject
                 $visible = "Discipline - for display purposes only, will not be changed in Bullhorn";
             }
         }
+        if (strpos($qlabel, 'Q39.A1') === 0 || strpos($qlabel, 'Q41.A1') === 0 || strpos($qlabel, 'Q43') === 0) {
+            echo "<div class='panel panel-info'>\n";
+            if (strpos($qlabel, 'Q39.A1') === 0) {
+                echo "<div class='panel-heading'>Net / Equivalent Gross</div>\n";
+            } else if (strpos($qlabel, 'Q41.A1') === 0) {
+                echo "<div class='panel-heading'>Gross / Equivalent Net</div>\n";
+            } else if (strpos($qlabel, 'Q43') === 0) {
+                echo "<div class='panel-heading'>Daily or Hourly</div>\n";
+            }
+            echo "<div class='panel-body'>\n";
+        }
         echo "\n<div class='form-group'>";
-        echo "\n<button class='btn btn-info btn-sm'>".$qlabel."</button>";
+        echo "\n<button class='btn btn-info btn-sm disabled'>".$qlabel."</button>";
         echo("\n<label for='$label'>$visible</label>\n");
         if (strpos($qlabel, 'Q65') === 0) {
             $visible = "Discipline";
@@ -388,6 +399,9 @@ class QuestionMapping extends ModelObject
         }
             //}
         echo "\n</div>\n";
+        if (strpos($qlabel, 'Q39.A2') === 0 || strpos($qlabel, 'Q41.A2') === 0 || strpos($qlabel, 'Q44.A2') === 0) {
+            echo "</div>\n</div>\n";
+        }
             //}
         //}
     }
