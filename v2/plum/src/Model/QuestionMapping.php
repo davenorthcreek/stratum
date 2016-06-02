@@ -374,6 +374,15 @@ class QuestionMapping extends ModelObject
             }
         } else if ($human == "Q110" || $human == "Q111") {
             echo("<textarea class='form-control' name='$label' rows='4' placeholder='Enter...'>$val</textarea>");
+        } else if ($human == "Q99") {
+            //list of files, not very helpful
+            $file_list = explode("," , $val);
+            $val = "Candidate uploaded ".count($file_list)." files to WorldApp.";
+            echo("\n<label>$val</label>\n");
+            $file_count = 1;
+            foreach ($file_list as $file_url) {
+                echo "<div><a href='$file_url' target='_blank'>File ".$file_count++."</a></div>\n";
+            }
         } else {
             echo("<input class='form-control' name='$label' type='text' value='".$val."'>");
         }

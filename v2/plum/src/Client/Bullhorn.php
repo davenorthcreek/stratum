@@ -903,17 +903,15 @@ class Bullhorn {
 			$body = substr($response, $header_size);
 			curl_close($ch);
 			$this->var_debug($this->responseHeaders[$url]);
-			$filename = '';
-			foreach ($this->responseHeaders[$url] as $header_item) {
-				if (preg_match('/filename="(.*?)";/', $header_item, $matches)) {
-					$filename = $matches[1];
+			if ($this->responseHeaders[$url]) { //may be null if link expired
+				$filename = '';
+				foreach ($this->responseHeaders[$url] as $header_item) {
+					if (preg_match('/filename="(.*?)";/', $header_item, $matches)) {
+						$filename = $matches[1];
+					}
 				}
-			}
-			$this->log_debug($filename);
-			$file_base64 = base64_encode($body);
-
-			//may not be any
-			if ($filename) {
+				$this->log_debug($filename);
+				$file_base64 = base64_encode($body);
 
 				$id = $candidate->get("id");
 				$subm_file_url = $this->base_url."file/Candidate/$id";

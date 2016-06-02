@@ -434,6 +434,15 @@ class CandidateController
                             $value = "U";
                     }
                 }
+                if ($key == 'referredBy' || $key == 'customText6') {
+                    //convert shortened FIFO/residential codes to longer versions
+                    //needs to be
+                    //International FIFO, International Residential, National FIFO, National Residential.
+                    $value = preg_replace("/Inter-FIFO/", "International FIFO", $value);
+                    $value = preg_replace("/Inter-Res/", "International Residential", $value);
+                    $value = preg_replace("/National-FIFO/", "National FIFO", $value);
+                    $value = preg_replace("/National-Res/", "National Residential", $value);
+                }
                 if ($key == 'customText20' && $pt1 && $pt2) {
         			$value = $pt1.' ('.$pt2.')';
                     $candidate->set($key, $value);

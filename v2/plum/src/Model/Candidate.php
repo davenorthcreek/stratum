@@ -161,7 +161,7 @@ class Candidate extends ModelObject
 						  'willRelocate'=>'',
 						  'workAuthorized'=>'',
 						  'workPhone'=>'',
-						  'references'=>[], //array of CandidateReference objects
+						  //'references'=>[], //array of CandidateReference objects
                           'files'=>''
 						  ];
 
@@ -402,6 +402,7 @@ class Candidate extends ModelObject
 		if ($references) {
 			return $references;
 		}
+        $references = []; //initialize
 		//so there is nothing in that empty array
 		foreach ($this->expose_set() as $attr=>$value) {
 			//now we filter based on what we have vs. what Bullhorn knows
@@ -774,6 +775,18 @@ class Candidate extends ModelObject
 
     public function validField($key) {
         return array_key_exists($key, $this->_fields);
+    }
+
+
+    public function expose_set() {
+        $set = array(); //array of set fields
+        foreach ($this->_fields as $field=>$value) {
+            if (!empty($value)) {
+                $set[$field] = $this->get($field);
+            }
+        }
+        //$this->log_debug(json_encode($set));
+        return $set;
     }
 
     public function dump() {
