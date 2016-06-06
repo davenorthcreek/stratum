@@ -399,7 +399,7 @@ class QuestionMapping extends ModelObject
         }
             //}
         echo "\n</div>\n";
-        if (strpos($qlabel, 'Q39.A2') === 0 || strpos($qlabel, 'Q41.A2') === 0 || strpos($qlabel, 'Q44.A2') === 0) {
+        if (strpos($qlabel, 'Q40') === 0 || strpos($qlabel, 'Q42') === 0 || strpos($qlabel, 'Q44.A2') === 0) {
             echo "</div>\n</div>\n";
         }
             //}

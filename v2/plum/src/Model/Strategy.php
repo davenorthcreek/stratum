@@ -25,6 +25,9 @@ class Strategy extends ModelObject
 
 						  ];
 
+    public function renderHTML() {
+    }
+
 
 	public function dump() {
 		$this->log_debug( "---------------------------");
