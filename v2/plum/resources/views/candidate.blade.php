@@ -36,9 +36,14 @@
                           <button id="launchButton" value="Launch">Edit Template and Launch Form</button>
                         </form>
                     @endif
-                    @if($status=="Interview Done" || $status=="Form Completed")
+                    @if($status=="Interview Done")
                         <form action='{{route("formResponseDisplay", ["id" => $thecandidate->get("id")])}}' method="GET">
                           <button id="launchButton" value="Launch">Reload WorldApp Form Data</button>
+                        </form>
+                    @endif
+                    @if($status=="Form Completed")
+                        <form action='{{route("formResponseDisplay", ["id" => $thecandidate->get("id")])}}' method="GET">
+                          <button id="launchButton" value="Launch">Load WorldApp Form Data</button>
                         </form>
                     @endif
                     <?php $thecandidate->exportSummaryToHTML($form) ?>
