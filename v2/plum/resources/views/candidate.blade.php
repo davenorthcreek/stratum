@@ -23,6 +23,11 @@
                           <button id="launchButton" value="Launch">Edit Template and Launch Form</button>
                         </form>
                     @endif
+                    @if($status=="Interview Done")
+                        <form action='{{route("formResponseDisplay", ["id" => $thecandidate->get("id")])}}' method="GET">
+                          <button id="launchButton" value="Launch">Re-Send WorldApp Form Data</button>
+                        </form>
+                    @endif
                     <?php $thecandidate->exportSummaryToHTML($form) ?>
                 </div><!-- /.box-body -->
                 <div class="box-footer">

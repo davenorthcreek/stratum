@@ -44,6 +44,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('test', 'TestController@index');
     Route::get('candidate', 'CandidateController@index');
     Route::get('/candidate/{id}', ['uses' =>'CandidateController@show', 'as'=>'showCandidate']);
+    Route::post('/search', ['uses' =>'CandidateController@search', 'as'=>'searchCandidate']);
     Route::get('/formtemplate/{id}', ['uses'=>'FormTemplateController@getIndexWithId', 'as'=>'candidateFormTemplate']);
     Route::post('/formtemplate/{id}/update-content', ['uses'=>'FormTemplateController@postUpdateContent', 'as'=>'candidateUpdateTemplate']);
     Route::post('/formtemplate/{id}/launch-form', ['uses'=>'FormTemplateController@postLaunchForm', 'as'=>'candidateLaunchForm']);
