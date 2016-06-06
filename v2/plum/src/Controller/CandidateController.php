@@ -434,7 +434,7 @@ class CandidateController
                             $value = "U";
                     }
                 }
-                if ($key == 'referredBy' || $key == 'customText6') {
+                if ($key == 'referredBy') {
                     $value2 = $value;
                     //convert shortened FIFO/residential codes to longer versions
                     //needs to be
