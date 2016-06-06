@@ -546,12 +546,11 @@ class Bullhorn {
 		$decoded = $this->extract_json($result);
 		$this->log_debug("Update $id has response: ");
 		$this->var_debug($decoded);
-		if (!array_key_exists('error', $decoded)) {
+		if (!array_key_exists('errorMessage', $decoded)) {
 			//success
 			$this->log_debug("Candidate $id Updated");
 		} else {
-			$this->log_debug("Candidate $id update failed with problem ".$decoded['error']);
-			die ("Candidate $id update failed with problem ".$decoded['error']."\n");
+			$this->log_debug("Candidate $id update failed with problem ".$decoded['errorMessage']);
 		}
 		return $decoded;
 	}

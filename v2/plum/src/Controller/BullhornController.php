@@ -166,6 +166,12 @@ class BullhornController {
 		return $retval;
 	}
 
+	public function submit_note(\Stratum\Model\Candidate $candidate) {
+		$bullhornClient = $this->getClient();
+
+		$bullhornClient->submit_note($candidate);
+	}
+
 	function submit_custom_object($candidate) {
 		$customObj_from_form = $candidate->loadCustomObject();
 		$this->log_debug("looking up custom object");

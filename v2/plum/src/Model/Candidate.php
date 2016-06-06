@@ -482,6 +482,7 @@ class Candidate extends ModelObject
 					   $attr == 'diploma' ||  //boolean
 					   $attr == 'reportToPerson' || //this is for ClientContact
                        $attr == 'NONE'  ||          //Q42 Daily or Hourly rate...
+                       $attr == 'specialties' || //handled separately
 					   $attr == 'employerAtRegistration') { //??
 				//skip
 			} else if (preg_match("/(recommender\d)_(.*)/", $attr)) {
@@ -541,7 +542,7 @@ class Candidate extends ModelObject
 		return $encoded;
 	}
 
-	private function get_a_string($thing) {
+	public function get_a_string($thing) {
 		$new_string = $thing; //not a reference
 		if (is_array($thing)) {
 			$new_array = [];

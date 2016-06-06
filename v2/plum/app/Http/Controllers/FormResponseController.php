@@ -85,15 +85,23 @@ class FormResponseController extends Controller
       $candidate->set("customDate2", $stamp);
 
       $bc = new \Stratum\Controller\BullhornController();
-      $bc->submit($candidate);
-      $bc->updateCandidateStatus($candidate, "Interview Done");
+      $retval = $bc->submit($candidate);
+      if (array_key_exists("errorMessage", $retval)) {
+          $data['errormessage']['message'] = $retval['errorMessage'];
+          $data['errormessage']['errors'] = $retval['errors'];
+          $data['message'] = "Problem uploading data";
+      } else {
+          $data['message'] = "Data Uploaded";
+          $bc->updateCandidateStatus($candidate, "Interview Done");
+      }
+
       $data['thecandidate'] = $candidate;
       $fc = new \Stratum\Controller\FormController();
       $data['form'] = $fc->setupForm();
       $cuc = new CorporateUserController();
       $cuc->flushCandidatesFromCache();
       $data['candidates'] = $cuc->load_candidates();
-      $data['message'] = "Data Uploaded";
+
       return view('candidate')->with($data);
   }
 }

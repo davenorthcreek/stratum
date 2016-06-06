@@ -307,8 +307,12 @@ class CandidateController
                 if ($this->endsWith($waan, "Yes") || $this->endsWith($waan, "No")) {
                     $waan = substr($waan, 0, strrpos($waan, ' '));
                 }
-                foreach ($values as $val) {
-                    $note[] = "$waan: $val";
+                if ($waan == "Call Availability") {
+                    //already submitted as a note when candidate uploaded (UploadController)
+                } else {
+                    foreach ($values as $val) {
+                        $note[] = "$waan: $val";
+                    }
                 }
             } else if ($candidate->validField($key)) {
 

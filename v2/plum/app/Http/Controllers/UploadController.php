@@ -30,6 +30,19 @@ class UploadController extends Controller
     	$candidate = $candidateController->populate($candidate, $formResult);
     	Log::debug("Form Completed for ".$candidate->getName());
         $controller = new \Stratum\Controller\BullhornController();
+
+        //update availability Note in Bullhorn
+        $availability = $formResult->findByWorldApp("Call Availability");
+        Log::debug($availability);
+        if ($availability) {
+            $to_transfer = new \Stratum\Model\Candidate();
+            $to_transfer->set("id", $candidate->get("id"));
+            $note['comments'] = "Call Availability: ".$availability['Call Availability']['value'];
+            Log::debug($note);
+            $to_transfer->set("Note", $note);
+            $controller->submit_note($to_transfer);
+        }
+
         $controller->updateCandidateStatus($candidate, "Form Completed");
 
         //Now to store form results in local storage
