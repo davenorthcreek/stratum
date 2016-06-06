@@ -25,7 +25,7 @@
                     @endif
                     @if($status=="Interview Done")
                         <form action='{{route("formResponseDisplay", ["id" => $thecandidate->get("id")])}}' method="GET">
-                          <button id="launchButton" value="Launch">Re-Send WorldApp Form Data</button>
+                          <button id="launchButton" value="Launch">Reload WorldApp Form Data</button>
                         </form>
                     @endif
                     <?php $thecandidate->exportSummaryToHTML($form) ?>

@@ -50,14 +50,14 @@ class CandidateController extends Controller
   public function search(Request $request) {
       $id = $request->input("q");
       $candidate = $this->load($id);
-      if ($candidate) {
+      if ($candidate->get("firstName")) {
           return $this->show($id);
       } else {
-        $message = "There is no candidate with ID $id";
+        $message = "There is no candidate with ID <strong>$id</strong>.";
         $cuc = new CorporateUserController();
         $data['candidates'] = $cuc->load_candidates();
         $data['message'] = $message;
-        return view('admin_template')->with($data);
+        return view('error')->with($data);
       }
   }
 
