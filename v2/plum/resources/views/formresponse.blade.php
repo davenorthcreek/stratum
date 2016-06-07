@@ -35,7 +35,7 @@
                         </div>
                     </div>
                     <div class='box-body' style='display: none;'>
-                        {{ $formResult->exportSectionToHTML($form, $section, $qbyq) }}
+                        {{ $formResult->exportSectionToHTML($form, $section, $qbyq, $candidate) }}
                     </div>
                     <div class="box-footer"></div><!-- /.box-footer-->
                 </div><!-- /.box -->

@@ -127,7 +127,7 @@ class QuestionMapping extends ModelObject
 	}
 
 
-    public function exportQMToHTML($human, $configs, $qbyq, $formResult) {
+    public function exportQMToHTML($human, $configs, $qbyq, $candidate, $formResult) {
         if ($human == "Q4" || $human == "Q6" || $human == "Q39" || $human == "Q41" || $human == "Q64") {
             return;
         }
@@ -174,10 +174,32 @@ class QuestionMapping extends ModelObject
                 }
             }
         }
+        if ($human == "Q109") {
+            $sfp = $candidate->get("customText4");
+            if ($sfp) {
+                $this->log_debug("Q109 loading Suitable Future Positions from Candidate: ");
+                $this->var_debug($sfp);
+                $valueMap[$sfp[0]] = 1;
+            } else {
+                $this->log_debug("Q109 no Suitable Future Positions in Candidate record");
+            }
+        } else if ($human == "Q108") {
+            $this->log_debug("Q108 Looking up category ID for candidate:");
+            $cats = $candidate->get("category");
+            foreach ($cats as $cid=>$cat) {
+                $valueMap[$cat] = 1;
+            }
+            $cats = $candidate->get("categoryID");
+            foreach (explode("\n", $cats) as $cat) {
+                $valueMap[$cat] = 1;
+            }
+            $this->var_debug($valueMap);
+        }
         if (count($valueMap)>1) {
             $mult = true;
         }
         $val = htmlentities(implode(',', array_keys($valueMap)), ENT_QUOTES);
+
         $type = $this->get("type");
         if ($type == "multichoice") {
             $mult = true;

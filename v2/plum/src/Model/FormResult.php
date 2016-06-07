@@ -126,7 +126,7 @@ class FormResult extends ModelObject
                 $answers[$waan]['value'] = $value;
                 return $answers;
             }
-		} else  if ($q->get("objects") && count($q->get("objects")>1)) {
+		} else if ($q->get("objects") && count($q->get("objects")>1)) {
             return $this->extractObjectValuesFromFile($q, $qmap);
         } else {
 			$value = $this->find_answer_in_file($q, $qmap, $qid);
@@ -165,7 +165,6 @@ class FormResult extends ModelObject
 		} else {
 			$answers[$waan]['value'] = $value;
 		}
-
 		return $answers;
 	}
 
@@ -285,7 +284,7 @@ class FormResult extends ModelObject
 		return $this;
 	}
 
-    public function exportSectionToHTML($form, $section, $qbyq) {
+    public function exportSectionToHTML($form, $section, $qbyq, $candidate) {
         $sectionQs=null;
         $questionMaps = $form->get('questionMappings');
         foreach ($section as $qmap) {
@@ -349,7 +348,7 @@ class FormResult extends ModelObject
                 /****************************************
                 second pass, export to html with answers
                 ************************************** */
-            $retval = $qmap->exportQMToHTML($human, $this->get("configs"), $qbyq, $this);
+            $retval = $qmap->exportQMToHTML($human, $this->get("configs"), $qbyq, $candidate, $this);
             if ($retval) {
                 $checkboxes[] = $retval;
             }
