@@ -204,7 +204,8 @@ class CandidateController
         //for customText20
         $pt1 = "";
         $pt2 = "";
-        $ctb5 = [];
+        // end of customText20 specific values
+        $ctb5 = []; //customTextBlock5
         $this->log_debug($id);
         $this->var_debug($req);
         foreach ($req as $jointkey=>$values) {

@@ -325,6 +325,15 @@ class QuestionMapping extends ModelObject
                 $this->var_debug($flag);
             }
         } else if ($type == 'choice' || $type == 'multichoice') {
+            $other = "";
+            $otherVal = '';
+            if (in_array($human, ['Q15', 'Q17', 'Q27', 'Q43', 'Q52', 'Q55', 'Q103', 'Q104'])) {
+                //need to take care of 'Other'
+                $other = "<label class='control-label col-sm-2' for='".$label."_other'>Other:</label>\n";
+                $other.= "<input class='form-control' name='".$label."_other' type='text' value='";
+                $this->log_debug("Question $human may contain Other");
+                $this->var_debug($valueMap);
+            }
             $all_listed = false;
             foreach (array_keys($valueMap) as $vm) {
                 if ($vm == "All Listed") {
@@ -369,6 +378,10 @@ class QuestionMapping extends ModelObject
                             if ($all_listed  || substr($vm, 0, strlen($aval)) === $aval) {
                                 $this->log_debug("Found $vm matching $aval in $human");
                                 echo "SELECTED ";
+                                if ($aval == "Other") {
+                                    $otherVal = substr($vm, 7);
+                                    $other .= $otherVal;
+                                }
                             }
                         }
                     }
@@ -383,7 +396,11 @@ class QuestionMapping extends ModelObject
                 }
                 echo ' >Select All';
             }
-        } else if ($human == "Q110" || $human == "Q111") {
+            if ($other) {
+                $other .= "'>\n";
+                echo $other;
+            }
+        } else if ($human == "Q18"|| $human == "Q110" || $human == "Q111") {
             echo("<textarea class='form-control' name='$label' rows='4' placeholder='Enter...'>$val</textarea>");
         } else if ($human == "Q99") {
             //list of files, not very helpful

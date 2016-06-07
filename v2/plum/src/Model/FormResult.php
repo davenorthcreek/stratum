@@ -97,7 +97,11 @@ class FormResult extends ModelObject
 		$waan = $qmap->get("WorldAppAnswerName");
 		$column = "";
 		$qac = $q->get("humanQACId");
-		if ($q->get("value")) {
+        if ($qmap->get("type")=="choice") {
+			$value = $qmap->get("Value");
+        } else if ($qmap->get("type")=="multichoice") {
+			$value = $qmap->get("Value");
+		} else if ($q->get("value")) {
 			$value = $q->get("value");
 		} else if ($qmap->get("type")=="boolean") {
 			//extract boolean from WorldAppAnswer
@@ -107,11 +111,7 @@ class FormResult extends ModelObject
 			} else if (preg_match("/no/i", $yn)) {
 				$value = "No";
 			}
-		} else if ($qmap->get("type")=="choice") {
-			$value = $qmap->get("Value");
-        } else if ($qmap->get("type")=="multichoice") {
-			$value = $qmap->get("Value");
-		} else if ($qmap->get("type")=="object") {
+		} else  if ($qmap->get("type")=="object") {
 			$obj = $q->get("objects");
 			if (array_key_exists('objectName', $obj)) {
 				$value = $obj['objectName'];
@@ -136,6 +136,13 @@ class FormResult extends ModelObject
 				//$qmap->dump();
 			}
 		}
+        if ($value == "Other") {
+            $qmap->dump();
+            $q->dump();
+            if ($q->get("value")) {
+                $value = "Other: ".$q->get("value");
+            }
+        }
         if ($qac) {
 			$last_number = preg_match("/\.C(\d+)$/", $qac, $num);
 			if ($num[1]) {
