@@ -84,6 +84,8 @@ class FormResponseController extends Controller
       $candidate->set("customDate1", $stamp);
       $candidate->set("customDate2", $stamp);
 
+      //$data['message'] = 'Debugging only, nothing uploaded to Bullhorn';
+
       $bc = new \Stratum\Controller\BullhornController();
       $retval = $bc->submit($candidate);
       if (array_key_exists("errorMessage", $retval)) {
@@ -94,7 +96,6 @@ class FormResponseController extends Controller
           $data['message'] = "Data Uploaded";
           $bc->updateCandidateStatus($candidate, "Interview Done");
       }
-
       $data['thecandidate'] = $candidate;
       $fc = new \Stratum\Controller\FormController();
       $data['form'] = $fc->setupForm();

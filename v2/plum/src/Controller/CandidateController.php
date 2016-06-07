@@ -175,13 +175,19 @@ class CandidateController
 	}
 
     private function assign($candidate, $label, $value, $separator) {
+        $result_split = [];
         $existing = $candidate->get($label);
         if ($existing) {
-            //only if $value does not already exist in $existing
-            if (strpos($existing, $value) === false) {
-                $value = $existing.$separator.$value;
+            $result_split = explode(", ", $existing);
+        }
+        $value_split = explode(", ", $value);
+        foreach ($value_split as $val) {
+            if (!in_array($val, $result_split)) {
+                $result_split[] = $val;
             }
         }
+        $value = implode($separator, $result_split);
+
         $candidate->set($label, $value);
     }
 
@@ -359,11 +365,11 @@ class CandidateController
                                     } else {
                                         $frval = "can't parse";
                                     }
-                                    $this->log_debug("FormResult: $frwaan: $frlabel: $frval");
+                                    $this->log_debug("FormResult (from array): $frwaan: $frlabel: $frval");
 
                                 } else {
                                     //frval is not an array
-                                    $this->log_debug("FormResult: $frwaan: $frlabel: $frval");
+                                    $this->log_debug("FormResult (non array): $frwaan: $frlabel: $frval");
                                     if ($frlabel == "combined") {
                                         $splitvals = array_merge($splitvals, explode(", ", $frval));
                                         foreach ($splitvals as $splitval) {
@@ -376,7 +382,7 @@ class CandidateController
                             }
                         } else {
                             //frvals is not an array
-                            $this->log_debug("FormResult: $frwaan: $frvals");
+                            $this->log_debug("FormResult (simple): $frwaan: $frvals");
                             $splitvals[] = $frvals;
                         }
                         foreach ($splitvals as $v) {
@@ -384,8 +390,9 @@ class CandidateController
                         }
                     }
                 }
+                //now back to dealing with request values
                 foreach($values as $val) {
-                    if ($key == "customTextBlock5") {
+                    if ($key == "customTextBlock5" || $key == "recentClientList") {
                         $val = "$waan: $val";
                     }
                     $rhash[$val] = 1;
@@ -398,6 +405,7 @@ class CandidateController
                     }
 
                 }
+                //$previous is what is returned from the loaded candidate on a 'get' call
                 foreach (explode(", ", $previous) as $valprev) {
                     if ($valprev) {
                         $rhash[$valprev] = 1;
@@ -405,21 +413,22 @@ class CandidateController
                 }
                 $final = [];
                 //add the formResult values in order
+                //splithash comes from FormResult
+                //want to maintain order, that's why all this gymnastics
                 foreach ($splithash as $frval=>$nothing) {
                     if (array_key_exists($frval, $rhash)) {
+                        //only preserve if it's still there in the request
                         $final[$frval] = 1;
                     }
                 }
                 //now add the leftover request values
+                //rhash comes from the request
+                //only add if it's not there already (to preserve order)
                 foreach ($rhash as $rval=>$nothing) {
                     if (!array_key_exists($rval, $final)) {
                         $final[$rval] = 1;
                     }
                 }
-                if ($key == "recentClientList") {
-                    $this->var_debug($final);
-                }
-
                 $value = implode(", ", array_keys($final));
 
                 if ($key == "customFloat2") {
@@ -456,7 +465,7 @@ class CandidateController
                     $candidate->set($key, $value);
         		} else {
                     $this->log_debug("setting $key to $value");
-                    $this->assign($candidate, $key, $value, "; ");
+                    $this->assign($candidate, $key, $value, ", ");
                 }
             } else {
                 $this->log_debug("Invalid Field: $key");
