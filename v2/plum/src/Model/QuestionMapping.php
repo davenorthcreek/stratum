@@ -351,8 +351,8 @@ class QuestionMapping extends ModelObject
             $otherVal = '';
             if (in_array($human, ['Q15', 'Q17', 'Q27', 'Q43', 'Q52', 'Q55', 'Q103', 'Q104'])) {
                 //need to take care of 'Other'
-                $other = "<label class='control-label col-sm-2' for='".$label."_other'>Other:</label>\n";
-                $other.= "<input class='form-control' name='".$label."_other' type='text' value='";
+                $other = "<label class='control-label col-sm-2' for='".$label."[other]'>Other:</label>\n";
+                $other.= "<input class='form-control' name='".$label."[Other]' type='text' value='";
                 $this->log_debug("Question $human may contain Other");
                 $this->var_debug($valueMap);
             }

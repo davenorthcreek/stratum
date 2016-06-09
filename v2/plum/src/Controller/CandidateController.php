@@ -241,6 +241,16 @@ class CandidateController
                     $values = "$waan2: ".$values[0];
                     $this->log_debug("Values now $values");
                 } else {
+                    //filter $values - remove empty values
+                    for ($i = 0; $i<count($values); $i++) {
+                        if (!$values[$i]) {
+                            unset($values[$i]);
+                        }
+                        if (is_array($values[$i]) && array_key_exists("Other", $values[$i])) {
+                            $this->addOtherNote($candidate, $waan, $values[$i]["Other"]);
+                            unset($values[$i]);
+                        }
+                    }
                     $val_split = implode($values, ',');
                     $this->log_debug("Imploding to $val_split");
                     $values = $val_split;
@@ -318,7 +328,11 @@ class CandidateController
                     //already submitted as a note when candidate uploaded (UploadController)
                 } else {
                     foreach ($values as $val) {
-                        $note[] = "$waan: $val";
+                        if (is_array($val) && array_key_exists("Other", $val)) {
+                            $this->addOtherNote($candidate, $waan, $val["Other"]);
+                        } else {
+                            $note[] = "$waan: $val";
+                        }
                     }
                 }
             } else if ($candidate->validField($key)) {
@@ -391,11 +405,21 @@ class CandidateController
                         }
                     }
                 }
+                //have to deal with "Other" values before we get to default cases
+                for ($i=0; $i < count($values); $i++) {
+                    if (is_array($values[$i]) && array_key_exists("Other", $values[$i])) {
+                        $otherVal = $values[$i]['Other'];
+                        $this->addOtherNote($candidate, $waan, $otherVal);
+                        unset($values[$i]);
+                    }
+                }
+
                 //now back to dealing with request values
                 foreach($values as $val) {
                     if ($key == "customTextBlock5" || $key == "recentClientList") {
                         $val = "$waan: $val";
                     }
+
                     $rhash[$val] = 1;
                     //now for customText20 specific stuff:
                     if ($jointkey == 'customText20*Expected_Local_Gross_Salary') {
@@ -493,6 +517,23 @@ class CandidateController
         return $needle === "" || (($temp = strlen($haystack) - strlen($needle)) >= 0 && strpos($haystack, $needle, $temp) !== false);
     }
 
+    private function addOtherNote($candidate, $waan, $otherVal) {
+        $this->log_debug("At addOtherNote with $waan and $otherVal");
+        if (!$otherVal) {
+            return;
+        }
+        $existing = $candidate->get("Note");
+        $newNote = [];
+        $comment = "";
+        if ($existing) {
+            $comment = $existing["comments"];
+        }
+        $comment .= "Other Value ($waan): $otherVal\n";
+        $newNote["comments"] = $comment;
+        $candidate->set("Note", $newNote);
+    }
+
+
     private function loadAddressesFromRequest($candidate, $address, $address2) {
         $add1 = $candidate->get("address");
         if (!$add1) {
@@ -545,8 +586,14 @@ class CandidateController
                 } else {
                     $value = $values;
                 }
+                if (strpos($value, "Other")===0) {
+                    $otherVal = substr($value, 7);
+                    if ($otherVal) {
+                        $value = "Other";
+                    }
+                }
                 $obj->set($key, $value);
-                //$this->log_debug("Setting custom object ".$index." $key to $value");
+                $this->log_debug("Setting custom object ".$index." $key to $value");
             }
             $label = "customObject".$index."s";
             $candidate->set($label, $obj);
