@@ -755,6 +755,7 @@ class Bullhorn {
 		$this->log_debug("Submitted Note");
 		$this->var_debug($subm_note_decoded);
 		$noteId = $subm_note_decoded["changedEntityId"];
+		/*
 		$subm_ne_url = $this->base_url."entity/NoteEntity";
 		$subm_ne_uri = $this->service->getRestUri($subm_ne_url, $this->session_key);
 		$ne = [];
@@ -768,6 +769,7 @@ class Bullhorn {
 		$subm_ne_decoded = $this->extract_json($subm_ne);
 		$this->log_debug("Submitted NoteEntity");
 		$this->var_debug($subm_ne_decoded);
+		*/
 		return $subm_note_decoded;
 	}
 

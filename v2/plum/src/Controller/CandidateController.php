@@ -581,6 +581,7 @@ class CandidateController
             $comment .= $noteDetail."\n";
         }
         $newNote["comments"] = $comment;
+        $newNote["action"] = "Conversion Interview";
         $candidate->set("Note", $newNote);
     }
 
