@@ -29,7 +29,11 @@ class UploadController extends Controller
     	$candidateController = new \Stratum\Controller\CandidateController();
     	$candidate = $candidateController->populate($candidate, $formResult);
     	Log::debug("Form Completed for ".$candidate->getName());
+
         $controller = new \Stratum\Controller\BullhornController();
+
+        //upload files from WorldApp to Bullhorn
+        $controller->submit_files($candidate);
 
         //update availability Note in Bullhorn
         $availability = $formResult->findByWorldApp("Call Availability");
@@ -42,6 +46,8 @@ class UploadController extends Controller
             $to_transfer->set("Note", $note);
             $controller->submit_note($to_transfer);
         }
+        //upload files to Bullhorn
+
 
         $controller->updateCandidateStatus($candidate, "Form Completed");
 

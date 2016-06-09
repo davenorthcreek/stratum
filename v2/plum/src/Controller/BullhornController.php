@@ -146,6 +146,11 @@ class BullhornController {
 		return $candidate;
 	}
 
+	public function submit_files(\Stratum\Model\Candidate $candidate) {
+		$bullhornClient = $this->getClient();
+		$bullhornClient->submit_files($candidate);
+	}
+
 	public function submit(\Stratum\Model\Candidate $candidate) {
 		$bullhornClient = $this->getClient();
 
@@ -159,8 +164,6 @@ class BullhornController {
 			$bullhornClient->submit_categories($candidate);
 			$bullhornClient->submit_specialties($candidate);
 			$bullhornClient->submit_note($candidate);
-			$bullhornClient->submit_files($candidate);
-
 		}
 		//returns an array with 'error' or 'id' and other data
 		return $retval;
