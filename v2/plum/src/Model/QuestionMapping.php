@@ -326,6 +326,7 @@ class QuestionMapping extends ModelObject
                 echo " id='$label' data-placeholder='$visible' name='$label'";
                 echo " style='width: 100%;'";
                 echo ">\n";
+                echo "<option></option>\n"; //empty option
                 //if (!$mult) {
                 //    echo "<option></option>\n";
                 //}
@@ -373,6 +374,7 @@ class QuestionMapping extends ModelObject
             echo " id='$label' data-placeholder='$visible' name='$label'";
             echo " style='width: 100%;'";
             echo ">\n";
+            echo "<option></option>\n"; //empty option
             $qmap2 = $questionMaps[$human];
             if ($human == "Q103") {
                 $my103 = false;
