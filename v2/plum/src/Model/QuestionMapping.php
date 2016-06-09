@@ -390,6 +390,20 @@ class QuestionMapping extends ModelObject
                     }
                 }
                 if (!$my103) {
+                    $valueMap['Yes'] = true;
+                }
+            }
+            if ($human == "Q104") {
+                $my104 = false;
+                if ($valueMap) {
+                    foreach (array_keys($valueMap) as $vm) {
+                        if ($vm) {
+                            //don't overwrite
+                            $my104 = true;
+                        }
+                    }
+                }
+                if (!$my104) {
                     $valueMap['No'] = true;
                 }
             }
