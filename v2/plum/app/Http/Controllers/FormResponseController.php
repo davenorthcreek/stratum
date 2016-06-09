@@ -13,6 +13,8 @@ use \Stratum\Model\FormResult;
 use \Stratum\Model\Candidate;
 use Storage;
 use Log;
+use Auth;
+use Mail;
 
 class FormResponseController extends Controller
 {
@@ -64,12 +66,6 @@ class FormResponseController extends Controller
         $candidate = $cc->populateFromRequest($candidate, $request->all(), $c2, $formResult);
         if ($candidate->get("validated") != 'true') {
             $data['errormessage']['message'] = "You must confirm that this form is correct and accurate.  Use the Browser Back button to avoid losing your edits.";
-            /*
-            Property:&nbsp;<strong>{{$error['propertyName'] }}</strong><br>
-            Value:&nbsp;&nbsp;&nbsp;<strong>{{$thecandidate->get_a_string($thecandidate->get($error['propertyName'])) }}</strong><br>
-            Severity:&nbsp;<strong>{{$error['severity'] }}</strong><br>
-            Issue:&nbsp;&nbsp;&nbsp;<strong>{{$error['type'] }}</strong><br><hr>
-            */
             $error['propertyName'] = "validated";
             $error['severity'] = 'Validation Failure';
             $error['type'] = 'Must Accept Form';
@@ -94,6 +90,16 @@ class FormResponseController extends Controller
                 $data['message'] = "Data Uploaded";
                 $bc->updateCandidateStatus($candidate, "Interview Done");
                 $cuc->flushCandidatesFromCache();
+                Log::debug("sending email to admin@stratum-int.com about Interview completion");
+                $user = Auth::user();
+                $maildata['candidateName'] = $candidate->getName();
+                $maildata['candidateID'] = $id;
+                $maildata['consultantName'] = $user->name;
+                $maildata['date'] = date(DATE_RFC2822);
+                Mail::send('email.interview_complete', $maildata, function ($m) use ($candidate, $id) {
+                    $m->from('dev@northcreek.ca', 'Plum Data Integration Service');
+                    $m->to('admin@stratum-int.com')->subject('Interview Complete '.$candidate->getName().' '.$id);
+                });
             }
         }
         $data['candidates'] = $cuc->load_candidates();

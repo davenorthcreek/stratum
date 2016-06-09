@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\CandidateController as CanCon;
 use \Stratum\Controller\FormController;
 use \Stratum\Controller\CandidateController;
 use \Stratum\Model\Candidate;
@@ -13,6 +14,7 @@ use \Stratum\Model\CorporateUser;
 use Log;
 use Cache;
 use Storage;
+use Mail;
 
 class UploadController extends Controller
 {
@@ -45,8 +47,31 @@ class UploadController extends Controller
             $candidate->set("Note", $note);
             $controller->submit_note($candidate);
         }
-        //upload files to Bullhorn
-
+        $cc = new CanCon();
+        $c3 = $cc->load($candidate->get("id")); //Bullhorn Candidate record, from cache if available
+        $owner = $c3->get("owner");
+        /*
+        array (
+          'id' => 10237,
+          'firstName' => 'Stratum',
+          'lastName' => 'API',
+        )
+        */
+        $cuser = new \Stratum\Model\CorporateUser();
+        $cuser->set("id", $owner['id']);
+        $cuser = $controller->loadCorporateUser($cuser);
+        $to_email = $cuser->get("email");
+        if (!$to_email) {
+            $to_email = "dev@northcreek.ca";
+        }
+        Log::debug("sending email to ".$cuser->getName()." at ".$to_email." about Form Submission");
+        $maildata['candidateName'] = $candidate->getName();
+        $maildata['candidateID'] = $candidate->get("id");
+        $maildata['date'] = date(DATE_RFC2822);
+        Mail::send('email.form_uploaded', $maildata, function ($m) use ($to_email, $candidate) {
+            $m->from('dev@northcreek.ca', 'Plum Data Integration Service');
+            $m->to($to_email)->subject('Form Submission from '.$candidate->getName().' '.$candidate->get("id"));
+        });
 
         $controller->updateCandidateStatus($candidate, "Form Completed");
 
