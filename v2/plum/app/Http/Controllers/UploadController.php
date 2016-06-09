@@ -39,13 +39,11 @@ class UploadController extends Controller
         $availability = $formResult->findByWorldApp("Call Availability");
         Log::debug($availability);
         if ($availability) {
-            $to_transfer = new \Stratum\Model\Candidate();
-            $to_transfer->set("id", $candidate->get("id"));
             $note['comments'] = "Call Availability: ".$availability['Call Availability']['value'];
             $note['action'] = 'Availability';
             Log::debug($note);
-            $to_transfer->set("Note", $note);
-            $controller->submit_note($to_transfer);
+            $candidate->set("Note", $note);
+            $controller->submit_note($candidate);
         }
         //upload files to Bullhorn
 

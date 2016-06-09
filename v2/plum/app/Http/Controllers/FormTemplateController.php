@@ -131,6 +131,16 @@ EOC;
       $data['launch'] = false;
       $data['formTemplate'] = $template;
 
+      //send note with email content
+      $comment = "Form sent at: ".date(DATE_RFC2822)."\n";
+      $comment .= "Sent to: ".$candidate->get("name")." at email address ".$candidate->get("email")."\n";
+      $comment .= "Content of Email follows.\n\n";
+      $comment .= $content;
+      $note['comments'] = $comment;
+      $note['action'] = "Reg Form Sent";
+      $candidate->set("Note", $note);
+      $this->bcontroller->submit_note($candidate);
+
       //update candidate status
       $this->bcontroller->updateCandidateStatus($candidate, 'Reg Form Sent');
       $this->flushCandidatesFromCache();
