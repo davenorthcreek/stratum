@@ -162,7 +162,8 @@ class Candidate extends ModelObject
 						  'workAuthorized'=>'',
 						  'workPhone'=>'',
 						  //'references'=>[], //array of CandidateReference objects
-                          'files'=>''
+                          'files'=>'',
+                          'validated'=>''
 						  ];
 
 	//OVERRIDE
@@ -338,6 +339,7 @@ class Candidate extends ModelObject
 			//exceptions need to be here
 			if ($key == 'userDateAdded' ||
 				$key == 'webResponse' ||
+                $key == 'validated' ||
                 $key == 'files' ||
                 //$key == 'specialties' ||
 				preg_match('/WithholdingsAmount/', $key)) {
@@ -483,6 +485,7 @@ class Candidate extends ModelObject
 					   $attr == 'reportToPerson' || //this is for ClientContact
                        $attr == 'NONE'  ||          //Q42 Daily or Hourly rate...
                        $attr == 'specialties' || //handled separately
+                       $attr == 'categories' ||  //handled separately
 					   $attr == 'employerAtRegistration') { //??
 				//skip
 			} else if (preg_match("/(recommender\d)_(.*)/", $attr)) {
@@ -544,7 +547,15 @@ class Candidate extends ModelObject
 
 	public function get_a_string($thing) {
 		$new_string = $thing; //not a reference
-		if (is_array($thing)) {
+        if (is_bool($new_string)) {
+            $this->log_debug("Boolean get_a_string");
+            $this->var_debug($new_string);
+            if ($new_string) {
+                return "true";
+            } else {
+                return "false";
+            }
+        } else if (is_array($thing)) {
 			$new_array = [];
 			foreach ($thing as $subthing) {
 				$new_array[] = $this->get_a_string($subthing);

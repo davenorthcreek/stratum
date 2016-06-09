@@ -186,8 +186,11 @@ class QuestionMapping extends ModelObject
         } else if ($human == "Q108") {
             $this->log_debug("Q108 Looking up category ID for candidate:");
             $cats = $candidate->get("category");
-            foreach ($cats as $cid=>$cat) {
-                $valueMap[$cat] = 1;
+            $this->var_debug($cats);
+            if (is_array($cats)) {
+                foreach ($cats as $cid=>$cat) {
+                    $valueMap[$cat] = 1;
+                }
             }
             $cats = $candidate->get("categoryID");
             foreach (explode("\n", $cats) as $cat) {
@@ -269,9 +272,6 @@ class QuestionMapping extends ModelObject
                 $qlabel = $q->get("humanQuestionId");
             }
             $answermap = $questionMaps[$qlabel];
-            if (strpos($qlabel, 'Q65') === 0) {
-                $visible = "Discipline - for display purposes only, will not be changed in Bullhorn";
-            }
         }
         if (strpos($qlabel, 'Q39.A1') === 0 || strpos($qlabel, 'Q41.A1') === 0 || strpos($qlabel, 'Q43') === 0) {
             echo "<div class='panel panel-info'>\n";
@@ -283,6 +283,9 @@ class QuestionMapping extends ModelObject
                 echo "<div class='panel-heading'>Daily or Hourly</div>\n";
             }
             echo "<div class='panel-body'>\n";
+        }
+        if (strpos($qlabel, 'Q65') === 0) {
+            $visible = "Discipline - for display purposes only, will not be changed in Bullhorn";
         }
         echo "\n<div class='form-group'>";
         echo "\n<button class='btn btn-info btn-sm disabled'>".$qlabel."</button>";

@@ -30,7 +30,7 @@ class FormResponseController extends Controller
         Log::debug($c3->get("category"));
         Log::debug($c3->get("categoryID"));
         $candidate->set("categoryID", $c3->get("categoryID"));
-        $candidate->set("category", $c3->get("category"));        
+        $candidate->set("category", $c3->get("category"));
         $candidate->set("customText4", $c3->get("customText4"));
         $form = $formResult->get("form");
         $questions = $formResult->get('questions');
@@ -50,41 +50,58 @@ class FormResponseController extends Controller
         return view('formresponse')->with($data);
     }
 
-  public function confirmValues(Request $request) {
-      $id = $request->input("id");
-      $fc = new \Stratum\Controller\FormController();
-      $cc = new \Stratum\Controller\CandidateController();
-      $entityBody = Storage::disk('local')->get($id.'.txt');
-      $formResult = $fc->parse($entityBody);
-      $c2 = new \Stratum\Model\Candidate();
-      $c2 = $cc->populate($c2, $formResult);
-      $form = $formResult->get("form");
-      $candidate = new \Stratum\Model\Candidate();
-      $candidate = $cc->populateFromRequest($candidate, $request->all(), $c2, $formResult);
-      $now = new \DateTime();
-      $stamp = $now->format("U") * 1000;
-      $candidate->set("customDate1", $stamp);
-      $candidate->set("customDate2", $stamp);
+    public function confirmValues(Request $request) {
+        $id = $request->input("id");
+        $fc = new \Stratum\Controller\FormController();
+        $cc = new \Stratum\Controller\CandidateController();
+        $cuc = new CorporateUserController();
+        $entityBody = Storage::disk('local')->get($id.'.txt');
+        $formResult = $fc->parse($entityBody);
+        $c2 = new \Stratum\Model\Candidate();
+        $c2 = $cc->populate($c2, $formResult);
+        $form = $formResult->get("form");
+        $candidate = new \Stratum\Model\Candidate();
+        $candidate = $cc->populateFromRequest($candidate, $request->all(), $c2, $formResult);
+        if ($candidate->get("validated") != 'true') {
+            $data['errormessage']['message'] = "You must confirm that this form is correct and accurate.  Use the Browser Back button to avoid losing your edits.";
+            /*
+            Property:&nbsp;<strong>{{$error['propertyName'] }}</strong><br>
+            Value:&nbsp;&nbsp;&nbsp;<strong>{{$thecandidate->get_a_string($thecandidate->get($error['propertyName'])) }}</strong><br>
+            Severity:&nbsp;<strong>{{$error['severity'] }}</strong><br>
+            Issue:&nbsp;&nbsp;&nbsp;<strong>{{$error['type'] }}</strong><br><hr>
+            */
+            $error['propertyName'] = "validated";
+            $error['severity'] = 'Validation Failure';
+            $error['type'] = 'Must Accept Form';
+            $data['errormessage']['errors'][] = $error;
+            $data['message'] = "Validation Failure: Data Not Uploaded";
+        } else {
 
-      //$data['message'] = 'Debugging only, nothing uploaded to Bullhorn';
+            $now = new \DateTime();
+            $stamp = $now->format("U") * 1000;
+            $candidate->set("customDate1", $stamp);
+            $candidate->set("customDate2", $stamp);
 
-      $bc = new \Stratum\Controller\BullhornController();
-      $retval = $bc->submit($candidate);
-      if (array_key_exists("errorMessage", $retval)) {
-          $data['errormessage']['message'] = $retval['errorMessage'];
-          $data['errormessage']['errors'] = $retval['errors'];
-          $data['message'] = "Problem uploading data";
-      } else {
-          $data['message'] = "Data Uploaded";
-          $bc->updateCandidateStatus($candidate, "Interview Done");
-      }
-      $data['thecandidate'] = $candidate;
-      $fc = new \Stratum\Controller\FormController();
-      $data['form'] = $fc->setupForm();
-      $cuc = new CorporateUserController();
-      $cuc->flushCandidatesFromCache();
-      $data['candidates'] = $cuc->load_candidates();
+            //$data['message'] = 'Debugging only, nothing uploaded to Bullhorn';
 
-      return view('candidate')->with($data);
-  }
+            $bc = new \Stratum\Controller\BullhornController();
+            $retval = $bc->submit($candidate);
+            if (array_key_exists("errorMessage", $retval)) {
+                $data['errormessage']['message'] = $retval['errorMessage'];
+                $data['errormessage']['errors'] = $retval['errors'];
+                $data['message'] = "Problem uploading data";
+            } else {
+                $data['message'] = "Data Uploaded";
+                $bc->updateCandidateStatus($candidate, "Interview Done");
+                $cuc->flushCandidatesFromCache();
+            }
+        }
+        $data['candidates'] = $cuc->load_candidates();
+        $data['thecandidate'] = $candidate;
+        $fc = new \Stratum\Controller\FormController();
+        $data['form'] = $fc->setupForm();
+
+
+        return view('candidate')->with($data);
+    }
 }

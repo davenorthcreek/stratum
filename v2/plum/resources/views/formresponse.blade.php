@@ -5,6 +5,28 @@
     <div class='row'>
         <div class='col-md-9'>
             <?PHP $id = $candidate->get('id'); ?>
+            @if (count($errors) > 0)
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+            @if(isset($errormessage))
+                <div class="panel panel-danger">
+                    <div class="panel-heading">{{ $errormessage['message'] }}</div>
+                    <div class="panel-body">
+                        @foreach ($errormessage['errors'] as $error)
+                            Property:&nbsp;<strong>{{$error['propertyName'] }}</strong><br>
+                            Value:&nbsp;&nbsp;&nbsp;<strong>{{$candidate->get_a_string($candidate->get($error['propertyName'])) }}</strong><br>
+                            Severity:&nbsp;<strong>{{$error['severity'] }}</strong><br>
+                            Issue:&nbsp;&nbsp;&nbsp;<strong>{{$error['type'] }}</strong><br><hr>
+                        @endforeach
+                    </div>
+                </div>
+            @endif
             <form method="post" id="confirmValues" action='{{route("confirmValues", ["id" => $id])}}' >
                 {{csrf_field()}}
                 <input type='hidden' name='id' value="{{$id}}">

@@ -324,6 +324,13 @@ class CandidateController
                 if ($this->endsWith($waan, "Yes") || $this->endsWith($waan, "No")) {
                     $waan = substr($waan, 0, strrpos($waan, ' '));
                 }
+                if ($waan == "Form is Correct and Accurate") {
+                    if ($values[0] == "yes") {
+                        $candidate->set("validated", 'true');
+                    } else {
+                        $candidate->set("validated", 'false');
+                    }
+                }
                 if ($waan == "Call Availability") {
                     //already submitted as a note when candidate uploaded (UploadController)
                 } else {
