@@ -152,7 +152,7 @@ class Bullhorn {
 		$response = $httpClient->retrieveResponse($uri, '', []);
 		$decoded = $this->extract_json($response);
 		$this->var_debug($decoded);
-		if (array_key_exists("error", $decoded)) {
+		if (!$decoded || array_key_exists("error", $decoded)) {
 			$this->log_debug("Unable to use refresh token, going through authorize");
 			$this->authorize($bullhornService, $httpClient, $servicesCredentials);
 		} else {

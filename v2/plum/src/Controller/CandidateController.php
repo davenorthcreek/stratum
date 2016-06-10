@@ -81,8 +81,8 @@ class CandidateController
 		//$candidate->dump();
 		$this->log_debug("Loading custom Object 1");
 		$candidate->loadCustomObject(1);
-		$this->log_debug("Loading custom Object 3");
-		$candidate->loadCustomObject(3);
+		//$this->log_debug("Loading custom Object 3");
+		//$candidate->loadCustomObject(3);
 		$this->log_debug("Loading references");
 		$candidate->loadReferences();
 		return $candidate;
@@ -247,16 +247,22 @@ class CandidateController
                             unset($values[$i]);
                         }
                         if (is_array($values[$i]) && array_key_exists("Other", $values[$i])) {
-                            $this->addOtherNote($candidate, $waan, $values[$i]["Other"]);
+                            $cos = $this->addOtherNote($cos, $waan, $values[$i]["Other"]);
+                            $this->log_debug("unsetting Other value");
+                            $this->var_debug($values);
                             unset($values[$i]);
                         }
                     }
+                    $this->var_debug($values);
                     $val_split = implode($values, ',');
                     $this->log_debug("Imploding to $val_split");
                     $values = $val_split;
                 }
-                if (array_key_exists($m[1], $cos) && array_key_exists($m[2], $cos[$m[1]])) {
-                    $existing = $cos[$m[1]][$m[2]];
+                $this->var_debug($cos);
+                if (array_key_exists($m[1], $cos)) {
+                    if (array_key_exists($m[2], $cos[$m[1]] )) {
+                        $existing = $cos[$m[1]][$m[2]];
+                    }
                 }
                 if ($existing) {
                     $cos[$m[1]][$m[2]] = "$existing\n\n$values";
@@ -336,7 +342,7 @@ class CandidateController
                 } else {
                     foreach ($values as $val) {
                         if (is_array($val) && array_key_exists("Other", $val)) {
-                            $this->addOtherNote($candidate, $waan, $val["Other"]);
+                            $cos = $this->addOtherNote($cos, $waan, $val["Other"]);
                         } else {
                             $note[] = "$waan: $val";
                         }
@@ -416,7 +422,7 @@ class CandidateController
                 for ($i=0; $i < count($values); $i++) {
                     if (is_array($values[$i]) && array_key_exists("Other", $values[$i])) {
                         $otherVal = $values[$i]['Other'];
-                        $this->addOtherNote($candidate, $waan, $otherVal);
+                        $cos = $this->addOtherNote($cos, $waan, $otherVal);
                         unset($values[$i]);
                     }
                 }
@@ -524,20 +530,20 @@ class CandidateController
         return $needle === "" || (($temp = strlen($haystack) - strlen($needle)) >= 0 && strpos($haystack, $needle, $temp) !== false);
     }
 
-    private function addOtherNote($candidate, $waan, $otherVal) {
+    private function addOtherNote($cos, $waan, $otherVal) {
+        //has to go to customObject1.textBlock3 (Additional Candidate Notes)
+        $this->var_debug($cos);
         $this->log_debug("At addOtherNote with $waan and $otherVal");
         if (!$otherVal) {
-            return;
+            return $cos;
         }
-        $existing = $candidate->get("Note");
-        $newNote = [];
         $comment = "";
-        if ($existing) {
-            $comment = $existing["comments"];
+        if (array_key_exists(1, $cos) && array_key_exists("textBlock3", $cos[1])) {
+            $comment = $cos[1]["textBlock3"];
         }
-        $comment .= "Other Value ($waan): $otherVal\n";
-        $newNote["comments"] = $comment;
-        $candidate->set("Note", $newNote);
+        $comment .= "\n\n$waan: $otherVal";
+        $cos[1]["textBlock3"] = $comment;
+        return $cos;
     }
 
 
@@ -594,12 +600,12 @@ class CandidateController
                 } else {
                     $value = $values;
                 }
-                if (strpos($value, "Other")===0) {
-                    $otherVal = substr($value, 7);
-                    if ($otherVal) {
-                        $value = "Other";
-                    }
-                }
+                //if (strpos($value, "Other")===0) {
+                //    $otherVal = substr($value, 7);
+                //    if ($otherVal) {
+                //        $value = "Other";
+                //    }
+                //}
                 $obj->set($key, $value);
                 $this->log_debug("Setting custom object ".$index." $key to $value");
             }

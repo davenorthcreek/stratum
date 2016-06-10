@@ -353,7 +353,7 @@ class QuestionMapping extends ModelObject
         } else if ($type == 'choice' || $type == 'multichoice') {
             $other = "";
             $otherVal = '';
-            if (in_array($human, ['Q15', 'Q17', 'Q27', 'Q43', 'Q52', 'Q55', 'Q103', 'Q104'])) {
+        if (in_array($human, ['Q15', 'Q17', 'Q19', 'Q27', 'Q43', 'Q52', 'Q55', 'Q57', 'Q62', 'Q93', 'Q103', 'Q104'])) {
                 //need to take care of 'Other'
                 $other = "<label class='control-label col-sm-2' for='".$label."[other]'>Other:</label>\n";
                 $other.= "<input class='form-control' name='".$label."[Other]' type='text' value='";

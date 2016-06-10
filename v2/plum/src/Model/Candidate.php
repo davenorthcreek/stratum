@@ -372,11 +372,19 @@ class Candidate extends ModelObject
 		foreach ($this->expose_set() as $attr=>$value) {
 			//now we filter based on what we have vs. what Bullhorn knows
 			if (preg_match("/customObject".$index."\.(.*)/", $attr, $m)) {
+                $this->log_debug("Custom Object attribute found: $attr");
 				$there = true;
 				if ($m[1] == 'textBlock3') {
 					$value = preg_replace("/Additional Candidate Notes: /", "", $value);
-				}
-				$co->set($m[1], $value);
+                    $separator = "\n\n";
+				} else {
+                    $separator = ", ";
+                }
+                $old = $co->get($m[1]);
+                if ($old) {
+                    $value = $old.$separator.$value;
+                }
+			    $co->set($m[1], $value);
 			}
 		}
 		if ($there) {
@@ -384,10 +392,19 @@ class Candidate extends ModelObject
             $this->log_debug("Found a custom object $name");
 			return $co;
 		} else {
-            $this->log_debug("Still nothing there after traversing candidate ".$this->get("id"));
-			return null;
+            $this->log_debug("No Custom object with index $index");
+            return null;
+            //$this->log_debug("creating a new $name ($index) for ".$this->get("id"));
+            //$obj = new \Stratum\Model\CustomObject();
+            //$this->setCustomObject($index, $obj);
+			//return $obj;
 		}
 	}
+
+    public function setCustomObject($index, \Stratum\Model\CustomObject $object) {
+        $name = "customObject".$index."s";
+        $this->set($name, $object);
+    }
 
 	public function marshalCustomObject($index = 1) {
         $obj = $this->loadCustomObject($index);
