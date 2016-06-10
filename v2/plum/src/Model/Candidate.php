@@ -509,9 +509,10 @@ class Candidate extends ModelObject
 				//handled in marshalReferences
 			} else if (preg_match("/customObject/", $attr)) {
 				//handled in marshalCustomObject
-			} else if (preg_match("/ID$/", $attr)) {
+			} else if ($attr != "taxID" && preg_match("/ID$/", $attr)) {
 				//ID means a secondary object that must be added later
 				//skip for now
+                //exception - taxID!
 			} else if ($attr == "address" || $attr == "secondaryAddress") {
                 //handle below
             } else if (preg_match("/(.*ddress)\((.*)\)/", $attr, $m)) {
