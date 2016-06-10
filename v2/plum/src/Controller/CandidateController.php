@@ -242,18 +242,15 @@ class CandidateController
                     $this->log_debug("Values now $values");
                 } else {
                     //filter $values - remove empty values
-                    for ($i = 0; $i<count($values); $i++) {
+                    $count = count($values); //unset lowers the count in the middle of the loop!
+                    for ($i = 0; $i<$count; $i++) {
                         if (!$values[$i]) {
                             unset($values[$i]);
-                        }
-                        if (is_array($values[$i]) && array_key_exists("Other", $values[$i])) {
+                        } else if (is_array($values[$i]) && array_key_exists("Other", $values[$i])) {
                             $cos = $this->addOtherNote($cos, $waan, $values[$i]["Other"]);
-                            $this->log_debug("unsetting Other value");
-                            $this->var_debug($values);
                             unset($values[$i]);
                         }
                     }
-                    $this->var_debug($values);
                     $val_split = implode($values, ',');
                     $this->log_debug("Imploding to $val_split");
                     $values = $val_split;
@@ -429,7 +426,7 @@ class CandidateController
 
                 //now back to dealing with request values
                 foreach($values as $val) {
-                    if ($key == "customTextBlock5" || $key == "recentClientList") {
+                    if ($key == "customTextBlock5") {
                         $val = "$waan: $val";
                     }
 
