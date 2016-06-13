@@ -874,9 +874,10 @@ class Bullhorn {
 		$filelist = $candidate->get("files");
 		$this->log_debug("Going to try to upload files $filelist");
 
-		$files = explode(",", $filelist);
+		$files = explode(", ", $filelist);
 		$filename = '';
 		foreach ($files as $url) {
+			$this->log_debug("Going to try to upload file $url");
 			$ch = curl_init($url);
 
 			curl_setopt($ch, CURLOPT_HEADER, true);

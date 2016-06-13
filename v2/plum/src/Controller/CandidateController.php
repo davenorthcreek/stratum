@@ -153,7 +153,14 @@ class CandidateController
 				}
 			} else {
 				foreach ($arr as $key=>$res) {
-					$total .= ($multiple? "$key: ":"").$res['value'].$separator;
+                    if (array_key_exists("combined", $res)) {
+                        $uncombined = explode(", ", $res['combined']);
+                        foreach ($uncombined as $list_element) {
+                            $total .= $list_element.$separator;
+                        }
+                    } else {
+					    $total .= ($multiple? "$key: ":"").$res['value'].$separator;
+                    }
 				}
 			}
 			//clip the last, trailing comma and space
