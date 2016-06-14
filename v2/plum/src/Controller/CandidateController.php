@@ -194,7 +194,6 @@ class CandidateController
             }
         }
         $value = implode($separator, $result_split);
-
         $candidate->set($label, $value);
     }
 
@@ -345,8 +344,17 @@ class CandidateController
                     //already submitted as a note when candidate uploaded (UploadController)
                 } else {
                     foreach ($values as $val) {
-                        if (is_array($val) && array_key_exists("Other", $val)) {
-                            $cos = $this->addOtherNote($cos, $waan, $val["Other"]);
+                        if (is_array($val)) {
+                            if (array_key_exists("Other", $val) && $val['Other']) {
+                                if (strpos($waan, 'CV Guidelines') !== false) {
+                                    $val_string = "Other: ".$val['Other'];
+                                    $this->log_debug("CV guidelines stay in note");
+                                    $this->log_debug("$waan: $val_string");
+                                    $note[] = "$waan: $val_string";
+                                } else {
+                                    $cos = $this->addOtherNote($cos, $waan, $val["Other"]);
+                                }
+                            } // if no value in "Other", do nothing
                         } else {
                             $note[] = "$waan: $val";
                         }
@@ -426,7 +434,12 @@ class CandidateController
                 for ($i=0; $i < count($values); $i++) {
                     if (is_array($values[$i]) && array_key_exists("Other", $values[$i])) {
                         $otherVal = $values[$i]['Other'];
-                        $cos = $this->addOtherNote($cos, $waan, $otherVal);
+                        if ($key == "educationDegree") {
+                            //edu note
+                            $this->addOtherEduNote($candidate, $waan, $otherVal);
+                        } else {
+                            $cos = $this->addOtherNote($cos, $waan, $otherVal);
+                        }
                         unset($values[$i]);
                     }
                 }
@@ -534,8 +547,25 @@ class CandidateController
         return $needle === "" || (($temp = strlen($haystack) - strlen($needle)) >= 0 && strpos($haystack, $needle, $temp) !== false);
     }
 
+    private function addOtherEduNote($candidate, $waan, $otherVal) {
+        //Eucation other values have to get stuffed into recentClientList
+
+        $this->log_debug("At addOtherEduNote with $waan and $otherVal");
+        if (!$otherVal) {
+            return;
+        }
+        $value = $candidate->get("recentClientList");
+        if ($value) {
+            $value = $value.", ".$otherVal;
+        } else {
+            $value = $otherVal;
+        }
+        $candidate->set("recentClientList", $value);
+    }
+
     private function addOtherNote($cos, $waan, $otherVal) {
         //has to go to customObject1.textBlock3 (Additional Candidate Notes)
+        //unless it's from education (Q15/Q17)
         $this->var_debug($cos);
         $this->log_debug("At addOtherNote with $waan and $otherVal");
         if (!$otherVal) {

@@ -916,7 +916,7 @@ class Bullhorn {
 					 	'name'=>$filename,
 					 	'fileType'=>'SAMPLE',
 					 	'description'=>'associated file',
-					 	'type'=>'CV'
+					 	'type'=>'To Be Checked'
 				 		]),
 					[],
 					'PUT');

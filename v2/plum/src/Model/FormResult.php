@@ -312,9 +312,6 @@ class FormResult extends ModelObject
                 $theId = $qmap->getBestId();
                 $sectionQs[$theId] = $qmap;
                 $this->log_debug("default case");
-                if ($type == "object" && array_key_exists($theId, $qbyq)) {
-                    $qanswers = $qbyq[$theId]; //an array!
-                }
             }
         }
         if (array_key_exists("Q3", $sectionQs)) {
@@ -353,8 +350,6 @@ class FormResult extends ModelObject
                 $checkboxes[] = $retval;
             }
         }
-
-        //return $checkboxes;
     }
 
 	public function dump() {

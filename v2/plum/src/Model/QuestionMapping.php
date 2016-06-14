@@ -128,7 +128,7 @@ class QuestionMapping extends ModelObject
 
 
     public function exportQMToHTML($human, $configs, $qbyq, $candidate, $formResult) {
-        if ($human == "Q4" || $human == "Q6" || $human == "Q39" || $human == "Q41" || $human == "Q64") {
+        if (in_array($human, ['Q4', 'Q6', 'Q39', 'Q41', 'Q64'])) {
             return;
         }
         $form = $this->get('form');
@@ -139,6 +139,9 @@ class QuestionMapping extends ModelObject
         $qanswers = [];
         if (array_key_exists($human, $qbyq)) {
             $qanswers = $qbyq[$human]; //an array!
+        }
+        if ($human == "Q93") {
+            $this->var_debug($qanswers);
         }
         $values = [];
         foreach ($qanswers as $q) {
@@ -152,6 +155,9 @@ class QuestionMapping extends ModelObject
             $answermap = $questionMaps[$qlabel];
             $mult = $answermap->get('multipleAnswers');
             $values = $formResult->getValue($qlabel, $q, $answermap, $values);
+        }
+        if ($human == "Q93") {
+            $this->var_debug($values);
         }
         foreach ($values as $akey=>$value) {
             if (is_numeric($akey)) {
@@ -173,6 +179,9 @@ class QuestionMapping extends ModelObject
                     }
                 }
             }
+        }
+        if ($human == "Q93") {
+            $this->var_debug($valueMap);
         }
         if ($human == "Q109") {
             $sfp = $candidate->get("customText4");
@@ -220,7 +229,9 @@ class QuestionMapping extends ModelObject
             if (!$qlabel || !array_key_exists($qlabel, $questionMaps)) {
                 $qlabel = $qanswers[0]->get("humanQuestionId");
             }
-            //$this->log_debug("Q Label     : ".$qlabel);
+            if ($human == "Q93") {
+                $this->log_debug("Q Label     : ".$qlabel);
+            }
         }
         $answermap = $questionMaps[$qlabel];
         $waan = $answermap->get("WorldAppAnswerName");
@@ -353,7 +364,8 @@ class QuestionMapping extends ModelObject
         } else if ($type == 'choice' || $type == 'multichoice') {
             $other = "";
             $otherVal = '';
-        if (in_array($human, ['Q15', 'Q17', 'Q19', 'Q27', 'Q43', 'Q52', 'Q55', 'Q57', 'Q62', 'Q93', 'Q103', 'Q104'])) {
+        if (in_array($human, ['Q15', 'Q17', 'Q19', 'Q27', 'Q43', 'Q52', 'Q55', 'Q57', 'Q62',
+                              'Q86', 'Q93', 'Q103', 'Q104'])) {
                 //need to take care of 'Other'
                 $other = "<label class='control-label col-sm-2' for='".$label."[other]'>Other:</label>\n";
                 $other.= "<input class='form-control' name='".$label."[Other]' type='text' value='";
