@@ -140,9 +140,6 @@ class QuestionMapping extends ModelObject
         if (array_key_exists($human, $qbyq)) {
             $qanswers = $qbyq[$human]; //an array!
         }
-        if ($human == "Q93") {
-            $this->var_debug($qanswers);
-        }
         $values = [];
         foreach ($qanswers as $q) {
             $qlabel = $q->get("humanQACId");
@@ -155,9 +152,6 @@ class QuestionMapping extends ModelObject
             $answermap = $questionMaps[$qlabel];
             $mult = $answermap->get('multipleAnswers');
             $values = $formResult->getValue($qlabel, $q, $answermap, $values);
-        }
-        if ($human == "Q93") {
-            $this->var_debug($values);
         }
         foreach ($values as $akey=>$value) {
             if (is_numeric($akey)) {
@@ -179,9 +173,6 @@ class QuestionMapping extends ModelObject
                     }
                 }
             }
-        }
-        if ($human == "Q93") {
-            $this->var_debug($valueMap);
         }
         if ($human == "Q109") {
             $sfp = $candidate->get("customText4");
@@ -348,7 +339,6 @@ class QuestionMapping extends ModelObject
                 foreach(array_keys($valueMap) as $v) {
                     $flag[$v] = true;
                 }
-                $this->var_debug($flag);
                 foreach ($configFile as $op) {
                     echo "<option ";
                     if ($valueMap && array_key_exists($op, $valueMap) and $flag[$op]) {
@@ -359,7 +349,6 @@ class QuestionMapping extends ModelObject
                     echo 'VALUE="'.$op.'">'.$op."</option>\n";
                 }
                 echo "</select>";
-                //$this->var_debug($flag);
             }
         } else if ($type == 'choice' || $type == 'multichoice') {
             $other = "";
