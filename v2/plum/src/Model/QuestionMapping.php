@@ -359,7 +359,7 @@ class QuestionMapping extends ModelObject
                     echo 'VALUE="'.$op.'">'.$op."</option>\n";
                 }
                 echo "</select>";
-                $this->var_debug($flag);
+                //$this->var_debug($flag);
             }
         } else if ($type == 'choice' || $type == 'multichoice') {
             $other = "";
