@@ -179,7 +179,9 @@ class QuestionMapping extends ModelObject
             if ($sfp) {
                 $this->log_debug("Q109 loading Suitable Future Positions from Candidate: ");
                 $this->var_debug($sfp);
-                $valueMap[$sfp[0]] = 1;
+                foreach ($sfp as $fp) {
+                    $valueMap[$fp] = 1;
+                }
             } else {
                 $this->log_debug("Q109 no Suitable Future Positions in Candidate record");
             }
