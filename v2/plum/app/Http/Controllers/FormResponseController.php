@@ -52,6 +52,20 @@ class FormResponseController extends Controller
         return view('formresponse')->with($data);
     }
 
+    public function exportPDF(Request $request) {
+        $id = $request->input("id");
+        $cc = new CanCon();
+        $cuc = new CorporateUserController();
+        $candidate = $cc->load($id); //Bullhorn Candidate record, from cache if available
+        $bc = new \Stratum\Controller\BullhornController();
+        $data = $bc->submitPDF($candidate);
+        $data['id'] = $id;
+        $data['candidate'] = $candidate;
+        $data['candidates'] = $cuc->load_candidates();
+        $data['message'] = "Mockup of PDF";
+        return view('export_the_pdf')->with($data);
+    }
+
     public function confirmValues(Request $request) {
         $id = $request->input("id");
         $fc = new \Stratum\Controller\FormController();
@@ -89,6 +103,7 @@ class FormResponseController extends Controller
             } else {
                 $data['message'] = "Data Uploaded";
                 $bc->updateCandidateStatus($candidate, "Interview Done");
+                $bc->submitPDF($candidate);
                 $cuc->flushCandidatesFromCache();
                 Log::debug("sending email to admin@stratum-int.com about Interview completion");
                 $user = Auth::user();

@@ -11,7 +11,8 @@
         "intervention/image": "^2.3",
         "intervention/imagecache": "^2.3",
         "lusitanian/oauth": "^0.8.6",
-        "guzzlehttp/guzzle": "~5.3|~6.0"
+        "guzzlehttp/guzzle": "~5.3|~6.0",
+        "kendu/l5-mpdf": "dev-master"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

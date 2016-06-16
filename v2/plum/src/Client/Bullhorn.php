@@ -575,7 +575,7 @@ class Bullhorn {
 		$body['candidate']['id'] = $id;
 		$body['candidate']['firstName'] = $candidate->get("firstName");
 		$body['candidate']['lastName'] = $candidate->get("lastName");
-		$this->var_debug($body);
+		//$this->var_debug($body);
 		$subm_ref_url = $this->base_url."entity/CandidateReference";
 		$subm_ref_uri = $this->service->getRestUri($subm_ref_url, $this->session_key);
 		$subm_ref = $this->httpClient->retrieveResponse($subm_ref_uri, json_encode($body), [], 'PUT');

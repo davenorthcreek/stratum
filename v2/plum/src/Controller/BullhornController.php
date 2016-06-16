@@ -169,6 +169,97 @@ class BullhornController {
 		return $retval;
 	}
 
+	public function submitPDF(\Stratum\Model\Candidate $candidate) {
+		$bullhornClient = $this->getClient();
+		$decoded = [];
+
+		//going to use FormResponse (web form) as a template for the pdf.
+		//so I will get the section headers - but only display section if
+		//there is content.
+
+		$fc = new FormController();
+		$form = $fc->setupForm();  //parsed QandA.txt to get questions in order
+		$sections = $form->get("sections");  //and sections
+		$headers = $form->get("sectionHeaders");  //with appropriate labels
+		for ($i = 0; $i < count($sections); $i++) {
+			$section = $sections[$i];
+			$label = $headers[$i];
+
+			$this->exportSectionToPDF($form, $section, $label, $candidate);
+		}
+		return [];
+	}
+
+	private function exportSectionToPDF($form, $section, $label, $candidate) {
+		$questionMaps = $form->get('questionMappings');
+        foreach ($section as $qmap) {  //qmaps for each question in a section
+            $theId = $qmap->getBestId();
+                /******************************
+                 first pass, find subquestions
+                /**************************** */
+            $mult = $qmap->get("multipleAnswers"); //boolean
+            $type = $qmap->get("type");
+            $this->log_debug("$theId $type");
+            if ($type == "boolean") {
+                if (array_key_exists($theId, $questionMaps)) {
+                    $this->log_debug("using $theId ".$qmap->get("WorldAppAnswerName"));
+                    $sectionQs[$theId] = $qmap;
+                }
+            } else if ($mult && ($type!='choice') && ($type != "list") && ($type != "multichoice")) {
+                $this->log_debug("Mult and not choice, multichoice, boolean, or list");
+                foreach ($qmap->get("answerMappings") as $q2) {
+                    $theId = $q2->getBestId();
+                    $sectionQs[$theId] = $q2;
+                    $this->log_debug("Setting answer $theId ".$q2->get("value"));
+                }
+            } else {
+                $theId = $qmap->getBestId();
+                $sectionQs[$theId] = $qmap;
+                $this->log_debug("default case");
+            }
+        }
+        if (array_key_exists("Q3", $sectionQs)) {
+            //Q3/5/7 were merged into one Nationality widget
+			//just display Nationality once
+            unset($sectionQs["Q5"]);
+            unset($sectionQs["Q7"]);
+        }
+
+		foreach ($sectionQs as $human=>$qmap) {
+
+                /****************************************
+                second pass, export to PDF with answers
+                ************************************** */
+            $retval = $this->exportQMToPDF($qmap, $human, $form, $candidate);
+		}
+	}
+
+	private function exportQMToPDF($qmap, $human, $form, $candidate) {
+		//$qmap->dump();
+		$bh = $qmap->get("BullhornField");
+		$value = $candidate->get($bh);
+		$this->log_debug("exporting $human to PDF: Label ".$qmap->get("WorldAppAnswerName"));
+		$this->var_debug($value);
+	}
+
+	/* Things I need to not forget to include in PDF:
+
+		$cand_data = $candidate->marshalToJSON();
+		$references = $candidate->loadReferences(); //returns an array of CandidateReference objects
+		$customObj_from_form = $candidate->loadCustomObject();
+		$skills = $candidate->get("skillID");
+
+		$cats = $candidate->get("categories");
+		$specs = $candidate->get("specialties");
+		$note = $candidate->get("Note"); //has "comments"
+		//$this->submit_references($candidate);
+		//$this->submit_custom_object($candidate);
+		//$bullhornClient->submit_skills($candidate);
+		//$bullhornClient->submit_categories($candidate);
+		//$bullhornClient->submit_specialties($candidate);
+		//$bullhornClient->submit_note($candidate);
+	}
+	*/
 	public function submit_note(\Stratum\Model\Candidate $candidate) {
 		$bullhornClient = $this->getClient();
 
@@ -220,7 +311,7 @@ class BullhornController {
 					$reference->set("id", $newRefId);
 				}
 			}
-			$reference->dump();
+			//$reference->dump();
 		}
 	}
 

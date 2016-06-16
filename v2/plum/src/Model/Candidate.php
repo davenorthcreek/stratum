@@ -624,9 +624,6 @@ class Candidate extends ModelObject
         echo '<div class="box box-primary">';
         echo '<div class="box-header with-border">';
         echo "\n\t<h3 class='box-title'>Candidate Data</h3>";
-        echo "\n\t".'<div class="box-tools pull-right">';
-        echo "\n\t\t".'<button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse/Expand"><i class="fa fa-minus"></i></button>';
-        echo "\n\t</div>";
         echo "\n</div>";
         echo "\n<div class='box-body'>\n";
         echo "\n<div class='table-responsive'>";

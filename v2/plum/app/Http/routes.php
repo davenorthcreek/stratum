@@ -51,6 +51,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/formresponse/{id}', ['uses'=>'FormResponseController@index', 'as'=>'formResponseDisplay']);
 
     Route::post('/formresponse/{id}/confirm', ['uses'=>'FormResponseController@confirmValues', 'as'=>'confirmValues']);
+    Route::post('/formresponse/{id}/pdf', ['uses'=>'FormResponseController@exportPDF', 'as'=>'exportPDF']);
 
     Route::get('/home', 'CorporateUserController@index');
     Route::get('/refresh', 'CorporateUserController@refresh');

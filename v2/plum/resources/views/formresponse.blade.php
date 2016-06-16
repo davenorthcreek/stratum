@@ -65,12 +65,18 @@
             <div class="box box-primary">
                 <div class="box-header with-border">
                     <button type="submit" class="btn btn-danger" id="confirmV">Submit Values to Bullhorn</button>
+
                     <button role="button" class="btn btn-mini btn-primary pull-right btn-click-action"
                         data-widget="collapseAll" data-toggle="tooltip" title="Collapse/Expand All">
                         <i class='fa fa-plus'></i>
                     </button>
                 </div>
             </div>
+        </form>
+        <form method="post" id="exportPDF_Form" action='{{route("exportPDF", ["id" => $id])}}' >
+            {{csrf_field()}}
+            <input type='hidden' name='id' value="{{$id}}">
+            <button type="submit" class="btn btn-danger" id="toPDF">Export PDF only</button>
         </form>
         </div><!-- /.col -->
 
