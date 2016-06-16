@@ -294,7 +294,8 @@ class Bullhorn {
 		$bullhornService = $this->service;
 
 		$fieldList = $user->getBullhornFieldList();
-
+		$this->log_debug("Finding CorporateUser ".$user->get("id"));
+		$this->log_debug($fieldList);
 		$find_uri = $bullhornService->getFindEntityUri("CorporateUser", $this->base_url, $this->session_key, $user->get("id"), $fieldList);
 		$this->log_debug("Looking for user ID ".$user->get("id"));
 		//$this->var_debug($find_uri);

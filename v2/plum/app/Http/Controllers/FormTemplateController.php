@@ -35,7 +35,19 @@ class FormTemplateController extends Controller
         //load the custom Object that contains the template information
         //$obj = $candidate->loadCustomObject(3);
         //$content =   $obj->get("customTextBlock1");
-
+        $owner = $template->get('owner');
+        $owner_email = $owner->get("email");
+        if (!$owner_email) {
+            Log::debug("No email in owner record");
+            $owner_email = "admin@stratum-int.com";
+        }
+        $owner_phone = $owner->get("phone");
+        if (!$owner_phone) {
+            Log::debug("No phone in owner record");
+            $owner_phone = "+44 (0) 203 627 3271";
+        }
+        $owner_name  = $owner->get("name");
+        $owner_sig   = $owner->get("emailSignature");
 
         //default template is from WorldApp
         $content = <<<EOC
@@ -57,10 +69,14 @@ class FormTemplateController extends Controller
 
 <p>Once you have completed the form we&rsquo;ll get in touch to arrange your interview.</p>
 
-<p>If you have any difficulty accessing or using the form you can contact us on <a href="tel:%2B44%20%280%29%20203%20627%203271">+44 (0) 203 627 3271</a> or by email at <a href="mailto:admin@stratum-int.com">admin@stratum-int.com</a> and we&rsquo;ll be very happy to help.</p>
+<p>If you have any difficulty accessing or using the form you can contact us on <a href="tel:$owner_phone">$owner_phone</a> or by email at <a href="mailto:$owner_email">$owner_email</a> and we&rsquo;ll be very happy to help.</p>
 
 <p>&nbsp;</p>
 
+$owner_sig
+EOC;
+
+    $old_email_sig = <<<EOS
 <p>Kind Regards</p>
 
 <p>The Stratum Team<br />
@@ -70,7 +86,7 @@ class FormTemplateController extends Controller
 a: 24 Greville Street, London, UK, EC1N 8SS<br />
 e: <a href="mailto:admin@stratum-int.com">admin@stratum-int.com</a><br />
 w: <a href="http://www.stratum-international.com/">www.stratum-international.com</a></p>
-EOC;
+EOS;
 
         $template->set('content', $content);
 
@@ -250,8 +266,6 @@ EOC;
       $id =               $candidate->get('id');
       $firstName =        $candidate->get("firstName");
       $lastName =         $candidate->get("lastName");
-      //$dateOfBirth =      $candidate->getDateOfBirthWithFormat("d/m/Y");
-      //$maritalStatus =    $candidate->get("nickName");
       $email =            $candidate->get("email");
       $workEmail =        $candidate->get("email2");
       $mobile =           $candidate->get("mobile");

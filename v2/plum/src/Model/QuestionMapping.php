@@ -126,6 +126,19 @@ class QuestionMapping extends ModelObject
 		return $this;
 	}
 
+    private function addOtherWrapper($human, $label, $valueMap) {
+        $other = '';
+        if (in_array($human, ['Q15', 'Q17', 'Q19', 'Q27', 'Q43', 'Q52', 'Q55', 'Q57', 'Q62',
+                          'Q86', 'Q93', 'Q103', 'Q104'])) {
+            //need to take care of 'Other'
+            $other = "<label class='control-label col-sm-2' for='".$label."[other]'>Other:</label>\n";
+            $other.= "<input class='form-control' name='".$label."[Other]' type='text' value='";
+            $this->log_debug("Question $human may contain Other");
+            $this->var_debug($valueMap);
+        }
+        return $other;
+    }
+
 
     public function exportQMToHTML($human, $configs, $qbyq, $candidate, $formResult) {
         if (in_array($human, ['Q4', 'Q6', 'Q39', 'Q41', 'Q64'])) {
@@ -291,8 +304,11 @@ class QuestionMapping extends ModelObject
         if (strpos($qlabel, 'Q65') === 0) {
             $visible = "Discipline - for display purposes only, will not be changed in Bullhorn";
         }
+        $qlabel = htmlentities($qlabel, ENT_QUOTES);
+        $label = htmlentities($label, ENT_QUOTES);
+        $visible = htmlentities($visible, ENT_QUOTES);
         echo "\n<div class='form-group'>";
-        echo "\n<button class='btn btn-info btn-sm disabled'>".$qlabel."</button>";
+        echo "\n<button class='btn btn-info btn-sm' style='pointer-events: none;'>".$qlabel."</button>";
         echo("\n<label for='$label'>$visible</label>\n");
         if (strpos($qlabel, 'Q65') === 0) {
             $visible = "Discipline";
@@ -316,6 +332,8 @@ class QuestionMapping extends ModelObject
             }
             echo ">No</label>\n";
         } else if ($file) {
+            $otherVal = '';
+            $other = $this->addOtherWrapper($human, $label, $valueMap);
 
             //may have to create configFile entry
             if (!array_key_exists($file, $configs)) {
@@ -334,35 +352,36 @@ class QuestionMapping extends ModelObject
                 echo " style='width: 100%;'";
                 echo ">\n";
                 echo "<option></option>\n"; //empty option
-                //if (!$mult) {
-                //    echo "<option></option>\n";
-                //}
-                $flag = [];
+                $first_not_found = [];
                 foreach(array_keys($valueMap) as $v) {
-                    $flag[$v] = true;
+                    $first_not_found[$v] = true; //so duplicates are only selected once
                 }
                 foreach ($configFile as $op) {
                     echo "<option ";
-                    if ($valueMap && array_key_exists($op, $valueMap) and $flag[$op]) {
+                    if ($valueMap && array_key_exists($op, $valueMap) and $first_not_found[$op]) {
                         echo("SELECTED ");
-                        $flag[$op] = false;
+                        $first_not_found[$op] = false;
                         $this->log_debug("Found $op in select for $human");
                     }
+                    $op = htmlentities($op, ENT_QUOTES);
                     echo 'VALUE="'.$op.'">'.$op."</option>\n";
                 }
                 echo "</select>";
             }
-        } else if ($type == 'choice' || $type == 'multichoice') {
-            $other = "";
-            $otherVal = '';
-        if (in_array($human, ['Q15', 'Q17', 'Q19', 'Q27', 'Q43', 'Q52', 'Q55', 'Q57', 'Q62',
-                              'Q86', 'Q93', 'Q103', 'Q104'])) {
-                //need to take care of 'Other'
-                $other = "<label class='control-label col-sm-2' for='".$label."[other]'>Other:</label>\n";
-                $other.= "<input class='form-control' name='".$label."[Other]' type='text' value='";
-                $this->log_debug("Question $human may contain Other");
-                $this->var_debug($valueMap);
+            if ($other) {
+                foreach (array_keys($first_not_found) as $answer) {
+                    if ($first_not_found[$answer]) {
+                        $answer = htmlentities($answer, ENT_QUOTES);
+                        $other .= $answer;
+                        $this->log_debug("Other value was $answer");
+                    }
+                }
+                $other .= "'>\n";
+                echo $other;
             }
+        } else if ($type == 'choice' || $type == 'multichoice') {
+            $otherVal = '';
+            $other = $this->addOtherWrapper($human, $label, $valueMap);
             $all_listed = false;
             foreach (array_keys($valueMap) as $vm) {
                 if ($vm == "All Listed") {
@@ -424,11 +443,13 @@ class QuestionMapping extends ModelObject
                                 echo "SELECTED ";
                                 if ($aval == "Other") {
                                     $otherVal = substr($vm, 7);
+                                    $otherVal = htmlentities($otherVal, ENT_QUOTES);
                                     $other .= $otherVal;
                                 }
                             }
                         }
                     }
+                    $aval = htmlentities($aval, ENT_QUOTES);
                     echo 'VALUE="'.$aval.'">'.$aval."</option>\n";
                 }
             }
