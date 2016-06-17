@@ -69,7 +69,7 @@ class FormTemplateController extends Controller
 
 <p>Once you have completed the form we&rsquo;ll get in touch to arrange your interview.</p>
 
-<p>If you have any difficulty accessing or using the form you can contact us on <a href="tel:$owner_phone">$owner_phone</a> or by email at <a href="mailto:$owner_email">$owner_email</a> and we&rsquo;ll be very happy to help.</p>
+<p>If you have any difficulty accessing or using the form you can contact me on <a href="tel:$owner_phone">$owner_phone</a>.  Alternatively contact our admin team at <a href="mailto:admin@stratum-int.com">admin@stratum-int.com</a> and they&rsquo;ll be very happy to help.</p>
 
 <p>&nbsp;</p>
 
