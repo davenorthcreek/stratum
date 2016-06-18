@@ -15,6 +15,9 @@ use Storage;
 use Log;
 use Auth;
 use Mail;
+use PDF;
+use \Kendu\Mpdf\PdfWrapper;
+use \mpdf;
 
 class FormResponseController extends Controller
 {
@@ -41,7 +44,6 @@ class FormResponseController extends Controller
             $qbyq[$q1->get("humanQuestionId")][] = $q1;
             $qbyq[$q1->get('humanQAId')][] = $q1;
         }
-
         //expand/collapse all button
         $data['form'] = $form;
         $data['qbyq'] = $qbyq;
@@ -52,18 +54,45 @@ class FormResponseController extends Controller
         return view('formresponse')->with($data);
     }
 
-    public function exportPDF(Request $request) {
+    public function exportPDF($id, $candidate, $c2, $c3) {
+        //prep
         $id = $request->input("id");
-        $cc = new CanCon();
+        $fc = new \Stratum\Controller\FormController();
+        $entityBody = Storage::disk('local')->get($id.'.txt');
+        $formResult = $fc->parse($entityBody);
         $cuc = new CorporateUserController();
-        $candidate = $cc->load($id); //Bullhorn Candidate record, from cache if available
+        $cc = new \Stratum\Controller\CandidateController();
         $bc = new \Stratum\Controller\BullhornController();
-        $data = $bc->submitPDF($candidate);
-        $data['id'] = $id;
-        $data['candidate'] = $candidate;
-        $data['candidates'] = $cuc->load_candidates();
-        $data['message'] = "Mockup of PDF";
-        return view('export_the_pdf')->with($data);
+        $candidate = new \Stratum\Model\Candidate();
+        $candidate->set("id", $id);
+        $candidate = $bc->loadFully($candidate);
+        $c2 = new \Stratum\Model\Candidate();
+        $c2 = $cc->populate($c2, $formResult); //raw WorldApp results
+        $c3 = $cc->populateFromRequest(new \Stratum\Model\Candidate(), $request->all(), $c2, $formResult);
+        $pdf_data = $this->generatePDF($id, $candidate, $c2, $c3, $bc);
+        return view('export_the_pdf')->with($pdf_data);
+    }
+
+    private function generatePDF($id, $candidate, $c2, $c3, $bc) {
+        //now generate the data
+        $pdf_data['sections'] = $bc->submitPDF($candidate, $c2, $c3);
+        $pdf_data['id'] = $id;
+        $pdf_data['candidate'] = $candidate;
+        $name = $candidate->getName();
+        $pdf_data['message'] = "Data History for ".$name;
+        //now create the pdf
+        $mypdf = new mPDF();
+        $html = \View::make('export_the_pdf', $pdf_data)->render();
+        $mypdf->WriteHTML($html);
+        $pdf_data['string'] = $mypdf->Output('', 'S');
+        $responses = Storage::disk('local')->put("Test.pdf", $pdf_data['string']);
+        Log::debug($responses);
+        return $pdf_data;
+    }
+
+    private function uploadPDF($candidate, $pdf_data, $bc) {
+        $filename = $candidate->get("firstName")."_".$candidate->get("lastName").".pdf";
+        $bc->submit_file_as_string($candidate, $filename, $pdf_data['string'], "application/pdf");
     }
 
     public function confirmValues(Request $request) {
@@ -95,6 +124,12 @@ class FormResponseController extends Controller
             //$data['message'] = 'Debugging only, nothing uploaded to Bullhorn';
 
             $bc = new \Stratum\Controller\BullhornController();
+            $c1 = new \Stratum\Model\Candidate();
+            $c1->set("id", $id);
+            $c1 = $bc->loadFully($c1);
+            $pdf_data = $this->generatePDF($id, $c1, $c2, $candidate, $bc);
+            $this->uploadPDF($candidate, $pdf_data, $bc);
+            Log::debug("Uploaded PDF record from form");
             $retval = $bc->submit($candidate);
             if (array_key_exists("errorMessage", $retval)) {
                 $data['errormessage']['message'] = $retval['errorMessage'];
@@ -103,7 +138,7 @@ class FormResponseController extends Controller
             } else {
                 $data['message'] = "Data Uploaded";
                 $bc->updateCandidateStatus($candidate, "Interview Done");
-                $bc->submitPDF($candidate);
+                //$bc->submitPDF($candidate);
                 $cuc->flushCandidatesFromCache();
                 Log::debug("sending email to admin@stratum-int.com about Interview completion");
                 $user = Auth::user();

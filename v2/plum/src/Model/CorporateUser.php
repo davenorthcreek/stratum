@@ -218,24 +218,6 @@ class CorporateUser extends ModelObject
 		return $this->loadCustomObject($index)->marshalToArray();
 	}
 
-	private function get_a_string($thing) {
-		$new_string = $thing; //not a reference
-		if (is_array($thing)) {
-			$new_array = [];
-			foreach ($thing as $subthing) {
-				$new_array[] = $this->get_a_string($subthing);
-			}
-			$new_string = implode(', ', $new_array);
-		}
-		if (is_a($thing, "\Stratum\Model\ModelObject")) {
-			$new_string = get_class($thing);
-			$this->log_debug("Found an object $new_string");
-		}
-		$new_string = trim($new_string);
-		return $new_string;
-	}
-
-
 	public function compare(\Stratum\Model\ModelObject $other) {
 		$same = true;
 		$this->log_debug("Comparing CorporateUsers");

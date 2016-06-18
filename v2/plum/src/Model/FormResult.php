@@ -137,8 +137,6 @@ class FormResult extends ModelObject
 			}
 		}
         if ($value == "Other") {
-            $qmap->dump();
-            $q->dump();
             if ($q->get("value")) {
                 $value = "Other: ".$q->get("value");
             }

@@ -361,7 +361,8 @@ class Candidate extends ModelObject
 
 	public function loadCustomObject($index = 1) {
         $name = "customObject".$index."s";
-		$customObject = $this->get($name);
+        $customObject = null;
+        //$customObject = $this->get($name);
 		if ($customObject) {
 			return $customObject;
 		}
@@ -561,31 +562,6 @@ class Candidate extends ModelObject
 		$encoded = json_encode($json, true);
 		$this->log_debug($encoded);
 		return $encoded;
-	}
-
-	public function get_a_string($thing) {
-		$new_string = $thing; //not a reference
-        if (is_bool($new_string)) {
-            $this->log_debug("Boolean get_a_string");
-            $this->var_debug($new_string);
-            if ($new_string) {
-                return "true";
-            } else {
-                return "false";
-            }
-        } else if (is_array($thing)) {
-			$new_array = [];
-			foreach ($thing as $subthing) {
-				$new_array[] = $this->get_a_string($subthing);
-			}
-			$new_string = implode(', ', $new_array);
-		}
-		if (is_a($thing, "\Stratum\Model\ModelObject")) {
-			$new_string = get_class($thing);
-			$this->log_debug("Found an object $new_string");
-		}
-		$new_string = trim($new_string);
-		return $new_string;
 	}
 
 
@@ -797,7 +773,17 @@ class Candidate extends ModelObject
         */
     }
 
-
+    public function populateFromData($data) {
+		foreach ($data as $key=>$value) {
+            if ($key == "customText19") {
+                $value = preg_replace("/Equipment Sup./", "Equipment Supplier", $value);
+                $value = preg_replace("|PE/IB |","PE / IB / Trading", $value);
+                $value = preg_replace("|\*|","Other", $value);
+            }
+			$this->set($key, $value);
+		}
+		return $this;
+	}
 
 
     public function validField($key) {
@@ -814,6 +800,10 @@ class Candidate extends ModelObject
         }
         //$this->log_debug(json_encode($set));
         return $set;
+    }
+
+    public function log_this($object) {
+        $this->var_debug($object);
     }
 
     public function dump() {

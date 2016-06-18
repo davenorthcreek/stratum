@@ -115,6 +115,31 @@ class ModelObject
 		return $encoded;
 	}
 
+    public function get_a_string($thing) {
+        $new_string = $thing; //not a reference
+        if (is_bool($new_string)) {
+            $this->log_debug("Boolean get_a_string");
+            $this->var_debug($new_string);
+            if ($new_string) {
+                return "true";
+            } else {
+                return "false";
+            }
+        } else if (is_array($thing)) {
+            $new_array = [];
+            foreach ($thing as $subthing) {
+                $new_array[] = $this->get_a_string($subthing);
+            }
+            $new_string = implode(', ', $new_array);
+        }
+        if (is_a($thing, "\Stratum\Model\ModelObject")) {
+            $new_string = get_class($thing);
+            $this->log_debug("Found an object $new_string");
+        }
+        $new_string = trim($new_string);
+        return $new_string;
+    }
+
 	public function marshalToArray() {
 		$json = [];
 		foreach ($this->expose_set() as $attr=>$value) {

@@ -116,17 +116,35 @@ class BullhornController {
 			return null;
 		}
 		$candidates = $bullhornClient->findAssocCandidatesIndexed($cuser);
-		/*
-		This section replaced by 'Indexed' call
-		$candidatesNo  = $bullhornClient->findAssocCandidatesWithNo($cuser, 'No');
-		$candidatesRFS = $bullhornClient->findAssocCandidatesWithRFS($cuser, 'RFS');
-		$candidatesFC  = $bullhornClient->findAssocCandidatesWithFC($cuser, 'FC');
-		$candidatesIC  = $bullhornClient->findAssocCandidatesWithIC($cuser, 'IC');
-		*/
 		if ($candidates == null) {
 			//error condition according to Stratum
 		}
 		return $candidates;
+	}
+
+	public function loadFully(\Stratum\Model\Candidate $candidate) {
+		$candidate = $this->load($candidate);
+		$this->log_debug("We have the candidate loaded - now the extras");
+		if ($candidate->get("id")) {
+			$bullhornClient = $this->getClient();
+			$this->log_debug("Loading notes");
+			$candidate->set("notes", $bullhornClient->find_note($candidate));
+			$this->log_debug("Loading references");
+			$raw_references = $bullhornClient->find_candidate_references($candidate);
+			$ref_objs = [];
+			foreach($raw_references as $raw_ref) {
+				$ref_obj = new \Stratum\Model\CandidateReference();
+				$ref_obj->populateFromData($raw_ref);
+				$ref_objs[] = $ref_obj;
+			}
+			$candidate->set("references", $ref_objs);
+			$this->log_debug("Loading custom object 1");
+			$raw_obj = $bullhornClient->find_custom_object($candidate);
+			$co = new \Stratum\Model\CustomObject();
+			$co->populateFromData($raw_obj);
+			$candidate->set("customObject1s", $co);
+		}
+		return $candidate;
 	}
 
 	public function load(\Stratum\Model\Candidate $candidate) {
@@ -151,6 +169,12 @@ class BullhornController {
 		$bullhornClient->submit_files($candidate);
 	}
 
+	public function submit_file_as_string($candidate, $filename, $body, $type) {
+		$bullhornClient = $this->getClient();
+		$decoded = $bullhornClient->submit_file_as_string($candidate, $filename, $body, $type);
+		$this->log_debug($decoded);
+	}
+
 	public function submit(\Stratum\Model\Candidate $candidate) {
 		$bullhornClient = $this->getClient();
 
@@ -169,28 +193,50 @@ class BullhornController {
 		return $retval;
 	}
 
-	public function submitPDF(\Stratum\Model\Candidate $candidate) {
-		$bullhornClient = $this->getClient();
-		$decoded = [];
+	public function submitPDF(\Stratum\Model\Candidate $bhcandidate,
+							  \Stratum\Model\Candidate $wacandidate,
+							  \Stratum\Model\Candidate $rqcandidate
+							 ) {
+		$this->log_debug("At submitPDF");
+
+		$candidates['bh'] = $bhcandidate;
+		$candidates['wa'] = $wacandidate;
+		$candidates['rq'] = $rqcandidate;
 
 		//going to use FormResponse (web form) as a template for the pdf.
 		//so I will get the section headers - but only display section if
 		//there is content.
 
-		$fc = new FormController();
+		$fc = new \Stratum\Controller\FormController();
 		$form = $fc->setupForm();  //parsed QandA.txt to get questions in order
 		$sections = $form->get("sections");  //and sections
 		$headers = $form->get("sectionHeaders");  //with appropriate labels
+		$sectionData = [];
 		for ($i = 0; $i < count($sections); $i++) {
 			$section = $sections[$i];
 			$label = $headers[$i];
-
-			$this->exportSectionToPDF($form, $section, $label, $candidate);
+			$retval = $this->exportSectionToPDF($form, $section, $label, $candidates);
+			if ($retval) {
+				$sectionData[$label] = $retval;
+			}
 		}
-		return [];
+		$sectionData['Recommenders'] = $this->convertReferencesForPDF($candidates);
+		$sectionData['Additional Tab'] = $this->convertCustomObjForPDF($candidates, $form);
+		$sectionData['Notes'] = $this->convertNotesForPDF($candidates);
+		return $sectionData;
 	}
 
-	private function exportSectionToPDF($form, $section, $label, $candidate) {
+
+		/* Things I need to not forget to include in PDF:
+			$cats = $candidate->get("categories");
+			$specs = $candidate->get("specialties");
+			//$bullhornClient->submit_skills($candidate);
+			//$bullhornClient->submit_categories($candidate);
+			//$bullhornClient->submit_specialties($candidate);
+		*/
+
+	private function exportSectionToPDF($form, $section, $label, $candidates) {
+		$retVal = [];
 		$questionMaps = $form->get('questionMappings');
         foreach ($section as $qmap) {  //qmaps for each question in a section
             $theId = $qmap->getBestId();
@@ -199,23 +245,18 @@ class BullhornController {
                 /**************************** */
             $mult = $qmap->get("multipleAnswers"); //boolean
             $type = $qmap->get("type");
-            $this->log_debug("$theId $type");
             if ($type == "boolean") {
                 if (array_key_exists($theId, $questionMaps)) {
-                    $this->log_debug("using $theId ".$qmap->get("WorldAppAnswerName"));
                     $sectionQs[$theId] = $qmap;
                 }
             } else if ($mult && ($type!='choice') && ($type != "list") && ($type != "multichoice")) {
-                $this->log_debug("Mult and not choice, multichoice, boolean, or list");
                 foreach ($qmap->get("answerMappings") as $q2) {
                     $theId = $q2->getBestId();
                     $sectionQs[$theId] = $q2;
-                    $this->log_debug("Setting answer $theId ".$q2->get("value"));
                 }
             } else {
                 $theId = $qmap->getBestId();
                 $sectionQs[$theId] = $qmap;
-                $this->log_debug("default case");
             }
         }
         if (array_key_exists("Q3", $sectionQs)) {
@@ -230,36 +271,204 @@ class BullhornController {
                 /****************************************
                 second pass, export to PDF with answers
                 ************************************** */
-            $retval = $this->exportQMToPDF($qmap, $human, $form, $candidate);
+            $value = $this->exportQMToPDF($qmap, $human, $form, $candidates);
+			if ($value && ($value['bhvalue'] || $value['wavalue'] || $value['rqvalue'])) {
+				$bh = $value['bh'];
+				$retVal[$bh]['Question'][] = $value['wa'];
+				$retVal[$bh]['Bullhorn'] = $value['bhvalue'];
+				$retVal[$bh]['WorldApp'] = $value['wavalue'];
+				$retVal[$bh]['Plum'] = $value['rqvalue'];
+			}
 		}
+		return $retVal;
 	}
 
-	private function exportQMToPDF($qmap, $human, $form, $candidate) {
-		//$qmap->dump();
+	private function exportQMToPDF($qmap, $human, $form, $candidates) {
 		$bh = $qmap->get("BullhornField");
-		$value = $candidate->get($bh);
-		$this->log_debug("exporting $human to PDF: Label ".$qmap->get("WorldAppAnswerName"));
-		$this->var_debug($value);
+		$wa = $qmap->get("WorldAppAnswerName");
+		if (!$bh) {
+            foreach ($qmap->get("answerMappings") as $q2) {
+                $bh = $q2->get("BullhornField");
+                if ($bh) {
+					if (!$wa) {
+						$wa = $q2->get("WorldAppAnswerName");
+					}
+                    break;
+                }
+            }
+        }
+		if (strpos($bh, 'customObject')===0 || $bh == 'Note') {
+			return null;
+		}
+		foreach ($candidates as $src=>$candidate) {
+			$value = $candidate->get($bh);
+			$val_condensed = $candidate->get_a_string($value);
+			$ret[$src.'value'] = $val_condensed;
+		}
+		$ret['bh'] = $bh;
+		$ret['wa'] = $wa;
+		return $ret;
 	}
 
-	/* Things I need to not forget to include in PDF:
-
-		$cand_data = $candidate->marshalToJSON();
-		$references = $candidate->loadReferences(); //returns an array of CandidateReference objects
-		$customObj_from_form = $candidate->loadCustomObject();
-		$skills = $candidate->get("skillID");
-
-		$cats = $candidate->get("categories");
-		$specs = $candidate->get("specialties");
-		$note = $candidate->get("Note"); //has "comments"
-		//$this->submit_references($candidate);
-		//$this->submit_custom_object($candidate);
-		//$bullhornClient->submit_skills($candidate);
-		//$bullhornClient->submit_categories($candidate);
-		//$bullhornClient->submit_specialties($candidate);
-		//$bullhornClient->submit_note($candidate);
+	private function convertReferencesForPDF($candidates) {
+		$bh_refs = $candidates['bh']->get("references");
+		$wa_refs = $candidates['wa']->get("references"); //keyed by 'recommenderX'
+		$plum_refs = $candidates['rq']->get("references");
+		$this->var_debug($bh_refs);
+		$this->var_debug($wa_refs);
+		$this->var_debug($plum_refs);
+		//sort by email (probably not repeated)
+		$by_email = [];
+		for ($i = 0; $i<count($bh_refs); $i++) {
+			$bh_r = $bh_refs[$i];
+			$bh_email = $bh_r->get("referenceEmail");
+			$by_email[$bh_email]['bh'] = $bh_r;
+		}
+		for ($i = 0; $i<count($plum_refs); $i++) {
+			$plum = $plum_refs[$i];
+			$pl_email = $plum->get("referenceEmail");
+			$by_email[$pl_email]['rq'] = $plum;
+		}
+		$index = 0;
+		for ($i = 0; $i<count($wa_refs); $i++) {
+			$index++;
+			$wa_r = $wa_refs['recommender'.$index];
+			$wa_email = $wa_r->get("referenceEmail");
+			$by_email[$wa_email]['wa'] = $wa_r;
+		}
+		$refData = [];
+		$index = 0;
+		foreach($by_email as $email=>$refs) {
+			$index++;
+			$refData["firstName$index"]['Question'][] = "Recommender $index First Name";
+			$refData["lastName$index"]['Question'][] = "Recommender $index Last Name";
+			$refData["employer$index"]['Question'][] = "Recommender $index Company / Employer";
+			$refData["title$index"]['Question'][] = "Recommender $index Job Title";
+			$refData["phone$index"]['Question'][] = "Recommender $index Phone Number";
+			$refData["email$index"]['Question'][] = "Recommender $index Email";
+			$refData["relationship$index"]['Question'][] = "Recommender $index Your Relationship with the Recommender";
+			if (array_key_exists("bh", $refs)) {
+				$ref = $refs['bh'];
+				$refData["firstName$index"]['Bullhorn'] = $ref->get("referenceFirstName");
+				$refData["lastName$index"]['Bullhorn'] = $ref->get("referenceLastName");
+				$refData["employer$index"]['Bullhorn'] = $ref->get("companyName");
+				$refData["title$index"]['Bullhorn'] = $ref->get("referenceTitle");
+				$refData["phone$index"]['Bullhorn'] = $ref->get("referencePhone");
+				$refData["email$index"]['Bullhorn'] = $ref->get("referenceEmail");
+				$refData["relationship$index"]['Bullhorn'] = $ref->get("customTextBlock1");
+			}
+			if (array_key_exists("rq", $refs)) {
+				$plum = $refs['rq'];
+				$refData["firstName$index"]['Plum'] = $plum->get("referenceFirstName");
+				$refData["lastName$index"]['Plum'] = $plum->get("referenceLastName");
+				$refData["employer$index"]['Plum'] = $plum->get("companyName");
+				$refData["title$index"]['Plum'] = $plum->get("referenceTitle");
+				$refData["phone$index"]['Plum'] = $plum->get("referencePhone");
+				$refData["email$index"]['Plum'] = $plum->get("referenceEmail");
+				$refData["relationship$index"]['Plum'] = $plum->get("customTextBlock1");
+			}
+			if (array_key_exists("wa", $refs)) {
+				$wa_r = $refs["wa"];
+				$refData["firstName$index"]['WorldApp'] = $wa_r->get("referenceFirstName");
+				$refData["lastName$index"]['WorldApp'] = $wa_r->get("referenceLastName");
+				$refData["employer$index"]['WorldApp'] = $wa_r->get("companyName");
+				$refData["title$index"]['WorldApp'] = $wa_r->get("referenceTitle");
+				$refData["phone$index"]['WorldApp'] = $wa_r->get("referencePhone");
+				$refData["email$index"]['WorldApp'] = $wa_r->get("referenceEmail");
+				$refData["relationship$index"]['WorldApp'] = $wa_r->get("customTextBlock1");
+			}
+		}
+		return $refData;
 	}
-	*/
+
+	private function convertCustomObjForPDF($candidates, $form) {
+		$customObj['bh'] = $candidates['bh']->get("customObject1s");
+		$customObj['wa'] = $candidates['wa']->loadCustomObject(1);
+		$customObj['rq'] = $candidates['rq']->get("customObject1s");
+		foreach($customObj as $src=>$obj) {
+			$json[$src] = $obj->marshalToArray();
+		}
+		$objData = [];
+		foreach ($json['bh'][0] as $key=>$attr) {
+			if (in_array($key, ["dateAdded", "dateLastModified"])) {
+				continue;
+			}
+			$fieldName = "customObject1.".$key;
+			$this->log_debug("Searching for the WAAN for $fieldName");
+			$qmappings = $form->get("BHMappings");
+			if (array_key_exists($fieldName, $qmappings)) {
+				$qmap = $qmappings[$fieldName][0];
+				$wa = $qmap->get("WorldAppAnswerName");
+				$objData[$key]['Question'][] = $wa;
+				$this->log_debug("Found $wa");
+			} else {
+				$objData[$key]['Question'] = [];
+			}
+			$objData[$key]['Bullhorn'] = $customObj['bh']->get_a_string($attr);
+			//worldapp
+			$wa_obj = $json['wa'][0];
+			$wa_attr = '';
+			if (array_key_exists($key, $wa_obj)) {
+				$wa_attr = $wa_obj[$key];
+			}
+			$objData[$key]['WorldApp'] = $customObj['bh']->get_a_string($wa_attr);
+			//request
+			$rq_obj = $json['rq'][0];
+			$rq_attr = '';
+			if (array_key_exists($key, $rq_obj)) {
+				$rq_attr = $rq_obj[$key];
+			}
+			$objData[$key]['Plum'] = $customObj['bh']->get_a_string($rq_attr);
+		}
+		return $objData;
+	}
+
+	private function convertNotesForPDF($candidates) {
+		$notes['bh'] = $candidates['bh']->get("notes");
+		$notes['rq'] = $candidates['rq']->get("Note"); //conversion interview
+		$wavalue = $candidates['wa']->get("Note"); //just Availability value here
+		$noteData = [];
+		//Conversion Interview
+		$rqvalue = $notes['rq']['comments'];
+		$bhvalue = '';
+		foreach ($notes['bh'] as $note) {
+			if ($note['action'] == "Conversion Interview") {
+				$bhvalue = $note['comments'];
+			}
+		}
+		// no WorldApp value for this field
+		$noteData['Conversion Interview']['Question'][] = "From Consultant's Confirmation Page";
+		$noteData['Conversion Interview']['Bullhorn'] = $bhvalue;
+		$noteData['Conversion Interview']['WorldApp'] = '';
+		$noteData['Conversion Interview']['Plum'] = $rqvalue;
+
+		//Availability
+		$bhvalue2 = '';
+		foreach ($notes['bh'] as $note) {
+			if ($note['action'] == "Availability") {
+				$bhvalue2 = $note['comments'];
+			}
+		}
+		$noteData['Availability']['Question'][] = 'Call Availability';
+		$noteData['Availability']['Bullhorn'] = $bhvalue2;
+		$noteData['Availability']['WorldApp'] = $wavalue;
+		$noteData['Availability']['Plum'] = ''; //WorldApp value not edited
+
+		//Reg Form sent
+		//only in Bullhorn, kicks off the whole Plum process
+		$bhvalue3 = '';
+		foreach ($notes['bh'] as $note) {
+			if ($note['action'] == "Reg Form Sent") {
+				$bhvalue3 = $note['comments'];
+			}
+		}
+		$noteData['Reg Form Sent']['Question'][] = 'Email Template in Plum';
+		$noteData['Reg Form Sent']['Bullhorn'] = $bhvalue3;
+		$noteData['Reg Form Sent']['WorldApp'] = '';
+		$noteData['Reg Form Sent']['Plum'] = '';
+		return $noteData;
+	}
+
 	public function submit_note(\Stratum\Model\Candidate $candidate) {
 		$bullhornClient = $this->getClient();
 
@@ -267,7 +476,7 @@ class BullhornController {
 	}
 
 	function submit_custom_object($candidate) {
-		$customObj_from_form = $candidate->loadCustomObject();
+		$customObj_from_form = $candidate->get("customObject1s");
 		$this->log_debug("looking up custom object");
 		$custom_data = $this->getClient()->find_custom_object($candidate);
 		$customObject_bh = new \Stratum\Model\CustomObject();

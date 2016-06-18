@@ -182,7 +182,7 @@ class Bullhorn {
 	}
 
 	private function extract_json($string) {
-		return json_decode(trim(substr($string, strpos($string, '{'))), true);
+		return json_decode(trim(substr($string, strpos($string, '{'))), true); //}
 	}
 
 	private function get_login($ref, $token, $bullhornService, $httpClient, $servicesCredentials) {
@@ -560,7 +560,8 @@ class Bullhorn {
 		//query/CandidateReference?fields=id%2CreferenceFirstName%2CreferenceLastName%2Ccandidate&where=candidate.id=10809&BhRestToken=7b7be6ef-3ff6-495f-a736-08401587393c
 		$id = $candidate->get("id");
 		$query_ref_url = $this->base_url."query/CandidateReference";
-		$query_ref_uri = $this->service->getRestUri($query_ref_url, $this->session_key, ['fields'=>'id,referenceFirstName,referenceLastName,isDeleted,candidate',
+		$fieldList = 'id,referenceFirstName,referenceLastName,companyName,referenceTitle,referencePhone,referenceEmail,customTextBlock1,isDeleted,candidate';
+		$query_ref_uri = $this->service->getRestUri($query_ref_url, $this->session_key, ['fields'=>$fieldList,
 			'where'=>'candidate.id='.$id.' AND isDeleted=false']);
 		$query_ref = $this->httpClient->retrieveResponse($query_ref_uri, '', [], 'GET');
 		$query_ref_decoded = $this->extract_json($query_ref);
@@ -657,6 +658,7 @@ class Bullhorn {
 		}
 		$candidate->set("categoryID", rtrim($skill_string));
 	}
+
 	public function load_specialties($candidate) {
         $skill_string = "";
         $skill_json = \Storage::get("Specialties.json");
@@ -672,9 +674,6 @@ class Bullhorn {
         }
         $candidate->set("specialtyCategoryID", rtrim($skill_string));
     }
-
-
-
 
 	function delete_custom_object($id, $candidate_id) {
 		//https://rest22.bullhornstaffing.com/rest-services/987up/entity/Candidate/10809/customObject1s/123
@@ -738,6 +737,17 @@ class Bullhorn {
 		$this->log_debug("Submitted customObject1: ");
 		$this->var_debug($subm_co_decoded);
 		return $subm_co_decoded;
+	}
+
+	public function find_note($candidate) {
+		//https://rest22.bullhornstaffing.com/rest-services/987up/entity/Candidate/12956/notes?fields=id,comments,action&BhRestToken=
+		$id = $candidate->get("id");
+		$query_note_url = $this->base_url."entity/Candidate/$id/notes";
+		$query_note_uri = $this->service->getRestUri($query_note_url, $this->session_key, ['fields'=>'id,comments,action']);
+		$query_note = $this->httpClient->retrieveResponse($query_note_uri, '', [], 'GET');
+		$query_note_decoded = $this->extract_json($query_note);
+		$this->var_debug($query_note_decoded);
+		return $query_note_decoded['data'];
 	}
 
 	public function submit_note($candidate) {
@@ -898,34 +908,39 @@ class Bullhorn {
 						$filename = $matches[1];
 					}
 				}
-				$this->log_debug($filename);
-				$file_base64 = base64_encode($body);
-
-				$id = $candidate->get("id");
-				$subm_file_url = $this->base_url."file/Candidate/$id";
-				$this->log_debug($subm_file_url);
-				$size = strlen($body);
-				if ($size < 10000) {
-					$this->log_debug($body);
-					$this->log_debug($file_base64);
-				}
-				$subm_file_uri = $this->service->getRestUri($subm_file_url, $this->session_key);
-
-				$subm_file = $this->httpClient->retrieveResponse($subm_file_uri,
-					json_encode(['fileContent'=>$file_base64,
-					 	'externalID'=>'Portfolio',
-					 	'name'=>$filename,
-					 	'fileType'=>'SAMPLE',
-					 	'description'=>'associated file',
-					 	'type'=>'To Be Checked'
-				 		]),
-					[],
-					'PUT');
-				$subm_file_decoded = $this->extract_json($subm_file);
+				$subm_file_decoded = $this->submit_file_as_string($candidate, $filename, $body);
 				$this->log_debug("Submitted File $url: ");
 				$this->var_debug($subm_file_decoded);
 			}
 		}
+	}
+
+	public function submit_file_as_string($candidate, $filename, $body, $type='To Be Checked') {
+		$this->log_debug($filename);
+		$file_base64 = base64_encode($body);
+
+		$id = $candidate->get("id");
+		$subm_file_url = $this->base_url."file/Candidate/$id";
+		$this->log_debug($subm_file_url);
+		$size = strlen($body);
+		if ($size < 10000) {
+			$this->log_debug($body);
+			$this->log_debug($file_base64);
+		}
+		$subm_file_uri = $this->service->getRestUri($subm_file_url, $this->session_key);
+
+		$subm_file = $this->httpClient->retrieveResponse($subm_file_uri,
+			json_encode(['fileContent'=>$file_base64,
+				'externalID'=>'Portfolio',
+				'name'=>$filename,
+				'fileType'=>'SAMPLE',
+				'description'=>'associated file',
+				'type'=>$type
+				]),
+			[],
+			'PUT');
+		$subm_file_decoded = $this->extract_json($subm_file);
+		return $subm_file_decoded;
 	}
 
 	function readHeader($ch, $header) {

@@ -261,7 +261,7 @@ class CandidateController
                     $this->log_debug("Imploding to $val_split");
                     $values = $val_split;
                 }
-                $this->var_debug($cos);
+                //$this->var_debug($cos);
                 if (array_key_exists($m[1], $cos)) {
                     if (array_key_exists($m[2], $cos[$m[1]] )) {
                         $existing = $cos[$m[1]][$m[2]];
@@ -515,6 +515,13 @@ class CandidateController
                         $value = $value2;
                     }
                 }
+                if ($key == 'customText19') {
+                    $value2 = $value;
+                    $value2 = preg_replace("/Equipment Supplier/", "Equipment Sup.", $value2);
+                    $value2 = preg_replace("|PE / IB / Trading|","PE/IB", $value2);
+                    $value2 = preg_replace("|Other|","*", $value2);
+                    $value = $value2;
+                }
                 if ($key == 'customText20' && $pt1 && $pt2) {
         			$value = $pt1.' ('.$pt2.')';
                     $candidate->set($key, $value);
@@ -531,13 +538,10 @@ class CandidateController
         $this->loadCustomObjectFromRequest($candidate, $cos);
         $this->loadAddressesFromRequest($candidate, $address, $address2);
         $this->loadNoteFromRequest($candidate, $note);
-        $co1 = $candidate->loadCustomObject(1);
+        $co1 = $candidate->get("customObject1s");
         $mtpa = $co1->get("int1");
         $candidate->set("customText15", $mtpa);
         $this->log_debug("Just copied $mtpa from customobject1.int1 to customText15");
-        //ensure that "name" is populated
-        $candidate->set("preferredContact", "Interview Done");
-        $name = $candidate->getName();
 
         return $candidate;
     }
@@ -566,7 +570,7 @@ class CandidateController
     private function addOtherNote($cos, $waan, $otherVal) {
         //has to go to customObject1.textBlock3 (Additional Candidate Notes)
         //unless it's from education (Q15/Q17)
-        $this->var_debug($cos);
+        //$this->var_debug($cos);
         $this->log_debug("At addOtherNote with $waan and $otherVal");
         if (!$otherVal) {
             return $cos;
