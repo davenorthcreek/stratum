@@ -266,6 +266,11 @@ class BullhornController {
             unset($sectionQs["Q7"]);
         }
 
+		//make a cache of longest value to put at end - usually the same value repeated
+		$max = 50;
+		$longest = '';
+		$put_at_end = [];
+
 		foreach ($sectionQs as $human=>$qmap) {
 
                 /****************************************
@@ -273,11 +278,35 @@ class BullhornController {
                 ************************************** */
             $value = $this->exportQMToPDF($qmap, $human, $form, $candidates);
 			if ($value && ($value['bhvalue'] || $value['wavalue'] || $value['rqvalue'])) {
-				$bh = $value['bh'];
-				$retVal[$bh]['Question'][] = $value['wa'];
-				$retVal[$bh]['Bullhorn'] = $value['bhvalue'];
-				$retVal[$bh]['WorldApp'] = $value['wavalue'];
-				$retVal[$bh]['Plum'] = $value['rqvalue'];
+				$wa = $value['wa'];
+				$plum_value = $value['rqvalue'];
+				if ($plum_value && strlen($plum_value) >= $max) {
+					$max = strlen($plum_value);
+					$longest = $plum_value;
+					$put_at_end[$plum_value][] = $value;
+					//only long values, and 'sorted' by increasing length
+				} else {
+					$retVal[$wa]['Question'][] = $value['wa'];
+					$retVal[$wa]['Bullhorn'] = $value['bhvalue'];
+					$retVal[$wa]['WorldApp'] = $value['wavalue'];
+					$retVal[$wa]['Plum'] = $value['rqvalue'];
+					$retVal[$wa]['repeat'] = 1;
+				}
+			}
+		}
+		foreach ($put_at_end as $plum=>$values) {
+			$count = count($values);
+			$first = true;
+			foreach ($values as $value) {
+				$wa = $value['wa'];
+				$retVal[$wa]['Question'][] = $value['wa'];
+				$retVal[$wa]['Bullhorn'] = $value['bhvalue'];
+				$retVal[$wa]['WorldApp'] = $value['wavalue'];
+				if ($first) {
+					$first = false;
+					$retVal[$wa]['Plum'] = $value['rqvalue'];
+					$retVal[$wa]['repeat'] = $count;
+				}
 			}
 		}
 		return $retVal;
@@ -301,9 +330,24 @@ class BullhornController {
 			return null;
 		}
 		foreach ($candidates as $src=>$candidate) {
-			$value = $candidate->get($bh);
+			if ($src == 'wa') {
+				$fr = $candidate->get("formResult");
+				$value = $fr->findByWorldApp($wa);
+				$this->log_debug("looking up $wa for PDF");
+				$this->var_debug($value);
+			} else {
+				$value = $candidate->get($bh);
+			}
+			$result_split = [];
 			$val_condensed = $candidate->get_a_string($value);
-			$ret[$src.'value'] = $val_condensed;
+			$value_split = preg_split("/[,;]\s/", $val_condensed);
+	        foreach ($value_split as $val) {
+	            if (!in_array($val, $result_split)) {
+	                $result_split[] = $val;
+	            }
+	        }
+	        $value = implode(', ', $result_split);
+			$ret[$src.'value'] = $value;
 		}
 		$ret['bh'] = $bh;
 		$ret['wa'] = $wa;
@@ -402,6 +446,13 @@ class BullhornController {
 				$refData["email$index"]['WorldApp'] = '';
 				$refData["relationship$index"]['WorldApp'] = '';
 			}
+			$refData["firstName$index"]['repeat'] = 1;
+			$refData["lastName$index"]['repeat'] = 1;
+			$refData["employer$index"]['repeat'] = 1;
+			$refData["title$index"]['repeat'] = 1;
+			$refData["phone$index"]['repeat'] = 1;
+			$refData["email$index"]['repeat'] = 1;
+			$refData["relationship$index"]['repeat'] = 1;
 		}
 		return $refData;
 	}
@@ -419,15 +470,13 @@ class BullhornController {
 				continue;
 			}
 			$fieldName = "customObject1.".$key;
-			$this->log_debug("Searching for the WAAN for $fieldName");
 			$qmappings = $form->get("BHMappings");
 			if (array_key_exists($fieldName, $qmappings)) {
 				$qmap = $qmappings[$fieldName][0];
 				$wa = $qmap->get("WorldAppAnswerName");
 				$objData[$key]['Question'][] = $wa;
-				$this->log_debug("Found $wa");
 			} else {
-				$objData[$key]['Question'] = [];
+				continue; //skip ID and person
 			}
 			$objData[$key]['Bullhorn'] = $customObj['bh']->get_a_string($attr);
 			//worldapp
@@ -444,6 +493,7 @@ class BullhornController {
 				$rq_attr = $rq_obj[$key];
 			}
 			$objData[$key]['Plum'] = $customObj['bh']->get_a_string($rq_attr);
+			$objData[$key]['repeat'] = 1;
 		}
 		return $objData;
 	}
@@ -466,6 +516,7 @@ class BullhornController {
 		$noteData['Conversion Interview']['Bullhorn'] = $bhvalue;
 		$noteData['Conversion Interview']['WorldApp'] = '';
 		$noteData['Conversion Interview']['Plum'] = $rqvalue;
+		$noteData['Conversion Interview']['repeat'] = 1;
 
 		//Availability
 		$bhvalue2 = '';
@@ -478,6 +529,7 @@ class BullhornController {
 		$noteData['Availability']['Bullhorn'] = $bhvalue2;
 		$noteData['Availability']['WorldApp'] = $wavalue;
 		$noteData['Availability']['Plum'] = ''; //WorldApp value not edited
+		$noteData['Availability']['repeat'] = 1;
 
 		//Reg Form sent
 		//only in Bullhorn, kicks off the whole Plum process
@@ -491,6 +543,7 @@ class BullhornController {
 		$noteData['Reg Form Sent']['Bullhorn'] = $bhvalue3;
 		$noteData['Reg Form Sent']['WorldApp'] = '';
 		$noteData['Reg Form Sent']['Plum'] = '';
+		$noteData['Reg Form Sent']['repeat'] = 1;
 		return $noteData;
 	}
 

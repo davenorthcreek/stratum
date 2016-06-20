@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
+<style>
+table {
+    border-collapse: collapse;
+}
+
+table, th, td {
+border: 1px solid black;
+}
+</style>
 </head>
 <body>
     <div>
@@ -22,7 +31,7 @@
                     <div>
                         <h3>{{$sec_head}}</h3>
                     </div>
-                    <?php $candidate->log_this($section); ?> 
+                    <?php $candidate->log_this($section); ?>
                     <div>
                         <div>
                         <table>
@@ -56,10 +65,11 @@
                                     <td>
                                         {{$question['WorldApp']}}
                                     </td>
-                                    <td>
-
-                                        {{$question['Plum']}}
-                                    </td>
+                                    @if(isset($question['Plum']))
+                                        <td rowspan="{{$question['repeat']}}">
+                                            {{$question['Plum']}}
+                                        </td>
+                                    @endif
                                 </tr>
                                 @endforeach
                             </tbody>

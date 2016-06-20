@@ -126,7 +126,8 @@ class FormResponseController extends Controller
             $bc = new \Stratum\Controller\BullhornController();
             $c1 = new \Stratum\Model\Candidate();
             $c1->set("id", $id);
-            $c1 = $bc->loadFully($c1);
+            $c1 = $bc->loadFully($c1); //$c1 is the bullhorn existing candidate
+            $c2->set("formResult", $formResult); //trojan horse to get formResult to pdf
             $pdf_data = $this->generatePDF($id, $c1, $c2, $candidate, $bc);
             $this->uploadPDF($candidate, $pdf_data, $bc);
             Log::debug("Uploaded PDF record from form");
