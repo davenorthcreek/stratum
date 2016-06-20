@@ -67,7 +67,11 @@ border: 1px solid black;
                                     </td>
                                     @if(isset($question['Plum']))
                                         <td rowspan="{{$question['repeat']}}">
-                                            {{$question['Plum']}}
+                                            @if($qhead=='List of Skills')
+                                                {!! $question['Plum'] !!}
+                                            @else
+                                                {{$question['Plum']}}
+                                            @endif
                                         </td>
                                     @endif
                                 </tr>

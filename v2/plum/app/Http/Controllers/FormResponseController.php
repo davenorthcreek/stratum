@@ -54,7 +54,7 @@ class FormResponseController extends Controller
         return view('formresponse')->with($data);
     }
 
-    public function exportPDF($id, $candidate, $c2, $c3) {
+    public function exportPDF($request) {
         //prep
         $id = $request->input("id");
         $fc = new \Stratum\Controller\FormController();
@@ -93,6 +93,7 @@ class FormResponseController extends Controller
     private function uploadPDF($candidate, $pdf_data, $bc) {
         $filename = $candidate->get("firstName")."_".$candidate->get("lastName").".pdf";
         $bc->submit_file_as_string($candidate, $filename, $pdf_data['string'], "application/pdf");
+
     }
 
     public function confirmValues(Request $request) {
@@ -131,6 +132,8 @@ class FormResponseController extends Controller
             $pdf_data = $this->generatePDF($id, $c1, $c2, $candidate, $bc);
             $this->uploadPDF($candidate, $pdf_data, $bc);
             Log::debug("Uploaded PDF record from form");
+            // to shortcut to html view
+            return view('export_the_pdf')->with($pdf_data);
             $retval = $bc->submit($candidate);
             if (array_key_exists("errorMessage", $retval)) {
                 $data['errormessage']['message'] = $retval['errorMessage'];

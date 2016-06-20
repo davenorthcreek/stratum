@@ -207,9 +207,9 @@ class BullhornController {
 		//so I will get the section headers - but only display section if
 		//there is content.
 
-		$fc = new \Stratum\Controller\FormController();
-		$form = $fc->setupForm();  //parsed QandA.txt to get questions in order
-		$sections = $form->get("sections");  //and sections
+		$formResult = $wacandidate->get("formResult");
+		$form = $formResult->get("form");	      //parsed QandA.txt to get questions in order
+		$sections = $form->get("sections");       //and sections
 		$headers = $form->get("sectionHeaders");  //with appropriate labels
 		$sectionData = [];
 		for ($i = 0; $i < count($sections); $i++) {
@@ -220,20 +220,12 @@ class BullhornController {
 				$sectionData[$label] = $retval;
 			}
 		}
+		$sectionData['Skills'] = $this->convertSkillsForPDF($candidates);
 		$sectionData['Recommenders'] = $this->convertReferencesForPDF($candidates);
 		$sectionData['Additional Tab'] = $this->convertCustomObjForPDF($candidates, $form);
 		$sectionData['Notes'] = $this->convertNotesForPDF($candidates);
 		return $sectionData;
 	}
-
-
-		/* Things I need to not forget to include in PDF:
-			$cats = $candidate->get("categories");
-			$specs = $candidate->get("specialties");
-			//$bullhornClient->submit_skills($candidate);
-			//$bullhornClient->submit_categories($candidate);
-			//$bullhornClient->submit_specialties($candidate);
-		*/
 
 	private function exportSectionToPDF($form, $section, $label, $candidates) {
 		$retVal = [];
@@ -267,7 +259,7 @@ class BullhornController {
         }
 
 		//make a cache of longest value to put at end - usually the same value repeated
-		$max = 50;
+		$max = 50;  //less than 50 is no bother
 		$longest = '';
 		$put_at_end = [];
 
@@ -349,8 +341,30 @@ class BullhornController {
 	        $value = implode(', ', $result_split);
 			$ret[$src.'value'] = $value;
 		}
+		if ($bh == 'skillID' && $ret['rqvalue']) {
+			//overwrite if there is something there
+			$ret['rqvalue'] = 'See Skills Section below';
+		}
 		$ret['bh'] = $bh;
 		$ret['wa'] = $wa;
+		return $ret;
+	}
+
+	private function convertSkillsForPDF($candidates) {
+		//going to discard all but rq candidate (Plum)
+		$candidate = $candidates['rq'];
+		$skills = $candidate->get("skillID");
+		$skill_output = "";
+		if ($skills) {
+			foreach (preg_split("/\n/", $skills) as $skill) {
+				$skill_output .= $skill."<br>\n";
+			}
+		}
+		$ret['List of Skills']['Question'][] = "List of Skills";
+		$ret['List of Skills']['Bullhorn'] = '';
+		$ret['List of Skills']['WorldApp'] = '';
+		$ret['List of Skills']['Plum'] = $skill_output;
+		$ret['List of Skills']['repeat'] = 1;
 		return $ret;
 	}
 
