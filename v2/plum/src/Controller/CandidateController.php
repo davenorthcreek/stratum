@@ -519,7 +519,8 @@ class CandidateController
                     $value2 = $value;
                     $value2 = preg_replace("/Equipment Supplier/", "Equipment Sup.", $value2);
                     $value2 = preg_replace("|PE / IB / Trading|","PE/IB", $value2);
-                    $value2 = preg_replace("|Other|","*", $value2);
+                    $value2 = preg_replace("|Other|","Oth", $value2);
+                    $value2 = preg_replace("/Owner \((.*?)\)/", '$1', $value2);
                     $value = $value2;
                 }
                 if ($key == 'customText20' && $pt1 && $pt2) {
