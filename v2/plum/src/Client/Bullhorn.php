@@ -446,8 +446,12 @@ class Bullhorn {
 		$lkup_uri = $this->service->getRestUri($lkup_url, $this->session_key, ['filter'=>$country]);
 		$lkup = $this->httpClient->retrieveResponse($lkup_uri, [], [], 'GET');
 		$lkup_decoded = $this->extract_json($lkup);
-		$country_ID = $lkup_decoded['data'][0]['value'];
-		return $country_ID;
+		$this->log_debug($lkup_decoded);
+		if (isset($lkup_decoded['data'][0]['value'])) {
+			return $lkup_decoded['data'][0]['value'];
+		} else {
+			return '';
+		}
 	}
 
 	public function submit_candidate($candidate) {
