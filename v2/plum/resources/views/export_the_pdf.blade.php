@@ -22,12 +22,13 @@
                     <div>
                         <h3>{{$sec_head}}</h3>
                     </div>
+                    <?php $candidate->log_this($section); ?> 
                     <div>
                         <div>
                         <table>
                             <thead>
                                 <tr>
-                                    <th>Field Name</th>
+                                    <!--th>Field Name</th -->
                                     <th>WorldApp Fields</th>
                                     <th>Existing Value</th>
                                     <th>WorldApp Form Value</th>
@@ -37,9 +38,9 @@
                             <tbody>
                                 @foreach($section as $qhead=>$question)
                                 <tr>
-                                    <td>
+                                    <!--td>
                                         {{$qhead}}
-                                    </td>
+                                    </td -->
                                     <td>
                                         @foreach ($question['Question'] as $wa)
                                         {{$wa}}<br>
