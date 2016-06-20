@@ -356,7 +356,16 @@ class BullhornController {
 				$refData["phone$index"]['Bullhorn'] = $ref->get("referencePhone");
 				$refData["email$index"]['Bullhorn'] = $ref->get("referenceEmail");
 				$refData["relationship$index"]['Bullhorn'] = $ref->get("customTextBlock1");
+			} else {
+				$refData["firstName$index"]['Bullhorn'] = '';
+				$refData["lastName$index"]['Bullhorn'] = '';
+				$refData["employer$index"]['Bullhorn'] = '';
+				$refData["title$index"]['Bullhorn'] = '';
+				$refData["phone$index"]['Bullhorn'] = '';
+				$refData["email$index"]['Bullhorn'] = '';
+				$refData["relationship$index"]['Bullhorn'] = '';
 			}
+
 			if (array_key_exists("rq", $refs)) {
 				$plum = $refs['rq'];
 				$refData["firstName$index"]['Plum'] = $plum->get("referenceFirstName");
@@ -366,6 +375,14 @@ class BullhornController {
 				$refData["phone$index"]['Plum'] = $plum->get("referencePhone");
 				$refData["email$index"]['Plum'] = $plum->get("referenceEmail");
 				$refData["relationship$index"]['Plum'] = $plum->get("customTextBlock1");
+			} else {
+				$refData["firstName$index"]['Plum'] = '';
+				$refData["lastName$index"]['Plum'] = '';
+				$refData["employer$index"]['Plum'] = '';
+				$refData["title$index"]['Plum'] = '';
+				$refData["phone$index"]['Plum'] = '';
+				$refData["email$index"]['Plum'] = '';
+				$refData["relationship$index"]['Plum'] = '';
 			}
 			if (array_key_exists("wa", $refs)) {
 				$wa_r = $refs["wa"];
@@ -376,6 +393,14 @@ class BullhornController {
 				$refData["phone$index"]['WorldApp'] = $wa_r->get("referencePhone");
 				$refData["email$index"]['WorldApp'] = $wa_r->get("referenceEmail");
 				$refData["relationship$index"]['WorldApp'] = $wa_r->get("customTextBlock1");
+			} else {
+				$refData["firstName$index"]['WorldApp'] = '';
+				$refData["lastName$index"]['WorldApp'] = '';
+				$refData["employer$index"]['WorldApp'] = '';
+				$refData["title$index"]['WorldApp'] = '';
+				$refData["phone$index"]['WorldApp'] = '';
+				$refData["email$index"]['WorldApp'] = '';
+				$refData["relationship$index"]['WorldApp'] = '';
 			}
 		}
 		return $refData;
