@@ -133,7 +133,7 @@ class FormResponseController extends Controller
             $this->uploadPDF($candidate, $pdf_data, $bc);
             Log::debug("Uploaded PDF record from form");
             // to shortcut to html view
-            return view('export_the_pdf')->with($pdf_data);
+            //return view('export_the_pdf')->with($pdf_data);
             $retval = $bc->submit($candidate);
             if (array_key_exists("errorMessage", $retval)) {
                 $data['errormessage']['message'] = $retval['errorMessage'];
