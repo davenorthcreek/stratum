@@ -44,7 +44,7 @@ table, td {
                                     <th>WorldApp Fields</th>
                                     <th>Existing Value</th>
                                     <th>WorldApp Form Value</th>
-                                    <th>Final Value</th>
+                                    <th>Pushed to Bullhorn</th>
                                 </tr>
                             </thead>
                             <tbody>
