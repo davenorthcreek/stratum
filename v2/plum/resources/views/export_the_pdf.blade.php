@@ -7,7 +7,10 @@ table {
 }
 
 table, th, td {
-border: 1px solid black;
+    border: 1px solid black;
+}
+table, td {
+    word-wrap:break-word;
 }
 </style>
 </head>
@@ -63,7 +66,11 @@ border: 1px solid black;
                                         @endif
                                     </td>
                                     <td>
-                                        {{$question['WorldApp']}}
+                                        @if($qhead=='File Uploads:')
+                                            {!! $question['WorldApp'] !!}
+                                        @else
+                                            {{$question['WorldApp']}}
+                                        @endif
                                     </td>
                                     @if(isset($question['Plum']))
                                         <td rowspan="{{$question['repeat']}}">

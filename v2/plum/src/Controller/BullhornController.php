@@ -259,7 +259,7 @@ class BullhornController {
         }
 
 		//make a cache of longest value to put at end - usually the same value repeated
-		$max = 50;  //less than 50 is no bother
+		$max = 70;  //less than 70 is no bother
 		$longest = '';
 		$put_at_end = [];
 
@@ -318,6 +318,10 @@ class BullhornController {
                 }
             }
         }
+		if ($qmap->get("type") == 'boolean') {
+			$shorter = substr($wa, 0, strrpos($wa, ' '));
+			$wa = $shorter;
+		}
 		if (strpos($bh, 'customObject')===0 || $bh == 'Note') {
 			return null;
 		}
@@ -341,9 +345,18 @@ class BullhornController {
 	        $value = implode(', ', $result_split);
 			$ret[$src.'value'] = $value;
 		}
+		//special fields (for formatting)
 		if ($bh == 'skillID' && $ret['rqvalue']) {
 			//overwrite if there is something there
 			$ret['rqvalue'] = 'See Skills Section below';
+		}
+		if ($bh == 'specialtyCategoryID') {
+			$ret['rqvalue'] = $ret['wavalue'];
+		}
+		if ($bh == 'files') {
+			$url = $ret['wavalue'];
+			$url = preg_replace("|file|", "file<br>", $url);
+			$ret['wavalue'] = $url;
 		}
 		$ret['bh'] = $bh;
 		$ret['wa'] = $wa;

@@ -399,7 +399,10 @@ class QuestionMapping extends ModelObject
             echo " id='$label' data-placeholder='$visible' name='$label'";
             echo " style='width: 100%;'";
             echo ">\n";
-            echo "<option></option>\n"; //empty option
+            if ($human != "Q57" && $human != "Q62") {
+                echo "<option></option>\n"; //empty option
+                //empty option messes up "All Listed" option
+            }
             $qmap2 = $questionMaps[$human];
             if ($human == "Q103") {
                 $my103 = false;
@@ -441,8 +444,8 @@ class QuestionMapping extends ModelObject
                             if ($all_listed  || substr($vm, 0, strlen($aval)) === $aval) {
                                 $this->log_debug("Found $vm matching $aval in $human");
                                 echo "SELECTED ";
-                                if ($aval == "Other") {
-                                    $otherVal = substr($vm, 7);
+                                if ($aval == "Other" && $vm != "All Listed") {
+                                    $otherVal = preg_replace("/Other: /", "", $vm);
                                     $otherVal = htmlentities($otherVal, ENT_QUOTES);
                                     $other .= $otherVal;
                                 }
