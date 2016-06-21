@@ -325,6 +325,9 @@ class BullhornController {
 		if (strpos($bh, 'customObject')===0 || $bh == 'Note') {
 			return null;
 		}
+		if ($bh == "customTextBlock2" && $qmap->get("type") == "Text") {
+			return null; //only need one 'Discipline' field
+		}
 		foreach ($candidates as $src=>$candidate) {
 			if ($src == 'wa') {
 				$fr = $candidate->get("formResult");

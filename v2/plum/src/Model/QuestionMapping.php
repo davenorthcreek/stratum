@@ -437,10 +437,16 @@ class QuestionMapping extends ModelObject
                 if ($human == "Q23") {
                     $aval = preg_replace("/ \(.*\)/", "", $aval); //everything within parentheses
                 }
+                if ($human == "Q65") {
+                    $aval = preg_replace("/: /", ":", $aval); //remove space after colon
+                }
                 if ($aval && $aval != "All Listed") { //skip the all listed option
                     echo "<option ";
                     if ($valueMap) {
                         foreach (array_keys($valueMap) as $vm) {
+                            if ($human == "Q65") {
+                                $vm = preg_replace("/: /", ":", $vm); //remove space after colon
+                            }
                             if ($all_listed  || substr($vm, 0, strlen($aval)) === $aval) {
                                 $this->log_debug("Found $vm matching $aval in $human");
                                 echo "SELECTED ";
