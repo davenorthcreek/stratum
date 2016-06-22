@@ -259,8 +259,9 @@ class BullhornController {
         }
 
 		//make a cache of longest value to put at end - usually the same value repeated
-		$max = 70;  //less than 70 is no bother
-		$longest = '';
+		$too_long = 70;  //less than 70 is no bother
+		$combine_anyway = array("Net Salary", "Gross Salary",
+		                        "Education Completed: Degree", "Education Completed: Diploma");
 		$put_at_end = [];
 
 		foreach ($sectionQs as $human=>$qmap) {
@@ -272,11 +273,10 @@ class BullhornController {
 			if ($value && ($value['bhvalue'] || $value['wavalue'] || $value['rqvalue'])) {
 				$wa = $value['wa'];
 				$plum_value = $value['rqvalue'];
-				if ($plum_value && strlen($plum_value) >= $max) {
-					$max = strlen($plum_value);
-					$longest = $plum_value;
+				if ($plum_value &&
+				   (strlen($plum_value) >= $too_long || in_array($wa, $combine_anyway))
+				    ) {
 					$put_at_end[$plum_value][] = $value;
-					//only long values, and 'sorted' by increasing length
 				} else {
 					$retVal[$wa]['Question'][] = $value['wa'];
 					$retVal[$wa]['Bullhorn'] = $value['bhvalue'];
@@ -307,6 +307,7 @@ class BullhornController {
 	private function exportQMToPDF($qmap, $human, $form, $candidates) {
 		$bh = $qmap->get("BullhornField");
 		$wa = $qmap->get("WorldAppAnswerName");
+		$yn = '';
 		if (!$bh) {
             foreach ($qmap->get("answerMappings") as $q2) {
                 $bh = $q2->get("BullhornField");
@@ -318,10 +319,6 @@ class BullhornController {
                 }
             }
         }
-		if ($qmap->get("type") == 'boolean') {
-			$shorter = substr($wa, 0, strrpos($wa, ' '));
-			$wa = $shorter;
-		}
 		if (strpos($bh, 'customObject')===0 || $bh == 'Note') {
 			return null;
 		}
@@ -360,6 +357,10 @@ class BullhornController {
 			$url = $ret['wavalue'];
 			$url = preg_replace("|file|", "file<br>", $url);
 			$ret['wavalue'] = $url;
+		}
+		if ($qmap->get("type") == 'boolean') {
+			$shorter = substr($wa, 0, strrpos($wa, ' '));
+			$wa = $shorter;
 		}
 		$ret['bh'] = $bh;
 		$ret['wa'] = $wa;

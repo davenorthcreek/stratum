@@ -142,7 +142,6 @@ class FormResponseController extends Controller
             } else {
                 $data['message'] = "Data Uploaded";
                 $bc->updateCandidateStatus($candidate, "Interview Done");
-                //$bc->submitPDF($candidate);
                 $cuc->flushCandidatesFromCache();
                 Log::debug("sending email to admin@stratum-int.com about Interview completion");
                 $user = Auth::user();
