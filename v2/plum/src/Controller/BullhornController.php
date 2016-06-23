@@ -496,7 +496,7 @@ class BullhornController {
 			$json[$src] = $obj->marshalToArray();
 		}
 		$objData = [];
-		foreach ($json['bh'][0] as $key=>$attr) {
+		foreach ($json['wa'][0] as $key=>$attr) {
 			if (in_array($key, ["dateAdded", "dateLastModified"])) {
 				continue;
 			}
