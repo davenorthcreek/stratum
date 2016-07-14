@@ -122,6 +122,6 @@ class WorldappController {
     public function setEmailTemplate($template, $attachments = null) {
 		//$this->log_debug("Setting template to:");
 		//$this->log_debug($template['content']);
-        return $this->getClient()->setEmailTemplate($template);
+        return $this->getClient()->setEmailTemplate($template, $attachments);
     }
 }

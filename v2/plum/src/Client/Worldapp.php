@@ -250,7 +250,7 @@ class Worldapp {
 						    ]
 					    ]);
 			}
-			$this->log_debug("response: ".$client->__getLastResponse());
+			//$this->log_debug("response: ".$client->__getLastResponse());
 			return $objResponse;
 		} catch (\Exception $ex) {
 			$this->log_debug("response: ".$client->__getLastResponse());
