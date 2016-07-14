@@ -115,6 +115,14 @@ class FormResponseController extends Controller
             $error['type'] = 'Must Accept Form';
             $data['errormessage']['errors'][] = $error;
             $data['message'] = "Validation Failure: Data Not Uploaded";
+        } else if (!$candidate->get("customText16")) {
+            $candidate->set("tier", $candidate->get("customText16")); //must transfer to human-readable attribute name
+            $data['errormessage']['message'] = "You must assign a Tier to this Candidate.  Use the Browser Back button to avoid losing your edits.";
+            $error['propertyName'] = "tier";
+            $error['severity'] = 'Validation Failure';
+            $error['type'] = 'Must Assign Tier';
+            $data['errormessage']['errors'][] = $error;
+            $data['message'] = "Validation Failure: Data Not Uploaded";
         } else {
 
             $now = new \DateTime();

@@ -317,6 +317,10 @@ class QuestionMapping extends ModelObject
         if ($type == 'boolean') {
             if ($answermap) {
                 $waan = $answermap->get("WorldAppAnswerName");
+            } else if ($human == 'Q105') {
+                //only if no answermap, use a default
+                $waan = 'Admin to Contact References No';
+                $answermap = true;
             }
             //$waan ends with yes or no
             $yn = substr($waan, strrpos($waan, ' '));
@@ -408,7 +412,7 @@ class QuestionMapping extends ModelObject
                 $my103 = false;
                 if ($valueMap) {
                     foreach (array_keys($valueMap) as $vm) {
-                        if ($vm) {
+                        if ($vm) {  // we have anything in there for this qmap
                             //don't overwrite
                             $my103 = true;
                         }
