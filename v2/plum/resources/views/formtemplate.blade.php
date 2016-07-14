@@ -13,7 +13,7 @@
                     </div>
                 </div>
                 <?PHP $id = $formTemplate->get('id'); ?>
-                <form method="post" id="contentUpdate" action='{{route("candidateUpdateTemplate", ["id" => $id])}}' >
+                <form method="post" id="contentUpdate" enctype="multipart/form-data" action='{{route("candidateUpdateTemplate", ["id" => $id])}}' >
                     {{csrf_field()}}
                     <input type='hidden' name='id' value="{{$id}}">
                     <div class="box-body">
@@ -31,6 +31,12 @@
                                 <hr>
                                 {!! $formTemplate->get('content') !!}
                                 <hr>
+                                @foreach($formTemplate->get('attachments') as $att)
+                                    <div>
+                                        File Attached: {{ $att['filename'] }}
+                                    </div>
+                                <hr>
+                                @endforeach
                             @else
                                 <div class="form-group">
                                     <label>Candidate Bullhorn ID: {{$id}}</label>
@@ -38,6 +44,12 @@
                                     <textarea id="contentEditor" name="contentEditor" rows="10" cols="80">
                                         {{$formTemplate->get('content')}}
                                     </textarea>
+                                </div>
+                                <div class="form-group">
+                                  <label for="attachmentFile">Upload Any Attachment Here</label>
+                                  <input type="file" id="attachmentFile" name='attachmentFile'>
+
+                                  <p class="help-block">File will be added to the email sent to the Candidate.</p>
                                 </div>
                                 <div class="form-group">
                                     <button type="submit" class="btn btn-primary" id="update">Update (or just approve) this Template</button>
@@ -51,7 +63,8 @@
                     {{csrf_field()}}
                     <input type="hidden" name="content" id="content" value="{{$formTemplate->get('content')}}">
                     <input type='hidden' name='id' value="{{$id}}">
-                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#dialog-confirm" id="launchForm">Launch Form</button>
+                    <button type="button" id="confirmLaunch" class="btn btn-success">Launch the Form</button>
+                    <!--button type="button" class="btn btn-danger" data-toggle="modal" data-target="#dialog-confirm" id="launchForm">Launch Form</button -->
                 @endif
                 @if($success)
                     <label>Form has been launched!</label>

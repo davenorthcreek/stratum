@@ -207,7 +207,7 @@ class Worldapp {
         return $objResponse->return;
     }
 
-    public function setEmailTemplate($template) {
+    public function setEmailTemplate($template, $attachments = null) {
 
         $client = $this->getClient("LaunchManagementService");
 
@@ -223,20 +223,41 @@ class Worldapp {
                 subject - indicates the subject of your e-mail message;
                 content - indicates the body content of the e-mail message;
         */
-
-        $objResponse = $client->setFormEmailTemplate(
+		try {
+			if ($attachments) {
+				$objResponse = $client->setFormEmailTemplate(
+                        ['template' =>
+                            ['formId'   =>  $template['formId'],
+                             'from'     =>  $template['from'],
+                             'replyTo'  =>  $template['replyTo'],
+                             'subject'  =>  $template['subject'],
+                             'content'  =>  $template['content'],
+							 'attachments' => [
+								 'versionId' => '1.0',
+								 'name' => $attachments['name'],
+								 'attachment' => $attachments['attachment']
+							 ]
+                            ]
+                        ]);
+			} else {
+				$objResponse = $client->setFormEmailTemplate(
                         ['template' =>
                             ['formId'   =>  $template['formId'],
                              'from'     =>  $template['from'],
                              'replyTo'  =>  $template['replyTo'],
                              'subject'  =>  $template['subject'],
                              'content'  =>  $template['content']
-                            ]
-                        ]);
-
-        //echo "Response: ".$client->getLastResponse()."\n";
-        return $objResponse;
-
+						    ]
+					    ]);
+			}
+			$this->log_debug("response: ".$client->__getLastResponse());
+			return $objResponse;
+		} catch (\Exception $ex) {
+			$this->log_debug("response: ".$client->__getLastResponse());
+			$this->var_debug($ex->detail);
+			//var_dump($ex->detail);
+			$this->log_debug("request : ".$client->__getLastRequest());
+		}
     }
 
 }

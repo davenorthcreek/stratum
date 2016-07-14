@@ -1,7 +1,7 @@
 <?php
 /*
- * Form.php
- * Base model for form
+ * FormTemplate.php
+ * Base model for formTemplate
  * Data model for transfer between WorldApp and Bullhorn
  *
  * Copyright 2015
@@ -26,7 +26,8 @@ class FormTemplate extends ModelObject
 		'candidate'             =>  '',
 		'form'                  =>  '',
 		'owner'                 =>  '',
-		'originalEmailTemplate' =>  ''
+		'originalEmailTemplate' =>  '',
+        'attachments'           =>  []  //an array with filename and file, so use foreach
 						  ];
 
 

@@ -106,10 +106,26 @@ EOS;
   public function postUpdateContent(Request $request) {
       $id = $request->input("id");
       $content = $request->input('contentEditor');
-      Log::debug('Updated Content: ');
-      Log::debug($content);
+      Log::debug('Updated Content: (skipping, too long)');
+      //Log::debug($content);
       $template = $this->setup_template($id);
       $template->set('content', $content);
+      Log::debug($request);
+      if ($request->hasFile("attachmentFile")) {
+          Log::debug("Request has file");
+          if ($request->file("attachmentFile")->isValid()) {
+              Log::debug("File uploaded!");
+              $attachment = $request->file("attachmentFile");
+              $attachmentName = $attachment->getClientOriginalName();
+              Log::debug("Name: ".$attachmentName);
+              $path = $attachment->getRealPath();
+              $att_data = file_get_contents($path);
+              $request->session()->push('attachments',[$attachmentName=>$att_data]);
+              $atts = $template->get("attachments");
+              $atts[] = ['filename'=>$attachmentName];
+              $template->set('attachments', $atts);
+          }
+      }
       $data['formTemplate'] = $template;
       $data['launch'] = true;
       $data['success'] = false;
@@ -131,7 +147,7 @@ EOS;
 
       $form = $template->get('form');
       $candidate = $template->get('candidate');
-      $this->setNewEmailTemplate($template, $content);
+      $this->setNewEmailTemplate($template, $content, $request->session());
 
       $autofill = $this->prepareAutofill($candidate);
       Log::debug("Candidate name:  ".$candidate->get("name"));
@@ -243,7 +259,23 @@ EOS;
       return $owner;
   }
 
-  private function setNewEmailTemplate($template, $content) {
+  private function getAttachments($session) {
+      $attachments = null;
+      if ($session->has('attachments')) {
+          Log::debug("add Attachments");
+
+          foreach($session->get('attachments') as $attach) {
+              foreach ($attach as $name => $data) {
+                  Log::debug($name);
+                  $attachments['name'] = $name;
+                  $attachments['attachment'] = $data;
+              }
+          }
+      }
+      return $attachments;
+  }
+
+  private function setNewEmailTemplate($template, $content, $session) {
       //set up the correct template
       $form = $template->get('form');
       $owner = $template->get('owner');
@@ -255,8 +287,10 @@ EOS;
       $newTemplate['subject'] =   $emailTemplate->subject;
       $newTemplate['content'] =   $content;
 
+      $attachments = $this->getAttachments($session);
+
       //set the correct template on the WorldApp server
-      $this->wcontroller->setEmailTemplate($newTemplate);
+      $response = $this->wcontroller->setEmailTemplate($newTemplate, $attachments);
 
   }
 
