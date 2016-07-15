@@ -49,7 +49,7 @@
                                   <label for="attachmentFile">Upload Any Attachment Here</label>
                                   <input type="file" id="attachmentFile" name='attachmentFile'>
 
-                                  <p class="help-block">File will be added to the email sent to the Candidate.</p>
+                                  <p class="help-block">File will be added to the email sent to the Candidate (one attachment only).</p>
                                 </div>
                                 <div class="form-group">
                                     <button type="submit" class="btn btn-primary" id="update">Update (or just approve) this Template</button>
