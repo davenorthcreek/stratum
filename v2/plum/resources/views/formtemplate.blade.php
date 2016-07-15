@@ -27,6 +27,9 @@
                                 <div class="form-group">
                                     <label>Candidate Bullhorn ID: {{$id}}</label>
                                 </div>
+                                @if($launch)
+                                    <button type="button" id="confirmLaunch_top" class="btn btn-success">Launch the Form</button>
+                                @endif
                                 <h3 class="box-title">Email Template</h3>
                                 <hr>
                                 {!! $formTemplate->get('content') !!}
@@ -65,6 +68,7 @@
                     <input type='hidden' name='id' value="{{$id}}">
                     <button type="button" id="confirmLaunch" class="btn btn-success">Launch the Form</button>
                     <!--button type="button" class="btn btn-danger" data-toggle="modal" data-target="#dialog-confirm" id="launchForm">Launch Form</button -->
+                </form>
                 @endif
                 @if($success)
                     <label>Form has been launched!</label>
@@ -80,33 +84,6 @@
 @endsection
 
 @section('local_scripts')
-<div class="modal modal-danger" id="dialog-confirm">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Launch the Form?</h4>
-      </div>
-      <div class="modal-body">
-          <p>Warning!</p>
-          <p>This will send an email from WorldApp to {{$formTemplate->get('candidate')->get('name')}}
-          at email address {{$formTemplate->get('candidate')->get('email')}}.</p>
-          <p>The content of the message will be:</p><hr>
-          {!! $formTemplate->get('content') !!}
-          <hr>
-          <p>Are you sure you want to send this?</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
-        <button type="button" id="confirmLaunch" class="btn btn-outline">Launch the Form</button>
-      </div>
-    </div>
-    <!-- /.modal-content -->
-  </div>
-  <!-- /.modal-dialog -->
-</div>
-<!-- /.modal -->
 
 <!-- CK Editor -->
 <script src="https://cdn.ckeditor.com/4.5.10/standard/ckeditor.js"></script>
@@ -114,6 +91,9 @@
 <script>
 @if($launch || $success)
     $('#confirmLaunch').click(function () {
+        $('#launchButtonForm').submit();
+    });
+    $('#confirmLaunch_top').click(function () {
         $('#launchButtonForm').submit();
     });
 @else
