@@ -81,7 +81,7 @@
 
 @section('local_scripts')
 <!-- Select2 -->
-<script src={{ asset("/bower_components/admin-lte/plugins/select2/select2.full.min.js") }}></script>
+<script src="{{ asset("/bower_components/admin-lte/plugins/select2/select2.full.min.js") }}"></script>
 <script type="text/javascript">
     $(function () {
       // Replace the <textarea id="editor1"> with a CKEditor
