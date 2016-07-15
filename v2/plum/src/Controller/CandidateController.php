@@ -434,7 +434,7 @@ class CandidateController
                 for ($i=0; $i < count($values); $i++) {
                     if (is_array($values[$i]) && array_key_exists("Other", $values[$i])) {
                         $otherVal = $values[$i]['Other'];
-                        if ($key == "educationDegree") {
+                        if ($key == "educationDegree"|| $key=="recentClientList") {
                             //edu note
                             $this->addOtherEduNote($candidate, $waan, $otherVal);
                         } else {
@@ -511,9 +511,9 @@ class CandidateController
                     $value2 = preg_replace("/Inter-Res/", "International Residential", $value2);
                     $value2 = preg_replace("/National-FIFO/", "National FIFO", $value2);
                     $value2 = preg_replace("/National-Res/", "National Residential", $value2);
-                    if (strlen($value2)<=50) {
-                        $value = $value2;
-                    }
+                    //if (strlen($value2)<=50) {
+                    $value = $value2;
+                    //}
                 }
                 if ($key == 'customText19') {
                     $value2 = $value;
