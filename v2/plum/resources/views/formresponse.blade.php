@@ -33,7 +33,7 @@
             <div class="box box-primary">
                 <div class="box-header with-border">
                     <button type="submit" class="btn btn-danger" id="confirmV">Submit Values to Bullhorn</button>
-                    <button class="btn btn-mini btn-primary pull-right btn-click-action"
+                    <button type="button" class="btn btn-mini btn-primary pull-right btn-click-action"
                         data-widget="collapseAll" data-toggle="tooltip" title="Collapse/Expand All">
                         <i class='fa fa-plus'></i>
                     </button>
@@ -53,7 +53,7 @@
                     <div class="box-header with-border">
                         <h3 class='box-title'>{{ $label }}</h3>
                         <div class="box-tools pull-right">
-                            <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse/Expand"><i class="fa fa-plus"></i></button>
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse/Expand"><i class="fa fa-plus"></i></button>
                         </div>
                     </div>
                     <div class='box-body' style='display: none;'>
@@ -67,7 +67,7 @@
                     <button type="submit" class="btn btn-danger" id="confirmV">Submit Values to Bullhorn</button>
                     <!--button type="submit" class="btn btn-info"
                         formaction='{{route("exportPDF", ["id" => $id])}}' id="toPDF">Export PDF only</button -->
-                    <button role="button" class="btn btn-mini btn-primary pull-right btn-click-action"
+                    <button type="button" role="button" class="btn btn-mini btn-primary pull-right btn-click-action"
                         data-widget="collapseAll" data-toggle="tooltip" title="Collapse/Expand All">
                         <i class='fa fa-plus'></i>
                     </button>
