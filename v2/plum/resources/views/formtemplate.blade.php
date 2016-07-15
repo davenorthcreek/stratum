@@ -109,7 +109,7 @@
 <!-- /.modal -->
 
 <!-- CK Editor -->
-<script src="https://cdn.ckeditor.com/4.4.3/standard/ckeditor.js"></script>
+<script src="https://cdn.ckeditor.com/4.5.10/standard/ckeditor.js"></script>
 
 <script>
 @if($launch || $success)
