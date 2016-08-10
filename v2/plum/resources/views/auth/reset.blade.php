@@ -4,7 +4,7 @@
 
     <div class="login-box">
         <div class="login-logo">
-            <a href="/"><img src="{{asset('/images/logo.png')}}"></a>
+            <a href="/"><img src="{{asset('/images/k8408177.jpg')}}"></a>
         </div>
 
 
