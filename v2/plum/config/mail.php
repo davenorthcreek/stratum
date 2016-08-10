@@ -54,7 +54,7 @@ return [
     |
     */
 
-    //'from' => ['address' => 'dev@northcreek.ca', 'name' => 'Plum Data Integration Service'],
+    'from' => ['address' => 'dev@northcreek.ca', 'name' => 'Plum Data Integration Service'],
 
     /*
     |--------------------------------------------------------------------------
