@@ -66,7 +66,7 @@
                                     data-widget="collapse" data-toggle="tooltip"
                                     title="Collapse/Expand">
                                 @if($label=="General Interview Information")
-                                    <i class="fa fa-plus"></i>
+                                    <i class="fa fa-minus"></i>
                                 @else
                                     <i class="fa fa-plus"></i>
                                 @endif
@@ -112,13 +112,43 @@
       });
     });
 
-    var btnClassClick = function(e){
+    var btnClassClick = function(e) {
+        if ($("i", this).hasClass("fa-plus")) {
+            $state = "plus";
+        } else {
+            $state = "minus";
+        }
         $("i",this).toggleClass("fa fa-plus fa fa-minus");
         //find all the divs that have data in them, ignore the empty ones
-        $(".present").click();
-        //$("[data-widget='collapse']").click();
+        $(".present").each(function(e) {
+            if ($state=="plus") {
+                //expand
+                if ($("i",this).hasClass("fa-plus")) {
+                    this.click();
+                }
+            } else {
+                if ($("i",this).hasClass("fa-minus")) {
+                    this.click();
+                }
+            }
+        });
         return false;
     }
+
+    /***
+    $(".present").click();
+    $("[data-widget='collapse']").click();
+    var box = $(this).parents(".box").first();
+    //Find the body and the footer
+    var bf = box.find(".box-body, .box-footer");
+    if (!box.hasClass("collapsed-box")) {
+        box.addClass("collapsed-box");
+        bf.slideUp();
+    } else {
+        box.removeClass("collapsed-box");
+        bf.slideDown();
+    }
+    ***/
 
     $('.btn-click-action').on('click', btnClassClick);
 
