@@ -153,6 +153,9 @@ class CandidateController
 				}
 			} else {
 				foreach ($arr as $key=>$res) {
+                    if ($key == 'valueFound') {
+                        continue; //added flag for section headers
+                    }
                     if (array_key_exists("combined", $res)) {
                         $uncombined = explode(", ", $res['combined']);
                         foreach ($uncombined as $list_element) {

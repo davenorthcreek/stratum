@@ -166,6 +166,8 @@ class QuestionMapping extends ModelObject
             $mult = $answermap->get('multipleAnswers');
             $values = $formResult->getValue($qlabel, $q, $answermap, $values);
         }
+        unset($values['valueFound']); //flag for section headers -
+                                      //we might be able to use this somewhere here
         foreach ($values as $akey=>$value) {
             if (is_numeric($akey)) {
                 $valueMap[$value] = $akey;

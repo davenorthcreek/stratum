@@ -94,6 +94,7 @@ class FormResult extends ModelObject
 	function getValue($qid, $q, $qmap, $answers) {
 		$form = $this->get("form");
 		$value = "";
+        $answers['valueFound'] = true; //only false in one case so far
 		$waan = $qmap->get("WorldAppAnswerName");
 		$column = "";
 		$qac = $q->get("humanQACId");
@@ -132,6 +133,7 @@ class FormResult extends ModelObject
 			$value = $this->find_answer_in_file($q, $qmap, $qid);
 			if (!$value) {
 				$this->log_debug("Unable to find a value:");
+                $answers['valueFound'] = false;
                 $this->var_debug($answers);
 				//$qmap->dump();
 			}
@@ -283,6 +285,7 @@ class FormResult extends ModelObject
 	}
 
     public function exportSectionToHTML($form, $section, $qbyq, $candidate) {
+        $answerPresent = false;
         $sectionQs=null;
         $questionMaps = $form->get('questionMappings');
         foreach ($section as $qmap) {
@@ -335,18 +338,13 @@ class FormResult extends ModelObject
             unset($sectionQs["Q7"]);
         }
 
-        //store list of 'select all' checkboxes for javascript
-        $checkboxes = [];
-
         foreach ($sectionQs as $human=>$qmap) {
 
                 /****************************************
                 second pass, export to html with answers
                 ************************************** */
             $retval = $qmap->exportQMToHTML($human, $this->get("configs"), $qbyq, $candidate, $this);
-            if ($retval) {
-                $checkboxes[] = $retval;
-            }
+            //need to use retval to signal whether section has answers in it or not- except it's too late!
         }
     }
 

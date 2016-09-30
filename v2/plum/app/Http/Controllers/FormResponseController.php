@@ -44,7 +44,38 @@ class FormResponseController extends Controller
             $qbyq[$q1->get("humanQuestionId")][] = $q1;
             $qbyq[$q1->get('humanQAId')][] = $q1;
         }
-        //expand/collapse all button
+        //expand/collapse all button depends on presence of values in the section
+        $valuesPresent = [];
+        //$form->output_sections();
+        $sections = $form->get("sections");
+        $headers  = $form->get("sectionHeaders");
+        $index = 0;
+        foreach ($sections as $sec) {
+            $header = $headers[$index];
+            $index++;
+            $valuePresent = false;
+            Log::debug("Got to section $index with label $header, checking for values present");
+            foreach ($sec as $qmap) {
+                $answers = [];
+                $qid = $qmap->getBestId();
+                $qs = $qbyq[$qid];
+                if (is_array($qs)) {
+                    foreach($qs as $q) {
+                        $answers = $formResult->getValue($qid, $q, $qmap, $answers);
+                        if ($answers['valueFound']) {
+                            $valuePresent = true; //never set back to false
+                        }
+                    }
+                } else if ($qs) {
+                    $answers = $formResult->getValue($qid, $qs, $qmap, $answers);
+                    if ($answers['valueFound']) {
+                        $valuePresent = true; //never set back to false
+                    }
+                }
+            }
+            $valuesPresent[$header] = $valuePresent;
+        }
+        $data['valuesPresent'] = $valuesPresent;
         $data['form'] = $form;
         $data['qbyq'] = $qbyq;
         $data['candidate'] = $candidate;

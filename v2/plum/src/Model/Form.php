@@ -215,20 +215,23 @@ class Form extends ModelObject
 		return $this;
 	}
 
-    private function output_sections() {
+    public function output_sections() {
         $sections = $this->get("sections");
+        $headers =  $this->get("sectionHeaders");
         //should be an array of arrays of QuestionMappings
         $this->log_debug("Checking section parsing");
         $first = true;
         $index = 0;
         foreach ($sections as $sec) {
-            $this->log_debug("Section ".$index);
+            $header = $headers[$index];
             $index++;
+            $this->log_debug("Section $index: $header");
             foreach($sec as $qmap) {
                 if (is_a($qmap, 'Stratum\Model\QuestionMapping')) {
                     if ($first) {
                         $first = false;
-                        $qmap->dump();
+                        $this->log_debug("Contains Qmap ".$id);
+                        //$qmap->dump();
                     } else {
                         $id = $qmap->getBestId();
                         $this->log_debug("Also Qmap ".$id);

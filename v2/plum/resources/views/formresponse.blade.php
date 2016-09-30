@@ -47,13 +47,23 @@
                 <?php
                 $section = $sections[$i];
                 $label = $headers[$i];
+                $found = $valuesPresent[$label]; //boolean
                 ?>
 
                 <div class="box box-primary collapsed-box">
                     <div class="box-header with-border">
                         <h3 class='box-title'>{{ $label }}</h3>
                         <div class="box-tools pull-right">
-                            <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse/Expand"><i class="fa fa-plus"></i></button>
+                            <button type="button"
+                                @if($found)
+                                    class="btn btn-box-tool present"
+                                @else
+                                    class="btn btn-box-tool absent"
+                                @endif
+                                    data-widget="collapse" data-toggle="tooltip"
+                                    title="Collapse/Expand">
+                                <i class="fa fa-plus"></i>
+                            </button>
                         </div>
                     </div>
                     <div class='box-body' style='display: none;'>
@@ -93,8 +103,9 @@
 
     var btnClassClick = function(e){
         $("i",this).toggleClass("fa fa-plus fa fa-minus");
-
-        $("[data-widget='collapse']").click();
+        //find all the divs that have data in them, ignore the empty ones
+        $(".present").click();
+        //$("[data-widget='collapse']").click();
         return false;
     }
 
