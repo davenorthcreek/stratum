@@ -69,7 +69,6 @@ class FormResponseController extends Controller
                                 $valuePresent = true; //never set back to false
                             } else {
                                 Log::debug("No value found for $qid");
-                                Log::debug($qmap);
                             }
                         }
                     } else if ($qs) {

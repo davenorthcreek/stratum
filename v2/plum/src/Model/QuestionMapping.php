@@ -144,6 +144,23 @@ class QuestionMapping extends ModelObject
         if (in_array($human, ['Q4', 'Q6', 'Q39', 'Q41', 'Q64'])) {
             return;
         }
+        //subsection header
+        if ($this->get("type") == "Subsection") {
+            $label = $this->get("WorldAppAnswerName");
+            $this->log_debug("Subsection $label");
+            $this->log_debug("Human: $human");
+            $this->log_debug("If this is true, there are values in this subsection: ".$this->get("Value"));
+            echo "<div class='col-xs-12'><div class='panel panel-info'>\n";
+            echo "<div class='panel-heading'>$label</div>\n";
+            echo "<div class='panel-body'>\n";
+            return;
+        }
+        if ($this->get("type") == "SubsectionEnd") {
+            $this->log_debug($human);
+            //end of separate panels
+            echo "</div></div>\n</div>\n";
+            return;
+        }
         $form = $this->get('form');
         $questionMaps = $form->get('questionMappings');
         $mult = false;
@@ -166,8 +183,10 @@ class QuestionMapping extends ModelObject
             $mult = $answermap->get('multipleAnswers');
             $values = $formResult->getValue($qlabel, $q, $answermap, $values);
         }
-        unset($values['valueFound']); //flag for section headers -
-                                      //we might be able to use this somewhere here
+        if (array_key_exists('valueFound', $values)) {
+            unset($values['valueFound']); //flag for section headers -
+                                          //we might be able to use this somewhere here
+        }
         foreach ($values as $akey=>$value) {
             if (is_numeric($akey)) {
                 $valueMap[$value] = $akey;
@@ -242,9 +261,11 @@ class QuestionMapping extends ModelObject
             }
         }
         $answermap = $questionMaps[$qlabel];
-        $waan = $answermap->get("WorldAppAnswerName");
+        if ($answermap) {
+            $waan = $answermap->get("WorldAppAnswerName");
+        }
         $bh = $this->get("BullhornField");
-        if (!$bh) {
+        if (!$bh && $answermap) {
             $bh = $answermap->get("BullhornField");
             if (!$bh) {
                 foreach ($answermap->get("answerMappings") as $q2) {
@@ -255,7 +276,7 @@ class QuestionMapping extends ModelObject
                 }
             }
         }
-        if (!$waan) {
+        if (!$waan && $answermap) {
             //go one deeper, if it is there
             foreach ($answermap->get("answerMappings") as $q2) {
                 $waan = $q2->get("WorldAppAnswerName");
@@ -291,20 +312,6 @@ class QuestionMapping extends ModelObject
                 $qlabel = $q->get("humanQuestionId");
             }
             $answermap = $questionMaps[$qlabel];
-        }
-        if (strpos($qlabel, 'Q39.A1') === 0 || strpos($qlabel, 'Q41.A1') === 0 ||
-            strpos($qlabel, 'Q43')    === 0 || strpos($qlabel, 'Q46.A1') === 0) {
-            echo "<div class='col-xs-12'><div class='panel panel-info'>\n";
-            if (strpos($qlabel, 'Q39.A1') === 0) {
-                echo "<div class='panel-heading'>Net / Equivalent Gross</div>\n";
-            } else if (strpos($qlabel, 'Q41.A1') === 0) {
-                echo "<div class='panel-heading'>Gross / Equivalent Net</div>\n";
-            } else if (strpos($qlabel, 'Q43') === 0) {
-                echo "<div class='panel-heading'>Daily or Hourly</div>\n";
-            } else if (strpos($qlabel, 'Q46.A1') === 0) {
-                echo "<div class='panel-heading'>Australia Only</div>\n";
-            }
-            echo "<div class='panel-body'>\n";
         }
         if (strpos($qlabel, 'Q65') === 0) {
             $visible = "Discipline - for display purposes only, will not be changed in Bullhorn";
@@ -503,11 +510,6 @@ class QuestionMapping extends ModelObject
         }
             //}
         echo "\n</div>\n";
-        if (strpos($qlabel, 'Q40')    === 0 || strpos($qlabel, 'Q42')    === 0 ||
-            strpos($qlabel, 'Q44.A2') === 0 || strpos($qlabel, 'Q45.A2') === 0) {
-            //end of separate panels
-            echo "</div></div>\n</div>\n";
-        }
             //}
         //}
     }

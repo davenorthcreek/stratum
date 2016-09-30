@@ -293,6 +293,10 @@ class FormResult extends ModelObject
         $answerPresent = false;
         $sectionQs=null;
         $questionMaps = $form->get('questionMappings');
+        $subsectionCounter = 1;
+        $subsectionValuesPresent = false;
+        $inSubsection = false;
+        $currentSubsection = null;
         foreach ($section as $qmap) {
             $theId = $qmap->getBestId();
                 /******************************
@@ -301,7 +305,23 @@ class FormResult extends ModelObject
             $mult = $qmap->get("multipleAnswers"); //boolean
             $type = $qmap->get("type");
             $this->log_debug("$theId $type");
-            if ($type == "boolean") {
+            if ($type == "Subsection") {
+                $waan = $qmap->get("WorldAppAnswerName");
+                $sectionQs[$waan] = $qmap;
+                $this->log_debug($waan);
+                $inSubsection = true;
+                $currentSubsection = $qmap;
+            } else if ($type == "SubsectionEnd") {
+                $sectionQs[$type.$subsectionCounter] = $qmap;
+                $this->log_debug("SubsectionEnd".$subsectionCounter);
+                if ($subsectionValuesPresent) {
+                    $currentSubsection->set("Value", "true");
+                }
+                $currentSubsection = null; //clear for the next one
+                $subsectionValuesPresent = false;
+                $subsectionCounter++;
+                $inSubsection = false;
+            } else if ($type == "boolean") {
                 $theId = $qmap->getBestId();
                 if (array_key_exists($theId, $questionMaps)) {
                     $this->log_debug("using $theId ".$qmap->get("WorldAppAnswerName"));
@@ -318,6 +338,11 @@ class FormResult extends ModelObject
                 $theId = $qmap->getBestId();
                 $sectionQs[$theId] = $qmap;
                 $this->log_debug("default case");
+            }
+            if ($type != "Subsection" && $inSubsection && !$subsectionValuesPresent) {
+                //only look for values if we haven't found any yet
+                $answers = $this->findByBullhorn($qmap->get("BullhornField"));
+                $subsectionValuesPresent = $answers['valueFound'];
             }
         }
         if (array_key_exists("Q3", $sectionQs)) {
@@ -346,6 +371,13 @@ class FormResult extends ModelObject
         if (in_array($header, ["Personal Details", "Current Situation", "Salary Information"])) {
             //we need to add internal columns to the box
             $cols = 2;
+        }
+        if ($header == "Salary Information") {
+            //this has sub-sections which need to be examined first
+            //iterate through questions
+            //divide into sub-sections
+            //flag sections as present or absent
+            //display properly
         }
         foreach ($sectionQs as $human=>$qmap) {
                 /****************************************

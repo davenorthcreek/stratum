@@ -85,6 +85,21 @@ class Form extends ModelObject
                     }
                     $sectionCounter++;
                     $sectionHeaders[$sectionCounter] = $this->collectMultiWordString($elements, 1);
+                } else if ($first == "Subsection" || $first == "SubsectionEnd") {
+                    //only relevant for display purposes
+                    if ($currentQ) { //close up current question
+                        $sections[$sectionCounter][] = $currentQ;
+                        $answers[] = $currentQ;
+                        $questionMappings[$mapKey] = $currentQ;
+                        $currentQ = null;
+                        $choice_flag = false;
+                    }
+                    $currentQ = new QuestionMapping();
+                    $currentQ->set("form", $this);
+                    $currentQ->set("type", $first);
+                    //re-assemble world app label
+                    $waName = $this->collectMultiWordString($elements, 1);
+                    $currentQ->set("WorldAppAnswerName", $waName);
 				} else if (preg_match("/Q\d+\.A\d+/", $first)) {
 					//full line (QXAX something something something)
 					$q = new QuestionMapping();
