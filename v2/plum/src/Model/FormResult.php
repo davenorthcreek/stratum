@@ -239,6 +239,11 @@ class FormResult extends ModelObject
         }
         $the_answers[$waan]['value'] = $value;
         $the_answers[$waan]['combined'] = $value;
+        if ($value) {
+            $the_answers['valueFound'] = true;
+        } else {
+            $the_answers['valueFound'] = false;
+        }
         return $the_answers;
     }
 
@@ -284,7 +289,7 @@ class FormResult extends ModelObject
 		return $this;
 	}
 
-    public function exportSectionToHTML($form, $section, $qbyq, $candidate) {
+    public function exportSectionToHTML($form, $section, $header, $qbyq, $candidate) {
         $answerPresent = false;
         $sectionQs=null;
         $questionMaps = $form->get('questionMappings');
@@ -337,14 +342,16 @@ class FormResult extends ModelObject
             unset($sectionQs["Q5"]);
             unset($sectionQs["Q7"]);
         }
-
+        $cols = 1;
+        if (in_array($header, ["Personal Details", "Current Situation", "Salary Information"])) {
+            //we need to add internal columns to the box
+            $cols = 2;
+        }
         foreach ($sectionQs as $human=>$qmap) {
-
                 /****************************************
                 second pass, export to html with answers
                 ************************************** */
-            $retval = $qmap->exportQMToHTML($human, $this->get("configs"), $qbyq, $candidate, $this);
-            //need to use retval to signal whether section has answers in it or not- except it's too late!
+            $retval = $qmap->exportQMToHTML($human, $this->get("configs"), $qbyq, $candidate, $this, $cols);
         }
     }
 

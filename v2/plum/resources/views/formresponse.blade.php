@@ -49,8 +49,11 @@
                 $label = $headers[$i];
                 $found = $valuesPresent[$label]; //boolean
                 ?>
-
+                @if($label=="General Interview Information")
+                <div class="box box-primary">
+                @else
                 <div class="box box-primary collapsed-box">
+                @endif
                     <div class="box-header with-border">
                         <h3 class='box-title'>{{ $label }}</h3>
                         <div class="box-tools pull-right">
@@ -62,12 +65,20 @@
                                 @endif
                                     data-widget="collapse" data-toggle="tooltip"
                                     title="Collapse/Expand">
-                                <i class="fa fa-plus"></i>
+                                @if($label=="General Interview Information")
+                                    <i class="fa fa-plus"></i>
+                                @else
+                                    <i class="fa fa-plus"></i>
+                                @endif
                             </button>
                         </div>
                     </div>
+                    @if($label=="General Interview Information")
+                    <div class='box-body'>
+                    @else
                     <div class='box-body' style='display: none;'>
-                        {{ $formResult->exportSectionToHTML($form, $section, $qbyq, $candidate) }}
+                    @endif
+                        {{ $formResult->exportSectionToHTML($form, $section, $label, $qbyq, $candidate) }}
                     </div>
                     <div class="box-footer"></div><!-- /.box-footer-->
                 </div><!-- /.box -->

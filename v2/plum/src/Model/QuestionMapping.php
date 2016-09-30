@@ -140,7 +140,7 @@ class QuestionMapping extends ModelObject
     }
 
 
-    public function exportQMToHTML($human, $configs, $qbyq, $candidate, $formResult) {
+    public function exportQMToHTML($human, $configs, $qbyq, $candidate, $formResult, $cols) {
         if (in_array($human, ['Q4', 'Q6', 'Q39', 'Q41', 'Q64'])) {
             return;
         }
@@ -292,14 +292,17 @@ class QuestionMapping extends ModelObject
             }
             $answermap = $questionMaps[$qlabel];
         }
-        if (strpos($qlabel, 'Q39.A1') === 0 || strpos($qlabel, 'Q41.A1') === 0 || strpos($qlabel, 'Q43') === 0) {
-            echo "<div class='panel panel-info'>\n";
+        if (strpos($qlabel, 'Q39.A1') === 0 || strpos($qlabel, 'Q41.A1') === 0 ||
+            strpos($qlabel, 'Q43')    === 0 || strpos($qlabel, 'Q46.A1') === 0) {
+            echo "<div class='col-xs-12'><div class='panel panel-info'>\n";
             if (strpos($qlabel, 'Q39.A1') === 0) {
                 echo "<div class='panel-heading'>Net / Equivalent Gross</div>\n";
             } else if (strpos($qlabel, 'Q41.A1') === 0) {
                 echo "<div class='panel-heading'>Gross / Equivalent Net</div>\n";
             } else if (strpos($qlabel, 'Q43') === 0) {
                 echo "<div class='panel-heading'>Daily or Hourly</div>\n";
+            } else if (strpos($qlabel, 'Q46.A1') === 0) {
+                echo "<div class='panel-heading'>Australia Only</div>\n";
             }
             echo "<div class='panel-body'>\n";
         }
@@ -309,7 +312,11 @@ class QuestionMapping extends ModelObject
         $qlabel = htmlentities($qlabel, ENT_QUOTES);
         $label = htmlentities($label, ENT_QUOTES);
         $visible = htmlentities($visible, ENT_QUOTES);
-        echo "\n<div class='form-group'>";
+        echo "\n<div class='form-group";
+        if ($cols==2) {
+            echo " col-xs-6";
+        }
+        echo "'>\n";
         echo "\n<button class='btn btn-info btn-sm' style='pointer-events: none;'>".$qlabel."</button>";
         echo("\n<label for='$label'>$visible</label>\n");
         if (strpos($qlabel, 'Q65') === 0) {
@@ -496,8 +503,10 @@ class QuestionMapping extends ModelObject
         }
             //}
         echo "\n</div>\n";
-        if (strpos($qlabel, 'Q40') === 0 || strpos($qlabel, 'Q42') === 0 || strpos($qlabel, 'Q44.A2') === 0) {
-            echo "</div>\n</div>\n";
+        if (strpos($qlabel, 'Q40')    === 0 || strpos($qlabel, 'Q42')    === 0 ||
+            strpos($qlabel, 'Q44.A2') === 0 || strpos($qlabel, 'Q45.A2') === 0) {
+            //end of separate panels
+            echo "</div></div>\n</div>\n";
         }
             //}
         //}

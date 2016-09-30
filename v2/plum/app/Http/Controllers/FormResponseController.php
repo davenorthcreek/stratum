@@ -58,18 +58,27 @@ class FormResponseController extends Controller
             foreach ($sec as $qmap) {
                 $answers = [];
                 $qid = $qmap->getBestId();
-                $qs = $qbyq[$qid];
-                if (is_array($qs)) {
-                    foreach($qs as $q) {
-                        $answers = $formResult->getValue($qid, $q, $qmap, $answers);
+                if (!array_key_exists($qid, $qbyq)) {
+                    Log::debug("No $qid in QbyQ");
+                } else {
+                    $qs = $qbyq[$qid];
+                    if (is_array($qs)) {
+                        foreach($qs as $q) {
+                            $answers = $formResult->getValue($qid, $q, $qmap, $answers);
+                            if ($answers['valueFound']) {
+                                $valuePresent = true; //never set back to false
+                            } else {
+                                Log::debug("No value found for $qid");
+                                Log::debug($qmap);
+                            }
+                        }
+                    } else if ($qs) {
+                        $answers = $formResult->getValue($qid, $qs, $qmap, $answers);
                         if ($answers['valueFound']) {
                             $valuePresent = true; //never set back to false
+                        } else {
+                            Log::debug("No value found for $qid");
                         }
-                    }
-                } else if ($qs) {
-                    $answers = $formResult->getValue($qid, $qs, $qmap, $answers);
-                    if ($answers['valueFound']) {
-                        $valuePresent = true; //never set back to false
                     }
                 }
             }
