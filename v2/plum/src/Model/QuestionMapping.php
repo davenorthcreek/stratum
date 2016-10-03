@@ -146,19 +146,31 @@ class QuestionMapping extends ModelObject
         }
         //subsection header
         if ($this->get("type") == "Subsection") {
-            $label = $this->get("WorldAppAnswerName");
+            $present = false;
+            if ($this->get("Value") == "true") {
+                $present = true;
+            }
+            //$this->dump();
+            $label = $this->getWorldAppAnswerName();
+            $id = str_replace(" ", "", $label);
+            $id = str_replace("/", "", $id);
             $this->log_debug("Subsection $label");
-            $this->log_debug("Human: $human");
-            $this->log_debug("If this is true, there are values in this subsection: ".$this->get("Value"));
-            echo "<div class='col-xs-12'><div class='panel panel-info'>\n";
-            echo "<div class='panel-heading'>$label</div>\n";
-            echo "<div class='panel-body'>\n";
+            echo "<div class='col-xs-12'><div class='panel panel-info'>\n";  //closed in SubsectionEnd below
+            echo "<div class='panel-heading'>$label\n";
+                echo "<div class='box-tools pull-right'>\n";
+                    echo "<button type='button' class='btn btn-box-tool' data-target='#$id'";
+                    echo " data-toggle='collapse' title='Collapse/Expand'>\n";
+                        echo "<i class='fa fa-arrows'></i>\n";
+                    echo "</button>\n";
+                echo "</div>\n"; //box-tools
+            echo "</div>\n"; //panel-heading
+            echo "<div class='panel-body collapse".($present?" in":"")."' id='$id'>\n"; //closed in SubsectionEnd below
             return;
         }
         if ($this->get("type") == "SubsectionEnd") {
             $this->log_debug($human);
             //end of separate panels
-            echo "</div></div>\n</div>\n";
+            echo "</div>\n</div>\n</div>\n";
             return;
         }
         $form = $this->get('form');
@@ -537,6 +549,30 @@ class QuestionMapping extends ModelObject
 		$configs[$theFileName] = $answers;
 		return $configs;
 	}
+
+    public function getWorldAppAnswerName() {
+        //needs to go to children if there is nothing in the parent
+        $waan = $this->get("WorldAppAnswerName");
+        if (!$waan) {
+            $answermap = $this->get("answerMappings");
+            if ($answermap) {
+                foreach ($answermap as $qmap_child) {
+                    $waan2 = $qmap_child->get("WorldAppAnswerName");
+                    if ($waan2) {
+                        return $waan2;
+                    }
+                }
+                //haven't returned so we have to go deeper
+                foreach ($answermap->get("answerMappings") as $qmap_grandchild) {
+                    $waan3 = $qmap_grandchild->get("WorldAppAnswerName");
+                    if ($waan3) {
+                        return $waan3;
+                    }
+                }
+            }
+        }
+        return $waan;
+    }
 
 
 	public function dump($recursion = 0) {

@@ -77,7 +77,7 @@ class FormResult extends ModelObject
 					foreach ($qmaps as $qm) {
 						$qi = $qm->getBestId();
 						if ($qi && $id==$qi) {
-							$waan = $qm->get("WorldAppAnswerName");
+							$waan = $qm->getWorldAppAnswerName();
 							$answers = $this->getValue($qid, $q, $qm, $answers);
 						}
                     }
@@ -95,7 +95,7 @@ class FormResult extends ModelObject
 		$form = $this->get("form");
 		$value = "";
         $answers['valueFound'] = true; //only false in one case so far
-		$waan = $qmap->get("WorldAppAnswerName");
+		$waan = $qmap->getWorldAppAnswerName();
 		$column = "";
 		$qac = $q->get("humanQACId");
         if ($qmap->get("type")=="choice") {
@@ -159,7 +159,8 @@ class FormResult extends ModelObject
 				$waan == 'Regions/Countries Preferred') {
 				$separator = '; ';
 			}
-            if (strpos($existing, $value)===false) {
+            $this->log_debug("Looking for $value in $existing - or the other way around");
+            if ($value && strpos($existing, $value)===false) {
 			    $answers[$waan]['combined'] = $existing.$separator.$value;
             }
 		} else {
@@ -306,7 +307,7 @@ class FormResult extends ModelObject
             $type = $qmap->get("type");
             $this->log_debug("$theId $type");
             if ($type == "Subsection") {
-                $waan = $qmap->get("WorldAppAnswerName");
+                $waan = $qmap->getWorldAppAnswerName();
                 $sectionQs[$waan] = $qmap;
                 $this->log_debug($waan);
                 $inSubsection = true;
@@ -324,7 +325,7 @@ class FormResult extends ModelObject
             } else if ($type == "boolean") {
                 $theId = $qmap->getBestId();
                 if (array_key_exists($theId, $questionMaps)) {
-                    $this->log_debug("using $theId ".$qmap->get("WorldAppAnswerName"));
+                    $this->log_debug("using $theId ".$qmap->getWorldAppAnswerName());
                     $sectionQs[$theId] = $qmap;
                 }
             } else if ($mult && ($type!='choice') && ($type != "list") && ($type != "multichoice")) {
@@ -341,8 +342,20 @@ class FormResult extends ModelObject
             }
             if ($type != "Subsection" && $inSubsection && !$subsectionValuesPresent) {
                 //only look for values if we haven't found any yet
-                $answers = $this->findByBullhorn($qmap->get("BullhornField"));
-                $subsectionValuesPresent = $answers['valueFound'];
+                $waan = $qmap->getWorldAppAnswerName();
+                if (!$waan) {
+                    //probably a parent of multiples
+                    foreach ($qmap->get("answerMappings") as $qmap_answer) {
+                        $waan = $qmap_answer->getWorldAppAnswerName();
+                        $answers = $this->findByWorldApp($waan);
+                        $subsectionValuesPresent = $answers['valueFound'];
+                    }
+                } else {
+                    $answers = $this->findByWorldApp($waan);
+                    $this->dump();
+                    $this->var_debug($answers);
+                    $subsectionValuesPresent = $answers['valueFound'];
+                }
             }
         }
         if (array_key_exists("Q3", $sectionQs)) {
