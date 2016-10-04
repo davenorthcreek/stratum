@@ -15,8 +15,8 @@ use Storage;
 use Log;
 use Auth;
 use Mail;
-use PDF;
-use \Kendu\Mpdf\PdfWrapper;
+//use PDF;
+//use \Kendu\Mpdf\PdfWrapper;
 use \mpdf;
 
 class FormResponseController extends Controller
@@ -59,7 +59,7 @@ class FormResponseController extends Controller
                 $answers = [];
                 $qid = $qmap->getBestId();
                 if (!array_key_exists($qid, $qbyq)) {
-                    Log::debug("No $qid in QbyQ");
+                    //Log::debug("No $qid in QbyQ");
                 } else {
                     $qs = $qbyq[$qid];
                     if (is_array($qs)) {

@@ -14,6 +14,10 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         //
+        //error_reporting(-1); // Reports everything
+        //error_reporting(0); // Reports nothing?
+        error_reporting(E_ALL & ~E_DEPRECATED & ~E_NOTICE);
+        //from https://www.godaddy.com/garage/webpro/development/suppressing-warning-messages-php-deprecated-functions/
     }
 
     /**

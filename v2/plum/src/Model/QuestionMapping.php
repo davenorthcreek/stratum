@@ -144,6 +144,7 @@ class QuestionMapping extends ModelObject
         if (in_array($human, ['Q4', 'Q6', 'Q39', 'Q41', 'Q64'])) {
             return;
         }
+        $this->log_debug("Exporting ".$this->getWorldAppAnswerName()." to html");
         //subsection header
         if ($this->get("type") == "Subsection") {
             $present = false;
@@ -273,8 +274,10 @@ class QuestionMapping extends ModelObject
             }
         }
         $answermap = $questionMaps[$qlabel];
+        $this->log_debug("Looking for waan in here:");
+        $answermap->dump();
         if ($answermap) {
-            $waan = $answermap->get("WorldAppAnswerName");
+            $waan = $answermap->getWorldAppAnswerName();
         }
         $bh = $this->get("BullhornField");
         if (!$bh && $answermap) {
@@ -285,15 +288,6 @@ class QuestionMapping extends ModelObject
                     if ($bh) {
                         break;
                     }
-                }
-            }
-        }
-        if (!$waan && $answermap) {
-            //go one deeper, if it is there
-            foreach ($answermap->get("answerMappings") as $q2) {
-                $waan = $q2->get("WorldAppAnswerName");
-                if ($waan) {
-                    break;
                 }
             }
         }

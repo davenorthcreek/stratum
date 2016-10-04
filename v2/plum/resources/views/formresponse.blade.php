@@ -42,11 +42,15 @@
             <?php
                 $sections = $form->get("sections");
                 $headers = $form->get("sectionHeaders");
+                $columns = $form->get("sectionColumns");
+                Log::debug($columns);
             ?>
             @for ($i = 0; $i < count($sections); $i++)
                 <?php
                 $section = $sections[$i];
                 $label = $headers[$i];
+                $cols = $columns[$i];
+                Log::debug("This section should have $cols columns");
                 $found = $valuesPresent[$label]; //boolean
                 ?>
                 @if($label=="General Interview Information")
@@ -78,7 +82,7 @@
                     @else
                     <div class='box-body' style='display: none;'>
                     @endif
-                        {{ $formResult->exportSectionToHTML($form, $section, $label, $qbyq, $candidate) }}
+                        {{ $formResult->exportSectionToHTML($form, $section, $label, $qbyq, $candidate, $cols) }}
                     </div>
                     <div class="box-footer"></div><!-- /.box-footer-->
                 </div><!-- /.box -->

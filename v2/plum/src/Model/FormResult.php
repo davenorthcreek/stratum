@@ -132,7 +132,7 @@ class FormResult extends ModelObject
         } else {
 			$value = $this->find_answer_in_file($q, $qmap, $qid);
 			if (!$value) {
-				$this->log_debug("Unable to find a value:");
+				$this->log_debug("$qid Unable to find a value:");
                 $answers['valueFound'] = false;
                 $this->var_debug($answers);
 				//$qmap->dump();
@@ -159,7 +159,6 @@ class FormResult extends ModelObject
 				$waan == 'Regions/Countries Preferred') {
 				$separator = '; ';
 			}
-            $this->log_debug("Looking for $value in $existing - or the other way around");
             if ($value && strpos($existing, $value)===false) {
 			    $answers[$waan]['combined'] = $existing.$separator.$value;
             }
@@ -290,7 +289,8 @@ class FormResult extends ModelObject
 		return $this;
 	}
 
-    public function exportSectionToHTML($form, $section, $header, $qbyq, $candidate) {
+    public function exportSectionToHTML($form, $section, $header, $qbyq, $candidate, $columns) {
+        $this->log_debug("Starting section with $columns columns");
         $answerPresent = false;
         $sectionQs=null;
         $questionMaps = $form->get('questionMappings');
@@ -307,9 +307,9 @@ class FormResult extends ModelObject
             $type = $qmap->get("type");
             $this->log_debug("$theId $type");
             if ($type == "Subsection") {
-                $waan = $qmap->getWorldAppAnswerName();
-                $sectionQs[$waan] = $qmap;
-                $this->log_debug($waan);
+                $sswaan = $qmap->getWorldAppAnswerName();
+                $sectionQs[$sswaan] = $qmap;
+                $this->log_debug($sswaan);
                 $inSubsection = true;
                 $currentSubsection = $qmap;
             } else if ($type == "SubsectionEnd") {
@@ -338,22 +338,23 @@ class FormResult extends ModelObject
             } else {
                 $theId = $qmap->getBestId();
                 $sectionQs[$theId] = $qmap;
-                $this->log_debug("default case");
+                $thisWaan = $qmap->getWorldAppAnswerName();
+                $this->log_debug("$theId default case $thisWaan");
             }
             if ($type != "Subsection" && $inSubsection && !$subsectionValuesPresent) {
                 //only look for values if we haven't found any yet
-                $waan = $qmap->getWorldAppAnswerName();
-                if (!$waan) {
+                $valuewaan = $qmap->getWorldAppAnswerName();
+                if (!$valuewaan) {
                     //probably a parent of multiples
                     foreach ($qmap->get("answerMappings") as $qmap_answer) {
-                        $waan = $qmap_answer->getWorldAppAnswerName();
-                        $answers = $this->findByWorldApp($waan);
+                        $valuewaan = $qmap_answer->getWorldAppAnswerName();
+                        $answers = $this->findByWorldApp($valuewaan);
                         $subsectionValuesPresent = $answers['valueFound'];
                     }
                 } else {
-                    $answers = $this->findByWorldApp($waan);
-                    $this->dump();
-                    $this->var_debug($answers);
+                    $answers = $this->findByWorldApp($valuewaan);
+                    //$this->dump();
+                    //$this->var_debug($answers);
                     $subsectionValuesPresent = $answers['valueFound'];
                 }
             }
@@ -380,23 +381,12 @@ class FormResult extends ModelObject
             unset($sectionQs["Q5"]);
             unset($sectionQs["Q7"]);
         }
-        $cols = 1;
-        if (in_array($header, ["Personal Details", "Current Situation", "Salary Information"])) {
-            //we need to add internal columns to the box
-            $cols = 2;
-        }
-        if ($header == "Salary Information") {
-            //this has sub-sections which need to be examined first
-            //iterate through questions
-            //divide into sub-sections
-            //flag sections as present or absent
-            //display properly
-        }
         foreach ($sectionQs as $human=>$qmap) {
+            $this->log_debug("Iterating through QMaps, at $human");
                 /****************************************
                 second pass, export to html with answers
                 ************************************** */
-            $retval = $qmap->exportQMToHTML($human, $this->get("configs"), $qbyq, $candidate, $this, $cols);
+            $retval = $qmap->exportQMToHTML($human, $this->get("configs"), $qbyq, $candidate, $this, $columns);
         }
     }
 

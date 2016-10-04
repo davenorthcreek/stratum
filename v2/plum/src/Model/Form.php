@@ -58,6 +58,7 @@ class Form extends ModelObject
         $sectionCounter = -1;  //so first section header goes to 0
         $sections = [];
         $sectionHeaders = [];
+        $sectionColumns = [];
 		$handle = fopen(base_path()."/storage/app/QandA.txt", "r");
 		$questionMappings = $this->get("questionMappings");
 		$waMappings = $this->get("WAMappings");
@@ -84,16 +85,24 @@ class Form extends ModelObject
                         $choice_flag = false;
                     }
                     $sectionCounter++;
-                    $sectionHeaders[$sectionCounter] = $this->collectMultiWordString($elements, 1);
+                    $sectionColumns[$sectionCounter] = $elements[1];
+                    $sectionLabel = $this->collectMultiWordString($elements, 2);
+                    $sectionHeaders[$sectionCounter] = $sectionLabel;
+                    $this->log_debug("Setting $sectionLabel columns to ".$elements[1]);
                 } else if ($first == "Subsection" || $first == "SubsectionEnd") {
                     //only relevant for display purposes
                     if ($currentQ) { //close up current question
                         $sections[$sectionCounter][] = $currentQ;
                         $answers[] = $currentQ;
-                        $questionMappings[$mapKey] = $currentQ;
+                        if ($mapKey) {
+                            $questionMappings[$mapKey] = $currentQ;
+                        }
+                        $this->log_debug("questionMappings is putting this into $mapKey:");
+                        $currentQ->dump();
                         $currentQ = null;
                         $choice_flag = false;
                     }
+                    $mapKey = "";
                     $currentQ = new QuestionMapping();
                     $currentQ->set("form", $this);
                     $currentQ->set("type", $first);
@@ -138,8 +147,9 @@ class Form extends ModelObject
 						}
 						$answers[] = $currentQ;
                         $sections[$sectionCounter][] = $currentQ;
+                        $this->log_debug("Putting this mapkey $mapKey into questionMappings:");
+                        $currentQ->dump();
                         $questionMappings[$mapKey] = $currentQ;
-						//$currentQ->dump();
 						$bullhorn_prefix = "";
 						$wa_prefix = "";
 					}
@@ -216,6 +226,7 @@ class Form extends ModelObject
 			$this->set("questionMappings", $questionMappings);
             $this->set("sections", $sections);
             $this->set("sectionHeaders", $sectionHeaders);
+            $this->set("sectionColumns", $sectionColumns);
 		} else {
 			// error opening the file.
 			die ("Unable to open form input file");
