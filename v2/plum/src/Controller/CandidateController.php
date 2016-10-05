@@ -111,8 +111,14 @@ class CandidateController
 			$candidate->set($the_key, $total);
 		} else if ($arr) {
 			$multiple = false;
-			if (count($arr)>1) {
-				$multiple = true;
+			if (count($arr)>1) { //may be fooled by valueFound
+                if (array_key_exists("valueFound", $arr)) {
+                    if (count($arr)>2) {
+				        $multiple = true;
+                    }
+                } else { //count > 1, no valueFound messing things up
+                    $multiple = true;
+                }
 			}
 			$separator = ', ';
 			$remove = 2;
@@ -154,7 +160,7 @@ class CandidateController
 			} else {
 				foreach ($arr as $key=>$res) {
                     if ($key == 'valueFound') {
-                        continue; //added flag for section headers
+                        continue;
                     }
                     if (array_key_exists("combined", $res)) {
                         $uncombined = explode(", ", $res['combined']);

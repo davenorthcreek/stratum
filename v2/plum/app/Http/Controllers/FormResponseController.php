@@ -67,18 +67,17 @@ class FormResponseController extends Controller
                             $answers = $formResult->getValue($qid, $q, $qmap, $answers);
                             if ($answers['valueFound']) {
                                 $valuePresent = true; //never set back to false
-                            } else {
-                                Log::debug("No value found for $qid");
                             }
                         }
                     } else if ($qs) {
                         $answers = $formResult->getValue($qid, $qs, $qmap, $answers);
                         if ($answers['valueFound']) {
                             $valuePresent = true; //never set back to false
-                        } else {
-                            Log::debug("No value found for $qid");
                         }
                     }
+                }
+                if (!$valuePresent) {
+                    $valuePresent = $qmap->checkforBullhornValue($candidate);
                 }
             }
             $valuesPresent[$header] = $valuePresent;

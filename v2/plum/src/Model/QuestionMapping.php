@@ -144,7 +144,7 @@ class QuestionMapping extends ModelObject
         if (in_array($human, ['Q4', 'Q6', 'Q39', 'Q41', 'Q64'])) {
             return;
         }
-        $this->log_debug("Exporting ".$this->getWorldAppAnswerName()." to html");
+        //$this->log_debug("Exporting ".$this->getWorldAppAnswerName()." to html");
         //subsection header
         if ($this->get("type") == "Subsection") {
             $present = false;
@@ -274,8 +274,6 @@ class QuestionMapping extends ModelObject
             }
         }
         $answermap = $questionMaps[$qlabel];
-        $this->log_debug("Looking for waan in here:");
-        $answermap->dump();
         if ($answermap) {
             $waan = $answermap->getWorldAppAnswerName();
         }
@@ -322,6 +320,7 @@ class QuestionMapping extends ModelObject
         if (strpos($qlabel, 'Q65') === 0) {
             $visible = "Discipline - for display purposes only, will not be changed in Bullhorn";
         }
+        $visible = preg_replace("/Recommender \d /", "", $visible);
         $qlabel = htmlentities($qlabel, ENT_QUOTES);
         $label = htmlentities($label, ENT_QUOTES);
         $visible = htmlentities($visible, ENT_QUOTES);
@@ -331,7 +330,11 @@ class QuestionMapping extends ModelObject
         }
         echo "'>\n";
         echo "\n<button class='btn btn-info btn-sm' style='pointer-events: none;'>".$qlabel."</button>";
-        echo("\n<label for='$label'>$visible</label>\n");
+        echo "\n<label for='$label'";
+        if ($qlabel == "Q112") {
+            echo " class='label-danger' ";
+        }
+        echo ">$visible</label>\n";
         if (strpos($qlabel, 'Q65') === 0) {
             $visible = "Discipline";
         }
@@ -543,6 +546,22 @@ class QuestionMapping extends ModelObject
 		$configs[$theFileName] = $answers;
 		return $configs;
 	}
+
+    public function checkforBullhornValue($candidate) {
+        $bh = $this->get("BullhornField");
+        if (in_array($bh, ["skillID", "Note", "customObject1.textBlock3"])) {
+            //assume false because these are collections from multiple questions
+            return false;
+        }
+        $valueFromCandidate = $candidate->get($bh);
+        if ($valueFromCandidate) {
+            $this->log_debug("Looked up $bh in candidate, got $valueFromCandidate, value is present");
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 
     public function getWorldAppAnswerName() {
         //needs to go to children if there is nothing in the parent

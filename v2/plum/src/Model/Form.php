@@ -97,8 +97,6 @@ class Form extends ModelObject
                         if ($mapKey) {
                             $questionMappings[$mapKey] = $currentQ;
                         }
-                        $this->log_debug("questionMappings is putting this into $mapKey:");
-                        $currentQ->dump();
                         $currentQ = null;
                         $choice_flag = false;
                     }
@@ -147,9 +145,9 @@ class Form extends ModelObject
 						}
 						$answers[] = $currentQ;
                         $sections[$sectionCounter][] = $currentQ;
-                        $this->log_debug("Putting this mapkey $mapKey into questionMappings:");
-                        $currentQ->dump();
-                        $questionMappings[$mapKey] = $currentQ;
+                        if ($mapKey) {
+                            $questionMappings[$mapKey] = $currentQ;
+                        }
 						$bullhorn_prefix = "";
 						$wa_prefix = "";
 					}

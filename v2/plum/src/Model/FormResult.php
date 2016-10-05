@@ -343,6 +343,8 @@ class FormResult extends ModelObject
             }
             if ($type != "Subsection" && $inSubsection && !$subsectionValuesPresent) {
                 //only look for values if we haven't found any yet
+
+                //exception - Tier and Job Coding filled from Bullhorn, not in answermap
                 $valuewaan = $qmap->getWorldAppAnswerName();
                 if (!$valuewaan) {
                     //probably a parent of multiples
@@ -355,7 +357,12 @@ class FormResult extends ModelObject
                     $answers = $this->findByWorldApp($valuewaan);
                     //$this->dump();
                     //$this->var_debug($answers);
-                    $subsectionValuesPresent = $answers['valueFound'];
+                    if (array_key_exists('valueFound', $answers)) {
+                        $subsectionValuesPresent = $answers['valueFound'];
+                    }
+                }
+                if (!$subsectionValuesPresent) {
+                    $subsectionValuesPresent = $qmap->checkforBullhornValue($candidate);
                 }
             }
         }
@@ -382,7 +389,6 @@ class FormResult extends ModelObject
             unset($sectionQs["Q7"]);
         }
         foreach ($sectionQs as $human=>$qmap) {
-            $this->log_debug("Iterating through QMaps, at $human");
                 /****************************************
                 second pass, export to html with answers
                 ************************************** */
