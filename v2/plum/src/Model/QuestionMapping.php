@@ -12,6 +12,8 @@
  */
 
 namespace Stratum\Model;
+
+use Auth;
 class QuestionMapping extends ModelObject
 {
 
@@ -36,43 +38,6 @@ class QuestionMapping extends ModelObject
 						  'answerMappings'=>[]
 						  ];
 
-	//can be recursive to handle multiple answers
-
-	//multiple Answer Fields (Q2: internal, Q8: Address, Q11 City/2ndary, Q22 Title/Employer) (Q38 Salary) (Q41 Salary) (Q46 AddtnlSalary)
-	//	(Q54 idealNextRole) (Q79 CapProjs) (Q95 with A2 admin use only) (Q100, Q101 recommenders)
-	//we can have lookups (country lists Q3, Q5, Q7, Q9, Q10)
-	//					  (language lists Q12)
-	//					  (diploma list Q15)
-	//					  (degree list Q17)
-	//					  (notice period Q25)
-	//					  (FIFO Roster Q29)
-	//					  (currency list Q36)
-	//					  (mine operations (multi-choice) Q70)
-	//					  (Technical Experience (multi-choice) Q71)
-	//					  (Project Control Skills (multi-choice) Q80)
-	//					  (Q81, Q83, Q88, Q90, Q92, Q96
-	//booleans (Q1 tickbox) Q103
-	//booleans (Q4, Q6, Q14, Q16, Q39, Q42, Q47 radio button, A1 or A2)
-	//Radio Buttons (Q23 status) (Q24 employmentStatus) (Q35 SalaryType) (Q45 Expat/Local) (Q28 Work Pattern) (Q32, Q33 travel) (Q45 Expat/local)
-	//multi-choice checkboxes(Q19:Ind. Qual/Memb) (Q26 company experience) (Q55 employPref) (Q56 CompPref) (Q57 MobilityPref) (Q58 RegionPref)
-	//						 (Q63 regionExp) (Q64 ClimateExp) (Q65 experience?) (Q78 IndExposure) (Q97)
-	//we can have drag/drop multi-choice dropdown (Q20: Pro Qual)
-	//we can have related "other" (Q21 tied to Q20 Other) (Q30 tied to Q29 Other) (Q37 tied to Q36 other) (Q62 tied to Q61 other) (Q82->Q81) (Q93->Q92)
-	//text Q27
-	//section header (null) - shouldn't make it through the JSON Q34 Q40 Q50 Q59 Q66 Q67 Q73 Q74 Q77 Q94 Q99 Q104
-	//check box with related answer Q43 day/hour->Q44 rate
-	//multi-line text Q48, Q49 Q72 (Q110 hidden)
-	//Radio Button Y/N/NA Q51, Q52
-	//multi-picker with scale (Q60 career) (Q61 Commodities) (Q68 Expert) (Q75 Mine Geo Skills) (Q76 Mine Engineering)
-	//percentage split (Q69 open/underground)
-	//Q105 Candidate Reference Number
-	//Q106 Q109 hidden boolean
-	//Q107 Q108 hidden y/n/other
-	//Q111 Hidden Tier dropdown
-	//Q112 hidden jtc list
-	//Q113 hidden jtc list (suitable)
-	//Q114 hidden interviewnotes (multi-line)
-	//Q115 full name + checkbox?
 
 	public function add_answer($answer) {
 		$answers = $this->get("answerMappings");
@@ -144,6 +109,7 @@ class QuestionMapping extends ModelObject
         if (in_array($human, ['Q4', 'Q6', 'Q39', 'Q41', 'Q64'])) {
             return;
         }
+        $admin_local = Auth::user()->is_admin;
         //$this->log_debug("Exporting ".$this->getWorldAppAnswerName()." to html");
         //subsection header
         if ($this->get("type") == "Subsection") {
@@ -329,7 +295,9 @@ class QuestionMapping extends ModelObject
             echo " col-xs-6";
         }
         echo "'>\n";
-        echo "\n<button class='btn btn-info btn-sm' style='pointer-events: none;'>".$qlabel."</button>";
+        if ($admin_local) {
+            echo "\n<button class='btn btn-info btn-sm' style='pointer-events: none;'>".$qlabel."</button>";
+        }
         echo "\n<label for='$label'";
         if ($qlabel == "Q112") {
             echo " class='label-danger' ";
