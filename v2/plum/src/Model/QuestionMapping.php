@@ -120,8 +120,9 @@ class QuestionMapping extends ModelObject
             //$this->dump();
             $label = $this->getWorldAppAnswerName();
             $id = str_replace(" ", "", $label);
-            $id = str_replace("/", "", $id);
+            $id = preg_replace("#[\/\(\)-,]#", "", $id);
             $this->log_debug("Subsection $label");
+            $this->log_debug("with ID $id");
             echo "<div class='col-xs-12'><div class='panel panel-info'>\n";  //closed in SubsectionEnd below
             echo "<div class='panel-heading'>$label\n";
                 echo "<div class='box-tools pull-right'>\n";
