@@ -223,8 +223,10 @@ class FormResult extends ModelObject
             $answers = $configs[$file];
             //now we have to parse the objectNames from the objects in $obj
             foreach ($obj as $thisObj) {
-                if (array_key_exists("objectName", $thisObj)) {
-                    $potential_value[] = $thisObj["objectName"];
+                if (is_array($thisObj)) { //could be answerPresent scalar
+                    if (array_key_exists("objectName", $thisObj)) {
+                        $potential_value[] = $thisObj["objectName"];
+                    }
                 }
             }
             //now confirm that the values are in the list
