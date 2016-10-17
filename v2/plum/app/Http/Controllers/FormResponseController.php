@@ -17,7 +17,7 @@ use Auth;
 use Mail;
 //use PDF;
 //use \Kendu\Mpdf\PdfWrapper;
-use \mpdf;
+use \Mpdf\Mpdf;
 
 class FormResponseController extends Controller
 {
@@ -119,7 +119,7 @@ class FormResponseController extends Controller
         $name = $candidate->getName();
         $pdf_data['message'] = "Data History for ".$name;
         //now create the pdf
-        $mypdf = new mPDF();
+        $mypdf = new \Mpdf\Mpdf();
         $html = \View::make('export_the_pdf', $pdf_data)->render();
         $mypdf->WriteHTML($html);
         $pdf_data['string'] = $mypdf->Output('', 'S');
