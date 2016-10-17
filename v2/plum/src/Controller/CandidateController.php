@@ -516,10 +516,10 @@ class CandidateController
                     //convert shortened FIFO/residential codes to longer versions
                     //needs to be
                     //International FIFO, International Residential, National FIFO, National Residential.
-                    $value2 = preg_replace("/Inter-FIFO/", "International FIFO", $value2);
-                    $value2 = preg_replace("/Inter-Res/", "International Residential", $value2);
-                    $value2 = preg_replace("/National-FIFO/", "National FIFO", $value2);
-                    $value2 = preg_replace("/National-Res/", "National Residential", $value2);
+                    $value2 = preg_replace("/International FIFO/", "Inter-FIFO", $value2);
+                    $value2 = preg_replace("/International Residential/", "Inter-Res", $value2);
+                    $value2 = preg_replace("/National FIFO/", "National-FIFO", $value2);
+                    $value2 = preg_replace("/National Residential/", "National-Res", $value2);
                     //if (strlen($value2)<=50) {
                     $value = $value2;
                     //}

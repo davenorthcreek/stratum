@@ -1,0 +1,393 @@
+Section 2 General Interview Information
+Q2  multiple
+Q2.A2	Text(50)    firstName   Text(50)    First Name
+Q2.A3	Text(50)    lastName    Text(50)    Last Name
+Q2.A1   General(50) id  General(50) Candidate Ref Number
+Q2.A4	Date(dd/MM/yyyy)    dateOfBirth Date    Date of Birth
+Q64 Text    customTextBlock2	String	Discipline
+Q65	multichoice	customTextBlock2	Discipline
+Q65.A1	EO:Executive (Board)
+Q65.A2	EX:Geology
+Q65.A3	IN:Port
+Q65.A4	IN:Rail
+Q65.A5	MO:General & Mine Management
+Q65.A6	MO:Maintenance
+Q65.A7	MO:Metallurgy & Processing
+Q65.A8	MO:Mine Engineering & Mine Geology
+Q65.A9	MO:Production
+Q65.A10	PR:Construction
+Q65.A11	PR:Engineering
+Q65.A12	PRC:Project Controls
+Q65.A13	PR:Project Management
+Q65.A14	SE:Commercial
+Q65.A15	SE:Finance
+Q65.A16	SE:HSE
+Q65.A17	SE:Human Resources & Training
+Q65.A18	SE:Procurement
+Q65.A19	SE:Supply & Logistics
+Q65.A20	SE:Sustainability (incl. CSR & Environment)
+Q65.A21 SE:Other
+Q65.A22 SE:IT
+Q65.A23 SE:Legal
+Q101    Text    Note    Text    Call Availability
+Q1
+Q1.A1   boolean confirmAgree    NONE    Agree to T&C Yes
+Section 2 Personal Details
+Q3	List	nationality.txt	customText9 Nationality
+Q4
+Q4.A1	boolean additionalCitizenship	NONE	Additional Citizenship Yes
+Q4.A2	boolean additionalCitizenship	NONE	Additional Citizenship No
+Q5	List	nationality.txt	customText9	Nationality
+Q6
+Q6.A1	boolean	anotherCitizenship	NONE	Another Citizenship Yes
+Q6.A2	boolean	anotherCitizenship	NONE	Another Citizenship No
+Q7	List	nationality.txt	customText9	Nationality
+Q8	multiple
+Q8.A7	Text(20)	pager	String(20)	Skype Address
+Q8.A2	email	email2	String(100)	Work Email Address
+Q8.A1	email	email	String(100)	Home Email Address
+Q8.A5	Text(20)	workPhone	String(20)	Work Phone Number
+Q8.A3	Text(20)	mobile	String(20)	Mobile Phone Number
+Q8.A6	Text(20)	fax3	String(20)	Work Phone Extension Number
+Q8.A4	Text(20)	phone	String(20)	Home Phone Number
+Q10	List	countries.txt	secondaryAddress(countryID)	Current WORK Country
+Q9	List	nationality2.txt	address(countryID)	Current HOME Country
+Q11	multiple
+Q11.A2	Text(40)	secondaryAddress(city)	String(40)	Current Work Location - City/Town/Mine
+Q11.A1	Text(40)	address(city)	String(40)	Current Home Location - City
+Section 2 Languages
+Q12	List	languages.txt	customText17	Languages
+Q13	Text	customObject1.textBlock3	String	Additional Candidate Notes: Other Language
+Section 1 Education, Qualifications and Memberships
+Subsection Degree
+Q14
+Q14.A1	boolean	disability	String(20)	Degree Qualified Yes
+Q14.A2	boolean	disability	String(20)	Degree Qualified No
+Q15	multichoice educationDegree	Education Completed: Degree
+Q15.A1	Foundation Degree
+Q15.A2	Associate Degree
+Q15.A3	Degree
+Q15.A4	Masters
+Q15.A5	MBA
+Q15.A6	Professional Degree
+Q15.A7	Doctorate
+Q15.A8	Other
+SubsectionEnd
+Subsection Diploma
+Q16
+Q16.A1	boolean diploma	NONE Diploma? Yes
+Q16.A2	boolean diploma	NONE Diploma? No
+Q17 multichoice educationDegree Education Completed: Diploma
+Q17.A1	HNC
+Q17.A2	NVQ
+Q17.A3	HND
+Q17.A4	Standard Diploma
+Q17.A5	Professional Certification
+Q17.A6	Postgraduate Diploma
+Q17.A7	Other
+SubsectionEnd
+Q18	Text	recentClientList	String	Additional Detail about Qualifications
+Subsection Memberships and Professional Qualifications
+Q19	List	industry.txt	recentClientList    Professional Memberships and Affiliations
+Q20 List	qualifications.txt	recentClientList	Professional and Industry Qualifications
+Q21	Text	recentClientList	String	Industry Qualifications and Memberships (Free Text)
+SubsectionEnd
+Section 2 Current Situation
+Q22	multiple
+Q22.A1	Text	occupation	Text(50)	Job Title
+Q23	choice	status	Availability
+Q23.A1	Active (considering suitable roles)
+Q23.A2	Passive (not currently interested in career move)
+Q23.A3	Available (not working, immediately available)
+Q22 multiple
+Q22.A2	Text	customObject1.textBlock2	Text(100)	Employer (or None if not working)
+Q24	choice	employeeType	Current Employment Status
+Q24.A1	Permanent
+Q24.A2	Interim / Consulting
+Q24.A3	Fixed Term Contract
+Q24.A4	Unemployed
+Q26	Text	customObject1.text1	Text(100)	Who Do You Report To?
+Q25	List	notice.txt	customText11	Notice Period
+Q28	choice	customText6	Current Work Pattern
+Q28.A1	International FIFO
+Q28.A2	International Residential
+Q28.A3	National FIFO
+Q28.A4	National Residential
+Q27	multichoice	customText1	Company Type Experience
+Q27.A1	Owner (Junior)
+Q27.A2	Owner (Mid Tier)
+Q27.A3	Owner (Major)
+Q27.A4	Consultancy
+Q27.A5	Contract Miner
+Q27.A6	EPCM
+Q27.A7	Equipment Supplier
+Q27.A8	PE / IB / Trading
+Q27.A9  Other
+Subsection FIFO and Flight Details
+Q29	List	fifo.txt	customText2	FIFO Cycle (where relevant)
+Q32	choice	desiredLocations	Flight Class
+Q32.A1	Business Class
+Q32.A2	Economy
+Q32.A3	Combination
+Q30	Text	customObject1.textBlock3	String	Additional Candidate Notes: Other FIFO Roster
+Q33	choice	type	Flying Time
+Q33.A1	During Company Time
+Q33.A2	During Own Time
+Q33.A3	Combination
+SubsectionEnd
+Section 2 Salary Information
+Q36	List	currencies.txt	customText14	Salary Currency
+Q38	choice	customText13	Expat or Local Current Salary
+Q38.A1	Expat
+Q38.A2	Local
+Q37	Text	customObject1.textBlock3	Text(100)	Additional Candidate Notes: Other Currency
+Q35	multichoice	customText7	Salary Used for Reporting
+Q35.A1	Net
+Q35.A2	Gross
+Subsection Net / Equivalent Gross
+Q39	multiple
+Q39.A1	Number(20)	customFloat3	Float	Net Salary
+Q39.A2	Number(20)	customTextBlock5	textBlock	Equivalent Gross Salary
+Q40
+Q40.A1	boolean	confirmGross	NONE	Gross Salary Provided Yes
+Q40.A2	boolean	confirmGross	NONE	Gross Salary Provided No
+SubsectionEnd
+Subsection Gross / Equivalent Net
+Q41 multiple
+Q41.A1	Number(20)	customFloat3	Float	Gross Salary
+Q41.A2	Number(20)	customTextBlock5	textBlock	Equivalent Net Salary
+Q42
+Q42.A1	boolean	provideNetAfterTax	NONE	Provide Net Salary Details (after local tax) Yes
+Q42.A2	boolean	provideNetAfterTax	NONE	Provide Net Salary Details (after local tax) No
+SubsectionEnd
+Subsection Australia Only
+Q46
+Q46.A1	boolean	nameSuffix	nameSuffix	Superannuation Included In Gross Yes
+Q46.A2	boolean	nameSuffix	nameSuffix	Superannuation Included In Gross No
+Q45 multiple
+Q45.A2	text	taxID	Number    Superannuation %
+SubsectionEnd
+Subsection Daily or Hourly
+Q43 multichoice NONE	Daily or Hourly
+Q43.A1	Daily Rate
+Q43.A2	Hourly Rate
+Q43.A3  Other
+Q44 multiple
+Q44.A1	text	dayRate	Number(20)	Day Rate
+Q44.A2	text	hourlyRate	Number(20)	Hourly Rate
+SubsectionEnd
+Q45	multiple
+Q45.A1	text	customTextBlock5	Number(50)	Guaranteed Cash Allowances
+Q45.A3	text	customFloat2    Number	Bonus Potential %
+Q45.A4	text	customTextBlock5	Text   CTC Package
+Q47	Text	customTextBlock5	Text	Salary, Benefit and Bonus Notes
+Q48	Text	customTextBlock5	Text	Additional Benefits
+Q2.A5	Text(100)   nickName    Text(100)   Marital Status, Number and Ages of Dependents (Children)
+Section 1 Background Checks
+Q49 choice	customObject1.text4 Would you pass a Criminal Check?
+Q49.A1	Yes
+Q49.A2	No
+Q50 choice customObject1.text5	Would you pass a Pre-Employment Medical Exam
+Q50.A1	Yes
+Q50.A2	No
+Q51 Text    customObject1.textBlock3	Text	Additional Candidate Notes: Other Background Check Information
+Q52	choice	customObject1.text2	Do you have a valid drivers license?
+Q52.A1	Yes
+Q52.A2	No
+Q52.A3  Other
+Section 2 Next Role Information
+Q53	multiple
+Q53.A1	text	customObject1.textBlock1	Ideal Next Job Title
+Q53.A3	text	customText20	text(100)	Expected Local Gross Salary
+Q53.A2	text	customText8	currency	Expected Net Salary (USD)
+Q53.A4	text	customText20	text(100)	Expected Local Salary Currency
+Q54	multichoice	employmentPreference	Employment Preference
+Q54.A1	Fixed Term Contract
+Q54.A2	Interim / Consulting
+Q54.A3	Permanent
+Q55	multichoice	customText19	Company Type Preferred
+Q55.A1	Owner (Junior)
+Q55.A2	Owner (Mid Tier)
+Q55.A3	Owner (Major)
+Q55.A4	Consultancy
+Q55.A5	Contract Miner
+Q55.A6	EPCM
+Q55.A7	Equipment Supplier
+Q55.A8	PE / IB / Trading
+Q55.A9  Other
+Section 1 Next Role Information - Location
+Q56	multichoice	referredBy	Mobility Preferences
+Q56.A1	Inter-FIFO
+Q56.A2	Inter-Res
+Q56.A3	National-FIFO
+Q56.A4	National-Res
+Q57	multichoice	customTextBlock4	Regions/Countries Preferred
+Q57.A1  All Listed
+Q57.A2	Africa
+Q57.A3	Australia
+Q57.A4	Central America and Caribbean
+Q57.A5	China
+Q57.A6	CIS/FSU/Central Asia
+Q57.A7	Eastern Europe
+Q57.A8	Middle East
+Q57.A9	New Zealand and Pacific
+Q57.A10	North America
+Q57.A11	Russia
+Q57.A12	South Africa
+Q57.A13	South America
+Q57.A14	South Asia
+Q57.A15	South-East Asia
+Q57.A16	Western Europe
+Q57.A17 Other
+Section 2 Career Experience
+Q59	List	careers.txt	specialtyCategoryID	Career Foundation
+Subsection Commodity Experience
+Q60	List	commodities2.txt	customText3	Commodity Experience
+Q61	text	customObject1.textBlock3	Text	Additional Candidate Notes: Other Commodity
+SubsectionEnd
+Subsection Regions / Countries
+Q62	multichoice	customTextBlock3	Regions/Countries Worked
+Q62.A1	Africa
+Q62.A2	Australia
+Q62.A3	Central America and Caribbean
+Q62.A4	China
+Q62.A5	CIS/FSU/Central Asia
+Q62.A6	Eastern Europe
+Q62.A7	Middle East
+Q62.A8	New Zealand and Pacific
+Q62.A9	North America
+Q62.A10	Russia
+Q62.A11	South Africa
+Q62.A12	South America
+Q62.A13	South Asia
+Q62.A14	South-East Asia
+Q62.A15	Western Europe
+Q62.A16 Other
+Q63	multichoice	customText10	Climate Exposure
+Q63.A1	Arctic / Extreme Cold
+Q63.A2	Desert / Extreme Heat
+Q63.A3	High Altitude
+Q63.A4	Tropical / Heavy Rain
+SubsectionEnd
+Section 1 Operational / Project Exposure
+Q68	multichoice	customTextBlock1	Project/Operations Type
+Q68.A1	Brownfield Expansion
+Q68.A2	Greenfield Start Up
+Q68.A3	Infrastructure Operations (Rail/Port/etc)
+Q68.A4	Mine Closure
+Q68.A5	Mine Project Development (OP)
+Q68.A6	Mine Project Development (UG)
+Q68.A7	Operational Readiness
+Q68.A8	Port / Marine Infrastructure Project Development
+Q68.A9	Power / Energy Infrastructure Development
+Q68.A10	Process Plant Commissioning
+Q68.A11	Process Plant Project Development / Construction
+Q68.A12	Rail Infrastructure Project Development
+Q68.A13	Road Infrastructure Project Development
+Q68.A14	Steady State Operation (OP)
+Q68.A15	Steady State Operation (Process Plant)
+Q68.A16	Steady State Operation (UG)
+Q69 multiple
+Q69.A1	text	ssn	Number(20)	Open Pit %
+Q69.A2	text	ethnicity	Number(50)	Underground %
+Q70	List	mining_methods.txt	degreeList	Mine Ops - Mining Method
+Q72	Text	customObject1.textBlock3	textBlock	Additional Candidate Notes: Other Relevant Experience
+Section 1 Mine Engineering & Maintenance Skills
+Q71	List	technical.txt	skillID	Maintenance Skills (Coded)
+Q76	List	mine_engineering.txt	skillID	Mine Engineering Skills (Coded)
+Section 1 Geology Skills
+Q75 List	geology.txt	skillID	Geology Skills (Coded)
+Section 1 Project Experience and Skills
+Q78	multichoice	skillID	Additional Industry Exposure
+Q78.A1	Marine
+Q78.A2	Nuclear Plant
+Q78.A3	Oil & Gas
+Q78.A4	Pharmaceutical Plant
+Q78.A5	Pulp & Paper Plant
+Q78.A6	Renewables
+Q78.A7	Telecoms
+Q79	multiple
+Q79.A1	text	salaryLow	Number(15)	Overall Project Size - US$ value
+Q79.A2	text	dayRateLow	Number(15)	Personal Responsibility - US$ value
+Q80	List	project_control_skills.txt	skillID	Project Controls Skills (Coded)
+Q81	object	building_construction.txt   skillID  Building / Construction Experience
+Q82	Text	customObject1.textBlock3	Text	Additional Candidate Notes: Other Skills or Experience
+Q83	List	management.txt	skillID	Management Experience (Coded)
+Section 1 Metallurgy Skills
+Q84	List	metallurgy.txt  skillID	Technology, Metallurgy and Processing Skills
+Q85	Text	customObject1.textBlock3	Text	Additional Candidate Notes: Other Metallurgical Skills or Experience
+Section 1 Size of Operations
+Q91	Text	customText15	Number(50)	Total Material Moved (MTPA)
+Q91	Text	customObject1.int1	Number(50)	Size of Project
+Q92	List	commodities.txt	customObject1.text11	Commodity
+Q93	choice	customObject1.text12	Underground / Open Pit
+Q93.A1	Open Pit
+Q93.A2	Underground
+Q93.A3  Other
+Q94	Text	customObject1.textBlock5	Text	Description
+Section 1 Software
+Q86	List	software.txt	certifications	Software/ERP
+Section 1 Human Resources
+Q87	Text	customInt3	Number(10)	Employees Managed - Indirect
+Q88	List	hr_skills.txt	skillID	Human Resources Skills (Coded)
+Q89	Text	customObject1.textBlock3	Text	Additional Candidate Notes: Other Human Resources Skills
+Section 2 Recommenders
+Subsection Recommender 1
+Q96	multiple	recommender1	Recommender 1
+Q96.A1	Text	referenceFirstName	Text(50)	Reference First Name
+Q96.A2	Text	referenceLastName	Text(50)	Reference Last Name
+Q96.A3	Text	companyName	Text(50)	Reference Company / Employer
+Q96.A4	Text	referenceTitle	Text(50)	Reference Job Title
+Q96.A5	Text	referencePhone	Text(20)	Reference Phone Number (Country Code + No.)
+Q96.A6	Text	referenceEmail	email	Reference E-Mail
+Q96.A7	Text	customTextBlock1	General	Your Relationship with the Recommender
+SubsectionEnd
+Subsection Recommender 2
+Q97	multiple	recommender2	Recommender 2
+Q97.A1	Text	referenceFirstName	Text(50)	Reference First Name
+Q97.A2	Text	referenceLastName	Text(50)	Reference Last Name
+Q97.A3	Text	companyName	Text(50)	Reference Company / Employer
+Q97.A4	Text	referenceTitle	Text(50)	Reference Job Title
+Q97.A5	Text	referencePhone	Text(20)	Reference Phone Number (Country Code + No.)
+Q97.A6	Text	referenceEmail	email	Reference E-Mail
+Q97.A7	Text	customTextBlock1	General	Your Relationship with the Recommender
+SubsectionEnd
+Q98
+Q98.A1	boolean	contactRecommendersConsent	NONE	Consent To Contact Recommenders Yes
+Q98.A2	boolean	contactRecommendersConsent	NONE	Consent To Contact Recommenders No
+Section 1 Internal Use Only: Consultants Confirmation Page
+Q99 upload  files   link    File Uploads:
+Q100    Text    customObject1.textBlock3    Text    Additional Candidate Notes: Any Additional Information
+Q102
+Q102.A1	boolean	Note	NONE	Admin to Format CV Yes
+Q102.A2	boolean	Note	NONE	Admin to Format CV No
+Subsection CV Guidelines (default - already sent, do not send)
+Q103	choice	Note	CV Guidelines Have Already Been Sent
+Q103.A1	Yes
+Q103.A2	No
+Q103.A3	Other
+Q104	choice	Note	Send CV Guidelines?
+Q104.A1	Yes
+Q104.A2	No
+Q104.A3	Other
+SubsectionEnd
+Subsection References (default - do not contact)
+Q105
+Q105.A1	boolean	Note	NONE	Admin to Contact References Yes
+Q105.A2	boolean	Note	NONE	Admin to Contact References No
+Q106	Text	Note	Text	Reference Notes
+SubsectionEnd
+Subsection Tier and Job Coding
+Q107	choice	customText16	Tier
+Q107.A1	1
+Q107.A2	2-1
+Q107.A3	2-2
+Q107.A4	3
+Q108	List	jtc.txt	categoryID	Job Title (Coded)
+Q109	List	jtc.txt	customText4	Suitable Future Positions
+SubsectionEnd
+Q110    Text    customObject1.textBlock4  Text  Agreed Objectives (Roles to look at for the Candidate)
+Q111	Text	Note  Text	Interview Notes
+Q112
+Q112.A1	boolean	Note	NONE	Form is Correct and Accurate Yes
+Q112.A2	boolean	Note	NONE	Form is Correct and Accurate No

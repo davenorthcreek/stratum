@@ -4,9 +4,9 @@
   <!-- Logo -->
   <a href="{{url("/home")}}" class="logo">
     <!-- mini logo for sidebar mini 50x50 pixels -->
-    <span class="logo-mini"><b>P</b>lum</span>
+    <span class="logo-mini"><b>S</b>tratum</span>
     <!-- logo for regular state and mobile devices -->
-    <span class="logo-lg"><b>Plum</b>Integration</span>
+    <span class="logo-lg"><b>Stratum</b>Integration</span>
   </a>
 
   <!-- Header Navbar -->
@@ -19,7 +19,7 @@
     <div class="navbar-custom-menu">
       <ul class="nav navbar-nav">
 
-        
+
         <!-- User Account Menu -->
         <li class="dropdown user user-menu">
           <!-- Menu Toggle Button -->
