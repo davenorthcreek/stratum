@@ -217,10 +217,10 @@ Q55.A8	PE / IB / Trading
 Q55.A9  Other
 Section 1 Next Role Information - Location
 Q56	multichoice	referredBy	Mobility Preferences
-Q56.A1	Inter-FIFO
-Q56.A2	Inter-Res
-Q56.A3	National-FIFO
-Q56.A4	National-Res
+Q56.A1	International FIFO
+Q56.A2	International Residential
+Q56.A3	National FIFO
+Q56.A4	National Residential
 Q57	multichoice	customTextBlock4	Regions/Countries Preferred
 Q57.A1  All Listed
 Q57.A2	Africa
