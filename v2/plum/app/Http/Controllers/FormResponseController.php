@@ -196,7 +196,7 @@ class FormResponseController extends Controller
                 $maildata['consultantName'] = $user->name;
                 $maildata['date'] = date(DATE_RFC2822);
                 Mail::send('email.interview_complete', $maildata, function ($m) use ($candidate, $id) {
-                    $m->from('dev@northcreek.ca', 'Plum Data Integration Service');
+                    $m->from('admin@stratum-int.com', 'Stratum Integration Service');
                     $m->to('admin@stratum-int.com')->subject('Interview Complete '.$candidate->getName().' '.$id);
                 });
             }

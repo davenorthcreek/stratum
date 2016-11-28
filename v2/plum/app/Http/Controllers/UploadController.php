@@ -69,7 +69,7 @@ class UploadController extends Controller
         $maildata['candidateID'] = $candidate->get("id");
         $maildata['date'] = date(DATE_RFC2822);
         Mail::send('email.form_uploaded', $maildata, function ($m) use ($to_email, $candidate) {
-            $m->from('dev@northcreek.ca', 'Plum Data Integration Service');
+            $m->from('admin@stratum-int.com', 'Stratum Integration Service');
             $m->to($to_email)->subject('Form Submission from '.$candidate->getName().' '.$candidate->get("id"));
         });
 
