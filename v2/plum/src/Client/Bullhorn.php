@@ -763,7 +763,7 @@ class Bullhorn {
 		$note = $candidate->get("Note"); //has "comments"
 		$note["personReference"]["id"]=$id;
 		$body = json_encode($note);
-		//$this->log_debug($body);
+		$this->log_debug($body);
 		$this->log_debug("Submitting this data as a note");
 		$subm_note = $this->httpClient->retrieveResponse($subm_note_uri, $body, [], 'PUT');
 		$subm_note_decoded = $this->extract_json($subm_note);
