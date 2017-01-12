@@ -762,7 +762,7 @@ class Bullhorn {
 		//POST BODY: {"customObject2s":[{"id":3649,"int1":7},{"int1":4}]}
 		$note = $candidate->get("Note"); //has "comments"
 		$note["personReference"]["id"]=$id;
-		$body = json_encode($note);
+		$body = json_encode($note, JSON_NUMERIC_CHECK);
 		$this->log_debug($body);
 		$this->log_debug("Submitting this data as a note");
 		$subm_note = $this->httpClient->retrieveResponse($subm_note_uri, $body, [], 'PUT');
