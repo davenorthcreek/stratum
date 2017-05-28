@@ -268,6 +268,38 @@ class Form extends ModelObject
         }
     }
 
+
+    public function getQuestionMappings($fieldname) {
+        //multiple questions map to the same bullhorn field
+        $mappings = $this->get("BHMappings");
+        if (array_key_exists($fieldname, $mappings)) {
+            $this->log_debug("QM Found $fieldname");
+            return $mappings[$fieldname];
+        }
+        return null;
+    }
+
+    public function getWorldAppLabel($bh) {
+        $wa = "";
+        $qmaps = $this->getQuestionMappings($bh);
+        if ($qmaps) {
+            foreach ($qmaps as $qmap) {
+                $wa2 = $qmap->get("WorldAppAnswerName");
+                if ($wa2) {
+                    if ($wa2 == $wa) {
+                        //ignore
+                    } else {
+                        $wa = $wa2;
+                        $this->log_debug("WAAN: $wa");
+                    }
+                }
+            }
+        }
+        //returns the last worldapp label found in the list
+        //but logs all the different ones if you're interested
+        return $wa;
+    }
+
 	private function collectMultiWordString($elements, $index) {
 		//re-assemble label
 		$waName = $elements[$index];

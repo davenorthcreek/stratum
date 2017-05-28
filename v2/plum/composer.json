@@ -12,7 +12,8 @@
         "intervention/imagecache": "^2.3",
         "lusitanian/oauth": "^0.8.6",
         "guzzlehttp/guzzle": "~5.3|~6.0",
-        "mpdf/mpdf": "dev-development"
+        "mpdf/mpdf": "dev-development",
+        "league/flysystem-aws-s3-v3": "~1.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

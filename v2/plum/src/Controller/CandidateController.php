@@ -55,16 +55,13 @@ class CandidateController
 	public function getIdentity($candidate, $formResult) {
 		$name = '';
 		//extract reference number, name from form result
-		$id = $formResult->findByWorldApp("Candidate Ref Number");
+		$id = $formResult->findByWorldApp("Candidate Ref Number"); //will be reference number
 		$candidate->set("name", $this->extractName($formResult));
 		if ($id) {
-			$candidate->set("id", $id[0]);
-		} else {
-			//hardcode this
-			$candidate->set("id", 10413); //matches Mickey Mouse
+			$candidate->set("reference_number", $id[0]);
 		}
-		$this->log_debug("Getting identity for ".$candidate->get("name"));
-		$this->log_debug("With ID: ".$candidate->get("id"));
+		$this->log_debug("Getting identity for ".$candidate->getName());
+		$this->log_debug("With ID: ".$candidate->get("reference_number"));
 		//$candidate->dump();
 		return $candidate;
 	}

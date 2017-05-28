@@ -13,6 +13,9 @@ use \Stratum\Model\Candidate;
 
 use Log;
 use Cache;
+use Auth;
+use Mail;
+use Carbon\Carbon;
 
 class FormTemplateController extends Controller
 {
@@ -20,38 +23,58 @@ class FormTemplateController extends Controller
     private $wcontroller;
     private $bcontroller;
 
-    private function load_candidates() {
+    public function initiate() {
+        $data['owner'] = Auth::user();
         $cuc = new CorporateUserController();
-        return $cuc->load_candidates();
+        $data['candidates'] = $cuc->load_candidates();
+        $data['message'] = 'Initiate Candidate Workflow';
+        return view('initiate')->with($data);
     }
 
-    private function flushCandidatesFromCache() {
-        $cuc = new CorporateUserController();
-        return $cuc->flushCandidatesFromCache();
+    public function initiateWorkflow(Request $request) {
+        $prospect = new \App\Prospect();
+        $prospect->email = $request->input('email');
+        $prospect2 = \App\Prospect::where("email", $request->input("email"))->first();
+        if ($prospect2) {
+            Log::debug("updating rather than creating");
+            $prospect = $prospect2;
+        }
+        $prospect->discipline = implode(';', $request->input('discipline'));
+        $prospect->first_name = $request->input('firstName');
+        $prospect->last_name = $request->input('lastName');
+        $prospect->reference_number = $request->input('referenceNumber');
+        $prospect->owner_id = Auth::user()->id;
+        $prospect->save();
+
+        return $this->getIndexWithId($prospect->reference_number, $prospect);
     }
 
-    public function getIndexWithId($id) {
-        $template = $this->setup_template($id);
+    public function getIndexWithId($id, $candidate = null) {
+        if (!$candidate) {
+            $candidate = \App\Prospect::where("reference_number", $id)->first();
+        }
+        $template = $this->setup_template($candidate->email, $candidate);
         //load the custom Object that contains the template information
         //$obj = $candidate->loadCustomObject(3);
         //$content =   $obj->get("customTextBlock1");
-        $owner = $template->get('owner');
-        $owner_email = $owner->get("email");
+        $firstname = $candidate->first_name;
+        $owner = $template->get('owner');  //Auth::user()
+        $owner_email = $owner->email;
         if (!$owner_email) {
             Log::debug("No email in owner record");
             $owner_email = "admin@stratum-int.com";
         }
-        $owner_phone = $owner->get("phone");
+        $owner_phone = $owner->phone;
         if (!$owner_phone) {
             Log::debug("No phone in owner record");
             $owner_phone = "+44 (0) 203 627 3271";
         }
-        $owner_name  = $owner->get("name");
-        $owner_sig   = $owner->get("emailSignature");
+        $owner_name  = $owner->name;
+        $owner_sig   = $owner->email_signature;
 
         //default template is from WorldApp
         $content = <<<EOC
-<span style="font-size: 10pt; font-family: arial, helvetica, sans-serif;"><p>Hi,</p>
+<span style="font-size: 10pt; font-family: arial, helvetica, sans-serif;"><p>Hi $firstname,</p>
 
 <p>Thank you for registering with Stratum International.</p>
 
@@ -94,23 +117,25 @@ EOS;
         $data['page_title'] = "Form Template";
         $data['success'] = false;
         $data['launch'] = false;
-        $data['candidates'] = $this->load_candidates();
+        $data['candidate'] = $candidate;
+        $data['email'] = $candidate->email;
+        $data['id'] = $candidate->reference_number;
+        $cuc = new CorporateUserController();
+        $data['candidates'] = $cuc->load_candidates();
         return view('formtemplate')->with($data);
     }
 
-    public function getIndex() {
-        return getIndexWithId(10809);
-
-  }
-
   public function postUpdateContent(Request $request) {
-      $id = $request->input("id");
+      $id = $request->input("id"); //now the reference_number of the Prospect
       $content = $request->input('contentEditor');
       Log::debug('Updated Content: (skipping, too long)');
       //Log::debug($content);
-      $template = $this->setup_template($id);
+      if (!$candidate) {
+          $candidate = \App\Prospect::where("reference_number", $id)->first();
+      }
+      $template = $this->setup_template($candidate->email, $candidate);
       $template->set('content', $content);
-      Log::debug($request);
+      //Log::debug($request);
       if ($request->hasFile("attachmentFile")) {
           Log::debug("Request has file");
           if ($request->file("attachmentFile")->isValid()) {
@@ -130,19 +155,25 @@ EOS;
       $data['launch'] = true;
       $data['success'] = false;
       $data['page_title'] = "Form Template";
-      $data['candidates'] = $this->load_candidates();
+      $data['candidate'] = $candidate;
+      $data['id'] = $id;
+      $cuc = new CorporateUserController();
+      $data['candidates'] = $cuc->load_candidates();
       return view('formtemplate')->with($data);
 
   }
 
   public function postLaunchForm(Request $request) {
-      $id = $request->input("id");
+      $id = $request->input("id"); //again, this is the reference_number of the Prospect
+      if (!$candidate) {
+          $candidate = \App\Prospect::where("reference_number", $id)->first();
+      }
       Log::debug("Launching form for user ".$id);
       Log::debug($request);
       $content = $request->input('content');
       Log::debug("Content:");
       Log::debug($content);
-      $template = $this->setup_template($id);
+      $template = $this->setup_template($candidate->email, $candidate);
       $template->set('content', $content);
 
       $form = $template->get('form');
@@ -150,49 +181,79 @@ EOS;
       $this->setNewEmailTemplate($template, $content, $request->session());
 
       $autofill = $this->prepareAutofill($candidate);
-      Log::debug("Candidate name:  ".$candidate->get("name"));
-      Log::debug("Candidate email: ".$candidate->get("email"));
+      Log::debug("Candidate name:  ".$candidate->getName());
+      Log::debug("Candidate email: ".$candidate->email);
 
-      $send = $this->wcontroller->sendUrlWithAutofill($form->id, $candidate->get('email'), $autofill);
+      $send = $this->wcontroller->sendUrlWithAutofill($form->id, $candidate->email, $autofill);
 
 
       $this->returnEmailTemplate($form, $template->get('emailTemplate'));
 
+      $candidate->form_sent = Carbon::now();
+      $candidate->save();
+
+      $this->send_email_to_owner($content, $candidate);
+      $this->send_email_to_admin($candidate);
+
+      $cuc = new CorporateUserController();
+      $data['candidates'] = $cuc->load_candidates();
+      $data['id'] = $id;
       $data['page_title'] = "Form Template";
       $data['success'] = true;
       $data['launch'] = false;
       $data['formTemplate'] = $template;
+      $data['candidate'] = $candidate;
 
-      //send note with email content
-      $comment = "Form sent at: ".date(DATE_RFC2822)."\n";
-      $comment .= "Sent to: ".$candidate->get("name")." at email address ".$candidate->get("email")."\n";
-      $comment .= "Content of Email follows.\n\n";
-      $comment .= $content;
-      $note['comments'] = $comment;
-      $note['action'] = "Reg Form Sent";
-      $candidate->set("Note", $note);
-      $this->bcontroller->submit_note($candidate);
-
-      //update candidate status
-      $this->bcontroller->updateCandidateStatus($candidate, 'Reg Form Sent');
-      $this->flushCandidatesFromCache();
-      Cache::forget($candidate->get("id"));
-      $data['candidates'] = $this->load_candidates();
       return view('formtemplate')->with($data);
 
   }
 
-  private function setup_template($id) {
+
+  function send_email_to_owner($message, $candidate) {
+    //Now send email copy to owner
+    $owner = Auth::user();
+    $owner_email = $owner->email;
+    $ref = $candidate->reference_number;
+    Log::debug("sending email to $owner_email about Interview being sent");
+    $maildata['candidateName'] = $candidate->getName();
+    $maildata['candidateID'] = $ref;
+    $maildata['consultantName'] = $owner->name;
+    $maildata['date'] = date(DATE_RFC2822);
+    $maildata['content'] = $message;
+    Mail::send('email.form_confirmation', $maildata, function ($m) use ($candidate, $ref, $owner_email) {
+        $m->from('admin@stratum-int.com', 'Stratum Integration Service');
+        $m->to($owner_email)->subject('Confirmation of Form Sent to '.$candidate->getName().' '.$ref);
+    });
+
+  }
+
+  function send_email_to_admin($candidate) {
+
+      $ref = $candidate->reference_number;
+      Log::debug("sending email to admin@stratum-int.com about Interview being sent");
+      $user = Auth::user();
+      $maildata['candidateName'] = $candidate->getName();
+      $maildata['candidateID'] = $candidate->reference_number;
+      $maildata['consultantName'] = $user->name;
+      $maildata['date'] = date(DATE_RFC2822);
+      Mail::send('email.form_sent', $maildata, function ($m) use ($candidate, $ref) {
+          $m->from('admin@stratum-int.com', 'Stratum Integration Service');
+          $m->to('admin@stratum-int.com')->subject('Form Sent to '.$candidate->getName().' '.$ref);
+      });
+
+  }
+
+  private function setup_template($email, $candidate) {
       $template = new FormTemplate();
       //load the id from the request
       //$id = $request->getAttribute('entityid');
 
-      $template->set('id', $id);
+
+      $template->set('email', $email);
 
 
       //set up the controllers and their loggers
       $this->wcontroller = new \Stratum\Controller\WorldappController();
-      $this->bcontroller = new \Stratum\Controller\BullhornController();
 
       $formName = 'Registration Form - Stratum International';
       if (Cache::has($formName)) {
@@ -205,20 +266,21 @@ EOS;
       }
       $template->set('form', $form);
 
+      /***
       $candidate = null;
-      if (Cache::has($id)) {
-          $candidate = Cache::get($id);
-          Log::debug("Loading candidate from cache with id ".$id);
+      if (Cache::has($email)) {
+          $candidate = Cache::get($email);
+          Log::debug("Loading candidate from cache with email ".$email);
       } else {
-          //load the candidate data from Bullhorn
+          //load the candidate data from local sources?
           $candidate = new \Stratum\Model\Candidate();
-          $candidate->set("id", $id);
-          $this->bcontroller->load($candidate);
-          Cache::add($id, $candidate, 60);
+          $candidate->set("email", $email);
+          Cache::add($email, $candidate, 60);
       }
-      $template->set('candidate', $candidate);
+      ***/
+      $template->set('candidate', $candidate); //is now an App\Prospect
 
-      $owner = $this->findCorporateUser($candidate);
+      $owner = Auth::user();
 
       $template->set('owner', $owner);
 
@@ -233,30 +295,6 @@ EOS;
       $template->set('emailTemplate', $emailTemplate);
 
       return $template;
-  }
-
-  private function findCorporateUser($candidate) {
-      //find the corporateUser Owner of this candidate (for From and ReplyTo email address)
-      //$owner1 = json_decode($candidate->get("owner"), true); //a json array structure
-      $owner1 = $candidate->get("owner");
-      Log::debug($owner1);
-      $owner = null;
-      if (isset($owner1['id'])) {
-          $ownerId = $owner1['id'];
-
-          if (Cache::has("user".$ownerId)) {
-              $owner = Cache::get("user".$ownerId);
-          } else {
-              $owner = new \Stratum\Model\CorporateUser();
-              $owner->set("id", $ownerId);
-              $this->bcontroller->loadCorporateUser($owner);
-              Cache::add('user'.$ownerId, $owner, 60);
-          }
-      } else {
-          Log::debug("No ID in owner?");
-          Log::debug($owner1['id']);
-      }
-      return $owner;
   }
 
   private function getAttachments($session) {
@@ -282,8 +320,8 @@ EOS;
       $emailTemplate = $template->get('emailTemplate');
       $newTemplate = [];
       $newTemplate['formId'] =    $form->id;
-      $newTemplate['from'] =      $owner->get("email");
-      $newTemplate['replyTo'] =   $owner->get("email");
+      $newTemplate['from'] =      $owner->email;
+      $newTemplate['replyTo'] =   $owner->email;
       $newTemplate['subject'] =   $emailTemplate->subject;
       $newTemplate['content'] =   $content;
 
@@ -295,39 +333,30 @@ EOS;
   }
 
   private function prepareAutofill($candidate) {
-      //autofilled fields to be extracted from candidate
-      //id,firstName,lastName,dateOfBirth,nickName,email,email2,mobile,phone,workPhone,fax3,pager,customTextBlock2
-      $id =               $candidate->get('id');
-      $firstName =        $candidate->get("firstName");
-      $lastName =         $candidate->get("lastName");
-      $email =            $candidate->get("email");
-      $workEmail =        $candidate->get("email2");
-      $mobile =           $candidate->get("mobile");
-      $homePhone =        $candidate->get("phone");
-      $workPhone =        $candidate->get("workPhone");
-      $fax =              $candidate->get("fax3");
-      $skype =            $candidate->get("pager");
-      $types =            $candidate->get("customTextBlock2");
-      //$types is an array, must translate to String
-      $type = '';
-      if (is_array($types)) {
-          foreach ($types as $t) {
-              $type .= $t.";";
-          }
-      }
-      $type = substr($type, 0, strlen($type)-1); //remove last semi-colon
-
-      $autofill = ['21741440'=>[$id, $firstName, $lastName],
-                   '21741491'=>[$type], // should be 21741516
-                   '21741451'=>[$email,
-                                $workEmail,
-                                $mobile,
-                                $homePhone,
-                                $workPhone,
-                                $fax,
-                                $skype]];
-      return $autofill;
-  }
+        //autofilled fields to be extracted from candidate
+        //id,firstName,lastName,dateOfBirth,nickName,email,email2,mobile,phone,workPhone,fax3,pager,customTextBlock2
+        $id =               $candidate->reference_number;
+        $firstName =        $candidate->first_name;
+        $lastName =         $candidate->last_name;
+        $email =            $candidate->email;
+        $workEmail =        '';
+        $mobile =           '';
+        $homePhone =        '';
+        $workPhone =        '';
+        $fax =              '';
+        $skype =            '';
+        $type =             $candidate->discipline;
+        $autofill = ['21741440'=>[$id, $firstName, $lastName],
+                     '21741491'=>[$type], // should be 21741516
+                     '21741451'=>[$email,
+                                  $workEmail,
+                                  $mobile,
+                                  $homePhone,
+                                  $workPhone,
+                                  $fax,
+                                  $skype]];
+        return $autofill;
+    }
 
   private function returnEmailTemplate($form, $emailTemplate) {
       //return the email template to the original

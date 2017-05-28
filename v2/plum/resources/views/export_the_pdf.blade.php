@@ -42,9 +42,8 @@ table, td {
                                 <tr>
                                     <!--th>Field Name</th -->
                                     <th>WorldApp Fields</th>
-                                    <th>Existing Value</th>
                                     <th>WorldApp Form Value</th>
-                                    <th>Pushed to Bullhorn</th>
+                                    <th>Confirmed by Consultant</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -58,13 +57,13 @@ table, td {
                                         {{$wa}}<br>
                                         @endforeach
                                     </td>
-                                    <td>
+                                    <!--<td>
                                         @if($qhead=='Reg Form Sent')
                                             {!! $question['Bullhorn'] !!}
                                         @else
                                             {{$question['Bullhorn']}}
                                         @endif
-                                    </td>
+                                    </td -->
                                     <td>
                                         @if($qhead=='File Uploads:')
                                             {!! $question['WorldApp'] !!}

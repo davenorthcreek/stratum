@@ -12,7 +12,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'bullhorn_id', 'image_location', 'is_admin'
+        'name', 'email', 'password', 'bullhorn_id', 'image_location', 'is_admin', 'email_signature'
     ];
 
     /**
@@ -23,5 +23,9 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function prospects() {
+        return $this->hasMany('App\Prospect', 'owner_id');
+    }
 
 }

@@ -24,19 +24,23 @@ class CandidateController extends Controller
       if (Cache::has($id)) {
           $candidate = Cache::get($id);
       } else {
+          $candidate = \App\Prospect::where("reference_number", $id)->first();
+          Cache::add($id, $candidate, 60);
+          /***
           //load the candidate data from Bullhorn
           $candidate = new \Stratum\Model\Candidate();
           $candidate->set("id", $id);
           $bc = new BullhornController();
           $bc->load($candidate);
           Cache::add($id, $candidate, 60);
+          ***/
       }
       return $candidate;
   }
 
   public function show($id) {
       $message = "Candidate Information";
-      $candidate = $this->load($id);
+      $candidate = $this->load($id); //reference number
       $data['thecandidate'] = $candidate;
       $fc = new \Stratum\Controller\FormController();
       $data['form'] = $fc->setupForm();
@@ -50,7 +54,7 @@ class CandidateController extends Controller
   public function search(Request $request) {
       $id = $request->input("q");
       $candidate = $this->load($id);
-      if ($candidate->get("firstName")) {
+      if ($candidate->getName()) {
           return $this->show($id);
       } else {
         $message = "There is no candidate with ID <strong>$id</strong>.";

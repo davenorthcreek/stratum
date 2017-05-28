@@ -23,22 +23,25 @@
                 </div>
                 <div class="box-body">
 
-                    <?php $status = $thecandidate->get("preferredContact");
-                          $thejson = $thecandidate->marshalToJSON();
-                          $refs = $thecandidate->marshalReferences();
+                    <?php $status = $thecandidate->getStatus();
+                          $thejson = $thecandidate->toJson();
+                          //$refs = $thecandidate->marshalReferences();
                           $decoded = json_decode($thejson, true); ?>
                     @if($status=="No")
-                        <form action='{{route("candidateFormTemplate", ["id" => $thecandidate->get("id")])}}' method="GET">
+                        <form action='{{route("candidateFormTemplate", ["id" => $thecandidate->reference_number])}}' method="GET">
                           <button id="launchButton" value="Launch">Edit Template and Launch Form</button>
                         </form>
                     @endif
                     @if($status=="Interview Done")
-                        <form action='{{route("formResponseDisplay", ["id" => $thecandidate->get("id")])}}' method="GET">
-                          <button id="launchButton" value="Launch">Reload WorldApp Form Data</button>
+                        <form action='{{route("formResponseDisplay", ["id" => $thecandidate->reference_number])}}' method="GET">
+                            <button id="launchButton" value="Launch">Reload WorldApp Form Data</button>
+                        </form>
+                        <form action='{{route("formResponseDownload", ["id" => $thecandidate->reference_number])}}' method="GET">
+                            <button id="pdfButton" value="Launch">Download PDF file</button>
                         </form>
                     @endif
                     @if($status=="Form Completed")
-                        <form action='{{route("formResponseDisplay", ["id" => $thecandidate->get("id")])}}' method="GET">
+                        <form action='{{route("formResponseDisplay", ["id" => $thecandidate->reference_number])}}' method="GET">
                           <button id="launchButton" value="Launch">Load WorldApp Form Data</button>
                         </form>
                     @endif

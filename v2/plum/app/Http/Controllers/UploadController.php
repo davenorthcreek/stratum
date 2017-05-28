@@ -15,6 +15,7 @@ use Log;
 use Cache;
 use Storage;
 use Mail;
+use Carbon\Carbon;
 
 class UploadController extends Controller
 {
@@ -27,44 +28,31 @@ class UploadController extends Controller
         Log::Debug("parsed input data");
     	//form has updated mappings for each question
 
-    	$candidate = new \Stratum\Model\Candidate();
+    	$candidate = new \Stratum\Model\Candidate(); //not Prospect now
     	$candidateController = new \Stratum\Controller\CandidateController();
     	$candidate = $candidateController->populate($candidate, $formResult);
     	Log::debug("Form Completed for ".$candidate->getName());
 
-        $controller = new \Stratum\Controller\BullhornController();
-
-        //upload files from WorldApp to Bullhorn
-        $controller->submit_files($candidate);
-
         //update availability Note in Bullhorn
         $availability = $formResult->findByWorldApp("Call Availability");
         Log::debug($availability);
+        $maildata = [];
         if ($availability) {
-            $note['comments'] = "Call Availability: ".$availability['Call Availability']['value'];
-            $note['action'] = 'Availability';
-            Log::debug($note);
-            $candidate->set("Note", $note);
-            $controller->submit_note($candidate);
+            //send availability info in email to Prospect owner
+            $maildata['availability'] = "Call Availability: ".$availability['Call Availability']['value'];
         }
-        $cc = new CanCon();
-        $c3 = $cc->load($candidate->get("id")); //Bullhorn Candidate record, from cache if available
-        $owner = $c3->get("owner");
-        /*
-        array (
-          'id' => 10237,
-          'firstName' => 'Stratum',
-          'lastName' => 'API',
-        )
-        */
-        $cuser = new \Stratum\Model\CorporateUser();
-        $cuser->set("id", $owner['id']);
-        $cuser = $controller->loadCorporateUser($cuser);
-        $to_email = $cuser->get("email");
+        Log::debug("looking up prospect with reference number ".$candidate->get("id"));
+        $prospect = \App\Prospect::where("reference_number", $candidate->get("id"))->first();
+        Log::debug($prospect);
+        $owner = $prospect->owner()->first();
+        Log::debug($owner);
+        $to_email = $owner->email;
+        Log::debug("Owner email is ".$to_email);
+        Log::debug("Owner name is ".$owner->name);
         if (!$to_email) {
             $to_email = "dev@northcreek.ca";
         }
-        Log::debug("sending email to ".$cuser->getName()." at ".$to_email." about Form Submission");
+        Log::debug("sending email to ".$owner->name." at ".$to_email." about Form Submission");
         $maildata['candidateName'] = $candidate->getName();
         $maildata['candidateID'] = $candidate->get("id");
         $maildata['date'] = date(DATE_RFC2822);
@@ -73,7 +61,8 @@ class UploadController extends Controller
             $m->to($to_email)->subject('Form Submission from '.$candidate->getName().' '.$candidate->get("id"));
         });
 
-        $controller->updateCandidateStatus($candidate, "Form Completed");
+        $prospect->form_returned = Carbon::now();
+        $prospect->save();
 
         //Now to store form results in local storage
         $entityBody = Storage::disk('local')->put($candidate->get("id").".txt", $entityBody);

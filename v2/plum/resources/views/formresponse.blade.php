@@ -32,7 +32,7 @@
                 <input type='hidden' name='id' value="{{$id}}">
             <div class="box box-primary">
                 <div class="box-header with-border">
-                    <button type="submit" class="btn btn-danger" id="confirmV">Submit Values to Bullhorn</button>
+                    <button type="submit" class="btn btn-danger" id="confirmV">Approve Answers, Generate PDF</button>
                     <button type="button" class="btn btn-mini btn-primary pull-right btn-click-action"
                         data-widget="collapseAll" data-toggle="tooltip" title="Collapse/Expand All">
                         <i class='fa fa-plus'></i>
@@ -88,8 +88,6 @@
             <div class="box box-primary">
                 <div class="box-header with-border">
                     <button type="submit" class="btn btn-danger" id="confirmV">Submit Values to Bullhorn</button>
-                    <!--button type="submit" class="btn btn-info"
-                        formaction='{{route("exportPDF", ["id" => $id])}}' id="toPDF">Export PDF only</button -->
                     <button type="button" role="button" class="btn btn-mini btn-primary pull-right btn-click-action"
                         data-widget="collapseAll" data-toggle="tooltip" title="Collapse/Expand All">
                         <i class='fa fa-plus'></i>

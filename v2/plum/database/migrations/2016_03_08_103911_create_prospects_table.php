@@ -14,15 +14,15 @@ class CreateProspectsTable extends Migration
     {
         Schema::create('prospects', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
-            $table->text('candidate');
-            $table->text('form_response');
-            $table->integer('bullhorn_id')->unique;
+            $table->string('first_name');
+            $table->string('last_name');
+            $table->string('email');
+            $table->string('discipline');
+            $table->string('reference_number');
             $table->integer('owner_id');
-            $table->timestamp('form_sent');
-            $table->timestamp('form_returned');
-            $table->timestamp('form_approved');
-            $table->timestamp('bullhorn_updated');
+            $table->datetime('form_sent')->nullable();
+            $table->datetime('form_returned')->nullable();
+            $table->datetime('form_approved')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

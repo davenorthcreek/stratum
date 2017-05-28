@@ -12,20 +12,19 @@
                         <button class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove"><i class="fa fa-times"></i></button>
                     </div>
                 </div>
-                <?PHP $id = $formTemplate->get('id'); ?>
                 <form method="post" id="contentUpdate" enctype="multipart/form-data" action='{{route("candidateUpdateTemplate", ["id" => $id])}}' >
                     {{csrf_field()}}
                     <input type='hidden' name='id' value="{{$id}}">
                     <div class="box-body">
                         <div class="box-header form-inline">
                             <div class="form-group">
-                                <label>Candidate Name: {{$formTemplate->get('candidate')->get('name')}}</label>
+                                <label>Candidate Name:{{' '.$candidate->first_name}}{{' '.$candidate->last_name}}</label>
                             </div>
                         </div>
                         <div class="box-body">
                             @if($launch || $success)
                                 <div class="form-group">
-                                    <label>Candidate Bullhorn ID: {{$id}}</label>
+                                    <label>Candidate Email Address: {{$candidate->email}}</label>
                                 </div>
                                 @if($launch)
                                     <button type="button" id="confirmLaunch_top" class="btn btn-success">Launch the Form</button>
@@ -42,7 +41,7 @@
                                 @endforeach
                             @else
                                 <div class="form-group">
-                                    <label>Candidate Bullhorn ID: {{$id}}</label>
+                                    <label>Candidate Email Address: {{$candidate->email}}</label>
                                     <h3 class="box-title">Email Template</h3>
                                     <textarea id="contentEditor" name="contentEditor" rows="10" cols="80">
                                         {{$formTemplate->get('content')}}

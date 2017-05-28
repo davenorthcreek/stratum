@@ -34,13 +34,14 @@
       <li class="header">MENU</li>
       <!-- Optionally, you can add icons to the links -->
       <li class="active"><a href="{{url("/")}}"><i class="fa fa-home"></i> <span>Home</span></a></li>
+      <li class="active"><a href="{{url("/initiate")}}"><i class="fa fa-new"></i> <span>New Candidate</span></a></li>
       @if(array_key_exists('No', $candidates))
           <li class="treeview">
             <a href="#"><i class="fa fa-star"></i> <span>New Candidates</span> <i class="fa fa-angle-left pull-right"></i></a>
             <ul class="treeview-menu">
               @foreach($candidates['No'] as $candidate)
-                  <?PHP $id = $candidate->get("id"); ?>
-                  <li><a href="{{url("/candidate/$id")}}">{{$candidate->getName()}}</a></li>
+                  <?PHP $id = $candidate->reference_number; ?>
+                  <li><a href="{{url("/candidate/$id")}}">{{$candidate->first_name}} {{$candidate->last_name}}</a></li>
               @endforeach
             </ul>
           </li>
@@ -50,8 +51,8 @@
             <a href="#"><i class="fa fa-upload"></i> <span>Reg Form Sent</span> <i class="fa fa-angle-left pull-right"></i></a>
             <ul class="treeview-menu">
               @foreach($candidates['RFS'] as $candidate)
-                  <?PHP $id = $candidate->get("id"); ?>
-                  <li><a href="{{url("/candidate/$id")}}">{{$candidate->getName()}}</a></li>
+                  <?PHP $id = $candidate->reference_number; ?>
+                  <li><a href="{{url("/candidate/$id")}}">{{$candidate->first_name}} {{$candidate->last_name}}</a></li>
               @endforeach
             </ul>
           </li>
@@ -61,8 +62,8 @@
             <a href="#"><i class="fa fa-download"></i> <span>Form Completed</span> <i class="fa fa-angle-left pull-right"></i></a>
             <ul class="treeview-menu">
               @foreach($candidates['FC'] as $candidate)
-                  <?PHP $id = $candidate->get("id"); ?>
-                  <li><a href="{{url("/formresponse/$id")}}">{{$candidate->getName()}}</a></li>
+                  <?PHP $id = $candidate->reference_number; ?>
+                  <li><a href="{{url("/candidate/$id")}}">{{$candidate->first_name}} {{$candidate->last_name}}</a></li>
               @endforeach
             </ul>
           </li>
@@ -72,11 +73,58 @@
             <a href="#"><i class="fa fa-link"></i> <span>Interview Completed</span> <i class="fa fa-angle-left pull-right"></i></a>
             <ul class="treeview-menu">
               @foreach($candidates['IC'] as $candidate)
-                  <?PHP $id = $candidate->get("id"); ?>
-                  <li><a href="{{url("/candidate/$id")}}">{{$candidate->getName()}}</a></li>
+                  <?PHP $id = $candidate->reference_number; ?>
+                  <li><a href="{{url("/candidate/$id")}}">{{$candidate->first_name}} {{$candidate->last_name}}</a></li>
               @endforeach
             </ul>
           </li>
+      @endif
+      @if(array_key_exists('All', $candidates))
+          <li class="header">Admin Access: All Candidates</li>
+          @if(array_key_exists('No', $candidates['All']))
+              <li class="treeview">
+                <a href="#"><i class="fa fa-star"></i> <span>New Candidates</span> <i class="fa fa-angle-left pull-right"></i></a>
+                <ul class="treeview-menu">
+                  @foreach($candidates['All']['No'] as $candidate)
+                      <?PHP $id = $candidate->reference_number; ?>
+                      <li><a href="{{url("/candidate/$id")}}">{{$candidate->first_name}} {{$candidate->last_name}}</a></li>
+                  @endforeach
+                </ul>
+              </li>
+          @endif
+          @if(array_key_exists('RFS', $candidates['All']))
+              <li class="treeview">
+                <a href="#"><i class="fa fa-upload"></i> <span>Reg Form Sent</span> <i class="fa fa-angle-left pull-right"></i></a>
+                <ul class="treeview-menu">
+                  @foreach($candidates['All']['RFS'] as $candidate)
+                      <?PHP $id = $candidate->reference_number; ?>
+                      <li><a href="{{url("/candidate/$id")}}">{{$candidate->first_name}} {{$candidate->last_name}}</a></li>
+                  @endforeach
+                </ul>
+              </li>
+          @endif
+          @if(array_key_exists('FC', $candidates['All']))
+              <li class="treeview">
+                <a href="#"><i class="fa fa-download"></i> <span>Form Completed</span> <i class="fa fa-angle-left pull-right"></i></a>
+                <ul class="treeview-menu">
+                  @foreach($candidates['All']['FC'] as $candidate)
+                      <?PHP $id = $candidate->reference_number; ?>
+                      <li><a href="{{url("/candidate/$id")}}">{{$candidate->first_name}} {{$candidate->last_name}}</a></li>
+                  @endforeach
+                </ul>
+              </li>
+          @endif
+          @if(array_key_exists('IC', $candidates['All']))
+              <li class="treeview">
+                <a href="#"><i class="fa fa-link"></i> <span>Interview Completed</span> <i class="fa fa-angle-left pull-right"></i></a>
+                <ul class="treeview-menu">
+                  @foreach($candidates['All']['IC'] as $candidate)
+                      <?PHP $id = $candidate->reference_number; ?>
+                      <li><a href="{{url("/candidate/$id")}}">{{$candidate->first_name}} {{$candidate->last_name}}</a></li>
+                  @endforeach
+                </ul>
+              </li>
+          @endif
       @endif
       <li class="active"><a href="{{url("/refresh")}}"><i class="fa fa-refresh"></i> <span>Refresh Candidate List</span></a></li>
     </ul>

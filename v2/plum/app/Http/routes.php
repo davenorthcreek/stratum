@@ -54,8 +54,10 @@ Route::group(['middleware' => ['web']], function () {
     Route::post('/formtemplate/{id}/launch-form', ['uses'=>'FormTemplateController@postLaunchForm', 'as'=>'candidateLaunchForm']);
     Route::get('/formresponse/{id}', ['uses'=>'FormResponseController@index', 'as'=>'formResponseDisplay']);
 
+    Route::get('/initiate', ['uses'=>'FormTemplateController@initiate', 'as'=>'newCandidate']);
+    Route::post('/initiateWorkflow', ['uses'=>'FormTemplateController@initiateWorkflow', 'as'=>'initiateForm']);
     Route::post('/formresponse/{id}/confirm', ['uses'=>'FormResponseController@confirmValues', 'as'=>'confirmValues']);
-    Route::post('/formresponse/{id}/pdf', ['uses'=>'FormResponseController@exportPDF', 'as'=>'exportPDF']);
+    Route::get('/formresponse/{id}/download', ['uses'=>'FormResponseController@downloadPDF', 'as'=>'formResponseDownload']);
 
     Route::get('/home', 'CorporateUserController@index');
     Route::get('/refresh', 'CorporateUserController@refresh');

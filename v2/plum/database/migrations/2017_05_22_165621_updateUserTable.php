@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddBullhornIdToUsers extends Migration
+class UpdateUserTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,8 @@ class AddBullhornIdToUsers extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->integer('bullhorn_id');
+            $table->string('phone');
+            $table->mediumText('email_signature');
         });
     }
 
@@ -25,7 +26,8 @@ class AddBullhornIdToUsers extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('bullhorn_id');
+            $table->dropColumn('phone');
+            $table->dropColumn('email_signature');
         });
     }
 }
