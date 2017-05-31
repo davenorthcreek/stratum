@@ -81,7 +81,7 @@ class UploadController extends Controller
     }
 
     /**
-    * @return $paths a list of files to attacht to the email
+    * @return $paths a list of files to attach to the email
     */
 
     private function download_files($candidate) {
@@ -116,5 +116,11 @@ class UploadController extends Controller
             }
         }
         return $paths;
+    }
+
+    function readHeader($ch, $header) {
+        $url = curl_getinfo($ch, CURLINFO_EFFECTIVE_URL);
+        $this->responseHeaders[$url][] = $header;
+        return strlen($header);
     }
 }
