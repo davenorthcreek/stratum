@@ -188,32 +188,6 @@ class QuestionMapping extends ModelObject
                 }
             }
         }
-        if ($human == "Q109") {
-            $sfp = $candidate->get("customText4");
-            if ($sfp) {
-                $this->log_debug("Q109 loading Suitable Future Positions from Candidate: ");
-                $this->var_debug($sfp);
-                foreach ($sfp as $fp) {
-                    $valueMap[$fp] = 1;
-                }
-            } else {
-                $this->log_debug("Q109 no Suitable Future Positions in Candidate record");
-            }
-        } else if ($human == "Q108") {
-            $this->log_debug("Q108 Looking up category ID for candidate:");
-            $cats = $candidate->get("category");
-            $this->var_debug($cats);
-            if (is_array($cats)) {
-                foreach ($cats as $cid=>$cat) {
-                    $valueMap[$cat] = 1;
-                }
-            }
-            $cats = $candidate->get("categoryID");
-            foreach (explode("\n", $cats) as $cat) {
-                $valueMap[$cat] = 1;
-            }
-            $this->var_debug($valueMap);
-        }
         if (count($valueMap)>1) {
             $mult = true;
         }
@@ -300,7 +274,7 @@ class QuestionMapping extends ModelObject
             echo "\n<button class='btn btn-info btn-sm' style='pointer-events: none;'>".$qlabel."</button>";
         }
         echo "\n<label for='$label'";
-        if ($qlabel == "Q112") {
+        if ($qlabel == "Q113") {
             echo " class='label-danger' ";
         }
         echo ">$visible</label>\n";
@@ -472,7 +446,7 @@ class QuestionMapping extends ModelObject
                 $other .= "'>\n";
                 echo $other;
             }
-        } else if ($human == "Q18"|| $human == "Q110" || $human == "Q111") {
+        } else if ($human == "Q18"|| $human == "Q111" || $human == "Q112") {
             echo("<textarea class='form-control' name='$label' rows='4' placeholder='Enter...'>$val</textarea>");
         } else if ($human == "Q99") {
             //list of files, not very helpful
