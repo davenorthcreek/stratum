@@ -49,11 +49,11 @@ class DeleteOldFiles extends Command
             Log::debug("found old prospect $ref_num");
             if (Storage::disk("local")->exists($ref_num.".txt")) {
                 Log::debug("Removing ".$ref_num.".txt");
-                //Storage::disk("local")->delete($ref_num.".txt");
+                Storage::disk("local")->delete($ref_num.".txt");
             }
             if (Storage::disk("local")->exists($ref_num.".pdf")) {
                 Log::debug("Removing ".$ref_num.".pdf");
-                //Storage::disk("local")->delete($ref_num.".pdf");
+                Storage::disk("local")->delete($ref_num.".pdf");
             }
         }
     }
