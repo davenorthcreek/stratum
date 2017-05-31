@@ -87,12 +87,12 @@ class UploadController extends Controller
     private function download_files($candidate) {
         $paths = [];
         $filelist = $candidate->get("files");
-        $this->log_debug("Going to try to upload files $filelist");
+        Log::debug("Going to try to upload files $filelist");
 
         $files = explode(", ", $filelist);
         $filename = '';
         foreach ($files as $url) {
-            $this->log_debug("Going to try to upload file $url");
+            Log::debug("Going to try to upload file $url");
             $ch = curl_init($url);
 
             curl_setopt($ch, CURLOPT_HEADER, true);
@@ -104,7 +104,7 @@ class UploadController extends Controller
             $header = substr($response, 0, $header_size);
             $body = substr($response, $header_size);
             curl_close($ch);
-            $this->var_debug($this->responseHeaders[$url]);
+            Log::debug($this->responseHeaders[$url]);
             if ($this->responseHeaders[$url]) { //may be null if link expired
                 $filename = '';
                 foreach ($this->responseHeaders[$url] as $header_item) {
