@@ -41,7 +41,7 @@ class DeleteOldFiles extends Command
     public function handle()
     {
         $now = Carbon::now();
-        $threeMonthsAgo = $now->subMinutes(3);
+        $threeMonthsAgo = $now->subMonths(3);
         //if form returned timestamp is lower than 3 months ago timestamp
         $old_prospects = \App\Prospect::where("form_returned", "<", $threeMonthsAgo)->get();
         foreach ($old_prospects as $old) {
