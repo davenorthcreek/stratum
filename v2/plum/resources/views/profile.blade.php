@@ -33,6 +33,13 @@
                             <label for="name">Name</label>
                             <input name="name" type="text" class="form-control" id="name" placeholder="Enter your name" value="{{Auth::user()->name}}" required>
                         </div>
+                        <div class="form-group">
+                            <label for="email_signature">Email Signature</label>
+                            <textarea id="email_signature" name="email_signature" rows="10" cols="80">
+                                {{Auth::user()->email_signature}}
+                            </textarea>
+
+                        </div>
                     </div>
                     <!-- /.box-body -->
 
@@ -87,13 +94,20 @@ Profile
 
 @section('local_scripts')
 
+    <!-- CK Editor -->
+    <script src="https://cdn.ckeditor.com/4.5.10/standard/ckeditor.js"></script>
+
     <script>
+        var $editor;
         $('form').on('submit', function (e) {
             e.preventDefault();
             var form = $(this);
             var submitBtn = form.find('.submit-btn');
             form.find('.alert').addClass('hide').html('');
             submitBtn.addClass('disabled');
+            if ($editor) {
+                $editor.updateElement();
+            }
             $.ajax({
                 url: submitBtn.attr('data-url'),
                 type: "POST",
@@ -117,4 +131,13 @@ Profile
         });
     </script>
 
+    <script>
+
+        $(function () {
+            // Replace the <textarea id="editor1"> with a CKEditor
+            // instance, using default configuration.
+            $editor = CKEDITOR.replace('email_signature');
+        });
+
+    </script>
 @endsection

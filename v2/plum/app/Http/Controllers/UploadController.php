@@ -56,9 +56,21 @@ class UploadController extends Controller
         $maildata['candidateName'] = $candidate->getName();
         $maildata['candidateID'] = $candidate->get("id");
         $maildata['date'] = date(DATE_RFC2822);
-        Mail::send('email.form_uploaded', $maildata, function ($m) use ($to_email, $candidate) {
+        $paths = $this->download_files($candidate);
+        Mail::send('email.form_uploaded', $maildata, function ($m) use ($to_email, $candidate, $paths) {
             $m->from('admin@stratum-int.com', 'Stratum Integration Service');
             $m->to($to_email)->subject('Form Submission from '.$candidate->getName().' '.$candidate->get("id"));
+            foreach ($paths as $filename => $body) {
+                $m->attachData($path, $filename);
+            }
+        });
+
+        Mail::send('email.form_uploaded', $maildata, function($m) use ($candidate, $paths) {
+            $m->from('admin@stratum-int.com', 'Stratum Integration Service');
+            $m->to('admin@stratum-int.com')->subject('Form Submission from '.$candidate->getName().' '.$candidate->get("id"));
+            foreach ($paths as $filename => $body) {
+                $m->attachData($path, $filename);
+            }
         });
 
         $prospect->form_returned = Carbon::now();
@@ -66,5 +78,43 @@ class UploadController extends Controller
 
         //Now to store form results in local storage
         $entityBody = Storage::disk('local')->put($candidate->get("id").".txt", $entityBody);
+    }
+
+    /**
+    * @return $paths a list of files to attacht to the email
+    */
+
+    private function download_files($candidate) {
+        $paths = [];
+        $filelist = $candidate->get("files");
+        $this->log_debug("Going to try to upload files $filelist");
+
+        $files = explode(", ", $filelist);
+        $filename = '';
+        foreach ($files as $url) {
+            $this->log_debug("Going to try to upload file $url");
+            $ch = curl_init($url);
+
+            curl_setopt($ch, CURLOPT_HEADER, true);
+            curl_setopt($ch, CURLOPT_HEADERFUNCTION, array($this,'readHeader'));
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($ch, CURLOPT_BINARYTRANSFER, 1);
+            $response = curl_exec($ch);
+            $header_size = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
+            $header = substr($response, 0, $header_size);
+            $body = substr($response, $header_size);
+            curl_close($ch);
+            $this->var_debug($this->responseHeaders[$url]);
+            if ($this->responseHeaders[$url]) { //may be null if link expired
+                $filename = '';
+                foreach ($this->responseHeaders[$url] as $header_item) {
+                    if (preg_match('/filename="(.*?)";/', $header_item, $matches)) {
+                        $filename = $matches[1];
+                    }
+                }
+                $paths[$filename] = $body;
+            }
+        }
+        return $paths;
     }
 }

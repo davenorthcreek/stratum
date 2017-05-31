@@ -23,8 +23,8 @@ class UsersController extends Controller
 
     public function postUser(Request $request)
     {
-        $this->validate($request, User::$personalRules);
-        $userData = $request->only(['email', 'name']);
+        //$this->validate($request, User::$personalRules);
+        $userData = $request->only(['email', 'name', 'email_signature']);
         Auth::user()->update($userData);
 
         return response()->json(['status' => true]);
