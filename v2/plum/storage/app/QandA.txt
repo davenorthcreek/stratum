@@ -377,7 +377,7 @@ Q105.A1	boolean	Note	NONE	Admin to Contact References Yes
 Q105.A2	boolean	Note	NONE	Admin to Contact References No
 Q106	Text	Note	Text	Reference Notes
 SubsectionEnd
-Subsection Tier and Job Coding
+Subsection Future Roles and Scoring
 Q107	choice	communication Communication (rate 1-5, 5 being the best)
 Q107.A1	1
 Q107.A2	2
@@ -401,7 +401,7 @@ Q109.A7 7
 Q109.A8 8
 Q109.A9 9
 Q109.A10 10
-Q110	file	jtc.txt	customText4	Suitable Future Positions
+Q110	List	jtc.txt	customText4	Potential Future Roles
 SubsectionEnd
 Q111    Text    customObject1.textBlock4  Text  Agreed Objectives (Roles to look at for the Candidate)
 Q112	Text	Note  Text	Interview Notes
