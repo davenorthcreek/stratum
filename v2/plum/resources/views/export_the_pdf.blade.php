@@ -12,9 +12,26 @@ table, th, td {
 table, td {
     word-wrap:break-word;
 }
+@page {
+        size: auto;
+		/* ensure you append the header/footer name with 'html_' */
+		header: html_MyCustomHeader; /* sets <htmlpageheader name="MyCustomHeader"> as the header */
+		footer: html_MyCustomFooter; /* sets <htmlpagefooter name="MyCustomFooter"> as the footer */
+        margin-header: 18mm;
+        margin-top: 40mm;
+        margin-bottom: 25mm;
+	}
 </style>
 </head>
 <body>
+    <htmlpageheader name="MyCustomHeader">
+        <div>
+	        <img height="18mm" style="float:right" src="{{asset("/images/header_image.jpg")}}">
+        </div>
+    </htmlpageheader>
+    <htmlpagefooter name="MyCustomFooter">
+        <img src="{{asset("/images/footer.png")}}">
+    </htmlpagefooter>
     <div>
       <section >
         <h1>
@@ -29,6 +46,7 @@ table, td {
                 <div>
                     <h3>{{ $message }}</h3>
                 </div>
+
                 @foreach ($sections as $sec_head=>$section)
                 <div>
                     <div>
@@ -42,8 +60,7 @@ table, td {
                                 <tr>
                                     <!--th>Field Name</th -->
                                     <th>WorldApp Fields</th>
-                                    <th>WorldApp Form Value</th>
-                                    <th>Confirmed by Consultant</th>
+                                    <th>Candidate Info</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -57,21 +74,14 @@ table, td {
                                         {{$wa}}<br>
                                         @endforeach
                                     </td>
-                                    <!--<td>
-                                        @if($qhead=='Reg Form Sent')
-                                            {!! $question['Bullhorn'] !!}
-                                        @else
-                                            {{$question['Bullhorn']}}
-                                        @endif
-                                    </td -->
                                     <td>
-                                        @if($qhead=='File Uploads:')
+                                        @if($qhead=='File Uploads:' || $qhead == 'List of Skills')
                                             {!! $question['WorldApp'] !!}
                                         @else
                                             {{$question['WorldApp']}}
                                         @endif
                                     </td>
-                                    @if(isset($question['Plum']))
+                                    <!--@if(isset($question['Plum']))
                                         <td rowspan="{{$question['repeat']}}">
                                             @if($qhead=='List of Skills')
                                                 {!! $question['Plum'] !!}
@@ -80,6 +90,7 @@ table, td {
                                             @endif
                                         </td>
                                     @endif
+                                -->
                                 </tr>
                                 @endforeach
                             </tbody>
@@ -92,6 +103,7 @@ table, td {
         </div><!-- /.col -->
 
     </div><!-- /.row -->
+
 </section>
 </div>
 </body>

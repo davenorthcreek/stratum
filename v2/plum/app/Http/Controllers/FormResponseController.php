@@ -120,9 +120,17 @@ class FormResponseController extends Controller
         $pdf_data['id'] = $id;
         $pdf_data['candidate'] = $candidate;
         $name = $candidate->getName();
+        $base_url = env('URL');
+        Log::debug("Images will be relative to $base_url");
         $pdf_data['message'] = "Data History for ".$name;
+        $header = '<img src="'.$base_url.'/images/header_image.jpg" ">';
+        $footer = '<img src="'.$base_url.'/images/footer.png" ">';
         //now create the pdf
+
         $mypdf = new \Mpdf\Mpdf();
+
+        $mypdf->SetHTMLHeader($header);
+        $mypdf->SetHTMLFooter($footer);
         $html = \View::make('export_the_pdf', $pdf_data)->render();
         $mypdf->WriteHTML($html);
         $pdf_data['string'] = $mypdf->Output('', 'S');
@@ -369,6 +377,33 @@ class FormResponseController extends Controller
         }
         $ret['bh'] = $bh;
         $ret['wa'] = $wa;
+
+        if (substr($ret['wavalue'],0,5) == 'true,') {
+            $ret['wavalue'] = substr($ret['wavalue'], 5); //remove starting true, from answer
+        }
+
+        //now that all the complex work is done, going to collate wa and rq
+        //so that we can remove all but one column
+        $combine_anyway = array("Net Salary", "Gross Salary",
+                                "Equivalent Net Salary",
+                                "Guaranteed Cash Allowances",
+                                "CTC Package",
+                                "Salary, Benefit and Bonus Notes",
+                                "Education Completed: Degree",
+                                "Education Completed: Diploma",
+                                "Professional Memberships and Affiliations",
+                                "Professional and Industry Qualifications",
+                                "Industry Qualifications and Memberships (Free Text)"
+                            );
+        if (in_array($wa, $combine_anyway)) {
+            //don't mess with this stuff
+        } else {
+            if ($ret['rqvalue'] && !$ret['wavalue']) {
+                $ret['wavalue'] = $ret['rqvalue'];
+            }
+
+        }
+
         Log::debug("Returning from exportQMToPDF");
         return $ret;
     }
@@ -385,8 +420,8 @@ class FormResponseController extends Controller
         }
         $ret['List of Skills']['Question'][] = "List of Skills";
         $ret['List of Skills']['Bullhorn'] = '';
-        $ret['List of Skills']['WorldApp'] = '';
-        $ret['List of Skills']['Plum'] = $skill_output;
+        $ret['List of Skills']['WorldApp'] = $skill_output;
+        $ret['List of Skills']['Plum'] = $skill_ouput;
         $ret['List of Skills']['repeat'] = 1;
         return $ret;
     }
@@ -576,19 +611,19 @@ class FormResponseController extends Controller
 
         //Reg Form sent
         //only in Bullhorn, kicks off the whole Plum process
-        $bhvalue3 = '';
-        if ($notes['bh']) {
-            foreach ($notes['bh'] as $note) {
-                if ($note['action'] == "Reg Form Sent") {
-                    $bhvalue3 = $note['comments'];
-                }
-            }
-        }
-        $noteData['Reg Form Sent']['Question'][] = 'Email Template in Plum';
-        $noteData['Reg Form Sent']['Bullhorn'] = $bhvalue3;
-        $noteData['Reg Form Sent']['WorldApp'] = '';
-        $noteData['Reg Form Sent']['Plum'] = '';
-        $noteData['Reg Form Sent']['repeat'] = 1;
+        //$bhvalue3 = '';
+        //if ($notes['bh']) {
+        //    foreach ($notes['bh'] as $note) {
+        //        if ($note['action'] == "Reg Form Sent") {
+        //            $bhvalue3 = $note['comments'];
+        //        }
+        //    }
+        //}
+        //$noteData['Reg Form Sent']['Question'][] = 'Email Template on Website';
+        //$noteData['Reg Form Sent']['Bullhorn'] = $bhvalue3;
+        //$noteData['Reg Form Sent']['WorldApp'] = '';
+        //$noteData['Reg Form Sent']['Plum'] = '';
+        //$noteData['Reg Form Sent']['repeat'] = 1;
         return $noteData;
     }
 }
