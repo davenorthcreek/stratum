@@ -33,7 +33,7 @@ table, td {
         <img src="{{asset("/images/footer.png")}}">
     </htmlpagefooter>
     <div>
-      <section >
+      <section>
         <h1>
            {{ $page_title or "" }}
           <small>{{ $page_description or null }}</small>
@@ -45,6 +45,7 @@ table, td {
             <div>
                 <div>
                     <h3>{{ $message }}</h3>
+                    <div style="display: inline-block; text-align: right">PDF Generated {{$date}}</div>
                 </div>
 
                 @foreach ($sections as $sec_head=>$section)
@@ -66,31 +67,22 @@ table, td {
                             <tbody>
                                 @foreach($section as $qhead=>$question)
                                 <tr>
-                                    <!--td>
-                                        {{$qhead}}
-                                    </td -->
                                     <td>
                                         @foreach ($question['Question'] as $wa)
                                         {{$wa}}<br>
                                         @endforeach
                                     </td>
                                     <td>
-                                        @if($qhead=='File Uploads:' || $qhead == 'List of Skills')
+                                        @if(in_array($qhead, ['File Uploads:', 'List of Skills', 'Conversion Interview']))
+                                            <?php $candidate->log_this($qhead);
+                                                  $candidate->log_this($question);
+                                            ?>
                                             {!! $question['WorldApp'] !!}
                                         @else
                                             {{$question['WorldApp']}}
                                         @endif
                                     </td>
-                                    <!--@if(isset($question['Plum']))
-                                        <td rowspan="{{$question['repeat']}}">
-                                            @if($qhead=='List of Skills')
-                                                {!! $question['Plum'] !!}
-                                            @else
-                                                {{$question['Plum']}}
-                                            @endif
-                                        </td>
-                                    @endif
-                                -->
+
                                 </tr>
                                 @endforeach
                             </tbody>
@@ -99,6 +91,14 @@ table, td {
                     </div> <!--box-body -->
                 </div><!-- /.box -->
                 @endforeach
+                <table>
+                    <tbody>
+                        <tr>
+                            <td>Email Sent to Candidate</td>
+                            <td>{!! $candidate->email_sent !!}</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div><!-- /.col -->
 

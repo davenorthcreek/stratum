@@ -240,6 +240,9 @@ class QuestionMapping extends ModelObject
             //remove trailing yes or no
             $visible = substr($visible, 0, strrpos($visible, ' '));
         }
+        if ($type == 'numeric') {
+            $waan = substr($visible, 0, strpos($visible, ' ')); //only take first word
+        }
         $visible = preg_replace("/Additional Candidate Notes: /", "", $visible);
         //going to put both bullhorn and worldapp in the label
         $label .= "*".$waan."[]";
@@ -446,6 +449,19 @@ class QuestionMapping extends ModelObject
                 $other .= "'>\n";
                 echo $other;
             }
+        } else if ($type=='numeric') {
+            $qmap2 = $questionMaps[$human];
+            $min = 1000000;
+            $max = 0;
+            foreach ($qmap2->get('answerMappings') as $amap) {
+                $aval = $amap->get("Value");
+                $min = $aval<$min? $aval : $min;
+                $max = $aval>$max? $aval : $max;
+            }
+            echo("<input class='form-control' name='$label' id='$label' type='range' min='$min' max='$max' value='$max' ");
+            echo("onchange=\"printValue('".$label."','helper".$human."')\">");
+            echo("<input id='helper$human' type='text' size='5' value='$max'/>");
+
         } else if ($human == "Q18"|| $human == "Q111" || $human == "Q112") {
             echo("<textarea class='form-control' name='$label' rows='4' placeholder='Enter...'>$val</textarea>");
         } else if ($human == "Q99") {

@@ -100,6 +100,8 @@ class FormResult extends ModelObject
 		$qac = $q->get("humanQACId");
         if ($qmap->get("type")=="choice") {
 			$value = $qmap->get("Value");
+        } else if ($qmap->get("type")=="numeric") {
+			$value = $qmap->get("Value");
         } else if ($qmap->get("type")=="multichoice") {
 			$value = $qmap->get("Value");
 		} else if ($q->get("value")) {
@@ -330,7 +332,7 @@ class FormResult extends ModelObject
                     $this->log_debug("using $theId ".$qmap->getWorldAppAnswerName());
                     $sectionQs[$theId] = $qmap;
                 }
-            } else if ($mult && ($type!='choice') && ($type != "list") && ($type != "multichoice")) {
+            } else if ($mult && ($type!='choice') && ($type != "list") && ($type != "multichoice") && ($type != "numeric")) {
                 $this->log_debug("Mult and not choice, multichoice, boolean, or list");
                 foreach ($qmap->get("answerMappings") as $q2) {
                     $theId = $q2->getBestId();

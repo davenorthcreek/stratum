@@ -629,7 +629,7 @@ class CandidateController
             $comment = $existing["comments"];
         }
         foreach ($note as $noteDetail) {
-            $comment .= $noteDetail."\n";
+            $comment .= $noteDetail."<br>\n";
         }
         $newNote["comments"] = $comment;
         $newNote["action"] = "Conversion Interview";

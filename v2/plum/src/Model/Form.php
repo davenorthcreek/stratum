@@ -202,6 +202,13 @@ class Form extends ModelObject
 						$currentQ->set("WorldAppAnswerName", $waName);
 						$waMappings[$waName][] = $currentQ;
 						$bhMappings[$elements[3]][] = $currentQ;
+                    } else if ($elements[1] == 'numeric') {
+                        //numeric min/max provided
+                        $currentQ->set("BullhornField", $elements[2]);
+						$currentQ->set("type", "numeric");
+						$waName = $this->collectMultiWordString($elements, 3);
+						$currentQ->set("WorldAppAnswerName", $waName);
+						$choice_flag = true;
 					} else {
 						//this is a normal field assigned to a top-level question ID
 						$currentQ->set("type", $elements[1]);

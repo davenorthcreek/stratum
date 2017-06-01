@@ -378,19 +378,19 @@ Q105.A2	boolean	Note	NONE	Admin to Contact References No
 Q106	Text	Note	Text	Reference Notes
 SubsectionEnd
 Subsection Future Roles and Scoring
-Q107	choice	communication Communication (rate 1-5, 5 being the best)
+Q107	numeric	communication Communication (rate 1-5, 5 being the best)
 Q107.A1	1
 Q107.A2	2
 Q107.A3	3
 Q107.A4	4
 Q107.A5 5
-Q108    choice  responsiveness  Responsiveness (rate 1-5, 5 being the best)
+Q108    numeric  responsiveness  Responsiveness (rate 1-5, 5 being the best)
 Q108.A1 1
 Q108.A2 2
 Q108.A3 3
 Q108.A4 4
 Q108.A5 5
-Q109    choice  recommendation  Recommendation (rate 1-10, 10 being the most likely)
+Q109    numeric  recommendation  Recommendation (rate 1-10, 10 being the most likely)
 Q109.A1 1
 Q109.A2 2
 Q109.A3 3

@@ -112,6 +112,12 @@
       });
     });
 
+    function printValue(sliderID, textbox) {
+        var x = document.getElementById(textbox);
+        var y = document.getElementById(sliderID);
+        x.value = y.value;
+    }
+
     var btnClassClick = function(e) {
         if ($("i", this).hasClass("fa-plus")) {
             $state = "plus";

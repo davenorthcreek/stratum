@@ -31,11 +31,7 @@ class FormResponseController extends Controller
         $candidate = $ccontroller->populate($candidate, $formResult);
         $cc = new CanCon();
         $c3 = $cc->load($id); //Prospect record from local database
-//        Log::debug("Bullhorn Category:");
-//        Log::debug($c3->discipline);
-//        $candidate->set("categoryID", $c3->get("categoryID"));
-//        $candidate->set("category", $c3->get("category"));
-//        $candidate->set("customText4", $c3->get("customText4"));
+
         $form = $formResult->get("form");
         $questions = $formResult->get('questions');
         $qbyq = [];
@@ -119,18 +115,15 @@ class FormResponseController extends Controller
         Log::debug("Back from submitPDF");
         $pdf_data['id'] = $id;
         $pdf_data['candidate'] = $candidate;
+        $pdf_data['date'] = Carbon::now();
         $name = $candidate->getName();
         $base_url = env('URL');
         Log::debug("Images will be relative to $base_url");
         $pdf_data['message'] = "Data History for ".$name;
-        $header = '<img src="'.$base_url.'/images/header_image.jpg" ">';
-        $footer = '<img src="'.$base_url.'/images/footer.png" ">';
         //now create the pdf
 
         $mypdf = new \Mpdf\Mpdf();
 
-        $mypdf->SetHTMLHeader($header);
-        $mypdf->SetHTMLFooter($footer);
         $html = \View::make('export_the_pdf', $pdf_data)->render();
         $mypdf->WriteHTML($html);
         $pdf_data['string'] = $mypdf->Output('', 'S');
@@ -225,7 +218,7 @@ class FormResponseController extends Controller
         }
         $sectionData['Skills'] = $this->convertSkillsForPDF($candidates);
         $sectionData['Recommenders'] = $this->convertReferencesForPDF($candidates);
-        $sectionData['Additional Tab'] = $this->convertCustomObjForPDF($candidates, $form);
+        //$sectionData['Additional Tab'] = $this->convertCustomObjForPDF($candidates, $form);
         $sectionData['Notes'] = $this->convertNotesForPDF($candidates);
         Log::debug("Returning section data from submitPDF");
         return $sectionData;
@@ -332,8 +325,11 @@ class FormResponseController extends Controller
                 }
             }
         }
-        if (strpos($bh, 'customObject')===0 || $bh == 'Note') {
+        if ($bh == 'Note') {
             return null;
+        }
+        if (strpos($bh, 'customObject')===0) {
+            Log::debug("at a customObject Field: $bh; $wa");
         }
         if ($bh == "customTextBlock2" && $qmap->get("type") == "Text") {
             return null; //only need one 'Discipline' field
@@ -590,7 +586,7 @@ class FormResponseController extends Controller
         // no WorldApp value for this field
         $noteData['Conversion Interview']['Question'][] = "From Consultant's Confirmation Page";
         $noteData['Conversion Interview']['Bullhorn'] = $bhvalue;
-        $noteData['Conversion Interview']['WorldApp'] = '';
+        $noteData['Conversion Interview']['WorldApp'] = $rqvalue;
         $noteData['Conversion Interview']['Plum'] = $rqvalue;
         $noteData['Conversion Interview']['repeat'] = 1;
 

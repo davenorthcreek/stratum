@@ -190,6 +190,7 @@ EOS;
       $this->returnEmailTemplate($form, $template->get('emailTemplate'));
 
       $candidate->form_sent = Carbon::now();
+      $candidate->email_sent = $content;
       $candidate->save();
 
       $this->send_email_to_owner($content, $candidate);
