@@ -261,9 +261,6 @@ class QuestionMapping extends ModelObject
             }
             $answermap = $questionMaps[$qlabel];
         }
-        if (strpos($qlabel, 'Q65') === 0) {
-            $visible = "Discipline - for display purposes only, will not be changed in Bullhorn";
-        }
         $visible = preg_replace("/Recommender \d /", "", $visible);
         $qlabel = htmlentities($qlabel, ENT_QUOTES);
         $label = htmlentities($label, ENT_QUOTES);
