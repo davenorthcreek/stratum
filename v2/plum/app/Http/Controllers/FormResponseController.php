@@ -239,7 +239,7 @@ class FormResponseController extends Controller
                 if (array_key_exists($theId, $questionMaps)) {
                     $sectionQs[$theId] = $qmap;
                 }
-            } else if ($mult && ($type!='choice') && ($type != "list") && ($type != "multichoice")) {
+            } else if ($mult && ($type!='choice') && ($type != 'numeric') && ($type != "list") && ($type != "multichoice")) {
                 foreach ($qmap->get("answerMappings") as $q2) {
                     $theId = $q2->getBestId();
                     $sectionQs[$theId] = $q2;
