@@ -101,6 +101,10 @@
 @endsection
 
 @section('local_scripts')
+<!-- rangeslider -->
+<script src="{{ asset("/bower_components/rangeslider.js/dist/rangeslider.min.js") }}"></script>
+<script src="{{ asset("/bower_components/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.js") }}"></script>
+
 <!-- Select2 -->
 <script src="{{ asset("/bower_components/admin-lte/plugins/select2/select2.full.min.js") }}"></script>
 <script type="text/javascript">
@@ -112,11 +116,15 @@
       });
     });
 
-    function printValue(sliderID, textbox) {
-        var x = document.getElementById(textbox);
-        var y = document.getElementById(sliderID);
-        x.value = y.value;
-    }
+    $(".touchspin5").TouchSpin({
+        min: 1,
+        max: 5
+    });
+
+    $(".touchspin10").TouchSpin({
+        min: 1,
+        max: 10
+    });
 
     var btnClassClick = function(e) {
         if ($("i", this).hasClass("fa-plus")) {

@@ -25,6 +25,7 @@ class Candidate extends ModelObject
 						  'mobile'=>'',
 						  'id'=>'',
 						  'address'=>'',
+                          'agreedObjectives'=>'',
 						  'businessSectors'=>'',
 						  'candidateSource'=>'',
 						  'category'=>'',

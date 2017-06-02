@@ -39,7 +39,7 @@ return [
     |
     */
 
-    'url' => 'http://dev.local/plum',
+    'url' => env('APP_URL', 'https://stratum-integration.com'),
 
     /*
     |--------------------------------------------------------------------------
@@ -52,7 +52,7 @@ return [
     |
     */
 
-    'timezone' => 'America/Edmonton',
+    'timezone' => env('TIMEZONE', 'Europe/London'),
 
     /*
     |--------------------------------------------------------------------------

@@ -272,6 +272,7 @@ class QuestionMapping extends ModelObject
         if ($cols==2) {
             echo " col-xs-6";
         }
+
         echo "'>\n";
         if ($admin_local) {
             echo "\n<button class='btn btn-info btn-sm' style='pointer-events: none;'>".$qlabel."</button>";
@@ -458,9 +459,9 @@ class QuestionMapping extends ModelObject
                 $min = $aval<$min? $aval : $min;
                 $max = $aval>$max? $aval : $max;
             }
-            echo("<input class='form-control' name='$label' id='$label' type='range' min='$min' max='$max' value='$max' ");
-            echo("onchange=\"printValue('".$label."','helper".$human."')\">");
-            echo("<input id='helper$human' type='text' size='5' value='$max'/>");
+            echo("<div class='col-xs-3'>");
+            echo("<input class='touchspin$max' type='text' name='$label' id='$label' min='$min' max='$max'>");
+            echo("</div>");
 
         } else if ($human == "Q18"|| $human == "Q111" || $human == "Q112") {
             echo("<textarea class='form-control' name='$label' rows='4' placeholder='Enter...'>$val</textarea>");

@@ -18,6 +18,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
   <!-- jvectormap -->
   <link rel="stylesheet" href="{{ asset ("bower_components/admin-lte/plugins/jvectormap/jquery-jvectormap-1.2.2.css") }}" type="text/css"/>
+
+
+
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ asset("/bower_components/admin-lte/dist/css/AdminLTE.min.css") }}" type="text/css"/>
   <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
@@ -26,12 +29,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
   -->
   <link rel="stylesheet" href="{{ asset("/bower_components/admin-lte/dist/css/skins/skin-blue.min.css") }}" type="text/css"/>
 
-  <!-- https://tuts.codingo.me/upload-and-edit-image-using-croppic-jquery-plugin -->
-  <link rel="stylesheet" href="{{ asset ("bower_components/croppic/croppic.css") }}"/>
   <!-- Select2 -->
   <link rel="stylesheet" href="{{ asset ("bower_components/admin-lte/plugins/select2/select2.min.css") }}" type="text/css"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2-bootstrap-theme/0.1.0-beta.8/select2-bootstrap.min.css" type="text/css"/>
-  <!--link rel="stylesheet" href="{{ asset ("bower_components/admin-lte/plugins/select2/select2-bootstrap.min.css") }}" type="text/css"/ -->
+  <link rel="stylesheet" href="{{ asset ("bower_components/rangeslider.js/dist/rangeslider.css") }}" type="text/css"/>
+  <link rel="stylesheet" href="{{ asset ("bower_components/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.css") }}" type="text/css"/>
+
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -110,8 +113,6 @@ desired effect
 <script src="{{ asset ("/bower_components/admin-lte/bootstrap/js/bootstrap.min.js") }}"></script>
 <!-- AdminLTE App -->
 <script src="{{ asset ("/bower_components/admin-lte/dist/js/app.min.js") }}"></script>
-
-<script src="{{ asset ("bower_components/croppic/croppic.min.js") }}"></script>
 
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
      Both of these plugins are recommended to enhance the
