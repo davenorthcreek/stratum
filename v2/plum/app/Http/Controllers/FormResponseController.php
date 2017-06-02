@@ -119,7 +119,7 @@ class FormResponseController extends Controller
         $name = $candidate->getName();
         $base_url = env('URL');
         Log::debug("Images will be relative to $base_url");
-        $pdf_data['message'] = "Data History for ".$name;
+        $pdf_data['message'] = "Online Registration Form for ".$name;
         //now create the pdf
 
         $mypdf = new \Mpdf\Mpdf();
