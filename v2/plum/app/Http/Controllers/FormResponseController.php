@@ -117,8 +117,6 @@ class FormResponseController extends Controller
         $pdf_data['candidate'] = $candidate;
         $pdf_data['date'] = Carbon::now();
         $name = $candidate->getName();
-        $base_url = env('URL');
-        Log::debug("Images will be relative to $base_url");
         $pdf_data['message'] = "Online Registration Form for ".$name;
         //now create the pdf
 

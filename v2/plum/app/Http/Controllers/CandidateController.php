@@ -26,14 +26,6 @@ class CandidateController extends Controller
       } else {
           $candidate = \App\Prospect::where("reference_number", $id)->first();
           Cache::add($id, $candidate, 60);
-          /***
-          //load the candidate data from Bullhorn
-          $candidate = new \Stratum\Model\Candidate();
-          $candidate->set("id", $id);
-          $bc = new BullhornController();
-          $bc->load($candidate);
-          Cache::add($id, $candidate, 60);
-          ***/
       }
       return $candidate;
   }

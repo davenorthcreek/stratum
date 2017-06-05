@@ -67,6 +67,9 @@
                                 @endif
                                     data-widget="collapse" data-toggle="tooltip"
                                     title="Collapse/Expand">
+                                @if($found)
+                                    <i class="fa fa-folder-open-o"></i>
+                                @endif
                                 @if($label=="General Interview Information")
                                     <i class="fa fa-minus"></i>
                                 @else
