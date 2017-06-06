@@ -61,7 +61,7 @@ class UploadController extends Controller
             $m->from('admin@stratum-int.com', 'Stratum Integration Service');
             $m->to($to_email)->subject('Form Submission from '.$candidate->getName().' '.$candidate->get("id"));
             foreach ($paths as $filename => $body) {
-                $m->attachData($path, $filename);
+                $m->attachData($body, $filename);
             }
         });
 
@@ -69,7 +69,7 @@ class UploadController extends Controller
             $m->from('admin@stratum-int.com', 'Stratum Integration Service');
             $m->to('admin@stratum-int.com')->subject('Form Submission from '.$candidate->getName().' '.$candidate->get("id"));
             foreach ($paths as $filename => $body) {
-                $m->attachData($path, $filename);
+                $m->attachData($body, $filename);
             }
         });
 
