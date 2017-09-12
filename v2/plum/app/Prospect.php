@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Log;
+use Carbon\Carbon as Carbon;
 
 class Prospect extends Model
 {
@@ -53,8 +54,17 @@ class Prospect extends Model
             $status = "Form Completed";
         }
         if ($this->form_approved != 0) {
-            Log::debug($this->form_approved);
-            $status = "Interview Done";
+            $now = Carbon::now();
+            $threeMonthsAgo = $now->subMonths(3);
+            $formReturned = Carbon::createFromFormat('Y-m-d H:i:s', $this->form_returned);
+            //if form returned timestamp is lower than 3 months ago timestamp
+            if ($threeMonthsAgo->gte($formReturned)) {
+                Log::debug("This is an old prospect, files removed.");
+                $status = 'Purged';
+            } else {
+                Log::debug($this->form_approved);
+                $status = "Interview Done";
+            }
         }
         Log::debug("Status is $status");
         return $status;
