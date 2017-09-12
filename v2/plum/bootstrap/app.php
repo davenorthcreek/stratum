@@ -41,6 +41,15 @@ $app->singleton(
     App\Exceptions\Handler::class
 );
 
+$app->configureMonologUsing(function(MonologLogger $monolog) {
+     $processUser = posix_getpwuid(posix_geteuid());
+     $processName= $processUser['name'];
+
+     $filename = storage_path('logs/laravel-'.php_sapi_name().'-'.$processName.'.log');
+     $handler = new MonologHandlerRotatingFileHandler($filename);
+     $monolog->pushHandler($handler);
+}); 
+
 /*
 |--------------------------------------------------------------------------
 | Return The Application
